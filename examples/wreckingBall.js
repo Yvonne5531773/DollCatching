@@ -49,7 +49,15 @@ Example.wreckingBall = function() {
         Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
     ]);
     
-    var ball = Bodies.circle(100, 400, 50, { density: 0.04, frictionAir: 0.005});
+    // var ball = Bodies.circle(100, 400, 50, { density: 0.04, frictionAir: 0.005});
+	var ball = Bodies.rectangle(120, 100, 238, 38, {
+		render: {
+			strokeStyle: '#ffffff',
+			sprite: {
+				texture: './img/red.png'
+			}
+		}
+	})
     
     World.add(world, ball);
     World.add(world, Constraint.create({
