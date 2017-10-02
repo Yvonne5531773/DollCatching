@@ -10,29 +10,29 @@
     var sourceLinkRoot = 'https://github.com/liabru/matter-js/blob/master/examples';
 
     var demo = MatterTools.Demo.create({
-        toolbar: {
-            title: 'doll-catching-demo',
-            url: '',
-            reset: false,
-            source: false,
-            inspector: false,
-            tools: false,
-            fullscreen: false,
-            exampleSelect: false
-        },
-				// toolbar: {
-				// 	title: 'matter-js',
-				// 	url: 'https://github.com/liabru/matter-js',
-				// 	reset: true,
-				// 	source: true,
-				// 	inspector: true,
-				// 	tools: true,
-				// 	fullscreen: true,
-				// 	exampleSelect: true
-				// },
+        // toolbar: {
+        //     title: 'doll-catching-demo',
+        //     url: '',
+        //     reset: false,
+        //     source: false,
+        //     inspector: false,
+        //     tools: false,
+        //     fullscreen: false,
+        //     exampleSelect: false
+        // },
+				toolbar: {
+					title: 'matter-js',
+					url: 'https://github.com/liabru/matter-js',
+					reset: true,
+					source: true,
+					inspector: true,
+					tools: true,
+					fullscreen: true,
+					exampleSelect: true
+				},
         tools: {
-            inspector: false, //调试工具左
-            gui: false //调试工具右
+            inspector: true, //调试工具左
+            gui: true //调试工具右
         },
         inline: false,
         preventZoom: true,
