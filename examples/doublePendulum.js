@@ -1,153 +1,156 @@
 var Example = Example || {};
 
 Example.doublePendulum = function() {
-    var Engine = Matter.Engine,
-        Events = Matter.Events,
-        Render = Matter.Render,
-        Runner = Matter.Runner,
-        Body = Matter.Body,
-        Composite = Matter.Composite,
-        Composites = Matter.Composites,
-        Constraint = Matter.Constraint,
-        MouseConstraint = Matter.MouseConstraint,
-        Mouse = Matter.Mouse,
-        World = Matter.World,
-        Bodies = Matter.Bodies,
-        Vector = Matter.Vector;
+	var Engine = Matter.Engine,
+		Events = Matter.Events,
+		Render = Matter.Render,
+		Runner = Matter.Runner,
+		Body = Matter.Body,
+		Composite = Matter.Composite,
+		Composites = Matter.Composites,
+		Constraint = Matter.Constraint,
+		MouseConstraint = Matter.MouseConstraint,
+		Mouse = Matter.Mouse,
+		World = Matter.World,
+		Bodies = Matter.Bodies,
+		Vector = Matter.Vector;
 
-    // create engine
-    var engine = Engine.create(),
-        world = engine.world;
+	// create engine
+	var engine = Engine.create(),
+		world = engine.world;
 
-    // create renderer
-    var render = Render.create({
-        element: document.body,
-        engine: engine,
-        options: {
-            width: 800,
-            height: 600,
-            wireframes: false,
-            background: '#0f0f13'
-        }
-    });
+	// create renderer
+	var render = Render.create({
+		element: document.body,
+		engine: engine,
+		options: {
+			width: 800,
+			height: 600,
+			wireframes: false,
+			background: '#0f0f13'
+		}
+	});
 
-    Render.run(render);
+	Render.run(render);
 
-    // create runner
-    var runner = Runner.create();
-    Runner.run(runner, engine);
+	// create runner
+	var runner = Runner.create();
+	Runner.run(runner, engine);
 
-    // add bodies
-    var group = Body.nextGroup(true),
-        length = 200,
-        width = 25;
-        
-    var pendulum = Composites.stack(350, 160, 2, 1, -20, 0, function(x, y) {
-        return Bodies.rectangle(x, y, length, width, { 
-            collisionFilter: { group: group },
-            frictionAir: 0,
-            chamfer: 5,
-            render: {
-                fillStyle: 'transparent',
-                lineWidth: 1
-            }
-        });
-    });
+	// add bodies
+	var group = Body.nextGroup(true),
+		length = 200,
+		width = 25;
 
-    pendulum.bodies[0].render.strokeStyle = '#2fab4e';
-    pendulum.bodies[1].render.strokeStyle = '#353fab';
+	var pendulum = Composites.stack(200, 150, 2, 1, -20, 0, function(x, y) {
+		return Bodies.rectangle(x, y, length, width, {
+			collisionFilter: { group: group },
+			frictionAir: 2, //摩擦
+			chamfer: 10, //倒角
+			render: {
+				fillStyle: 'transparent',
+				lineWidth: 1
+			}
+		});
+	});
 
-    world.gravity.scale = 0.002;
-    
-    Composites.chain(pendulum, 0.45, 0, -0.45, 0, {
-        stiffness: 0.9,
-        length: 0,
-        angularStiffness: 0.7,
-        render: {
-            strokeStyle: '#f1f953'
-        }
-    });
-    
-    Composite.add(pendulum, Constraint.create({
-        bodyB: pendulum.bodies[0],
-        pointB: { x: -length * 0.42, y: 0 },
-        pointA: { x: pendulum.bodies[0].position.x - length * 0.42, y: pendulum.bodies[0].position.y },
-        stiffness: 0.9,
-        length: 0,
-        render: {
-            strokeStyle: '#ff4a74'
-        }
-    }));
+	pendulum.bodies[0].render.strokeStyle = '#2fab4e';
+	pendulum.bodies[1].render.strokeStyle = '#353fab';
 
-    var lowerArm = pendulum.bodies[1];
+	world.gravity.scale = 0.002;
 
-    Body.rotate(lowerArm, -Math.PI * 0.3, {
-        x: lowerArm.position.x - 100,
-        y: lowerArm.position.y
-    });
-    
-    World.add(world, pendulum);
+	//0.45 -0.45代表链节点交汇处的位置
+	Composites.chain(pendulum, 0.45, 0, -0.45, 0, {
+		stiffness: 0.9, //节点的坚硬程度，拉扯不会分离的作用
+		length: 0,
+		angularStiffness: 0.7,
+		render: {
+			strokeStyle: '#f1f953'
+		}
+	});
 
-    var trail = [];
+	Composite.add(pendulum, Constraint.create({
+		bodyB: pendulum.bodies[0],
+		pointB: { x: -length * 0.42, y: 0 },
+		pointA: { x: pendulum.bodies[0].position.x - length * 0.42, y: pendulum.bodies[0].position.y },
+		stiffness: 0.9,
+		length: 0,
+		render: {
+			strokeStyle: '#ff4a74'
+		}
+	}));
 
-    Events.on(render, 'afterRender', function() {
-        trail.unshift({
-            position: Vector.clone(lowerArm.position),
-            speed: lowerArm.speed
-        });
+	var lowerArm = pendulum.bodies[1];
 
-        Render.startViewTransform(render);
-        render.context.globalAlpha = 0.7;
+	//夹角, 0.5->90°，1->180°
+	Body.rotate(lowerArm, -Math.PI * 0.5, {
+		x: lowerArm.position.x - 100,
+		y: lowerArm.position.y
+	});
 
-        for (var i = 0; i < trail.length; i += 1) {
-            var point = trail[i].position,
-                speed = trail[i].speed;
-            
-            var hue = 250 + Math.round((1 - Math.min(1, speed / 10)) * 170);
-            render.context.fillStyle = 'hsl(' + hue + ', 100%, 55%)';
-            render.context.fillRect(point.x, point.y, 2, 2);
-        }
+	World.add(world, pendulum);
 
-        render.context.globalAlpha = 1;
-        Render.endViewTransform(render);
+	var trail = [];
 
-        if (trail.length > 2000) {
-            trail.pop();
-        }
-    });
+	//画出轨道
+	Events.on(render, 'afterRender', function() {
+		trail.unshift({
+			position: Vector.clone(lowerArm.position),
+			speed: lowerArm.speed
+		});
 
-    // add mouse control
-    var mouse = Mouse.create(render.canvas),
-        mouseConstraint = MouseConstraint.create(engine, {
-            mouse: mouse,
-            constraint: {
-                stiffness: 0.2,
-                render: {
-                    visible: false
-                }
-            }
-        });
+		Render.startViewTransform(render);
+		render.context.globalAlpha = 0.7;
 
-    World.add(world, mouseConstraint);
+		for (var i = 0; i < trail.length; i += 1) {
+			var point = trail[i].position,
+				speed = trail[i].speed;
 
-    // keep the mouse in sync with rendering
-    render.mouse = mouse;
+			var hue = 250 + Math.round((1 - Math.min(1, speed / 10)) * 170);
+			render.context.fillStyle = 'hsl(' + hue + ', 100%, 55%)';
+			render.context.fillRect(point.x, point.y, 2, 2);
+		}
 
-    // fit the render viewport to the scene
-    Render.lookAt(render, {
-        min: { x: 0, y: 0 },
-        max: { x: 700, y: 600 }
-    });
+		render.context.globalAlpha = 1;
+		Render.endViewTransform(render);
 
-    // context for MatterTools.Demo
-    return {
-        engine: engine,
-        runner: runner,
-        render: render,
-        canvas: render.canvas,
-        stop: function() {
-            Matter.Render.stop(render);
-            Matter.Runner.stop(runner);
-        }
-    };
+		if (trail.length > 2000) {
+			trail.pop();
+		}
+	});
+
+	// add mouse control
+	var mouse = Mouse.create(render.canvas),
+		mouseConstraint = MouseConstraint.create(engine, {
+			mouse: mouse,
+			constraint: {
+				stiffness: 0.2,
+				render: {
+					visible: false
+				}
+			}
+		});
+
+	World.add(world, mouseConstraint);
+
+	// keep the mouse in sync with rendering
+	render.mouse = mouse;
+
+	// fit the render viewport to the scene
+	Render.lookAt(render, {
+		min: { x: 0, y: 0 },
+		max: { x: 700, y: 600 }
+	});
+
+	// context for MatterTools.Demo
+	return {
+		engine: engine,
+		runner: runner,
+		render: render,
+		canvas: render.canvas,
+		stop: function() {
+			Matter.Render.stop(render);
+			Matter.Runner.stop(runner);
+		}
+	};
 };

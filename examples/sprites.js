@@ -223,6 +223,8 @@ Example.sprites = function() {
 	};
 };
 
+//爪子
+//捉住有两个因素，1.改变节点角度，2.改变摩擦力
 Example.sprites.ragdoll = function(x, y, scale, options) {
 	scale = typeof scale === 'undefined' ? 1 : scale;
 
@@ -282,38 +284,6 @@ Example.sprites.ragdoll = function(x, y, scale, options) {
 			fillStyle: '#E59B12'
 		}
 	});
-
-	var leftLegOptions = Common.extend({
-		label: 'left-leg',
-		collisionFilter: {
-			group: Body.nextGroup(true)
-		},
-		chamfer: {
-			radius: 10 * scale
-		},
-		render: {
-			fillStyle: '#FFBC42'
-		}
-	}, options);
-
-	var leftLowerLegOptions = Common.extend({}, leftLegOptions, {
-		render: {
-			fillStyle: '#E59B12'
-		}
-	});
-
-	var rightLegOptions = Common.extend({
-		label: 'right-leg',
-		collisionFilter: {
-			group: Body.nextGroup(true)
-		},
-		chamfer: {
-			radius: 10 * scale
-		},
-		render: {
-			fillStyle: '#FFBC42'
-		}
-	}, options);
 
 	var chest = Bodies.rectangle(x, y, 55 * scale, 30 * scale, chestOptions);
 	var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 20 * scale, 40 * scale, rightArmOptions);
