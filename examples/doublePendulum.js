@@ -45,7 +45,7 @@ Example.doublePendulum = function() {
 	var pendulum = Composites.stack(200, 150, 2, 1, -20, 0, function(x, y) {
 		return Bodies.rectangle(x, y, length, width, {
 			collisionFilter: { group: group },
-			frictionAir: 2, //摩擦
+			frictionAir: 0.1, //摩擦
 			chamfer: 10, //倒角
 			render: {
 				fillStyle: 'transparent',
@@ -63,7 +63,8 @@ Example.doublePendulum = function() {
 	Composites.chain(pendulum, 0.45, 0, -0.45, 0, {
 		stiffness: 0.9, //节点的坚硬程度，拉扯不会分离的作用
 		length: 0,
-		angularStiffness: 0.7,
+		angularStiffness: 0.6,
+		frictionAir: 1.1,
 		render: {
 			strokeStyle: '#f1f953'
 		}
@@ -73,7 +74,9 @@ Example.doublePendulum = function() {
 		bodyB: pendulum.bodies[0],
 		pointB: { x: -length * 0.42, y: 0 },
 		pointA: { x: pendulum.bodies[0].position.x - length * 0.42, y: pendulum.bodies[0].position.y },
-		stiffness: 0.9,
+		stiffness: 2,
+		angularStiffness: 1,
+		frictionAir: 1.1,
 		length: 0,
 		render: {
 			strokeStyle: '#ff4a74'

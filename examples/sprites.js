@@ -159,6 +159,15 @@ Example.sprites = function() {
 		stiffness: 0,
 		length: 0
 	});
+
+	console.log('ragdoll', ragdoll)
+	console.log('ragdoll.bodies[1]', ragdoll.bodies[1])
+	//夹角, 0.5->90°，1->180°
+	Body.rotate(ragdoll.bodies[1], -Math.PI * 0.5, {
+		x: ragdoll.bodies[1].position.x - 100,
+		y: ragdoll.bodies[1].position.y
+	});
+
 	World.add(world, [ragdoll, ragdollConstraint]);
 
 	Events.on(engine, 'beforeUpdate', function(event) {

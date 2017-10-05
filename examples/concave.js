@@ -48,7 +48,8 @@ Example.concave = function() {
 
     var stack = Composites.stack(50, 50, 6, 4, 10, 10, function(x, y) {
         var color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58']);
-        return Bodies.fromVertices(x, y, Common.choose([arrow, chevron, star, horseShoe]), {
+        return Bodies.fromVertices(x, y, Common.choose([horseShoe]), {
+        	// return Bodies.fromVertices(x, y, Common.choose([arrow, chevron, star, horseShoe]), {
             render: {
                 fillStyle: color,
                 strokeStyle: color,
