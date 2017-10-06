@@ -94,9 +94,9 @@ Example.manipulation = function() {
 
 		// every 1.5 sec
 		if (counter >= 60 * 1.5) {
-			Body.setVelocity(bodyB, { x: 5, y: -5 });
+			Body.setVelocity(bodyB, { x: 0, y: -5 });
 			Body.setAngle(bodyC, -Math.PI * 0.26);
-			Body.setAngularVelocity(bodyD, 0.2);
+			Body.setAngularVelocity(bodyD, 0.1);
 
 			// reset counter
 			counter = 0;

@@ -13,7 +13,8 @@ Example.sprites = function() {
 		Mouse = Matter.Mouse,
 		World = Matter.World,
 		Events = Matter.Events,
-		Bodies = Matter.Bodies;
+		Bodies = Matter.Bodies,
+		Svg = Matter.Svg;
 
 	// create engine
 	var engine = Engine.create(),
@@ -160,33 +161,41 @@ Example.sprites = function() {
 		}
 	}));
 	console.log('ropeC', ropeC.constraints[2])
-	//连接, 第三个参数是爪子的大小比例, (400,100)-初始位置
-	var ragdoll = Example.sprites.ragdoll(400, 100, 1.1);
-	var ragdollConstraint = Constraint.create({
-		bodyA: ropeC.bodies[ropeC.bodies.length-1],
-		bodyB: ragdoll.bodies[0],
-		pointA: { x: 28, y: 0 },
-		pointB: { x: 0, y: -20 }, //爪子的连接位置
-		stiffness: 0,
-		length: 0
+
+	var vertexSets = [],
+		ragdoll,
+		color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58']);
+	$.get('./svg/iconmonstr-check-mark-8-icon.svg').done(function(data) {
+		$(data).find('path').each(function(i, path) {
+			vertexSets.push(Svg.pathToVertices(path, 30));
+		});
+
+		//连接, 第三个参数是爪子的大小比例, (400,100)-初始位置
+		ragdoll = Example.sprites.ragdoll(400, 100, 1.1, {}, vertexSets);
+		var ragdollConstraint = Constraint.create({
+			bodyA: ropeC.bodies[ropeC.bodies.length-1],
+			bodyB: ragdoll.bodies[0],
+			pointA: { x: 28, y: 0 },
+			pointB: { x: 0, y: -20 }, //爪子的连接位置
+			stiffness: 0,
+			length: 0
+		});
+
+		//爪子出现
+		setTimeout(function(){
+			World.add(world, [ropeC, ragdoll, ragdollConstraint]);
+		}, 800)
+
+		console.log('ragdoll:', ragdoll)
 	});
 
-	console.log('ragdoll', ragdoll)
-	console.log('ragdoll.bodies[1]', ragdoll.bodies[1])
 	//夹角, 0.5->90°，1->180°
 	// Body.rotate(ragdoll.bodies[1], -Math.PI * 0.5, {
 	// 	x: ragdoll.bodies[1].position.x - 100,
 	// 	y: ragdoll.bodies[1].position.y
 	// });
 
-	//爪子出现
-	setTimeout(function(){
-		World.add(world, [ropeC, ragdoll, ragdollConstraint]);
-	}, 800)
-
-	console.log('ragdoll.constraints:', ragdoll.constraints)
-	console.log('ragdoll.bodies:', ragdoll.bodies);
-	var hasCatched = 0;
+	var hasCatched = false;
 	Events.on(engine, 'beforeUpdate', function(event) {
 		//链条摇摆的调整
 		// counter += 0.03;
@@ -202,29 +211,43 @@ Example.sprites = function() {
 		// Body.setPosition(ropeC.bodies[0], { x: px, y: ropeC.bodies[0].position.y });
 		// console.log('setAngle:', ragdoll.bodies[0].angle)
 
+		if(!ragdoll || ragdoll.length <= 0) return
 		//初始爪子状态
+		// if(!hasCatched){
+		// 	Body.setAngle(ragdoll.bodies[1], 0.5);
+		// 	Body.setAngle(ragdoll.bodies[2], 2);
+		// 	Body.setAngle(ragdoll.bodies[3], -0.5);
+		// 	Body.setAngle(ragdoll.bodies[4], -3);
+		// }
+		// if(!hasCatched){
+		// 	Body.setAngle(ragdoll.bodies[1], -1);
+		// 	Body.setAngle(ragdoll.bodies[2], 2);
+		// 	Body.setAngle(ragdoll.bodies[3], 0.8);
+		// 	Body.setAngle(ragdoll.bodies[4], -3);
+		// }
 		if(!hasCatched){
+			console.log('!hasCatched')
 			Body.setAngle(ragdoll.bodies[1], 0.5);
+			Body.setAngle(ragdoll.bodies[2], 3.5);
+			Body.setAngle(ragdoll.bodies[3], -0.4);
+			Body.setAngle(ragdoll.bodies[4], -3.5);
+		}else{
+			Body.setAngle(ragdoll.bodies[1], -0.7);
 			Body.setAngle(ragdoll.bodies[2], 2);
-			Body.setAngle(ragdoll.bodies[3], -0.5);
-			Body.setAngle(ragdoll.bodies[4], -3);
+			Body.setAngle(ragdoll.bodies[3], 0.7);
+			Body.setAngle(ragdoll.bodies[4], -2.2);
 		}
 
-		//抓娃娃状态
-		// setTimeout(function(){
-		// 	ragdoll.constraints[2].length = 20
-		// 	ragdoll.constraints[3].length = 20
-		// 	Body.setAngle(ragdoll.bodies[1], -0.8);
-		// 	// Body.setAngle(ragdoll.bodies[2], 1);
-		// 	Body.setAngle(ragdoll.bodies[3], 0.8);
-		// 	hasCatched = true
-		// }, 6000)
+		// ragdoll.constraints[2].pointB.y = -38*1.1
 
-		//爪子的角度
-		// Body.setAngle(ragdoll.bodies[1], -0.5);
-		// Body.setAngle(ragdoll.bodies[2], 0.5);
-		// Body.setAngle(ragdoll.bodies[3], -0.5);
-		// Body.setAngle(ragdoll.bodies[4], -3.5);
+		//抓娃娃状态
+		setTimeout(function(){
+			// ragdoll.constraints[2].length = 20
+			// ragdoll.constraints[3].length = 20
+			// Body.setAngle(ragdoll.bodies[1], -0.8);
+			// Body.setAngle(ragdoll.bodies[3], 0.8);
+			hasCatched = true
+		}, 6000)
 
 		Body.set(ragdoll.bodies[1], 'friction', 1)
 		Body.set(ragdoll.bodies[3], 'friction', 1)
@@ -255,7 +278,7 @@ Example.sprites = function() {
 			}
 		});
 
-	// World.add(world, mouseConstraint);
+	World.add(world, mouseConstraint);
 
 	//爪子伸下去后增加压力
 	Events.on(mouseConstraint, 'mouseup', function(event) {
@@ -268,7 +291,7 @@ Example.sprites = function() {
 		// Body.setVelocity(ragdoll.bodies[0], { x: 0, y: 10 });
 		// Body.setPosition(ragdoll.bodies[0], { x: 404, y: 403 });
 		console.log('ropeC.constraints[2]', ropeC.constraints[2]);
-		ropeC.constraints[2].length = 200
+		// ropeC.constraints[2].length = 200
 	});
 
 	// keep the mouse in sync with rendering
@@ -296,7 +319,7 @@ Example.sprites = function() {
 
 //爪子
 //捉住有两个因素，1.改变节点角度，2.改变摩擦力
-Example.sprites.ragdoll = function(x, y, scale, options) {
+Example.sprites.ragdoll = function(x, y, scale, options, vertexSets) {
 	scale = typeof scale === 'undefined' ? 1 : scale;
 
 	var Body = Matter.Body,
@@ -366,7 +389,13 @@ Example.sprites.ragdoll = function(x, y, scale, options) {
 	var rightLowerArm = Bodies.rectangle(x + 39 * scale, y + 25 * scale, 20 * scale, 60 * scale, rightLowerArmOptions);
 	var leftUpperArm = Bodies.rectangle(x - 39 * scale, y - 15 * scale, 20 * scale, 40 * scale, leftArmOptions);
 	var leftLowerArm = Bodies.rectangle(x - 39 * scale, y + 25 * scale, 20 * scale, 60 * scale, leftLowerArmOptions);
-
+	// var leftLowerArm = Bodies.fromVertices(400, 80, vertexSets, {
+	// 	render: {
+	// 		fillStyle: '#556270',
+	// 		strokeStyle: '#556270',
+	// 		lineWidth: 1
+	// 	}
+	// }, true)
 	var chestToRightUpperArm = Constraint.create({
 		label: 'CHEST_TO_RIGHT_UPPER',
 		bodyA: chest,
@@ -376,14 +405,15 @@ Example.sprites.ragdoll = function(x, y, scale, options) {
 		},
 		pointB: {
 			x: 0,
-			y: -18 * scale
+			// y: -18 * scale
+			y: -38 * scale
 		},
 		bodyB: rightUpperArm,
-		stiffness: 1,
-		angularStiffness: 0.1,
+		stiffness: 0.6,
+		angularStiffness: 0.3,
 		length: 0,
 		render: {
-			visible: true //弹簧是否显示
+			visible: false //弹簧是否显示
 		}
 	});
 
@@ -396,14 +426,15 @@ Example.sprites.ragdoll = function(x, y, scale, options) {
 		},
 		pointB: {
 			x: 0,
-			y: -18 * scale
+			// y: -18 * scale
+			y: -38 * scale
 		},
 		bodyB: leftUpperArm,
-		stiffness: 1,
-		angularStiffness: 0.1,
+		stiffness: 0.6,
+		angularStiffness: 0.3,
 		length: 0,
 		render: {
-			visible: true
+			visible: false
 		}
 	});
 
@@ -420,7 +451,7 @@ Example.sprites.ragdoll = function(x, y, scale, options) {
 			y: -25 * scale
 		},
 		stiffness: 0.6,
-		angularStiffness: 1.3,  //节点的角硬度
+		angularStiffness: 1.6,  //节点的角硬度
 		render: {
 			visible: false
 		}
@@ -439,7 +470,7 @@ Example.sprites.ragdoll = function(x, y, scale, options) {
 			y: -25 * scale
 		},
 		stiffness: 0.6,
-		angularStiffness: 1.3,
+		angularStiffness: 1.6,
 		render: {
 			visible: false
 		}
