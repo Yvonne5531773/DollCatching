@@ -163,25 +163,42 @@ Example.sprites = function() {
 	console.log('ragdoll', ragdoll)
 	console.log('ragdoll.bodies[1]', ragdoll.bodies[1])
 	//夹角, 0.5->90°，1->180°
-	Body.rotate(ragdoll.bodies[1], -Math.PI * 0.5, {
-		x: ragdoll.bodies[1].position.x - 100,
-		y: ragdoll.bodies[1].position.y
-	});
+	// Body.rotate(ragdoll.bodies[1], -Math.PI * 0.5, {
+	// 	x: ragdoll.bodies[1].position.x - 100,
+	// 	y: ragdoll.bodies[1].position.y
+	// });
 
 	World.add(world, [ragdoll, ragdollConstraint]);
 
+	console.log('setAngle:', ragdoll.bodies[1])
 	Events.on(engine, 'beforeUpdate', function(event) {
-		// counter += 0.03;
-		// if (counter < 0) {
-		// 	return;
-		// }
-		// var px = 400 + 100 * Math.sin(counter);
+		counter += 0.03;
+		if (counter < 0) {
+			return;
+		}
+		var px = 400 + 100 * Math.sin(counter);
 		// // body is static so must manually update velocity for friction to work
 		// // console.log('counter:', counter)
 		// // console.log('px:', px)
 		// // console.log('px - ropeC.bodies[0].position.x:', px - ropeC.bodies[0].position.x)
-		// Body.setVelocity(ropeC.bodies[0], { x: px - ropeC.bodies[0].position.x, y: 0 });
+		// Body.setVelocity(ropeC.bodies[0], { x: px - ropeC.bodies[0].position.x, y: 0 }); //速度
 		// Body.setPosition(ropeC.bodies[0], { x: px, y: ropeC.bodies[0].position.y });
+
+		// Body.setVelocity(ragdoll.bodies[2], { x: px - ragdoll.bodies[2].position.x, y: 0 });
+		// Body.setPosition(ragdoll.bodies[2], { x: px, y: ragdoll.bodies[2].position.y });
+		// console.log('setAngle:', ragdoll.bodies[1])
+		Body.setAngle(ragdoll.bodies[1], -0.8);
+		Body.setAngle(ragdoll.bodies[2], 1);
+		Body.setAngle(ragdoll.bodies[3], 0.8);
+		Body.set(ragdoll.bodies[1], 'friction', 1)
+		Body.set(ragdoll.bodies[3], 'friction', 1)
+		// Body.set(ragdoll.bodies[1], 'frictionAir', 1)
+		// Body.setAngle(ragdoll.bodies[3], 90);
+		// Body.setPosition(ragdoll.bodies[4], { x: px-10, y: ragdoll.bodies[4].position.y });
+		// Body.rotate(ragdoll.bodies[1], -Math.PI * 1, {
+		// 		x: ragdoll.bodies[1].position.x ,
+		// 		y: ragdoll.bodies[1].position.y
+		// });
 	});
 
 	//线
@@ -252,7 +269,10 @@ Example.sprites.ragdoll = function(x, y, scale, options) {
 			radius: [20 * scale, 20 * scale, 26 * scale, 26 * scale]
 		},
 		render: {
-			fillStyle: '#E0A423'
+			fillStyle: '#E0A423',
+			sprite: {
+				// texture: './img/liebao.png'
+			}
 		}
 	}, options);
 
@@ -348,6 +368,7 @@ Example.sprites.ragdoll = function(x, y, scale, options) {
 			y: -25 * scale
 		},
 		stiffness: 0.6,
+		angularStiffness: 1.6,  //节点的角硬度
 		render: {
 			visible: false
 		}
@@ -365,6 +386,7 @@ Example.sprites.ragdoll = function(x, y, scale, options) {
 			y: -25 * scale
 		},
 		stiffness: 0.6,
+		angularStiffness: 1.6,
 		render: {
 			visible: false
 		}

@@ -42,11 +42,11 @@ Example.doublePendulum = function() {
 		length = 200,
 		width = 25;
 
-	var pendulum = Composites.stack(200, 150, 2, 1, -20, 0, function(x, y) {
+	var pendulum = Composites.stack(350, 160, 2, 1, -20, 0, function(x, y) {
 		return Bodies.rectangle(x, y, length, width, {
 			collisionFilter: { group: group },
-			frictionAir: 0.1, //摩擦
-			chamfer: 10, //倒角
+			frictionAir: 0,
+			chamfer: 5,
 			render: {
 				fillStyle: 'transparent',
 				lineWidth: 1
@@ -54,19 +54,17 @@ Example.doublePendulum = function() {
 		});
 	});
 
-	pendulum.bodies[0].render.strokeStyle = '#2fab4e';
-	pendulum.bodies[1].render.strokeStyle = '#353fab';
+	pendulum.bodies[0].render.strokeStyle = '#4af272';
+	pendulum.bodies[1].render.strokeStyle = '#334ee6';
 
 	world.gravity.scale = 0.002;
 
-	//0.45 -0.45代表链节点交汇处的位置
 	Composites.chain(pendulum, 0.45, 0, -0.45, 0, {
-		stiffness: 0.9, //节点的坚硬程度，拉扯不会分离的作用
+		stiffness: 0.9,
 		length: 0,
-		angularStiffness: 0.6,
-		frictionAir: 1.1,
+		angularStiffness: 0.7,
 		render: {
-			strokeStyle: '#f1f953'
+			strokeStyle: '#f00831'
 		}
 	});
 
@@ -74,28 +72,45 @@ Example.doublePendulum = function() {
 		bodyB: pendulum.bodies[0],
 		pointB: { x: -length * 0.42, y: 0 },
 		pointA: { x: pendulum.bodies[0].position.x - length * 0.42, y: pendulum.bodies[0].position.y },
-		stiffness: 2,
-		angularStiffness: 1,
-		frictionAir: 1.1,
+		stiffness: 0.9,
 		length: 0,
 		render: {
-			strokeStyle: '#ff4a74'
+			strokeStyle: '#94435a'
 		}
 	}));
 
 	var lowerArm = pendulum.bodies[1];
 
-	//夹角, 0.5->90°，1->180°
-	Body.rotate(lowerArm, -Math.PI * 0.5, {
+	Body.rotate(lowerArm, -Math.PI * 0.3, {
 		x: lowerArm.position.x - 100,
 		y: lowerArm.position.y
 	});
 
 	World.add(world, pendulum);
 
-	var trail = [];
+	var trail = [], counter = -1;
+	console.log('pendulum.bodies[1]:', pendulum.bodies[1])
+	Events.on(engine, 'beforeUpdate', function(event) {
+		counter += 0.03;
+		if (counter < 0) {
+			return;
+		}
+		var px = 400 + 100 * Math.sin(counter);
+		// Body.setVelocity(pendulum.bodies[0], { x: 100, y: 0 });
+		// console.log('px', px)
+		// console.log('pendulum.bodies[1].position.y', pendulum.bodies[1].position.y)
+		// Body.setPosition(pendulum.bodies[0], { x: 100, y: 340 });
+		// Body.setPosition(pendulum.bodies[1], { x: px, y: pendulum.bodies[1].position.y });
+		// console.log('setAngle:', pendulum.bodies[1].angle)
+		Body.setAngle(pendulum.bodies[1], 3);
+		Body.set(pendulum.bodies[1], 'frictionAir', 1)
+		console.log('pendulum.bodies[1] frictionAir:', pendulum.bodies[1].frictionAir)
+		// Body.rotate(ragdoll.bodies[1], -Math.PI * 1, {
+		// 		x: ragdoll.bodies[1].position.x ,
+		// 		y: ragdoll.bodies[1].position.y
+		// });
+	});
 
-	//画出轨道
 	Events.on(render, 'afterRender', function() {
 		trail.unshift({
 			position: Vector.clone(lowerArm.position),

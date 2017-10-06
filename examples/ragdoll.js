@@ -81,7 +81,7 @@ Example.ragdoll = function() {
 
 	World.add(world, [stack, obstacles, ragdolls]);
 
-	var timeScaleTarget = 1,
+	var timeScaleTarget = 1, //控制时间静止, 动作静止
 		counter = 0;
 
 	Events.on(engine, 'afterUpdate', function(event) {
