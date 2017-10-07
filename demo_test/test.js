@@ -1,239 +1,112 @@
-// Use matter.js to attach a pinata to a figure, drag to interact
+var svg_data = '<?xml version="1.0" encoding="utf-8"?> <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --> <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"viewBox="0 0 800 600" style="enable-background:new 0 0 800 600;" xml:space="preserve"> <path d="M556,320.4c-9.4-22.3-22.7-41.3-39.9-56.9c-17.2-15.6-37.4-27.3-60.5-35.1c-23.1-7.8-48.1-11.7-75-11.7 c-2.7,0-5.8,0.1-9.3,0.4c-3.5,0.3-7.1,0.4-10.9,0.4c-4.3,0.5-8.6,0.8-12.9,0.8V109.4h201.7V11h-10v88.4H337.5v128.9h10 c4.5,0,9.1-0.3,13.5-0.8c3.9,0,7.6-0.2,11.1-0.4c3.2-0.2,6.1-0.4,8.5-0.4c25.7,0,49.8,3.8,71.8,11.2c21.7,7.3,40.9,18.4,57,33 c16,14.5,28.6,32.5,37.4,53.4c8.8,21,13.3,44.5,13.3,69.9c0,30-5.6,56.6-16.7,79.1c-11.1,22.5-26.5,41.6-45.6,56.7 c-19.4,15.3-42.2,27.1-67.8,35c-25.8,8-53.9,12.1-83.4,12.1c-11.2,0-23.4-1.2-36.2-3.5c-13-2.3-26.1-5.3-38.7-8.7 c-12.6-3.4-24.3-7.2-34.9-11.4c-6.9-2.7-13.2-5.3-18.7-7.8l26.2-65c8.9,4.2,20.1,8.6,34,13.3c20,6.8,41.3,10.2,63.3,10.2 c18.6,0,36.1-2.3,52-6.8c16.1-4.6,30.3-11.4,42.3-20.1c12.2-8.9,21.9-20.1,28.8-33.3c6.9-13.2,10.4-28.4,10.4-45 c0-32.8-13.2-59-39.2-77.9c-25-18.1-62.4-27.3-111.2-27.3c-5.9,0-12.8,0.1-20.9,0.4c-7.9,0.3-15.5,0.7-22.6,1.2 c-4.6,0.3-9.4,0.5-14.3,0.7V11h-10v295.3c8.6,0,16.9-0.3,25-0.8c7-0.5,14.4-0.9,22.2-1.2c7.8-0.3,14.7-0.4,20.6-0.4 c46.8,0,81.9,8.5,105.3,25.4c23.4,16.9,35.1,40.2,35.1,69.8c0,15.1-3.1,28.5-9.3,40.3c-6.2,11.8-14.8,21.8-25.8,29.9 c-11,8.1-24.1,14.3-39.1,18.6c-15.1,4.3-31.5,6.5-49.2,6.5c-21,0-41-3.2-60.1-9.7c-19.1-6.5-33.2-12.4-42.4-17.8l-33.9,83.9 c7.5,3.8,16.8,7.8,27.8,12.1c11,4.3,23,8.2,35.9,11.7s26.1,6.5,39.5,8.9c13.4,2.4,26.1,3.6,37.9,3.6c30.7,0,59.4-4.2,86.3-12.5 c26.9-8.3,50.6-20.6,71-36.7c20.4-16.1,36.6-36.2,48.4-60.1c11.8-23.9,17.8-51.8,17.8-83.5C570.2,367.4,565.4,342.8,556,320.4z"/> </svg>';
 
-var screenW = window.innerWidth;
-var screenH = window.innerHeight;
-var canvas = document.getElementById('sim');
-canvas.width = screenW;
-canvas.height = screenH;
+function five() {
+	var Engine = Matter.Engine,
+		Render = Matter.Render,
+		Runner = Matter.Runner,
+		Composites = Matter.Composites,
+		Common = Matter.Common,
+		MouseConstraint = Matter.MouseConstraint,
+		Mouse = Matter.Mouse,
+		World = Matter.World,
+		Query = Matter.Query,
+		Svg = Matter.Svg,
+		Vertices = Matter.Vertices,
+		Bodies = Matter.Bodies;
 
-var Engine = Matter.Engine,
-	Render = Matter.Render,
-	World = Matter.World,
-	Bodies = Matter.Bodies,
-	Body = Matter.Body,
-	Constraint = Matter.Constraint,
-	MouseConstraint = Matter.MouseConstraint,
-	Mouse = Matter.Mouse,
-	Composite = Matter.Composite,
-	Composites = Matter.Composites,
-	Runner = Matter.Runner;
+	// create engine
+	var engine = Engine.create(),
+		world = engine.world;
 
-var engine = Engine.create();
-engine.world.gravity.x = 0;
-engine.world.gravity.y = 6;
-
-var mouseConstraint = MouseConstraint.create(engine,{
-	mouse: Mouse.create(canvas)
-});
-
-var group = Body.nextGroup(true);
-var render = Render.create({
-	canvas: canvas,
-	engine: engine,
-	options: {
-		width: window.innerWidth,
-		height: window.innerHeight,
-		wireframeBackground: '#ffffff',
-		wireframes: false
-	}
-});
-
-// create person
-function createPinata(x,y){
-	var headOptions = {friction: 1,frictionAir:.09,collisionFilter: {group: group}};
-	var chestOptions = {friction: 1,frictionAir:.09,collisionFilter: {group: group}};
-	var armOptions = {friction: 1, frictionAir: .09,collisionFilter: {group: group}};
-	var legOptions = {friction: 1, frictionAir: .09,collisionFilter: {group: group}};
-	var head  = Bodies.circle(x, y-70, 30, headOptions);
-	var chest = Bodies.rectangle(x,y,60, 80,chestOptions);//40,120
-	var rightUpperArm = Bodies.rectangle(x+40, y-20, 20, 40,armOptions);
-	var rightLowerArm = Bodies.rectangle(x+40, y+20, 20, 60,armOptions);
-	var leftUpperArm = Bodies.rectangle(x-40, y-20, 20, 40,armOptions);
-	var leftLowerArm = Bodies.rectangle(x-40, y+20, 20, 60,armOptions);
-	var leftUpperLeg = Bodies.rectangle(x-20, y+60, 20, 40,legOptions);
-	var rightUpperLeg = Bodies.rectangle(x+20, y+60, 20, 40,legOptions);
-	var leftLowerLeg = Bodies.rectangle(x-20, y+100, 20, 60,legOptions);
-	var rightLowerLeg = Bodies.rectangle(x+20, y+100, 20, 60,legOptions);
-
-	var legTorso = Body.create({
-		parts: [chest, leftUpperLeg, rightUpperLeg],
-		collisionFilter: {group: group},
-	});
-
-	var chestToRightUpperArm = Constraint.create({
-		bodyA: legTorso,
-		pointA: { x: 25, y: -40 },
-		pointB: {x:-5, y:-10},
-		bodyB: rightUpperArm,
-		stiffness: .4,
-		length: 2
-	});
-	var chestToLeftUpperArm = Constraint.create({
-		bodyA: legTorso,
-		pointA: { x: -25, y: -40 },
-		pointB: {x:5, y:-10},
-		bodyB: leftUpperArm,
-		stiffness: .4,
-		length: 2
-	});
-
-	var upperToLowerRightArm = Constraint.create({
-		bodyA: rightUpperArm,
-		bodyB: rightLowerArm,
-		pointA: {x:0,y: 15},
-		pointB: {x:0, y:-20},
-		stiffness: .2
-	});
-
-	var upperToLowerLeftArm= Constraint.create({
-		bodyA: leftUpperArm,
-		bodyB: leftLowerArm,
-		pointA: {x:0,y: 15},
-		pointB: {x:0, y:-20},
-		stiffness: .2,
-		length: 1
-	});
-
-	var upperToLowerLeftLeg= Constraint.create({
-		bodyA: legTorso,
-		bodyB: leftLowerLeg,
-		pointA: {x:-20,y: 60},
-		pointB: {x:0, y:-25},
-		stiffness: .4
-	});
-
-	var upperToLowerRightLeg= Constraint.create({
-		bodyA: legTorso,
-		bodyB: rightLowerLeg,
-		pointA: {x:20,y: 60},
-		pointB: {x:0, y:-25},
-		stiffness: .4
-	});
-
-	var headContraint = Constraint.create({
-		bodyA: head,
-		pointA:{x:0, y: 20},
-		pointB: {x:0, y:-50},
-		bodyB: legTorso,
-		stiffness: .7
-	});
-
-	return Composite.create({
-		bodies: [
-			legTorso,
-			head,
-			leftLowerArm,
-			leftUpperArm,
-			rightLowerArm,
-			rightUpperArm,
-			leftLowerLeg,
-			rightLowerLeg
-		],
-		constraints: [
-			headContraint,
-			chestToLeftUpperArm,
-			chestToRightUpperArm,
-			upperToLowerLeftArm,
-			upperToLowerRightArm,
-			upperToLowerLeftLeg,
-			upperToLowerRightLeg
-		]
-	});
-}
-
-var ground = Bodies.rectangle(screenW/2, screenH, screenW, 100, {
-	render: {
-		fillStyle: '#000000',
-		strokeStyle: '#333',
-		lineWidth: 0
-	},
-	isStatic: true,
-	friction: 1
-});
-
-// create rope
-var ropeA = Composites.stack(50, 10, 2, 1, 11, 11, function(x, y) {
-	return Bodies.rectangle(x, y, 50, 2, { collisionFilter: { group: group } });
-});
-
-Composites.chain(ropeA, 0.5, 0, -0.5, 0, { stiffness: 0.5, length: 20 });
-Composite.add(ropeA, Constraint.create({
-	pointA: { x: screenW/2, y: 10 },
-	pointB: { x: -20, y:0 },
-	bodyB: ropeA.bodies[0],
-	stiffness: 0.5,
-	length: 20
-}));
-World.add(engine.world, ropeA);
-
-// create pinata, connect to rope
-var pinata = createPinata(screenW/2-50, screenH/2);
-var pinataConstraint = Constraint.create({
-	bodyA: ropeA.bodies[ropeA.bodies.length-1],
-	bodyB: pinata.bodies[1],
-	pointA: { x: 25, y:0 },
-	pointB: { x: 0, y: -30 },
-	stiffness: 0.5,
-	length: 20
-});
-World.add(engine.world, [pinata, pinataConstraint]);
-
-// bat
-function dropBat() {
-	var bat = Bodies.rectangle(0, 0, 100, 10, {
-
-	});
-	Body.setMass(bat, 2);
-	Body.setAngularVelocity(bat, -.1);
-	Body.applyForce(bat, { x: 0, y: 0 }, { x: 0.1, y: 0 });
-	World.add(engine.world, [bat]);
-}
-setTimeout(dropBat, 2000);
-
-// emit candy
-function dropCandyPiece(x, y) {
-	var c = Bodies.circle(x + Math.random()*5, y + Math.random()*5, 4, {});
-	World.add(engine.world, c);
-}
-
-function dropCandy(x, y) {
-	setTimeout(dropCandyPiece, 5, x, y);
-	setTimeout(dropCandyPiece, 10, x, y);
-	setTimeout(dropCandyPiece, 15, x, y);
-	setTimeout(dropCandyPiece, 20, x, y);
-	setTimeout(dropCandyPiece, 30, x, y);
-	setTimeout(dropCandyPiece, 50, x, y);
-}
-
-setTimeout(function () {
-	setInterval(function () {
-		if (pinata.constraints.length<2) {
-			if (c.bodyB.angularSpeed < 0.1) {
-				dropCandy(c.bodyB.position.x, c.bodyB.position.y);
-			}
-			return;
+	// create renderer
+	// var render = Render.create({
+	// 	element: document.body,
+	// 	engine: engine,
+	// 	options: {
+	// 		wireframes: false,
+	// 		background: 'transparent',
+	// 		width: Math.min(document.documentElement.clientWidth, 800),
+	// 		height: Math.min(document.documentElement.clientHeight, 600)
+	// 	}
+	// });var render = Render.create({
+	var render = Render.create({
+		element: document.body,
+		engine: engine,
+		options: {
+			width: 1000,
+			height: 800,
+			background: '#0f0f13',
+			showAngleIndicator: false,
+			wireframes: false
 		}
+	});
 
-		var c = pinata.constraints[pinata.constraints.length-1];
-		if (c.bodyB.angularSpeed < 0.1) {
-			return;
+
+	Render.run(render);
+
+	// create runner
+	var runner = Runner.create();
+	Runner.run(runner, engine);
+
+	// var offset = 10,
+	// 	options = {
+	// 		isStatic: true
+	// 	};
+	// World.add(world, [
+	// 	Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options),
+	// 	Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options),
+	// 	Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options),
+	// 	Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)
+	// ]);
+
+	// add bodies
+	var five;
+	var vertexSets = [];
+
+	$(svg_data).find('path').each(function(i, path) {
+		vertexSets.push(Vertices.scale(Svg.pathToVertices(path, 30), 1, 1));
+	});
+
+	five = Bodies.fromVertices(400, 500, vertexSets, {
+		isStatic: true,
+		render: {
+			fillStyle: 'transparent',
+			strokeStyle: 'transparent',
+			lineWidth: 0
 		}
+	}, true);
 
-		Composite.remove(pinata, c);
-		dropCandy(c.bodyB.position.x, c.bodyB.position.y);
+	World.add(world, five);
 
-	}, 1000);
-}, 2000);
+	//2代表两行, 280->横坐标，-3100->纵坐标
+	World.add(world, Composites.stack(280, -3100, 2, 110, 3, 5, function(x, y) {
+		if (Query.point([five], { x: x, y: y }).length === 0) {
+			return Bodies.polygon(x, y, 6, 12, {
+				frictionAir: .02,
+				friction: 0.01,
+				restitution: 0.1,
+				render: {
+					fillStyle: ["#FFFFFF", "#4285F4", "#EA4335", "#FBBC05", "#34A853"][Math.round(Math.random() * 4)]
+				}
+			});
+		}
+	}));
+	// fit the render viewport to the scene
+	Render.lookAt(render, {
+		min: { x: 0, y: 0 },
+		max: { x: 800, y: 800 }
+	});
 
-//
-World.add(engine.world, [mouseConstraint, ground]);
-window.addEventListener("resize", function(){
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
-	screenW = window.innerWidth;
-	screenH = window.innerHeight;
-	Body.setPosition(ground, {x:screenW/2, y: screenH-50});
-});
+	return {
+		engine: engine,
+		runner: runner,
+		render: render,
+		canvas: render.canvas,
+		stop: function() {
+			Matter.Render.stop(render);
+			Matter.Runner.stop(runner);
+		}
+	};
+};
 
-Engine.run(engine);
-Render.run(render);
+five()

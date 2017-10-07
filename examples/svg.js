@@ -35,6 +35,8 @@ Example.svg = function() {
 	// add bodies
 	var svgs = [
 		'iconmonstr-check-mark-8-icon',
+		'test1',
+		'test5',
 		// 'iconmonstr-paperclip-2-icon',
 		// 'iconmonstr-puzzle-icon',
 		// 'iconmonstr-user-icon',
@@ -44,6 +46,7 @@ Example.svg = function() {
 	for (var i = 0; i < svgs.length; i += 1) {
 		(function(i) {
 			$.get('./svg/' + svgs[i] + '.svg').done(function(data) {
+				console.log('data', data)
 				var vertexSets = [],
 					color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58']);
 
@@ -51,12 +54,15 @@ Example.svg = function() {
 					var points = Svg.pathToVertices(path, 30);
 					vertexSets.push(Vertices.scale(points, 0.4, 0.4));
 				});
-
+				console.log('vertexSets', vertexSets)
 				World.add(world, Bodies.fromVertices(100 + i * 150, 200 + i * 50, vertexSets, {
 					render: {
 						fillStyle: color,
 						strokeStyle: color,
-						lineWidth: 1
+						lineWidth: 1,
+						// sprite: {
+						// 	texture: './img/background.png'
+						// }
 					}
 				}, true));
 			});
