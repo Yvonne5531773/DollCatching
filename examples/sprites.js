@@ -118,13 +118,10 @@ Example.sprites = function() {
 
 	var explosion = function(engine) {
 		var bodies = Composite.allBodies(engine.world);
-
 		for (var i = 0; i < bodies.length; i++) {
 			var body = bodies[i];
-
-			if (!body.isStatic && body.position.y >= 500) {
+			if (!body.isStatic && body.position.y >= 300) {
 				var forceMagnitude = 0.05 * body.mass;
-
 				Body.applyForce(body, body.position, {
 					x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
 					y: -forceMagnitude + Common.random() * -forceMagnitude
@@ -152,6 +149,7 @@ Example.sprites = function() {
 	setTimeout(function(){
 		World.add(world, Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options))
 		World.remove(world, five);
+		World.add(world, stack);
 	}, 6000)
 	setTimeout(function(){
 		explosion(engine);
@@ -163,7 +161,7 @@ Example.sprites = function() {
 			return Bodies.polygon(x, y, 6, 12, {
 				frictionAir: 0.02,
 				friction: 0.01,
-				restitution: 0.1,
+				restitution: 0,
 				render: {
 					fillStyle: ["#FFFFFF", "#4285F4", "#EA4335", "#FBBC05", "#34A853"][Math.round(Math.random() * 4)]
 				}
@@ -241,7 +239,7 @@ Example.sprites = function() {
 		//爪子出现
 		setTimeout(function(){
 			World.add(world, [ropeC, ragdoll, ragdollConstraint]);
-		}, 7500)
+		}, 8300)
 
 		console.log('ragdoll:', ragdoll)
 	});
