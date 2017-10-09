@@ -59,18 +59,20 @@ Example.sprites = function() {
 		Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)
 	]);
 
-	var stack = Composites.stack(20, 20, 15, 3, 0, 0, function(x, y) {
+	var stack = Composites.stack(20, 20, 28, 4, 0, 0, function(x, y) {
 		if (Common.random() < 0.25) {
-			return Bodies.rectangle(x, y, 36, 36, {
+			return Bodies.rectangle(x, y, 32, 20, {
+				frictionAir: 0.01,
 				render: {
 					strokeStyle: '#ff4a74',
 					sprite: {
-						texture: './img/prize.png'
+						texture: './img/double11_1.png'
 					}
 				}
 			});
 		} else if(Common.random() > 0.25 && Common.random() < 0.45){
-			return Bodies.rectangle(x, y, 36, 36, {
+			return Bodies.rectangle(x, y, 28, 36, {
+				frictionAir: 0.01,
 				render: {
 					strokeStyle: '#ffffff',
 					sprite: {
@@ -91,21 +93,21 @@ Example.sprites = function() {
 		// 	});
 		// }
 		else if(Common.random() > 0.45 && Common.random() < 0.65){
-			return Bodies.circle(x, y, 20, {
+			return Bodies.circle(x, y, 22, {
 				density: 0.0005,
-				frictionAir: 0,
+				frictionAir: 0.01,
 				restitution: 0,
 				friction: 0,
 				render: {
 					sprite: {
-						texture: './img/prize.png'
+						texture: './img/gift.png'
 					}
 				}
 			});
 		}  else if(Common.random() > 0.65 && Common.random() < 0.85){
 			return Bodies.circle(x, y, 20, {
 				density: 0.0005,
-				frictionAir: 0,
+				frictionAir: 0.01,
 				restitution: 0,
 				friction: 0,
 				render: {
@@ -117,7 +119,7 @@ Example.sprites = function() {
 		} else {
 			return Bodies.circle(x, y, 20, {
 				density: 0.0005,
-				frictionAir: 0,
+				frictionAir: 0.01,
 				restitution: 0,
 				friction: 0,
 				render: {
@@ -252,7 +254,7 @@ Example.sprites = function() {
 		//爪子出现
 		setTimeout(function(){
 			World.add(world, [ropeC, ragdoll, ragdollConstraint]);
-		}, 8300)
+		}, 8800)
 
 		console.log('ragdoll:', ragdoll)
 	});
@@ -264,8 +266,8 @@ Example.sprites = function() {
 	// });
 
 	var hasCatched = false,
-		i = 3.3,
-		j = -3.15
+		i = 3.3, j = -3.15,
+		x = 0.5, y = -0.4
 	Events.on(engine, 'beforeUpdate', function(event) {
 		//链条摇摆的调整
 		// counter += 0.03;
@@ -289,15 +291,16 @@ Example.sprites = function() {
 			Body.setAngle(ragdoll.bodies[3], -0.4);
 			Body.setAngle(ragdoll.bodies[4], -3.15);
 		}else{
-			i -= 0.01;
-			j += 0.01;
+			i -= 0.01;j += 0.01;x -= 0.01;y += 0.01
 			if(i <= 1.5) {
-				i = 1.5
-				j = -1.5
+				i = 1.5;j = -1.5;
 			}
-			Body.setAngle(ragdoll.bodies[1], -0.7);
+			if(x <= -0.7){
+				x = -0.7; y = 0.7;
+			}
+			Body.setAngle(ragdoll.bodies[1], x);
 			Body.setAngle(ragdoll.bodies[2], i);
-			Body.setAngle(ragdoll.bodies[3], 0.7);
+			Body.setAngle(ragdoll.bodies[3], y);
 			Body.setAngle(ragdoll.bodies[4], j);
 		}
 		Body.set(ragdoll.bodies[1], 'friction', 1)
@@ -331,14 +334,14 @@ Example.sprites = function() {
 		// Body.setVelocity(ragdoll.bodies[0], { x: 0, y: 10 });
 		// Body.setPosition(ragdoll.bodies[0], { x: 404, y: 403 });
 		console.log('ropeC.constraints[2]', ropeC.constraints[2]);
-		ropeC.constraints[2].length = 200
+		ropeC.constraints[2].length = 250
 		//抓娃娃状态
 		setTimeout(function(){
 			hasCatched = true
 		}, 3000)
 		setTimeout(function(){
 			ropeC.constraints[2].length = 10
-		}, 10000)
+		}, 8500)
 	});
 
 	// keep the mouse in sync with rendering
