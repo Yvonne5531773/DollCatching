@@ -52,7 +52,6 @@ Example.sprites = function() {
 
 	world.bodies = [];
 
-	// these static walls will not be rendered in this sprites example, see options
 	World.add(world, [
 		// Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options),
 		Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options),
@@ -60,18 +59,18 @@ Example.sprites = function() {
 		Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)
 	]);
 
-	var stack = Composites.stack(20, 20, 15, 4, 0, 0, function(x, y) {
+	var stack = Composites.stack(20, 20, 15, 3, 0, 0, function(x, y) {
 		if (Common.random() < 0.25) {
-			return Bodies.rectangle(x, y, 64, 64, {
+			return Bodies.rectangle(x, y, 36, 36, {
 				render: {
 					strokeStyle: '#ff4a74',
 					sprite: {
-						texture: './img/hamburger.png'
+						texture: './img/prize.png'
 					}
 				}
 			});
 		} else if(Common.random() > 0.25 && Common.random() < 0.45){
-			return Bodies.rectangle(x, y, 38, 38, {
+			return Bodies.rectangle(x, y, 36, 36, {
 				render: {
 					strokeStyle: '#ffffff',
 					sprite: {
@@ -79,18 +78,32 @@ Example.sprites = function() {
 					}
 				}
 			});
-		}else if(Common.random() > 0.45 && Common.random() < 0.65){
-			//三角形, 第三个参数代表边数
-			return Bodies.polygon(x, y, Math.round(3), Common.random(20, 50), {
+		}
+		// else if(Common.random() > 0.45 && Common.random() < 0.65){
+		// 	//三角形, 第三个参数代表边数
+		// 	return Bodies.polygon(x, y, Math.round(3), Common.random(20, 50), {
+		// 		render: {
+		// 			strokeStyle: '#ffffff',
+		// 			sprite: {
+		// 				texture: './img/sandwich.png'
+		// 			}
+		// 		}
+		// 	});
+		// }
+		else if(Common.random() > 0.45 && Common.random() < 0.65){
+			return Bodies.circle(x, y, 20, {
+				density: 0.0005,
+				frictionAir: 0,
+				restitution: 0,
+				friction: 0,
 				render: {
-					strokeStyle: '#ffffff',
 					sprite: {
-						texture: './img/sandwich.png'
+						texture: './img/prize.png'
 					}
 				}
 			});
-		} else if(Common.random() > 0.65 && Common.random() < 0.85){
-			return Bodies.circle(x, y, 30, {
+		}  else if(Common.random() > 0.65 && Common.random() < 0.85){
+			return Bodies.circle(x, y, 20, {
 				density: 0.0005,
 				frictionAir: 0,
 				restitution: 0,
@@ -102,7 +115,7 @@ Example.sprites = function() {
 				}
 			});
 		} else {
-			return Bodies.circle(x, y, 32, {
+			return Bodies.circle(x, y, 20, {
 				density: 0.0005,
 				frictionAir: 0,
 				restitution: 0,
@@ -156,7 +169,7 @@ Example.sprites = function() {
 	}, 7000)
 
 	//2代表两行, 280->横坐标，-3100->纵坐标
-	World.add(world, Composites.stack(300, -2500, 2, 68, 3, 5, function(x, y) {
+	World.add(world, Composites.stack(300, -2500, 2, 65, 3, 5, function(x, y) {
 		if (Query.point([five], { x: x, y: y }).length === 0) {
 			return Bodies.polygon(x, y, 6, 12, {
 				frictionAir: 0.02,
@@ -231,7 +244,7 @@ Example.sprites = function() {
 			bodyA: ropeC.bodies[ropeC.bodies.length-1],
 			bodyB: ragdoll.bodies[0],
 			pointA: { x: 28, y: 0 },
-			pointB: { x: 0, y: -20 }, //爪子的连接位置
+			pointB: { x: 0, y: -8 }, //爪子的连接位置
 			stiffness: 0,
 			length: 0
 		});
@@ -250,7 +263,9 @@ Example.sprites = function() {
 	// 	y: ragdoll.bodies[1].position.y
 	// });
 
-	var hasCatched = false;
+	var hasCatched = false,
+		i = 3.3,
+		j = -3.15
 	Events.on(engine, 'beforeUpdate', function(event) {
 		//链条摇摆的调整
 		// counter += 0.03;
@@ -268,41 +283,23 @@ Example.sprites = function() {
 
 		if(!ragdoll || ragdoll.length <= 0) return
 		//初始爪子状态
-		// if(!hasCatched){
-		// 	Body.setAngle(ragdoll.bodies[1], 0.5);
-		// 	Body.setAngle(ragdoll.bodies[2], 2);
-		// 	Body.setAngle(ragdoll.bodies[3], -0.5);
-		// 	Body.setAngle(ragdoll.bodies[4], -3);
-		// }
-		// if(!hasCatched){
-		// 	Body.setAngle(ragdoll.bodies[1], -1);
-		// 	Body.setAngle(ragdoll.bodies[2], 2);
-		// 	Body.setAngle(ragdoll.bodies[3], 0.8);
-		// 	Body.setAngle(ragdoll.bodies[4], -3);
-		// }
 		if(!hasCatched){
 			Body.setAngle(ragdoll.bodies[1], 0.5);
-			Body.setAngle(ragdoll.bodies[2], 3.5);
+			Body.setAngle(ragdoll.bodies[2], 3.3);
 			Body.setAngle(ragdoll.bodies[3], -0.4);
-			Body.setAngle(ragdoll.bodies[4], -3.5);
+			Body.setAngle(ragdoll.bodies[4], -3.15);
 		}else{
+			i -= 0.01;
+			j += 0.01;
+			if(i <= 1.5) {
+				i = 1.5
+				j = -1.5
+			}
 			Body.setAngle(ragdoll.bodies[1], -0.7);
-			Body.setAngle(ragdoll.bodies[2], 2);
+			Body.setAngle(ragdoll.bodies[2], i);
 			Body.setAngle(ragdoll.bodies[3], 0.7);
-			Body.setAngle(ragdoll.bodies[4], -2.2);
+			Body.setAngle(ragdoll.bodies[4], j);
 		}
-
-		// ragdoll.constraints[2].pointB.y = -38*1.1
-
-		//抓娃娃状态
-		setTimeout(function(){
-			// ragdoll.constraints[2].length = 20
-			// ragdoll.constraints[3].length = 20
-			// Body.setAngle(ragdoll.bodies[1], -0.8);
-			// Body.setAngle(ragdoll.bodies[3], 0.8);
-			hasCatched = true
-		}, 8000)
-
 		Body.set(ragdoll.bodies[1], 'friction', 1)
 		Body.set(ragdoll.bodies[3], 'friction', 1)
 		// Body.set(ragdoll.bodies[1], 'frictionAir', 1)
@@ -334,7 +331,14 @@ Example.sprites = function() {
 		// Body.setVelocity(ragdoll.bodies[0], { x: 0, y: 10 });
 		// Body.setPosition(ragdoll.bodies[0], { x: 404, y: 403 });
 		console.log('ropeC.constraints[2]', ropeC.constraints[2]);
-		// ropeC.constraints[2].length = 200
+		ropeC.constraints[2].length = 200
+		//抓娃娃状态
+		setTimeout(function(){
+			hasCatched = true
+		}, 3000)
+		setTimeout(function(){
+			ropeC.constraints[2].length = 10
+		}, 10000)
 	});
 
 	// keep the mouse in sync with rendering

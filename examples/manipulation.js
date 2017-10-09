@@ -82,20 +82,25 @@ Example.manipulation = function() {
 
 		// make bodyA move up and down
 		// body is static so must manually update velocity for friction to work
+
+		// console.log('Math.sin(engine.timing.timestamp * 0.002)', Math.sin(engine.timing.timestamp * 0.002))
 		var py = 300 + 100 * Math.sin(engine.timing.timestamp * 0.002);
 		Body.setVelocity(bodyA, { x: 0, y: py - bodyA.position.y });
 		Body.setPosition(bodyA, { x: 100, y: py });
 
 		// make compound body move up and down and rotate constantly
-		Body.setVelocity(compound, { x: 0, y: py - compound.position.y });
-		Body.setAngularVelocity(compound, 0.02);
-		Body.setPosition(compound, { x: 600, y: py });
+		// Body.setVelocity(compound, { x: 0, y: py - compound.position.y });
+		// Body.setAngularVelocity(compound, 0.02);
+		// Body.setPosition(compound, { x: 600, y: py });
 		Body.rotate(compound, 0.02);
 
 		// every 1.5 sec
 		if (counter >= 60 * 1.5) {
 			Body.setVelocity(bodyB, { x: 0, y: -5 });
+
+			Body.setVelocity(bodyC, { angle: 1});
 			Body.setAngle(bodyC, -Math.PI * 0.26);
+
 			Body.setAngularVelocity(bodyD, 0.1);
 
 			// reset counter
