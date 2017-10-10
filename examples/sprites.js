@@ -22,7 +22,8 @@ Example.sprites = function() {
 
 	// create engine
 	var engine = Engine.create(),
-		world = engine.world;
+		world = engine.world,
+		timeout = 1000
 
 	// create renderer
 	// 整个屏幕所占用的大小
@@ -32,7 +33,7 @@ Example.sprites = function() {
 		options: {
 			width: 1000,
 			height: 800,
-			background: '#0f0f13',
+			background: '#f7f8f8',
 			showAngleIndicator: false,
 			wireframes: false
 		}
@@ -47,30 +48,43 @@ Example.sprites = function() {
 	// add bodies
 	var offset = 10,
 		options = {
-			isStatic: true
+			isStatic: true,
+			render: {
+				fillStyle: '#c6c6c6'
+			}
 		};
 
 	world.bodies = [];
 
 	World.add(world, [
-		// Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options),
-		Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options),
-		Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options),
-		Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)
+		Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options), //上
+		Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options), //下
+		Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options), //右
+		Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)  //左
 	]);
 
-	var stack = Composites.stack(20, 20, 28, 4, 0, 0, function(x, y) {
-		if (Common.random() < 0.25) {
+	var stack = Composites.stack(20, 20, 28, 6, 0, 0, function(x, y) {
+		if (Common.random() < 0.2) {
 			return Bodies.rectangle(x, y, 32, 20, {
 				frictionAir: 0.01,
 				render: {
-					strokeStyle: '#ff4a74',
+					strokeStyle: '#14151f',
 					sprite: {
 						texture: './img/double11_1.png'
 					}
 				}
 			});
-		} else if(Common.random() > 0.25 && Common.random() < 0.45){
+		} else if(Common.random() > 0.2 && Common.random() < 0.3){
+			return Bodies.rectangle(x, y, 32, 30, {
+				frictionAir: 0.01,
+				render: {
+					strokeStyle: '#ffffff',
+					sprite: {
+						texture: './img/tmall.png'
+					}
+				}
+			});
+		} else if(Common.random() > 0.3 && Common.random() < 0.4){
 			return Bodies.rectangle(x, y, 28, 36, {
 				frictionAir: 0.01,
 				render: {
@@ -92,19 +106,17 @@ Example.sprites = function() {
 		// 		}
 		// 	});
 		// }
-		else if(Common.random() > 0.45 && Common.random() < 0.65){
-			return Bodies.circle(x, y, 22, {
-				density: 0.0005,
+		else if(Common.random() > 0.4 && Common.random() < 0.5){
+			return Bodies.rectangle(x, y, 30, 30, {
 				frictionAir: 0.01,
-				restitution: 0,
-				friction: 0,
 				render: {
+					strokeStyle: '#ffffff',
 					sprite: {
 						texture: './img/gift.png'
 					}
 				}
 			});
-		}  else if(Common.random() > 0.65 && Common.random() < 0.85){
+		}  else if(Common.random() > 0.5 && Common.random() < 0.6){
 			return Bodies.circle(x, y, 20, {
 				density: 0.0005,
 				frictionAir: 0.01,
@@ -116,8 +128,20 @@ Example.sprites = function() {
 					}
 				}
 			});
-		} else {
-			return Bodies.circle(x, y, 20, {
+		} else if(Common.random() > 0.6 && Common.random() < 0.8){
+			return Bodies.circle(x, y, 16, {
+				density: 0.0005,
+				frictionAir: 0.01,
+				restitution: 0,
+				friction: 0,
+				render: {
+					sprite: {
+						texture: './img/duck.png'
+					}
+				}
+			});
+		}else {
+			return Bodies.circle(x, y, 22, {
 				density: 0.0005,
 				frictionAir: 0.01,
 				restitution: 0,
@@ -146,43 +170,78 @@ Example.sprites = function() {
 	};
 
 	//池
-	// World.add(world, stack);
-	var five;
-	var vertexs = [];
-	$(svg_data).find('path').each(function(i, path) {
-		vertexs.push(Vertices.scale(Svg.pathToVertices(path, 30), 0.8, 0.8));
-	});
-	five = Bodies.fromVertices(400, 400, vertexs, {
-		isStatic: true,
-		render: {
-			fillStyle: 'transparent',
-			strokeStyle: 'transparent',
-			lineWidth: 0
-		}
-	}, true);
-	World.add(world, five);
-	setTimeout(function(){
-		World.add(world, Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options))
-		World.remove(world, five);
-		World.add(world, stack);
-	}, 6000)
+	World.add(world, stack);
+	// var five;
+	// var vertexs = [];
+	// $(svg_data).find('path').each(function(i, path) {
+	// 	vertexs.push(Vertices.scale(Svg.pathToVertices(path, 30), 0.8, 0.8));
+	// });
+	// five = Bodies.fromVertices(400, 400, vertexs, {
+	// 	isStatic: true,
+	// 	render: {
+	// 		fillStyle: 'transparent',
+	// 		strokeStyle: 'transparent',
+	// 		lineWidth: 0
+	// 	}
+	// }, true);
+	// World.add(world, five);
+	// setTimeout(function(){
+	// 	World.add(world, Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options))
+	// 	World.remove(world, five);
+	// 	World.add(world, stack);
+	// }, timeout*6)
 	setTimeout(function(){
 		explosion(engine);
-	}, 7000)
+	}, timeout*1.5)
 
-	//2代表两行, 280->横坐标，-3100->纵坐标
-	World.add(world, Composites.stack(300, -2500, 2, 65, 3, 5, function(x, y) {
-		if (Query.point([five], { x: x, y: y }).length === 0) {
-			return Bodies.polygon(x, y, 6, 12, {
-				frictionAir: 0.02,
-				friction: 0.01,
-				restitution: 0,
-				render: {
-					fillStyle: ["#FFFFFF", "#4285F4", "#EA4335", "#FBBC05", "#34A853"][Math.round(Math.random() * 4)]
-				}
-			});
-		}
-	}));
+	//svg加入元素；2代表两行, 280->横坐标，-3100->纵坐标
+	// World.add(world, Composites.stack(300, -2500, 3, 58, 3, 5, function(x, y) {
+	// 	if (Query.point([five], { x: x, y: y }).length === 0) {
+	// 		// return Bodies.polygon(x, y, 6, 12, {
+	// 		// 	frictionAir: 0.02,
+	// 		// 	friction: 0.01,
+	// 		// 	restitution: 0,
+	// 		// 	render: {
+	// 		// 		fillStyle: ["#FFFFFF", "#4285F4", "#EA4335", "#FBBC05", "#34A853"][Math.round(Math.random() * 4)]
+	// 		// 	}
+	// 		// });
+	// 		if (Common.random() < 0.3) {
+	// 			return Bodies.circle(x, y, 10, {
+	// 				density: 0.0005,
+	// 				frictionAir: 0.01,
+	// 				restitution: 0,
+	// 				friction: 0,
+	// 				render: {
+	// 					sprite: {
+	// 						texture: './img/tmall.png'
+	// 					}
+	// 				}
+	// 			});
+	// 		}else if(Common.random() > 0.3 && Common.random() < 0.6){
+	// 			return Bodies.rectangle(x, y, 18, 26, {
+	// 				frictionAir: 0.01,
+	// 				render: {
+	// 					strokeStyle: '#ffffff',
+	// 					sprite: {
+	// 						texture: './img/red2.png'
+	// 					}
+	// 				}
+	// 			})
+	// 		}else{
+	// 			return Bodies.circle(x, y, 10, {
+	// 				density: 0.0005,
+	// 				frictionAir: 0.01,
+	// 				restitution: 0,
+	// 				friction: 0,
+	// 				render: {
+	// 					sprite: {
+	// 						texture: './img/taobao2.png'
+	// 					}
+	// 				}
+	// 			});
+	// 		}
+	// 	}
+	// }));
 
 	//弹簧
 	var changeVal = 400;
@@ -198,7 +257,7 @@ Example.sprites = function() {
 
 	var arm = Bodies.rectangle(400, 100, 40, 25, {
 		render: {
-			strokeStyle: '#ffffff',
+			strokeStyle: '#3c3f41',
 			sprite: {
 				texture: './img/arm.png'
 			}
@@ -224,8 +283,9 @@ Example.sprites = function() {
 		length: 10,
 		render: {
 			visible: true,
+			strokeStyle: '#14151f',
 			sprite: {
-				// texture: './img/liebao.png'
+				texture: './img/liebao.png'
 			}
 		}
 	}));
@@ -246,7 +306,7 @@ Example.sprites = function() {
 			bodyA: ropeC.bodies[ropeC.bodies.length-1],
 			bodyB: ragdoll.bodies[0],
 			pointA: { x: 28, y: 0 },
-			pointB: { x: 0, y: -8 }, //爪子的连接位置
+			pointB: { x: 0, y: -10 }, //爪子的连接位置
 			stiffness: 0,
 			length: 0
 		});
@@ -254,36 +314,30 @@ Example.sprites = function() {
 		//爪子出现
 		setTimeout(function(){
 			World.add(world, [ropeC, ragdoll, ragdollConstraint]);
-		}, 8800)
+		}, timeout*3)
 
 		console.log('ragdoll:', ragdoll)
 	});
-
-	//夹角, 0.5->90°，1->180°
-	// Body.rotate(ragdoll.bodies[1], -Math.PI * 0.5, {
-	// 	x: ragdoll.bodies[1].position.x - 100,
-	// 	y: ragdoll.bodies[1].position.y
-	// });
 
 	var hasCatched = false,
 		i = 3.3, j = -3.15,
 		x = 0.5, y = -0.4
 	Events.on(engine, 'beforeUpdate', function(event) {
+		if(!ragdoll || ragdoll.length <= 0) return
+
 		//链条摇摆的调整
-		// counter += 0.03;
-		// if (counter < 0) {
-		// 	return;
-		// }
-		// var px = 400 + 100 * Math.sin(counter);
-		// // body is static so must manually update velocity for friction to work
-		// // console.log('counter:', counter)
-		// // console.log('px:', px)
-		// // console.log('px - ropeC.bodies[0].position.x:', px - ropeC.bodies[0].position.x)
+		counter += 0.03;
+		if (counter < 0) {
+			return;
+		}
+		var px = 400 + 100 * Math.sin(counter);
 		// Body.setVelocity(ropeC.bodies[0], { x: px - ropeC.bodies[0].position.x, y: 0 }); //速度
 		// Body.setPosition(ropeC.bodies[0], { x: px, y: ropeC.bodies[0].position.y });
-		// console.log('setAngle:', ragdoll.bodies[0].angle)
 
-		if(!ragdoll || ragdoll.length <= 0) return
+		// var py = 400 + 100 * Math.sin(engine.timing.timestamp * 0.002);
+		// // Body.setVelocity(ropeC.bodies[0], { x: 0, y: py - ropeC.bodies[0].position.y });
+		// Body.setPosition(ropeC.bodies[0], { x: 0, y: py });
+
 		//初始爪子状态
 		if(!hasCatched){
 			Body.setAngle(ragdoll.bodies[1], 0.5);
@@ -291,13 +345,14 @@ Example.sprites = function() {
 			Body.setAngle(ragdoll.bodies[3], -0.4);
 			Body.setAngle(ragdoll.bodies[4], -3.15);
 		}else{
-			i -= 0.01;j += 0.01;x -= 0.01;y += 0.01
+			i -= 0.01;j += 0.01;x -= 0.005;y += 0.005
 			if(i <= 1.5) {
 				i = 1.5;j = -1.5;
 			}
-			if(x <= -0.7){
-				x = -0.7; y = 0.7;
+			if(x <= -0.9){
+				x = -0.9; y = 0.9;
 			}
+			// x = 0.5; y = -0.4
 			Body.setAngle(ragdoll.bodies[1], x);
 			Body.setAngle(ragdoll.bodies[2], i);
 			Body.setAngle(ragdoll.bodies[3], y);
@@ -305,8 +360,6 @@ Example.sprites = function() {
 		}
 		Body.set(ragdoll.bodies[1], 'friction', 1)
 		Body.set(ragdoll.bodies[3], 'friction', 1)
-		// Body.set(ragdoll.bodies[1], 'frictionAir', 1)
-		// ropeC.constraints[2].length = 160
 	});
 
 	// add mouse control
@@ -338,10 +391,10 @@ Example.sprites = function() {
 		//抓娃娃状态
 		setTimeout(function(){
 			hasCatched = true
-		}, 3000)
+		}, timeout*3)
 		setTimeout(function(){
 			ropeC.constraints[2].length = 10
-		}, 8500)
+		}, timeout*8)
 	});
 
 	// keep the mouse in sync with rendering
@@ -387,9 +440,9 @@ Example.sprites.ragdoll = function(x, y, scale, options, vertexSets) {
 			radius: [20 * scale, 20 * scale, 26 * scale, 26 * scale]
 		},
 		render: {
-			fillStyle: '#E0A423',
+			fillStyle: '#d81e06',
 			sprite: {
-				// texture: './img/liebao.png'
+				texture: './img/chest.png'
 			}
 		}
 	}, options);
@@ -403,14 +456,14 @@ Example.sprites.ragdoll = function(x, y, scale, options, vertexSets) {
 			radius: 10 * scale
 		},
 		render: {
-			fillStyle: '#FFBC42'
+			fillStyle: '#feb742'
 		}
 	}, options);
 
 	var leftLowerArmOptions = Common.extend({}, leftArmOptions, {
 		label: 'left-lower-arm',
 		render: {
-			fillStyle: '#E59B12'
+			fillStyle: '#fed259'
 		}
 	});
 
@@ -423,22 +476,22 @@ Example.sprites.ragdoll = function(x, y, scale, options, vertexSets) {
 			radius: 10 * scale
 		},
 		render: {
-			fillStyle: '#FFBC42'
+			fillStyle: '#feb742'
 		}
 	}, options);
 
 	var rightLowerArmOptions = Common.extend({}, rightArmOptions, {
 		label: 'right-lower-arm',
 		render: {
-			fillStyle: '#E59B12'
+			fillStyle: '#fed259'
 		}
 	});
 
-	var chest = Bodies.rectangle(x, y, 55 * scale, 30 * scale, chestOptions);
-	var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 20 * scale, 40 * scale, rightArmOptions);
-	var rightLowerArm = Bodies.rectangle(x + 39 * scale, y + 25 * scale, 20 * scale, 60 * scale, rightLowerArmOptions);
-	var leftUpperArm = Bodies.rectangle(x - 39 * scale, y - 15 * scale, 20 * scale, 40 * scale, leftArmOptions);
-	var leftLowerArm = Bodies.rectangle(x - 39 * scale, y + 25 * scale, 20 * scale, 60 * scale, leftLowerArmOptions);
+	var chest = Bodies.rectangle(x, y, 60 * scale, 30 * scale, chestOptions);
+	var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 20 * scale, 54 * scale, rightArmOptions);
+	var rightLowerArm = Bodies.rectangle(x + 39 * scale, y + 25 * scale, 18 * scale, 78 * scale, rightLowerArmOptions);
+	var leftUpperArm = Bodies.rectangle(x - 39 * scale, y - 15 * scale, 20 * scale, 54 * scale, leftArmOptions);
+	var leftLowerArm = Bodies.rectangle(x - 39 * scale, y + 25 * scale, 18 * scale, 78 * scale, leftLowerArmOptions);
 	// var leftLowerArm = Bodies.fromVertices(x - 39 * scale, y + 25 * scale, vertexSets, {
 	// 	render: {
 	// 		fillStyle: '#556270',
@@ -459,8 +512,8 @@ Example.sprites.ragdoll = function(x, y, scale, options, vertexSets) {
 			y: -38 * scale
 		},
 		bodyB: rightUpperArm,
-		stiffness: 0.6,
-		angularStiffness: 0.3,
+		stiffness: 1,
+		angularStiffness: 0.1,
 		length: 0,
 		render: {
 			visible: false //弹簧是否显示
@@ -480,8 +533,8 @@ Example.sprites.ragdoll = function(x, y, scale, options, vertexSets) {
 			y: -38 * scale
 		},
 		bodyB: leftUpperArm,
-		stiffness: 0.6,
-		angularStiffness: 0.3,
+		stiffness: 1,
+		angularStiffness: 0.1,
 		length: 0,
 		render: {
 			visible: false
@@ -494,14 +547,14 @@ Example.sprites.ragdoll = function(x, y, scale, options, vertexSets) {
 		bodyB: rightLowerArm,
 		pointA: {
 			x: 0,
-			y: 15 * scale
+			y: 20 * scale
 		},
 		pointB: {
 			x: 0,
 			y: -25 * scale
 		},
-		stiffness: 0.6,
-		angularStiffness: 1.6,  //节点的角硬度
+		stiffness: 1,
+		angularStiffness: 1.5,  //节点的角硬度
 		render: {
 			visible: false
 		}
@@ -513,14 +566,14 @@ Example.sprites.ragdoll = function(x, y, scale, options, vertexSets) {
 		bodyB: leftLowerArm,
 		pointA: {
 			x: 0,
-			y: 15 * scale
+			y: 20 * scale
 		},
 		pointB: {
 			x: 0,
 			y: -25 * scale
 		},
-		stiffness: 0.6,
-		angularStiffness: 1.6,
+		stiffness: 1,
+		angularStiffness: 1.5,
 		render: {
 			visible: false
 		}
