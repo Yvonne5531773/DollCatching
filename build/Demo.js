@@ -6,7 +6,8 @@
  * @class Demo
  */
 (function() {
-	var sourceLinkRoot = 'https://github.com/liabru/matter-js/blob/master/examples';
+	// var sourceLinkRoot = '//10.20.209.140:8000/build/';
+	var sourceLinkRoot = '//localhost:8000/build/';
 	var oHead = document.getElementsByTagName('HEAD').item(0);
 	var dScript= document.createElement("script"),
 		pScript= document.createElement("script"),
@@ -26,15 +27,15 @@
 	miScript.type = "text/javascript";
 	mdScript.type = "text/javascript";
 	mainScript.type = "text/javascript";
-	dScript.src="//10.20.209.140:8000/build/decomp.js";
-	pScript.src="//10.20.209.140:8000/build/pathseg.js";
-	mScript.src="//10.20.209.140:8000/build/matter-dev.js";
+	dScript.src = sourceLinkRoot + 'decomp.js'
+	pScript.src=sourceLinkRoot + 'pathseg.js';
+	mScript.src=sourceLinkRoot + "matter-dev.js";
 	jScript.src="//code.jquery.com/jquery-3.1.1.js";
-	mwScript.src="//10.20.209.140:8000/build/matter-wrap.js";
-	mgScript.src = "//10.20.209.140:8000/build/matter-tools.gui.js";
-	miScript.src = "//10.20.209.140:8000/build/matter-tools.inspector.js";
-	mdScript.src = "//10.20.209.140:8000/build/matter-tools.demo.js";
-	mainScript.src = "//10.20.209.140:8000/build/main.js";
+	mwScript.src=sourceLinkRoot + "matter-wrap.js";
+	mgScript.src = sourceLinkRoot + "matter-tools.gui.js";
+	miScript.src = sourceLinkRoot + "matter-tools.inspector.js";
+	mdScript.src = sourceLinkRoot + "matter-tools.demo.js";
+	mainScript.src = sourceLinkRoot + "main.js";
 	oHead.appendChild(dScript);
 	oHead.appendChild(pScript);
 	oHead.appendChild(mScript);
@@ -80,7 +81,7 @@
 				name: 'DOLL_CATCHING',
 				id: 'main',
 				init: Example.sprites,
-				sourceLink: '//10.20.209.140:8000/build/main.js'
+				sourceLink: sourceLinkRoot + 'main.js'
 			},
 		]
 	});

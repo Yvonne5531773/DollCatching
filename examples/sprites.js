@@ -35,7 +35,8 @@ Example.sprites = function() {
 			height: 800,
 			background: '#f7f8f8',
 			showAngleIndicator: false,
-			wireframes: false
+			wireframes: false,
+
 		}
 	});
 
