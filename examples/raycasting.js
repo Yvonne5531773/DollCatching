@@ -94,8 +94,7 @@ Example.raycasting = function() {
 		// console.log('collisions.length', collisions.length)
 		for (var i = 0; i < collisions.length; i++) {
 			var collision = collisions[i];
-			// console.log('collision sleep', collision.bodyA)
-			// console.log('collision sleep isSleeping', collision.bodyA.isSleeping)
+			console.log('collision.bodyA', collision.bodyA)
 			Sleeping.set(collision.bodyA, false)
 			context.rect(collision.bodyA.position.x - 4.5, collision.bodyA.position.y - 4.5, 8, 8);
 		}

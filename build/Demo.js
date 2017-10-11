@@ -1,7 +1,7 @@
 
 // var sourceLinkRoot = '//10.20.209.140:8000/build/';
-var sourceLinkRoot = '//localhost:8000/build/';
-
+var sourceLinkRoot = '//10.20.209.140:8000/build/';
+var dcDemo
 (function() {
 	var oHead = document.getElementsByTagName('HEAD').item(0);
 	var dScript= document.createElement("script"),
@@ -12,16 +12,9 @@ var sourceLinkRoot = '//localhost:8000/build/';
 		mgScript= document.createElement("script"),
 		miScript= document.createElement("script"),
 		mdScript= document.createElement("script"),
-		mainScript= document.createElement("script");
-	dScript.type = "text/javascript";
-	pScript.type = "text/javascript";
-	mScript.type = "text/javascript";
-	jScript.type = "text/javascript";
-	mwScript.type = "text/javascript";
-	mgScript.type = "text/javascript";
-	miScript.type = "text/javascript";
-	mdScript.type = "text/javascript";
-	mainScript.type = "text/javascript";
+		mainScript= document.createElement("script"),
+		alertScript= document.createElement("script"),
+		alertCss= document.createElement("link");
 	dScript.src = sourceLinkRoot + 'decomp.js'
 	pScript.src=sourceLinkRoot + 'pathseg.js';
 	mScript.src=sourceLinkRoot + "matter-dev.js";
@@ -30,8 +23,12 @@ var sourceLinkRoot = '//localhost:8000/build/';
 	mgScript.src = sourceLinkRoot + "matter-tools.gui.js";
 	miScript.src = sourceLinkRoot + "matter-tools.inspector.js";
 	mdScript.src = sourceLinkRoot + "matter-tools.demo.js";
-	mainScript.src = sourceLinkRoot + "main.js";
-
+	mainScript.src = sourceLinkRoot + "cmdcg.js";
+	alertScript.src = sourceLinkRoot + "plugin/js/simpleAlert.js";
+	alertCss.href = sourceLinkRoot + "plugin/css/simpleAlert.css";
+	alertCss.rel = 'stylesheet';
+	alertCss.type = 'text/css';
+	oHead.appendChild(alertCss)
 	oHead.appendChild(mScript);
 	setTimeout(function(){
 		oHead.appendChild(jScript);
@@ -42,10 +39,11 @@ var sourceLinkRoot = '//localhost:8000/build/';
 		oHead.appendChild(miScript);
 		oHead.appendChild(mdScript);
 		oHead.appendChild(mainScript);
+		oHead.appendChild(alertScript);
 	}, 500)
 
 	setTimeout(function() {
-		var demo = MatterTools.Demo.create({
+		var obj = {
 			toolbar: {
 				title: '天猫双11主场',
 				url: '',
@@ -74,18 +72,19 @@ var sourceLinkRoot = '//localhost:8000/build/';
 			preventZoom: true,
 			resetOnOrientation: true,
 			routing: true,
-			startExample: 'main', //默认例子
+			startExample: 'cmdcg',
 			examples: [
 				{
 					name: 'DOLL_CATCHING',
-					id: 'main',
+					id: 'cmdcg',
 					init: DC.do,
-					sourceLink: sourceLinkRoot + 'main.js'
+					sourceLink: sourceLinkRoot + 'cmdcg.js'
 				},
 			]
-		});
-		document.body.appendChild(demo.dom.root);
+		}
+		dcDemo = MatterTools.Demo.create(obj);
+		document.body.appendChild(dcDemo.dom.root);
 
-		MatterTools.Demo.start(demo);
+		MatterTools.Demo.start(dcDemo);
 	}, 1000)
 })();

@@ -9,12 +9,14 @@ Example.sleeping = function() {
 		Events = Matter.Events,
 		MouseConstraint = Matter.MouseConstraint,
 		Mouse = Matter.Mouse,
+		Composite = Matter.Composite,
+		Query = Matter.Query,
 		World = Matter.World,
 		Bodies = Matter.Bodies;
 
 	// create engine
 	var engine = Engine.create({
-			enableSleeping: true
+			// enableSleeping: true
 		}),
 		world = engine.world;
 
@@ -88,6 +90,14 @@ Example.sleeping = function() {
 	Events.on(mouseConstraint, 'mouseup', function(event) {
 		var mousePosition = event.mouse.position;
 		console.log('mouseup at ' + mousePosition.x + ' ' + mousePosition.y);
+		var mouse = mouseConstraint.mouse,
+			bodies = Composite.allBodies(engine.world),
+			startPoint = { x: 400, y: 100 },
+			endPoint = mouse.position;
+		var collisions = Query.ray(bodies, startPoint, endPoint);
+		for (var i = 0; i < collisions.length; i++) {
+			console.log('mouseup collisions', collisions[i].bodyA)
+		}
 	});
 
 	// fit the render viewport to the scene
