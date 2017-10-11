@@ -11,7 +11,6 @@ function five() {
 		World = Matter.World,
 		Query = Matter.Query,
 		Svg = Matter.Svg,
-		Vertices = Matter.Vertices,
 		Bodies = Matter.Bodies;
 
 	// create engine
@@ -19,28 +18,16 @@ function five() {
 		world = engine.world;
 
 	// create renderer
-	// var render = Render.create({
-	// 	element: document.body,
-	// 	engine: engine,
-	// 	options: {
-	// 		wireframes: false,
-	// 		background: 'transparent',
-	// 		width: Math.min(document.documentElement.clientWidth, 800),
-	// 		height: Math.min(document.documentElement.clientHeight, 600)
-	// 	}
-	// });var render = Render.create({
 	var render = Render.create({
 		element: document.body,
 		engine: engine,
 		options: {
-			width: 1000,
-			height: 800,
-			background: '#0f0f13',
-			showAngleIndicator: false,
-			wireframes: false
+			wireframes: false,
+			background: 'transparent',
+			width: Math.min(document.documentElement.clientWidth, 800),
+			height: Math.min(document.documentElement.clientHeight, 600)
 		}
 	});
-
 
 	Render.run(render);
 
@@ -48,23 +35,12 @@ function five() {
 	var runner = Runner.create();
 	Runner.run(runner, engine);
 
-	// var offset = 10,
-	// 	options = {
-	// 		isStatic: true
-	// 	};
-	// World.add(world, [
-	// 	Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options),
-	// 	Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options),
-	// 	Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options),
-	// 	Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)
-	// ]);
-
 	// add bodies
 	var five;
 	var vertexSets = [];
 
 	$(svg_data).find('path').each(function(i, path) {
-		vertexSets.push(Vertices.scale(Svg.pathToVertices(path, 30), 1, 1));
+		vertexSets.push(Svg.pathToVertices(path, 20));
 	});
 
 	five = Bodies.fromVertices(400, 500, vertexSets, {
@@ -78,13 +54,12 @@ function five() {
 
 	World.add(world, five);
 
-	//2代表两行, 280->横坐标，-3100->纵坐标
-	World.add(world, Composites.stack(280, -3100, 2, 110, 3, 5, function(x, y) {
+	World.add(world, Composites.stack(280, -3800, 2, 110, 3, 5, function(x, y) {
 		if (Query.point([five], { x: x, y: y }).length === 0) {
 			return Bodies.polygon(x, y, 6, 12, {
 				frictionAir: .02,
 				friction: 0.01,
-				restitution: 0.1,
+				restitution: 0,
 				render: {
 					fillStyle: ["#FFFFFF", "#4285F4", "#EA4335", "#FBBC05", "#34A853"][Math.round(Math.random() * 4)]
 				}
