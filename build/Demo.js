@@ -1,7 +1,8 @@
 
 // var sourceLinkRoot = '//10.20.209.140:8000/build/';
 var sourceLinkRoot = '//10.20.209.140:8000/build/';
-var dcDemo
+var dcDemo, done = false;
+console.log('init');
 (function() {
 	var oHead = document.getElementsByTagName('HEAD').item(0);
 	var dScript= document.createElement("script"),
