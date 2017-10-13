@@ -78,22 +78,23 @@ DC.do = function() {
 		// Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options), //右
 		// Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)  //左
 	]);
-
-	$('.start-btn').click(function(){
-		console.log('start-btn click')
-		//弹簧伸长
+	var dblChoseAlert,
+		clickFun = function() {
+			//弹簧伸长
 			ropeC.constraints[2].length = 265
 			//抓娃娃状态
-			setTimeout(function(){
+			setTimeout(function () {
 				hasCatched = true
-			}, timeout*3)
-			setTimeout(function(){
+			}, timeout * 3)
+			setTimeout(function () {
 				ropeC.constraints[2].length = 10
-				setTimeout(function(){
-					var dblChoseAlert = simpleAlert({
-						"content":"游戏结束啦！",
-						"buttons":{
-							"再玩一次":function () {
+				setTimeout(function () {
+					//防止多次出现提示框
+					if($('.simpleAlert').length > 0) return;
+					dblChoseAlert = simpleAlert({
+						"content": "游戏结束啦！",
+						"buttons": {
+							"再玩一次": function () {
 								dblChoseAlert.close();
 								$('#d-c').remove();
 								var createObj = {
@@ -129,16 +130,17 @@ DC.do = function() {
 								document.body.appendChild(dcDemo.dom.root);
 								MatterTools.Demo.start(dcDemo);
 							},
-							"退出":function () {
+							"退出": function () {
 								dblChoseAlert.close();
 								World.clear(world)
 								$('#d-c').remove()
 							}
 						}
 					})
-				}, timeout*5)
-			}, timeout*8)
-		})
+				}, timeout * 5)
+			}, timeout * 8)
+		}
+	$('.start-btn').click(clickFun)
 
 	var stack = Composites.stack(-80, 0, 28, 6, 0, 0, function(x, y) {
 		if (Common.random() < 0.2) {
@@ -404,7 +406,8 @@ DC.do = function() {
 	//爪子出现
 	setTimeout(function(){
 		World.add(world, [ropeC, ragdoll, ragdollConstraint]);
-		$('.start-btn').css('background', 'url(\'//10.20.209.140:8000/build/img/start.png\') no-repeat')
+		//开始按钮出现
+		$('.start-btn').css('background', 'url(\'//10.20.209.140:8000/build/img/start.png\') no-repeat');
 	}, timeout*5)
 
 	var hasCatched = false,
