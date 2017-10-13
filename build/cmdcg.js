@@ -22,6 +22,7 @@ DC.do = function() {
 		Query = Matter.Query,
 		Sleeping = Matter.Sleeping;
 
+	var ragdollShow = false;
 	// create engine
 	var engine = Engine.create({
 			// enableSleeping: true
@@ -78,13 +79,16 @@ DC.do = function() {
 		// Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options), //右
 		// Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)  //左
 	]);
-	var dblChoseAlert,
+	var dblChoseAlert, clicked = false,
 		clickFun = function() {
+			clicked = true
+			//禁止鼠标操作
+			World.remove(world, mouseConstraint);
 			//弹簧伸长
 			ropeC.constraints[2].length = 265
 			//抓娃娃状态
 			setTimeout(function () {
-				hasCatched = true
+				catched = true
 			}, timeout * 3)
 			setTimeout(function () {
 				ropeC.constraints[2].length = 10
@@ -350,6 +354,11 @@ DC.do = function() {
 		return Bodies.rectangle(x, y, 30, 15, {
 			collisionFilter: { group: group },
 			chamfer: 0.5, //节点的四角弧度
+			// render: {
+			// 	sprite: {
+			// 		texture: sourceLinkRoot + 'img/arm.png'
+			// 	}
+			// }
 		});
 	});
 
@@ -376,15 +385,13 @@ DC.do = function() {
 		pointB: { x: -20, y: 0 },
 		pointA: { x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y },
 		// stiffness: 0.03, //弹簧, 0是线
-		stiffness: 0.015,
+		stiffness: 0.02,
 		damping: 1,
 		length: 10,
 		render: {
 			visible: true,
-			strokeStyle: '#14151f',
-			sprite: {
-				texture: sourceLinkRoot + 'img/liebao.png'
-			}
+			lineWidth: 1.5,
+			strokeStyle: '#969797', //弹簧颜色
 		}
 	}));
 
@@ -408,27 +415,24 @@ DC.do = function() {
 		World.add(world, [ropeC, ragdoll, ragdollConstraint]);
 		//开始按钮出现
 		$('.start-btn').css('background', 'url(\'//10.20.209.140:8000/build/img/start.png\') no-repeat');
+		ragdollShow = true
 	}, timeout*5)
 
-	var hasCatched = false,
+	var catched = false,
 		i = 3.3, j = -3.15,
-		x = 0.5, y = -0.4
-
+		x = 0.5, y = -0.4,
+		position_x = ropeC.bodies[0].position.x;
 	Events.on(engine, 'beforeUpdate', function(event) {
 		if(!ragdoll || ragdoll.length <= 0) return
 		//链条摇摆的调整
 		counter += 0.03;
 		if (counter < 0) return
-		var px = 400 + 100 * Math.sin(counter);
+		var px = position_x + 120 * Math.sin(counter);
 		// Body.setVelocity(ropeC.bodies[0], { x: px - ropeC.bodies[0].position.x, y: 0 }); //速度
-		// Body.setPosition(ropeC.bodies[0], { x: px, y: ropeC.bodies[0].position.y });
-
-		// var py = 400 + 100 * Math.sin(engine.timing.timestamp * 0.002);
-		// // Body.setVelocity(ropeC.bodies[0], { x: 0, y: py - ropeC.bodies[0].position.y });
-		// Body.setPosition(ropeC.bodies[0], { x: 0, y: py });
+		!clicked && Body.setPosition(ropeC.bodies[0], { x: px, y: ropeC.bodies[0].position.y });
 
 		//初始爪子状态
-		if(!hasCatched){
+		if(!catched){
 			Body.setAngle(ragdoll.bodies[1], 0.5);
 			Body.setAngle(ragdoll.bodies[2], 3.3);
 			Body.setAngle(ragdoll.bodies[3], -0.4);

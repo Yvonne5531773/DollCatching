@@ -2,26 +2,34 @@
 // var sourceLinkRoot = '//10.20.209.140:8000/build/';
 var sourceLinkRoot = '//10.20.209.140:8000/build/';
 var dcDemo, done = false,
-	loadSource = function(){
+	isInclude = function (name) {
+		var js = /js$/i.test(name);
+		var es = document.getElementsByTagName(js ? 'script' : 'link');
+		for (var i = 0; i < es.length; i++)
+			if (es[i][js ? 'src' : 'href'].indexOf(name) !== -1)return true;
+		return false;
+	},
+	loadSource = function() {
 		var oHead = document.getElementsByTagName('HEAD').item(0);
-		var dScript= document.createElement("script"),
-			pScript= document.createElement("script"),
-			mScript= document.createElement("script"),
-			jScript= document.createElement("script"),
-			mwScript= document.createElement("script"),
-			mgScript= document.createElement("script"),
-			miScript= document.createElement("script"),
-			mdScript= document.createElement("script"),
-			mainScript= document.createElement("script"),
-			alertScript= document.createElement("script"),
-			alertCss= document.createElement("link"),
-			tipScript= document.createElement("script"),
-			tipCss= document.createElement("link");
+		if(isInclude('cmdcg.js')) return
+		var dScript = document.createElement("script"),
+			pScript = document.createElement("script"),
+			mScript = document.createElement("script"),
+			jScript = document.createElement("script"),
+			mwScript = document.createElement("script"),
+			mgScript = document.createElement("script"),
+			miScript = document.createElement("script"),
+			mdScript = document.createElement("script"),
+			mainScript = document.createElement("script"),
+			alertScript = document.createElement("script"),
+			alertCss = document.createElement("link"),
+			tipScript = document.createElement("script"),
+			tipCss = document.createElement("link");
 		dScript.src = sourceLinkRoot + 'decomp.js'
-		pScript.src=sourceLinkRoot + 'pathseg.js';
-		mScript.src=sourceLinkRoot + "matter-dev.js";
-		jScript.src="//code.jquery.com/jquery-3.1.1.js";
-		mwScript.src=sourceLinkRoot + "matter-wrap.js";
+		pScript.src = sourceLinkRoot + 'pathseg.js';
+		mScript.src = sourceLinkRoot + "matter-dev.js";
+		jScript.src = "//code.jquery.com/jquery-3.1.1.js";
+		mwScript.src = sourceLinkRoot + "matter-wrap.js";
 		mgScript.src = sourceLinkRoot + "matter-tools.gui.js";
 		miScript.src = sourceLinkRoot + "matter-tools.inspector.js";
 		mdScript.src = sourceLinkRoot + "matter-tools.demo.js";
@@ -38,7 +46,7 @@ var dcDemo, done = false,
 		oHead.appendChild(tipCss)
 		oHead.appendChild(mScript);
 		oHead.appendChild(jScript);
-		setTimeout(function(){
+		setTimeout(function () {
 			oHead.appendChild(dScript);
 			oHead.appendChild(pScript);
 			oHead.appendChild(mwScript);
@@ -52,7 +60,7 @@ var dcDemo, done = false,
 	};
 
 (function() {
-	loadSource()
+	loadSource();
 	setTimeout(function() {
 		var obj = {
 			toolbar: {

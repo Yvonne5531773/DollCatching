@@ -59,7 +59,6 @@ function Box(x, y, w, h, options) {
 }
 
 
-
 //
 function calculateLinks() {
 	// 77 is the offset from the bottom and the top
@@ -75,8 +74,6 @@ function calculateLinks() {
 		return Math.ceil(links);
 	}
 }
-
-
 
 // ------------
 // Create chain
@@ -165,7 +162,7 @@ function HeatParticle(x, y) {
 HeatParticle.prototype.render = function() {
 	push();
 	noStroke();
-	fill('#f0d38d');
+	fill('#0d1dab');
 	ellipse(this.position.x, this.position.y, this.parent.particleSize);
 	pop();
 }
@@ -547,7 +544,7 @@ function draw() {
 	if (chain) {
 		push();
 		noStroke();
-		fill('black');
+		fill('#ff4a74');
 		ellipse(chain.x, chain.y, 25, 6);
 		pop();
 	}
@@ -559,7 +556,7 @@ function draw() {
 
 		if (allConstraints[i].label !== 'Mouse Constraint') {
 			push();
-			strokeWeight(2.5);
+			strokeWeight(6.5);
 
 			line(
 				allConstraints[i].bodyA.position.x + allConstraints[i].pointA.x,
@@ -575,7 +572,7 @@ function draw() {
 	if (marshmallowAttachment) {
 		push();
 		noStroke();
-		fill('black');
+		fill('#d81e06');
 		translate(marshmallowAttachment.bodyB.position.x + marshmallowAttachment.pointB.x, marshmallowAttachment.bodyB.position.y + marshmallowAttachment.pointB.y);
 		rotate(marshmallow.body.angle);
 		ellipse(0, 0, 10, 3);
@@ -658,10 +655,10 @@ function draw() {
 
 	// Marshmallow mouth
 	push();
-	stroke('#000');
+	stroke('#ff4a74');
 	strokeJoin(ROUND);
 	strokeWeight(2);
-	fill('black');
+	fill('#353fab');
 	translate(marshmallow.body.position.x, marshmallow.body.position.y);
 	rotate(marshmallow.body.angle);
 	arc(0, 12 + (thirdAnimation.percent * 5), 16, firstAnimation.percent * 14, 0, 3.14, CHORD);
@@ -677,7 +674,7 @@ function draw() {
 	if (cup) {
 		push();
 		noStroke();
-		fill('#fee096');
+		fill('#d81e06');
 		translate(cup.body.position.x, cup.body.position.y);
 		rect(0, 60, cup.w + 20, cup.h + 100);
 		pop();
@@ -758,7 +755,7 @@ function draw() {
 		// Inner eyes
 		push();
 		noStroke();
-		fill('black');
+		fill('#14151f');
 		translate(cup.body.position.x, cup.body.position.y);
 		ellipse(-76.5 + (marshmallow.body.position.x / width - 0.5) * 10, -7 + (marshmallow.body.position.y / height - 0.5) * 10,
 			9.5
