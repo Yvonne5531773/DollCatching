@@ -51,7 +51,8 @@ Example.constraints = function() {
 		pointA: { x: 280, y: 120 },
 		bodyB: body,
 		pointB: { x: -10, y: -7 },
-		stiffness: 0.001
+		stiffness: 0.001,
+		angularStiffness: 0
 	});
 
 	World.add(world, [body, constraint]);
