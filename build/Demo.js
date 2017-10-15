@@ -75,7 +75,7 @@ var dcDemo, done = false,
 			},
 			tools: {
 				inspector: false, //调试工具
-				gui: false //调试工具
+				gui: true //调试工具
 			},
 			inline: false,
 			preventZoom: true,

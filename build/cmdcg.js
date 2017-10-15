@@ -283,7 +283,7 @@ DC.do = function() {
 		var bodies = Composite.allBodies(engine.world);
 		for (var i = 0; i < bodies.length; i++) {
 			var body = bodies[i];
-			if (!body.isStatic && body.position.y >= 10) {
+			if (!body.isStatic && body.position.y >= 200) {
 				var forceMagnitude = 0.05 * body.mass;
 				Body.applyForce(body, body.position, {
 					x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
