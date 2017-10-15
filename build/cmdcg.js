@@ -93,7 +93,7 @@ DC.do = function() {
 			setTimeout(function () {
 				ropeC.constraints[2].length = 10
 				setTimeout(function () {
-					//防止多次出现提示框
+					//防止多次现提示框出
 					if($('.simpleAlert').length > 0) return;
 					dblChoseAlert = simpleAlert({
 						"content": "游戏结束啦！",
@@ -414,7 +414,7 @@ DC.do = function() {
 	setTimeout(function(){
 		World.add(world, [ropeC, ragdoll, ragdollConstraint]);
 		//开始按钮出现
-		$('.start-btn').css('background', 'url(\'//10.20.209.140:8000/build/img/start.png\') no-repeat');
+		$('.start-btn').css('background', 'url(\'//localhost:8000/build/img/start.png\') no-repeat');
 		ragdollShow = true
 	}, timeout*5)
 

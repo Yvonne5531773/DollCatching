@@ -1,6 +1,6 @@
 
 // var sourceLinkRoot = '//10.20.209.140:8000/build/';
-var sourceLinkRoot = '//10.20.209.140:8000/build/';
+var sourceLinkRoot = '//localhost:8000/build/';
 var dcDemo, done = false,
 	isInclude = function (name) {
 		var js = /js$/i.test(name);
