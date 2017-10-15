@@ -73,16 +73,6 @@ var dcDemo, done = false,
 				fullscreen: false,
 				exampleSelect: false
 			},
-			// toolbar: {
-			// 	title: 'matter-js',
-			// 	url: 'https://github.com/liabru/matter-js',
-			// 	reset: true,
-			// 	source: true,
-			// 	inspector: true,
-			// 	tools: true,
-			// 	fullscreen: true,
-			// 	exampleSelect: true
-			// },
 			tools: {
 				inspector: false, //调试工具
 				gui: false //调试工具

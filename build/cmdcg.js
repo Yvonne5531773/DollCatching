@@ -89,7 +89,7 @@ DC.do = function() {
 			//抓娃娃状态
 			setTimeout(function () {
 				catched = true
-			}, timeout * 3)
+			}, timeout * 1.5)
 			setTimeout(function () {
 				ropeC.constraints[2].length = 10
 				setTimeout(function () {
@@ -142,7 +142,7 @@ DC.do = function() {
 						}
 					})
 				}, timeout * 5)
-			}, timeout * 8)
+			}, timeout * 6)
 		}
 	$('.start-btn').click(clickFun)
 
@@ -385,7 +385,7 @@ DC.do = function() {
 		pointB: { x: -20, y: 0 },
 		pointA: { x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y },
 		// stiffness: 0.03, //弹簧, 0是线
-		stiffness: 0.02,
+		stiffness: 0.01,
 		damping: 1,
 		length: 10,
 		render: {
@@ -416,7 +416,7 @@ DC.do = function() {
 		//开始按钮出现
 		$('.start-btn').css('background', 'url(\'//10.20.209.140:8000/build/img/start.png\') no-repeat');
 		ragdollShow = true
-	}, timeout*5)
+	}, timeout*4)
 
 	var catched = false,
 		i = 3.3, j = -3.15,
@@ -427,7 +427,7 @@ DC.do = function() {
 		//链条摇摆的调整
 		counter += 0.03;
 		if (counter < 0) return
-		var px = position_x + 120 * Math.sin(counter);
+		var px = position_x + 30 * Math.sin(counter);
 		// Body.setVelocity(ropeC.bodies[0], { x: px - ropeC.bodies[0].position.x, y: 0 }); //速度
 		!clicked && Body.setPosition(ropeC.bodies[0], { x: px, y: ropeC.bodies[0].position.y });
 
@@ -438,7 +438,7 @@ DC.do = function() {
 			Body.setAngle(ragdoll.bodies[3], -0.4);
 			Body.setAngle(ragdoll.bodies[4], -3.15);
 		}else{
-			i -= 0.01;j += 0.01;x -= 0.005;y += 0.005
+			i -= 0.02;j += 0.02;x -= 0.005;y += 0.005
 			if(i <= 1.5) {
 				i = 1.5;j = -1.5;
 			}
@@ -450,8 +450,8 @@ DC.do = function() {
 			Body.setAngle(ragdoll.bodies[3], y);
 			Body.setAngle(ragdoll.bodies[4], j);
 		}
-		Body.set(ragdoll.bodies[1], 'friction', 1)
-		Body.set(ragdoll.bodies[3], 'friction', 1)
+		// Body.set(ragdoll.bodies[1], 'friction', 1)
+		// Body.set(ragdoll.bodies[3], 'friction', 1)
 	});
 
 	Events.on(render, 'afterRender', function() {
@@ -487,9 +487,9 @@ DC.do = function() {
 		mouseConstraint = MouseConstraint.create(engine, {
 			mouse: mouse,
 			constraint: {
-				stiffness: 0.2,
+				stiffness: 1,  //0-鼠标不能捕获
 				render: {
-					visible: false
+					visible: true
 				}
 			}
 		});
@@ -499,14 +499,14 @@ DC.do = function() {
 	//爪子伸下去后增加压力
 	Events.on(mouseConstraint, 'mouseup', function(event) {
 		//点击获取body id
-		var mouse = mouseConstraint.mouse,
-			bodies = Composite.allBodies(engine.world),
-			startPoint = { x: 400, y: 100 },
-			endPoint = mouse.position;
-		var collisions = Query.ray(bodies, startPoint, endPoint);
-		for (var i = 0; i < collisions.length; i++) {
-			console.log('mouseup collisions', collisions[i].bodyA)
-		}
+		// var mouse = mouseConstraint.mouse,
+		// 	bodies = Composite.allBodies(engine.world),
+		// 	startPoint = { x: 400, y: 100 },
+		// 	endPoint = mouse.position;
+		// var collisions = Query.ray(bodies, startPoint, endPoint);
+		// for (var i = 0; i < collisions.length; i++) {
+		// 	console.log('mouseup collisions', collisions[i].bodyA)
+		// }
 	});
 
 	// keep the mouse in sync with rendering
@@ -521,7 +521,6 @@ DC.do = function() {
 
 	//关闭按钮事件
 	$('.d-c-close').click(function(){
-		console.log('close click ')
 		World.clear(world)
 		$('#d-c').remove()
 	})
@@ -576,14 +575,15 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 		},
 		render: {
 			fillStyle: '#feb742'
-		}
+		},
+		stiffness: 0,
 	}, options);
 
 	var leftLowerArmOptions = Common.extend({}, leftArmOptions, {
 		label: 'left-lower-arm',
 		render: {
 			fillStyle: '#fed259'
-		}
+		},
 	});
 
 	var rightArmOptions = Common.extend({
