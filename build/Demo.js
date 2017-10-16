@@ -1,6 +1,6 @@
 
-// var sourceLinkRoot = '//10.20.209.140:8000/build/';
-var sourceLinkRoot = '//localhost:8000/build/';
+var sourceLinkRoot = '//10.20.209.140:8000/build/';
+// var sourceLinkRoot = '//localhost:8000/build/';
 var dcDemo, done = false,
 	isInclude = function (name) {
 		var js = /js$/i.test(name);
@@ -22,6 +22,7 @@ var dcDemo, done = false,
 			mdScript = document.createElement("script"),
 			mainScript = document.createElement("script"),
 			alertScript = document.createElement("script"),
+			bhScript = document.createElement("script"),
 			alertCss = document.createElement("link"),
 			tipScript = document.createElement("script"),
 			tipCss = document.createElement("link");
@@ -33,6 +34,7 @@ var dcDemo, done = false,
 		mgScript.src = sourceLinkRoot + "matter-tools.gui.js";
 		miScript.src = sourceLinkRoot + "matter-tools.inspector.js";
 		mdScript.src = sourceLinkRoot + "matter-tools.demo.js";
+		bhScript.src = sourceLinkRoot + "blackhole.js";
 		mainScript.src = sourceLinkRoot + "cmdcg.js";
 		alertScript.src = sourceLinkRoot + "plugin/js/simpleAlert.js";
 		alertCss.href = sourceLinkRoot + "plugin/css/simpleAlert.css";
@@ -56,12 +58,13 @@ var dcDemo, done = false,
 			oHead.appendChild(mainScript);
 			oHead.appendChild(alertScript);
 			oHead.appendChild(tipScript);
+			oHead.appendChild(bhScript);
 		}, 500)
 	};
 
 (function() {
 	loadSource();
-	setTimeout(function() {
+	var play = function() {
 		var obj = {
 			toolbar: {
 				title: '天猫双11主场',
@@ -93,7 +96,20 @@ var dcDemo, done = false,
 		}
 		dcDemo = MatterTools.Demo.create(obj);
 		document.body.appendChild(dcDemo.dom.root);
-
 		MatterTools.Demo.start(dcDemo);
-	}, 1000)
+	}
+	setTimeout(function(){
+		var bhObj = doblackhole();
+		var st = setTimeout(function(){
+			bhObj.dispose();
+			play();
+		}, 6000);
+		bhObj.init(function(res){
+			if(res === 1){
+				clearTimeout(st);
+				play();
+			}
+		})
+	}, 1000);
+
 })();

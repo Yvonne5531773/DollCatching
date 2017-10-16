@@ -1,4 +1,4 @@
-var test = function() {
+var doblackhole = function() {
 	(function() {
 		var O = 0;
 		var P = ["ms", "moz", "webkit", "o"];
@@ -10,6 +10,7 @@ var test = function() {
 			window.requestAnimationFrame = function(U, R) {
 				var Q = new Date().getTime();
 				var S = Math.max(0, 16 - (Q - O));
+				console.log('in requestAnimationFrame S', S)
 				var T = window.setTimeout(function() {
 					U(Q + S)
 				}, S);
@@ -19,6 +20,7 @@ var test = function() {
 		}
 		if (!window.cancelAnimationFrame) {
 			window.cancelAnimationFrame = function(Q) {
+				console.log('in cancelAnimationFrame')
 				clearTimeout(Q)
 			}
 		}
@@ -370,25 +372,24 @@ var test = function() {
 			};
 			var aa = 0;
 			this.render = function() {
+				console.log('in render')
 				++aa;
-				var aj = $(window).width();
-				var ag = $(window).height();
 				for (var ai in ad) {
 					var ak = ad[ai];
-					if (aa < ak.startStep) {
+					if (!ak.startStep || aa < ak.startStep) {
 						continue
 					}
-					if (aa == ak.startStep) {
+					if (aa === ak.startStep) {
 						ak.$e.css({
 							position: "relative",
 							zIndex: K
 						})
 					}
-					ab += 1;
+					// ab += 1; //图片变大
 					var af = ac.x - ab / 2;
 					var al = ac.y - ab / 2 - $(document).scrollTop();
 					$(".ops-blackhole").css({
-						width: ab,
+						width: ab+100,
 						height: ab,
 						left: af,
 						top: al,
@@ -403,7 +404,8 @@ var test = function() {
 							ac.particleComplete(ak)
 						}
 						Z(ai);
-						if (this.particles.length == 0) {
+						console.log('this.particles.length', this.particles.length)
+						if (this.particles.length === 0) {
 							if (ac.allComplete) {
 								ac.allComplete()
 							}
@@ -428,14 +430,14 @@ var test = function() {
 		};
 		return U
 	})();
-	var l = "//bdaladdin.duapp.com/blackhole/img/blackhole.png";
+	var l = "//act.cmcmcdn.com/upload/201710/c6e06e6fed16fc0b068b2711831ceeab.png";
 	var m = "//bdaladdin.duapp.com/blackhole/img/close.png";
 
 	function M() {
-		var N = "display: none;width:0;height:0;animation: rotates 15s linear infinite;-moz-animation: rotates 15s linear infinite; -webkit-animation: rotates 15s linear infinite;-ms-animation: rotates 15s linear infinite;-o-animation: rotates 15s linear infinite;position:fixed;z-index:0;";
-		if ($(".ops-blackhole").length == 0) {
+		var N = "display: none;width:0;height:0;animation: rotates 15s linear infinite;-moz-animation: rotates 15s linear infinite; -webkit-animation: rotates 15s linear infinite;-ms-animation: rotates 15s linear infinite;-o-animation: rotates 15s linear infinite;position:fixed;z-index:999;";
+		if ($(".ops-blackhole").length === 0) {
 			var P = '<style type="text/css">@-webkit-keyframes rotates{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(360deg)}}@-ms-keyframes rotates{from{-ms-transform:rotate(0deg)}to{-ms-transform:rotate(360deg)}}@-moz-keyframes rotates{from{-moz-transform:rotate(0deg)}to{-moz-transform:rotate(360deg)}}@-o-keyframes rotates{from{-o-transform:rotate(0deg)}to{-o-transform:rotate(360deg)}}</style>';
-			var O = "<img src=" + l + ' class="ops-blackhole" style="' + N + '"><img src=' + m + ' class="ops-close OP_LOG_BTN" data-click="{\'fm\':\'beha\'}" style="width:50px;height:50px;box-shadow:0px 0px 3px #000;position:fixed;top:100px;right:50px;z-index:305;cursor: pointer; display:none;">';
+			var O = "<img src=" + l + ' class="ops-blackhole" style="' + N + '"><img style=\'display:none\' src=' + m + ' class="ops-close OP_LOG_BTN" data-click="{\'fm\':\'beha\'}" style="width:50px;height:50px;box-shadow:0px 0px 3px #000;position:fixed;top:100px;right:50px;z-index:305;cursor: pointer; display:none;">';
 			O += P;
 			$(document.body).prepend(O)
 		} else {
@@ -443,8 +445,9 @@ var test = function() {
 			$(".ops-close").show()
 		}
 	}
-	var c = "#wrapper_wrapper";
-	var h = "#wrapper_wrapper img, #bds-wraper img";
+	var c = ".wrapper";
+	var elements = ".left_slidebar_con img, .top_warp img, .search_promotion img, .side img, .hot_box img, .detail_video img";
+	// var elements = ".left_slidebar_con img, .top_warp img, .search_promotion img, .side_main img";
 	var z = "data-blackhole-";
 	var o = ["position", "z-index", "top", "left", "width", "height", "transform", "-webkit-transform", "-moz-transform", "-ms-transform", "-o-transform"];
 
@@ -465,14 +468,13 @@ var test = function() {
 			R.removeData(O)
 		}
 	}
-	var p = 30;
-	var D = "0%";
-	var v = 400;
+	var count = 95; //吸收个数
 	var g = 0;
 	var E = 0;
 	var k;
 
-	function b(P, R) {
+	function b(P, R, cb) {
+		console.log('in b')
 		var N = P + $(document).scrollLeft();
 		var S = R + $(document).scrollTop();
 		k = new s.ParticleSystem();
@@ -482,14 +484,14 @@ var test = function() {
 				a(T.$e)
 			},
 			allComplete: function() {
-				B()
+				completed(cb)
 			},
 			x: N,
 			y: S
 		});
 		var O = 0;
-		$(h).each(function() {
-			if (g >= p) {
+		$(elements).each(function() {
+			if (g >= count) {
 				return
 			}
 			var X = $(this);
@@ -506,11 +508,12 @@ var test = function() {
 			k.emit(new s.Particle(X, new Vector2(V, U), O))
 		});
 		if (g == 0) {
-			B()
+			completed()
 		}
 		function Q() {
 			k.render()
 		}
+		console.log('before start Q')
 		s.start(Q)
 	}
 	var F = ["-ms-", "-webkit-", "-moz-", "-o-", ""];
@@ -526,28 +529,28 @@ var test = function() {
 		var O = "scale(" + P + "," + P + ")";
 		e(N, O)
 	}
-	function B() {
-		e($("#wrapper_wrapper"), "scale(0,0)");
+	function completed(cb) {
+		// e($(".wrapper"), "scale(0,0)"); //页面是否缩小
 		$("#s_tab,.nums").fadeOut();
-		J()
+		J(cb)
 	}
 	var i = 0;
 	var t = 0;
 	var G;
 
-	function r() {
+	function rafcallback() {
 		i += 0.03;
 		t += 0.03;
 		if (i > 1) {
 			i = 1;
 			t = 1
 		}
-		e($("#wrapper_wrapper"), "scale(" + i + "," + t + ")");
+		e($(".wrapper"), "scale(" + i + "," + t + ")");
 		if (i < 1) {
-			G = requestAnimationFrame(r)
+			G = requestAnimationFrame(rafcallback)
 		}
 	}
-	function J() {
+	function J(cb) {
 		$(".ops-blackhole").animate({
 			width: 0,
 			height: 0,
@@ -555,15 +558,16 @@ var test = function() {
 			left: $(window).width() / 2,
 			top: $(window).height() / 2
 		}, 1000, function() {
-			G = requestAnimationFrame(r);
-			$(h).fadeIn();
-			$("#s_tab,.nums").fadeIn();
-			$(".ops-close").fadeOut()
+			// G = requestAnimationFrame(rafcallback);
+			// $(elements).fadeIn();
+			// $("#s_tab,.nums").fadeIn();
+			// $(".ops-close").fadeOut()
+			cb(1)
 		})
 	}
-	var f = 500;
-
-	function L(N, O) {
+	//图片大小
+	var f = 200;
+	function L(N, O, cb) {
 		$(".ops-close").fadeIn();
 		$(".ops-blackhole").css({
 			width: 0,
@@ -571,12 +575,12 @@ var test = function() {
 			left: N,
 			top: O
 		}).show().animate({
-			width: f,
+			width: f+100,
 			height: f,
 			left: N - f / 2,
 			top: O - f / 2
 		}, 1000, function() {
-			b(N, O)
+			b(N, O, cb)
 		})
 	}
 	function j() {
@@ -586,14 +590,14 @@ var test = function() {
 			L(N, P)
 		})
 	}
-	function q() {
+	function q(cb) {
 		var N = $(window).width() / 2;
 		var O = $(window).height() / 2;
-		L(N, O)
+		L(N, O, cb)
 	}
 	function d() {
 		s.stop();
-		$(h).stop(true).each(function() {
+		$(elements).stop(true).each(function() {
 			var N = $(this);
 			a(N);
 			N.show()
@@ -634,30 +638,39 @@ var test = function() {
 		g = 0;
 		E = 0
 	}
-	function I() {
+	function doInit(cb) {
 		if (x.msie && x.version <= 9) {
 			return
 		}
 		y();
 		M();
 		A([l, m]).done(function(N) {
-			q()
+			q(cb)
 		});
 		$(".ops-close").bind("click", function() {
-			u()
+			dodispose()
 		})
 	}
-	function u() {
+	function dodispose() {
+		console.log('in dodispose')
 		cancelAnimationFrame(G);
 		$(".ops-blackhole").stop(true).hide();
-		$(".ops-close").hide();
+		// $(".ops-close").hide();
 		d()
 	}
 	var H = {
-		init: I,
-		dispose: u
+		init: doInit,
+		dispose: dodispose
 	};
 	return H
 }
-var obj = test()
-obj.init()
+
+var bhObj = doblackhole();
+var st = setTimeout(function(){
+	bhObj.dispose()
+}, 6000);
+bhObj.init(function(res){
+	if(res === 1){
+		clearTimeout(st)
+	}
+})
