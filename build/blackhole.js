@@ -10,7 +10,6 @@ var doblackhole = function() {
 			window.requestAnimationFrame = function(U, R) {
 				var Q = new Date().getTime();
 				var S = Math.max(0, 16 - (Q - O));
-				console.log('in requestAnimationFrame S', S)
 				var T = window.setTimeout(function() {
 					U(Q + S)
 				}, S);
@@ -20,7 +19,6 @@ var doblackhole = function() {
 		}
 		if (!window.cancelAnimationFrame) {
 			window.cancelAnimationFrame = function(Q) {
-				console.log('in cancelAnimationFrame')
 				clearTimeout(Q)
 			}
 		}
@@ -372,7 +370,6 @@ var doblackhole = function() {
 			};
 			var aa = 0;
 			this.render = function() {
-				console.log('in render')
 				++aa;
 				for (var ai in ad) {
 					var ak = ad[ai];
@@ -404,7 +401,7 @@ var doblackhole = function() {
 							ac.particleComplete(ak)
 						}
 						Z(ai);
-						console.log('this.particles.length', this.particles.length)
+						// console.log('this.particles.length', this.particles.length)
 						if (this.particles.length === 0) {
 							if (ac.allComplete) {
 								ac.allComplete()
@@ -446,7 +443,7 @@ var doblackhole = function() {
 		}
 	}
 	var c = ".wrapper";
-	var elements = ".left_slidebar_con img, .top_warp img, .search_promotion img, .side img, .hot_box img, .detail_video img";
+	var elements = ".left_slidebar_con img, .top_warp img, .search_promotion img,.hot_box img, .detail_video img";
 	// var elements = ".left_slidebar_con img, .top_warp img, .search_promotion img, .side_main img";
 	var z = "data-blackhole-";
 	var o = ["position", "z-index", "top", "left", "width", "height", "transform", "-webkit-transform", "-moz-transform", "-ms-transform", "-o-transform"];
@@ -468,13 +465,12 @@ var doblackhole = function() {
 			R.removeData(O)
 		}
 	}
-	var count = 95; //吸收个数
+	var count = 80; //吸收个数
 	var g = 0;
 	var E = 0;
 	var k;
 
 	function b(P, R, cb) {
-		console.log('in b')
 		var N = P + $(document).scrollLeft();
 		var S = R + $(document).scrollTop();
 		k = new s.ParticleSystem();
@@ -513,7 +509,6 @@ var doblackhole = function() {
 		function Q() {
 			k.render()
 		}
-		console.log('before start Q')
 		s.start(Q)
 	}
 	var F = ["-ms-", "-webkit-", "-moz-", "-o-", ""];
@@ -531,7 +526,6 @@ var doblackhole = function() {
 	}
 	function completed(cb) {
 		// e($(".wrapper"), "scale(0,0)"); //页面是否缩小
-		$("#s_tab,.nums").fadeOut();
 		J(cb)
 	}
 	var i = 0;
@@ -551,7 +545,10 @@ var doblackhole = function() {
 		}
 	}
 	function J(cb) {
-		$(".ops-blackhole").animate({
+		$(".ops-blackhole").css({
+			width: f,
+			height: f+100
+		}).animate({
 			width: 0,
 			height: 0,
 			padding: 0,
@@ -652,7 +649,6 @@ var doblackhole = function() {
 		})
 	}
 	function dodispose() {
-		console.log('in dodispose')
 		cancelAnimationFrame(G);
 		$(".ops-blackhole").stop(true).hide();
 		// $(".ops-close").hide();
@@ -665,12 +661,12 @@ var doblackhole = function() {
 	return H
 }
 
-var bhObj = doblackhole();
-var st = setTimeout(function(){
-	bhObj.dispose()
-}, 6000);
-bhObj.init(function(res){
-	if(res === 1){
-		clearTimeout(st)
-	}
-})
+// var bhObj = doblackhole();
+// var st = setTimeout(function(){
+// 	bhObj.dispose()
+// }, 6000);
+// bhObj.init(function(res){
+// 	if(res === 1){
+// 		clearTimeout(st)
+// 	}
+// })

@@ -1,7 +1,7 @@
 
 var sourceLinkRoot = '//10.20.209.140:8000/build/';
 // var sourceLinkRoot = '//localhost:8000/build/';
-var dcDemo, done = false,
+var dcDemo, playAgain = false,
 	isInclude = function (name) {
 		var js = /js$/i.test(name);
 		var es = document.getElementsByTagName(js ? 'script' : 'link');
@@ -78,7 +78,7 @@ var dcDemo, done = false,
 			},
 			tools: {
 				inspector: false, //调试工具
-				gui: true //调试工具
+				gui: false //调试工具
 			},
 			inline: false,
 			preventZoom: true,
@@ -103,7 +103,7 @@ var dcDemo, done = false,
 		var st = setTimeout(function(){
 			bhObj.dispose();
 			play();
-		}, 6000);
+		}, 4800);
 		bhObj.init(function(res){
 			if(res === 1){
 				clearTimeout(st);
