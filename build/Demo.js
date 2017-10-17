@@ -1,6 +1,6 @@
 
-var sourceLinkRoot = '//10.20.209.140:8000/build/';
-// var sourceLinkRoot = '//localhost:8000/build/';
+// var sourceLinkRoot = '//10.20.209.140:8000/build/';
+var sourceLinkRoot = '//localhost:8000/build/';
 var dcDemo, playAgain = false,
 	isInclude = function (name) {
 		var js = /js$/i.test(name);
@@ -47,11 +47,11 @@ var dcDemo, playAgain = false,
 		oHead.appendChild(alertCss)
 		oHead.appendChild(tipCss)
 		oHead.appendChild(mScript);
-		oHead.appendChild(jScript);
+		// oHead.appendChild(jScript);
 		setTimeout(function () {
-			oHead.appendChild(dScript);
-			oHead.appendChild(pScript);
-			oHead.appendChild(mwScript);
+			// oHead.appendChild(dScript);
+			// oHead.appendChild(pScript);
+			// oHead.appendChild(mwScript);
 			oHead.appendChild(mgScript);
 			oHead.appendChild(miScript);
 			oHead.appendChild(mdScript);
@@ -103,7 +103,7 @@ var dcDemo, playAgain = false,
 		var st = setTimeout(function(){
 			bhObj.dispose();
 			play();
-		}, 4800);
+		}, 5000);
 		bhObj.init(function(res){
 			if(res === 1){
 				clearTimeout(st);
