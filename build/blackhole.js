@@ -546,8 +546,8 @@ var doblackhole = function() {
 	}
 	function J(cb) {
 		$(".ops-blackhole").css({
-			width: f,
-			height: f+100
+			width: f+100,
+			height: f
 		}).animate({
 			width: 0,
 			height: 0,
