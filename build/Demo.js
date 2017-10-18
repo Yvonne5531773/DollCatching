@@ -78,7 +78,7 @@ var dcDemo, playAgain = false,
 			},
 			tools: {
 				inspector: false, //调试工具
-				gui: false //调试工具
+				gui: true //调试工具
 			},
 			inline: false,
 			preventZoom: true,
@@ -99,18 +99,18 @@ var dcDemo, playAgain = false,
 		MatterTools.Demo.start(dcDemo);
 	}
 	setTimeout(function(){
-		var bhObj = doblackhole();
-		var st = setTimeout(function(){
-			bhObj.dispose();
-			play();
-		}, 5000);
-		bhObj.init(function(res){
-			if(res === 1){
-				clearTimeout(st);
-				play();
-			}
-		})
-		// play();
+		// var bhObj = doblackhole();
+		// var st = setTimeout(function(){
+		// 	bhObj.dispose();
+		// 	play();
+		// }, 5000);
+		// bhObj.init(function(res){
+		// 	if(res === 1){
+		// 		clearTimeout(st);
+		// 		play();
+		// 	}
+		// })
+		play();
 	}, 1000);
 
 })();

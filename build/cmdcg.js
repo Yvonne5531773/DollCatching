@@ -34,7 +34,8 @@ DC.do = function() {
 							texture: sourceLinkRoot + 'img/double11_1.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			}
 			else if(Common.random() > 0.05 && Common.random() < 0.1){
@@ -46,7 +47,8 @@ DC.do = function() {
 							texture: '//act.cmcmcdn.com/upload/201710/f8e6bdd1572a5e8a2e2f73d8c52b1bf6.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			} else if(Common.random() > 0.1 && Common.random() < 0.15){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 24, 32, {
@@ -57,7 +59,8 @@ DC.do = function() {
 							texture: sourceLinkRoot + 'img/red.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			} else if(Common.random() > 0.15 && Common.random() < 0.2){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 26, 26, {
@@ -68,7 +71,8 @@ DC.do = function() {
 							texture: sourceLinkRoot + 'img/gift.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			}  else if(Common.random() > 0.2 && Common.random() < 0.25){
 				return Bodies.circle(x+Common.random()*15, y+Common.random()*5, 18, {
@@ -79,7 +83,7 @@ DC.do = function() {
 							texture: sourceLinkRoot + 'img/coin.png'
 						}
 					},
-					friction: 0.5
+					friction: 0.7
 				});
 			} else if(Common.random() > 0.25 && Common.random() < 0.3){
 				return Bodies.circle(x+Common.random()*15, y+Common.random()*10, 14, {
@@ -90,7 +94,7 @@ DC.do = function() {
 							texture: sourceLinkRoot + 'img/duck.png'
 						}
 					},
-					friction: 0.5
+					friction: 0.7
 				});
 			}else if(Common.random() > 0.3 && Common.random() < 0.35){
 				return Bodies.circle(x+Common.random()*15, y+Common.random()*5, 18, {
@@ -101,7 +105,7 @@ DC.do = function() {
 							texture: '//act.cmcmcdn.com/upload/201710/bd2bd1fb94a20ca2f9eea1088925050a.png'
 						}
 					},
-					friction: 0.5
+					friction: 0.7
 				});
 			}else if(Common.random() > 0.35 && Common.random() < 0.4){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 30, 40, {
@@ -112,7 +116,8 @@ DC.do = function() {
 							texture: '//act.cmcmcdn.com/upload/201710/24af186e46de0d872942ef2709f83b71.gif'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			} else if(Common.random() > 0.4 && Common.random() < 0.45){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*45, 40, 20, {
@@ -123,7 +128,8 @@ DC.do = function() {
 							texture: '//act.cmcmcdn.com/upload/201710/2a126249ff498557a38cc920a64481c7.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			} else if(Common.random() > 0.45 && Common.random() < 0.5){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*40, 30, 25, {
@@ -134,7 +140,8 @@ DC.do = function() {
 							texture: sourceLinkRoot + 'img/10.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			} else if(Common.random() > 0.5 && Common.random() < 0.55){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*32, 40, 25, {
@@ -145,7 +152,8 @@ DC.do = function() {
 							texture: sourceLinkRoot + 'img/500.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			} else if(Common.random() > 0.55 && Common.random() < 0.6){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*44, 40, 25, {
@@ -156,7 +164,8 @@ DC.do = function() {
 							texture: sourceLinkRoot + '/img/100.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			} else if(Common.random() > 0.6 && Common.random() < 0.65){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*21, 65, 25, {
@@ -167,7 +176,8 @@ DC.do = function() {
 							texture: sourceLinkRoot + '/img/10000.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			} else if(Common.random() > 0.65 && Common.random() < 0.7){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*29, 30, 25, {
@@ -178,7 +188,8 @@ DC.do = function() {
 							texture: sourceLinkRoot + '/img/50.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			} else if(Common.random() > 0.7 && Common.random() < 0.75){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 30, 30, {
@@ -189,7 +200,8 @@ DC.do = function() {
 							texture: '//act.cmcmcdn.com/upload/201710/25cd325bae7818e30a4d4676ec0880bf.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			} else if(Common.random() > 0.75 && Common.random() < 0.8){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 30, 30, {
@@ -200,7 +212,8 @@ DC.do = function() {
 							texture: '//act.cmcmcdn.com/upload/201710/c1fede413fbd7b3de23a771472e67d29.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			}else if(Common.random() > 0.8 && Common.random() < 0.85){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 30, 30, {
@@ -211,7 +224,8 @@ DC.do = function() {
 							texture: '//act.cmcmcdn.com/upload/201710/9de67782c268517089e6d031af85405c.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			}else if(Common.random() > 0.85 && Common.random() < 0.9){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 30, 30, {
@@ -222,7 +236,8 @@ DC.do = function() {
 							texture: '//act.cmcmcdn.com/upload/201710/45991158829180f3a86597a0ef781c3a.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			}else if(Common.random() > 0.95 && Common.random() < 1){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 30, 30, {
@@ -233,19 +248,19 @@ DC.do = function() {
 							texture: '//act.cmcmcdn.com/upload/201710/328c7178f239ce35264850419510b3be.png'
 						}
 					},
-					friction: 0.5
+					chamfer: { radius: 5 },
+					friction: 0.7
 				});
 			}else {
-				return Bodies.circle(x+Common.random()*15, y+Common.random()*15, 22, {
-					density: 0.0005,
+				return Bodies.circle(x+Common.random()*15, y+Common.random()*15, 18, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.7,
+							yScale: 0.7,
 							texture: sourceLinkRoot + 'img/liebao.png'
 						}
 					},
-					friction: 0.5
+					friction: 0.7
 				});
 			}
 			// else if(Common.random() > 0.45 && Common.random() < 0.5){
@@ -324,7 +339,7 @@ DC.do = function() {
 			ragdollMove = false
 			clicked = true
 			//禁止鼠标操作
-			World.remove(world, mouseConstraint);
+			// World.remove(world, mouseConstraint);
 			//弹簧伸长
 			spring.length = 280
 			//抓娃娃状态
@@ -342,39 +357,6 @@ DC.do = function() {
 									playAgain = true;
 									$('#switch1').prop("checked", true)
 									dblChoseAlert.close();
-									// $('#d-c').remove();
-									// var createObj = {
-									// 	toolbar: {
-									// 		title: '天猫双11主场',
-									// 		url: '',
-									// 		reset: false,
-									// 		source: false,
-									// 		inspector: false,
-									// 		tools: false,
-									// 		fullscreen: false,
-									// 		exampleSelect: false
-									// 	},
-									// 	tools: {
-									// 		inspector: false,
-									// 		gui: false
-									// 	},
-									// 	inline: false,
-									// 	preventZoom: true,
-									// 	resetOnOrientation: true,
-									// 	routing: true,
-									// 	startExample: 'cmdcg',
-									// 	examples: [
-									// 		{
-									// 			name: 'DOLL_CATCHING',
-									// 			id: 'cmdcg',
-									// 			init: DC.do,
-									// 			sourceLink: sourceLinkRoot + 'cmdcg.js'
-									// 		},
-									// 	]
-									// }
-									// dcDemo = MatterTools.Demo.create(createObj);
-									// document.body.appendChild(dcDemo.dom.root);
-									// MatterTools.Demo.start(dcDemo);
 								},
 								"退出": function () {
 									dblChoseAlert.close();
@@ -384,7 +366,7 @@ DC.do = function() {
 							}
 						})
 					}, timeout * 3)
-				}, timeout * 3.5)
+				}, timeout * 3)
 			}, timeout)
 		}
 	$('.start-btn').click(clickFun)
@@ -610,8 +592,8 @@ DC.do = function() {
 				if(i <= 1.2) {
 					i = 1.2;j = -1.2;
 				}
-				if(x <= -0.85){
-					x = -0.85; y = 0.85;
+				if(x <= -0.95){
+					x = -0.95; y = 0.95;
 				}
 			}
 			Body.setAngle(ragdoll.bodies[1], x);
@@ -627,8 +609,6 @@ DC.do = function() {
 			springPx = spring_x + 250 * Math.sin(counter);
 			!clicked && (spring.pointA.x = springPx)
 		}
-		// Body.set(ragdoll.bodies[1], 'friction', 1)
-		// Body.set(ragdoll.bodies[3], 'friction', 1)
 	});
 
 	// Events.on(render, 'afterRender', function() {
@@ -732,7 +712,7 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 			group: Body.nextGroup(true)
 		},
 		chamfer: {
-			radius: [20 * scale, 20 * scale, 26 * scale, 26 * scale]
+			radius: [10 * scale, 10 * scale, 16 * scale, 16 * scale]
 		},
 		render: {
 			sprite: {
@@ -761,7 +741,7 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 		render: {
 			fillStyle: '#cfcdd2'
 		},
-		friction: 0.9
+		friction: 0.7
 	});
 
 	var rightArmOptions = Common.extend({
@@ -783,7 +763,7 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 			fillStyle: '#cfcdd2'
 		},
 		stiffness: 1,
-		friction: 0.9
+		friction: 0.7
 	});
 
 	var chest = Bodies.rectangle(x, y, 45 * scale, 30 * scale, chestOptions);
@@ -810,8 +790,8 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 			y: -32 * scale
 		},
 		bodyB: rightUpperArm,
-		stiffness: 0.8,
-		angularStiffness: 0.3,
+		// stiffness: 0.8,
+		// angularStiffness: 0.3, //跟上部分爪子的硬度有关
 		length: 0,
 		render: {
 			anchors: false,
@@ -831,8 +811,8 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 			y: -32 * scale
 		},
 		bodyB: leftUpperArm,
-		stiffness: 0.8,
-		angularStiffness: 0.3,
+		// stiffness: 0.8,
+		// angularStiffness: 0.3,
 		length: 0,
 		render: {
 			anchors: false,
