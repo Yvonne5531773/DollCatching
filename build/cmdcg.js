@@ -357,7 +357,7 @@ DC.do = function() {
 			ragdollMove = false
 			clicked = true
 			//禁止鼠标操作
-			// World.remove(world, mouseConstraint);
+			World.remove(world, mouseConstraint);
 			//弹簧伸长
 			spring.length = 280
 			//抓娃娃状态

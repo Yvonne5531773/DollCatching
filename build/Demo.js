@@ -52,8 +52,8 @@ var dcDemo, playAgain = false,
 			// oHead.appendChild(dScript);
 			// oHead.appendChild(pScript);
 			// oHead.appendChild(mwScript);
+			// oHead.appendChild(miScript);
 			oHead.appendChild(mgScript);
-			oHead.appendChild(miScript);
 			oHead.appendChild(mdScript);
 			oHead.appendChild(mainScript);
 			oHead.appendChild(alertScript);
