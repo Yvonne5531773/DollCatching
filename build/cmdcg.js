@@ -26,241 +26,261 @@ DC.do = function() {
 	DC.do.createStacks = function(){
 		return Composites.stack(-60, 0, 24, 6, 0, 0, function(x, y) {
 			if (Common.random() < 0.05) {
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 18, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 26, 16, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: sourceLinkRoot + 'img/double11_1.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			}
 			else if(Common.random() > 0.05 && Common.random() < 0.1){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*30, 26, 26, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*30, 24, 24, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: '//act.cmcmcdn.com/upload/201710/f8e6bdd1572a5e8a2e2f73d8c52b1bf6.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			} else if(Common.random() > 0.1 && Common.random() < 0.15){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 24, 32, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 22, 30, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: sourceLinkRoot + 'img/red.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			} else if(Common.random() > 0.15 && Common.random() < 0.2){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 26, 26, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 24, 24, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: sourceLinkRoot + 'img/gift.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			}  else if(Common.random() > 0.2 && Common.random() < 0.25){
-				return Bodies.circle(x+Common.random()*15, y+Common.random()*5, 18, {
+				return Bodies.circle(x+Common.random()*15, y+Common.random()*5, 16, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: sourceLinkRoot + 'img/coin.png'
 						}
 					},
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			} else if(Common.random() > 0.25 && Common.random() < 0.3){
-				return Bodies.circle(x+Common.random()*15, y+Common.random()*10, 14, {
+				return Bodies.circle(x+Common.random()*15, y+Common.random()*10, 12, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: sourceLinkRoot + 'img/duck.png'
 						}
 					},
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			}else if(Common.random() > 0.3 && Common.random() < 0.35){
-				return Bodies.circle(x+Common.random()*15, y+Common.random()*5, 18, {
+				return Bodies.circle(x+Common.random()*15, y+Common.random()*5, 16, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: '//act.cmcmcdn.com/upload/201710/bd2bd1fb94a20ca2f9eea1088925050a.png'
 						}
 					},
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			}else if(Common.random() > 0.35 && Common.random() < 0.4){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 30, 40, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 38, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: '//act.cmcmcdn.com/upload/201710/24af186e46de0d872942ef2709f83b71.gif'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			} else if(Common.random() > 0.4 && Common.random() < 0.45){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*45, 40, 20, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*45, 38, 18, {
 					render: {
 						sprite: {
-							xScale: 0.5,
-							yScale: 0.5,
+							xScale: 0.5-scale,
+							yScale: 0.5-scale,
 							texture: '//act.cmcmcdn.com/upload/201710/2a126249ff498557a38cc920a64481c7.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			} else if(Common.random() > 0.45 && Common.random() < 0.5){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*40, 30, 25, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*40, 28, 23, {
 					render: {
 						sprite: {
-							xScale: 0.7,
-							yScale: 0.7,
+							xScale: 0.7-scale,
+							yScale: 0.7-scale,
 							texture: sourceLinkRoot + 'img/10.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			} else if(Common.random() > 0.5 && Common.random() < 0.55){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*32, 40, 25, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*32, 38, 23, {
 					render: {
 						sprite: {
-							xScale: 0.7,
-							yScale: 0.7,
+							xScale: 0.7-scale,
+							yScale: 0.7-scale,
 							texture: sourceLinkRoot + 'img/500.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			} else if(Common.random() > 0.55 && Common.random() < 0.6){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*44, 40, 25, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*44, 38, 23, {
 					render: {
 						sprite: {
-							xScale: 0.7,
-							yScale: 0.7,
+							xScale: 0.7-scale,
+							yScale: 0.7-scale,
 							texture: sourceLinkRoot + '/img/100.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			} else if(Common.random() > 0.6 && Common.random() < 0.65){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*21, 65, 25, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*21, 63, 23, {
 					render: {
 						sprite: {
-							xScale: 0.7,
-							yScale: 0.7,
+							xScale: 0.7-scale,
+							yScale: 0.7-scale,
 							texture: sourceLinkRoot + '/img/10000.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			} else if(Common.random() > 0.65 && Common.random() < 0.7){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*29, 30, 25, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*29, 28, 23, {
 					render: {
 						sprite: {
-							xScale: 0.7,
-							yScale: 0.7,
+							xScale: 0.7-scale,
+							yScale: 0.7-scale,
 							texture: sourceLinkRoot + '/img/50.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			} else if(Common.random() > 0.7 && Common.random() < 0.75){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 30, 30, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 28, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: '//act.cmcmcdn.com/upload/201710/25cd325bae7818e30a4d4676ec0880bf.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			} else if(Common.random() > 0.75 && Common.random() < 0.8){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 30, 30, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 28, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: '//act.cmcmcdn.com/upload/201710/c1fede413fbd7b3de23a771472e67d29.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			}else if(Common.random() > 0.8 && Common.random() < 0.85){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 30, 30, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 28, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: '//act.cmcmcdn.com/upload/201710/9de67782c268517089e6d031af85405c.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			}else if(Common.random() > 0.85 && Common.random() < 0.9){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 30, 30, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 28, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: '//act.cmcmcdn.com/upload/201710/45991158829180f3a86597a0ef781c3a.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			}else if(Common.random() > 0.95 && Common.random() < 1){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 30, 30, {
+				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 28, {
 					render: {
 						sprite: {
-							xScale: 0.8,
-							yScale: 0.8,
+							xScale: 0.8-scale,
+							yScale: 0.8-scale,
 							texture: '//act.cmcmcdn.com/upload/201710/328c7178f239ce35264850419510b3be.png'
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			}else {
-				return Bodies.circle(x+Common.random()*15, y+Common.random()*15, 18, {
+				return Bodies.circle(x+Common.random()*15, y+Common.random()*15, 16, {
 					render: {
 						sprite: {
-							xScale: 0.7,
-							yScale: 0.7,
+							xScale: 0.7-scale,
+							yScale: 0.7-scale,
 							texture: sourceLinkRoot + 'img/liebao.png'
 						}
 					},
-					friction: 0.7
+					friction: 0.7,
+					timeScale: timeScaleVal
 				});
 			}
 			// else if(Common.random() > 0.45 && Common.random() < 0.5){
@@ -276,7 +296,7 @@ DC.do = function() {
 		});
 	}
 
-	var ragdollShow = false, ragdollMove = false;
+	var ragdollShow = false, ragdollMove = false, scale = 0.1, timeScaleVal = 0.8;
 	// create engine
 	var engine = Engine.create({
 			// enableSleeping: true
@@ -292,8 +312,6 @@ DC.do = function() {
 		options: {
 			width: document.documentElement.clientWidth,
 			height: document.documentElement.clientHeight,
-			// width: Math.max(document.documentElement.clientWidth, 1000),
-			// height: Math.max(document.documentElement.clientHeight, 800),
 			background: 'transparent',
 			showAngleIndicator: false,
 			wireframes: false
@@ -417,7 +435,7 @@ DC.do = function() {
 		for (var i = 0; i < bodies.length; i++) {
 			var body = bodies[i];
 			if (!body.isStatic && body.position.y >= 100) {
-				var forceMagnitude = 0.04* body.mass;
+				var forceMagnitude = 0.05* body.mass;
 				Body.applyForce(body, body.position, {
 					x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
 					y: -forceMagnitude + Common.random() * -forceMagnitude
@@ -427,7 +445,7 @@ DC.do = function() {
 	};
 	setTimeout(function(){
 		explosion(engine);
-	}, timeout* 1.2)
+	}, timeout* 1.5)
 
 	//svg加入元素；2代表两行, 280->横坐标，-3100->纵坐标
 	// World.add(world, Composites.stack(300, -2500, 3, 58, 3, 5, function(x, y) {
@@ -556,7 +574,7 @@ DC.do = function() {
 		$('.start-btn').css('display', 'block');
 		ragdollShow = true
 		setTimeout(function(){
-			ragdollMove = true
+			ragdollMove = true;
 		}, timeout)
 	}, timeout*5)
 
@@ -607,7 +625,7 @@ DC.do = function() {
 			counter += 0.012
 			if (counter < 0) return
 			springPx = spring_x + 250 * Math.sin(counter);
-			// !clicked && (spring.pointA.x = springPx)
+			!clicked && (spring.pointA.x = springPx)
 		}
 	});
 
