@@ -607,7 +607,7 @@ DC.do = function() {
 			counter += 0.012
 			if (counter < 0) return
 			springPx = spring_x + 250 * Math.sin(counter);
-			!clicked && (spring.pointA.x = springPx)
+			// !clicked && (spring.pointA.x = springPx)
 		}
 	});
 
@@ -734,12 +734,16 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 		render: {
 			fillStyle: '#bdbabb'
 		},
+		stiffness: 0.8,
 	}, options);
 
 	var leftLowerArmOptions = Common.extend({}, leftArmOptions, {
 		label: 'left-lower-arm',
 		render: {
 			fillStyle: '#cfcdd2'
+		},
+		chamfer: {
+			radius: 6 * scale
 		},
 		friction: 0.7
 	});
@@ -754,7 +758,8 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 		},
 		render: {
 			fillStyle: '#bdbabb'
-		}
+		},
+		stiffness: 0.8,
 	}, options);
 
 	var rightLowerArmOptions = Common.extend({}, rightArmOptions, {
@@ -762,15 +767,17 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 		render: {
 			fillStyle: '#cfcdd2'
 		},
-		stiffness: 1,
+		chamfer: {
+			radius: 6 * scale
+		},
 		friction: 0.7
 	});
 
 	var chest = Bodies.rectangle(x, y, 45 * scale, 30 * scale, chestOptions);
-	var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 18 * scale, 54 * scale, rightArmOptions);
-	var rightLowerArm = Bodies.rectangle(x + 39 * scale, y + 25 * scale, 16 * scale, 78 * scale, rightLowerArmOptions);
-	var leftUpperArm = Bodies.rectangle(x - 39 * scale, y - 15 * scale, 18 * scale, 54 * scale, leftArmOptions);
-	var leftLowerArm = Bodies.rectangle(x - 39 * scale, y + 25 * scale, 16 * scale, 78 * scale, leftLowerArmOptions);
+	var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 17 * scale, 54 * scale, rightArmOptions);
+	var rightLowerArm = Bodies.rectangle(x + 39 * scale, y + 25 * scale, 14 * scale, 86 * scale, rightLowerArmOptions);
+	var leftUpperArm = Bodies.rectangle(x - 39 * scale, y - 15 * scale, 17 * scale, 54 * scale, leftArmOptions);
+	var leftLowerArm = Bodies.rectangle(x - 39 * scale, y + 25 * scale, 14 * scale, 86 * scale, leftLowerArmOptions);
 	// var leftLowerArm = Bodies.fromVertices(x - 39 * scale, y + 25 * scale, vertexSets, {
 	// 	render: {
 	// 		fillStyle: '#556270',
@@ -790,8 +797,8 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 			y: -32 * scale
 		},
 		bodyB: rightUpperArm,
-		// stiffness: 0.8,
-		// angularStiffness: 0.3, //跟上部分爪子的硬度有关
+		stiffness: 0.8,
+		angularStiffness: 0.2, //跟上部分爪子的硬度有关
 		length: 0,
 		render: {
 			anchors: false,
@@ -811,8 +818,8 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 			y: -32 * scale
 		},
 		bodyB: leftUpperArm,
-		// stiffness: 0.8,
-		// angularStiffness: 0.3,
+		stiffness: 0.8,
+		angularStiffness: 0.2,
 		length: 0,
 		render: {
 			anchors: false,
@@ -830,7 +837,7 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 		},
 		pointB: {
 			x: 0,
-			y: -32 * scale
+			y: -36 * scale
 		},
 		stiffness: 0.6,
 		angularStiffness: 1.2,  //节点的角硬度
@@ -851,7 +858,7 @@ DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
 		},
 		pointB: {
 			x: 0,
-			y: -32 * scale
+			y: -36 * scale
 		},
 		stiffness: 0.6,
 		angularStiffness: 1.2,
