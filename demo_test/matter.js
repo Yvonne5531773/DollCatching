@@ -5215,7 +5215,7 @@ var Body = _dereq_('../body/Body');
      *
      * @property render
      * @type render
-     * @deprecated see Demo.js for an example of creating a renderer
+     * @deprecated see cmdci.js for an example of creating a renderer
      * @default a Matter.Render instance
      */
 
