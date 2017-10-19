@@ -54,7 +54,9 @@
   "scripts": {
     "test": "gulp build:dev && gulp lint"
   },
-  "dependencies": {},
+  "dependencies": {
+    "babel-polyfill": "^6.26.0"
+  },
   "files": [
     "src",
     "build",

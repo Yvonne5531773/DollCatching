@@ -1,6 +1,7 @@
 
-var sourceLinkRoot = '//10.20.240.179:8000/NJS_PRS/output/';
-// var sourceLinkRoot = '//localhost:8000/build/';
+// var sourceLinkRoot = '//10.20.240.179:8000/NJS_PRS/output/';
+var sourceLinkRoot = '//10.20.240.179:8000/NJS_PRS/src/';
+
 var dcDemo, playAgain = false,
 	isInclude = function (name) {
 		var js = /js$/i.test(name);
@@ -12,6 +13,7 @@ var dcDemo, playAgain = false,
 	loadSource = function() {
 		if(isInclude('cmdcg.js')) return
 		var oHead = document.getElementsByTagName('HEAD').item(0),
+			pfScript = document.createElement("script"),
 			mScript = document.createElement("script"),
 			mgScript = document.createElement("script"),
 			mdScript = document.createElement("script"),
@@ -22,6 +24,7 @@ var dcDemo, playAgain = false,
 			tipScript = document.createElement("script"),
 			tipCss = document.createElement("link");
 
+		pfScript.src = sourceLinkRoot + "js/polyfill.js";
 		mScript.src = sourceLinkRoot + "js/matter-dev.js";
 		mgScript.src = sourceLinkRoot + "js/matter-tools.gui.js";
 		mdScript.src = sourceLinkRoot + "js/matter-tools.demo.js";
@@ -38,6 +41,7 @@ var dcDemo, playAgain = false,
 
 		oHead.appendChild(alertCss);
 		oHead.appendChild(tipCss);
+		oHead.appendChild(pfScript);
 		oHead.appendChild(mScript);
 		setTimeout(function () {
 			oHead.appendChild(mgScript);

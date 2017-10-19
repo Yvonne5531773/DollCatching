@@ -99,18 +99,18 @@ var dcDemo, playAgain = false,
 		MatterTools.Demo.start(dcDemo);
 	}
 	setTimeout(function(){
-		var bhObj = doblackhole();
-		var st = setTimeout(function(){
-			bhObj.dispose();
-			play();
-		}, 5500);
-		bhObj.init(function(res){
-			if(res === 1){
-				clearTimeout(st);
-				play();
-			}
-		})
-		// play();
+		// var bhObj = doblackhole();
+		// var st = setTimeout(function(){
+		// 	bhObj.dispose();
+		// 	play();
+		// }, 5500);
+		// bhObj.init(function(res){
+		// 	if(res === 1){
+		// 		clearTimeout(st);
+		// 		play();
+		// 	}
+		// })
+		play();
 	}, 1000);
 
 })();

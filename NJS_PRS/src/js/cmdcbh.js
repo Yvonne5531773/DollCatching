@@ -439,7 +439,7 @@ var doblackhole = function() {
 			$(document.body).prepend(O)
 		} else {
 			$(".ops-blackhole").attr("style", N);
-			$(".ops-close").show()
+			// $(".ops-close").show()
 		}
 	}
 	var c = ".wrapper";
@@ -565,7 +565,7 @@ var doblackhole = function() {
 	//图片大小
 	var f = 200;
 	function L(N, O, cb) {
-		$(".ops-close").fadeIn();
+		// $(".ops-close").fadeIn();
 		$(".ops-blackhole").css({
 			width: 0,
 			height: 0,
