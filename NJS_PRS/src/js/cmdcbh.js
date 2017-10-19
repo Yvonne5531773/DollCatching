@@ -373,7 +373,7 @@ var doblackhole = function() {
 				++aa;
 				for (var ai in ad) {
 					var ak = ad[ai];
-					if (!ak.startStep || aa < ak.startStep) {
+					if (!ak || !ak.startStep || aa < ak.startStep) {
 						continue
 					}
 					if (aa === ak.startStep) {
@@ -443,8 +443,7 @@ var doblackhole = function() {
 		}
 	}
 	var c = ".wrapper";
-	var elements = ".left_slidebar_con img, .top_warp img, .search_promotion img,.hot_box img, .detail_video img";
-	// var elements = ".left_slidebar_con img, .top_warp img, .search_promotion img, .side_main img";
+	var elements = ".left_slidebar_con img, .top_warp img, .search_promotion img,.hot_box img, .s11_store_box img, .side_top_banner img, .fav-title-box img, .top_ad_tmall img";
 	var z = "data-blackhole-";
 	var o = ["position", "z-index", "top", "left", "width", "height", "transform", "-webkit-transform", "-moz-transform", "-ms-transform", "-o-transform"];
 
@@ -465,7 +464,7 @@ var doblackhole = function() {
 			R.removeData(O)
 		}
 	}
-	var count = 80; //吸收个数
+	var count = 200; //吸收个数
 	var g = 0;
 	var E = 0;
 	var k;
@@ -664,7 +663,7 @@ var doblackhole = function() {
 // var bhObj = doblackhole();
 // var st = setTimeout(function(){
 // 	bhObj.dispose()
-// }, 6000);
+// }, 1000* 6);
 // bhObj.init(function(res){
 // 	if(res === 1){
 // 		clearTimeout(st)

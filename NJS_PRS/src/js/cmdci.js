@@ -2,7 +2,7 @@
 // var sourceLinkRoot = '//10.20.240.179:8000/NJS_PRS/output/';
 var sourceLinkRoot = '//10.20.240.179:8000/NJS_PRS/src/';
 
-var dcDemo, playAgain = false,
+var dcDemo, playAgain = false, bhObj = {}, timeout = 1000,
 	isInclude = function (name) {
 		var js = /js$/i.test(name);
 		var es = document.getElementsByTagName(js ? 'script' : 'link');
@@ -54,6 +54,10 @@ var dcDemo, playAgain = false,
 	};
 
 (function() {
+	//设置屏幕宽度的最小支持
+	console.log('document.documentElement.clientWidth', document.documentElement.clientWidth)
+	if(document.documentElement.clientWidth < 1263) return
+
 	loadSource();
 	var play = function() {
 		var obj = {
@@ -90,18 +94,21 @@ var dcDemo, playAgain = false,
 		MatterTools.Demo.start(dcDemo);
 	}
 	setTimeout(function(){
-		var bhObj = doblackhole();
-		var st = setTimeout(function(){
-			bhObj.dispose();
+		bhObj = doblackhole();
+		// var st = setTimeout(function(){
+		// 	bhObj.dispose();
+		// 	play();
+		// }, timeout* 6);
+		// bhObj.init(function(res){
+		// 	if(res === 1){
+		// 		clearTimeout(st);
+		// 		play();
+		// 	}
+		// })
+		bhObj.init()
+		setTimeout(function(){
 			play();
-		}, 5500);
-		bhObj.init(function(res){
-			if(res === 1){
-				clearTimeout(st);
-				play();
-			}
-		})
-		// play();
-	}, 1000);
+		}, timeout)
+	}, timeout);
 
 })();

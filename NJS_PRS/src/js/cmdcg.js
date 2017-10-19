@@ -23,8 +23,9 @@ DC.do = function() {
 		Sleeping = Matter.Sleeping;
 
 	//构造物品
-	DC.do.createStacks = function(){
-		return Composites.stack(-60, 0, 24, 6, 0, 0, function(x, y) {
+	DC.do.createStacks = function(criteria){
+		// return Composites.stack(-60, 0, 24, 6, 0, 0, function(x, y) {
+		return Composites.stack(criteria.x, criteria.y, criteria.columns, criteria.rows, 0, 0, function(x, y) {
 			if (Common.random() < 0.05) {
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 26, 16, {
 					render: {
@@ -301,8 +302,7 @@ DC.do = function() {
 	var engine = Engine.create({
 			// enableSleeping: true
 		}),
-		world = engine.world,
-		timeout = 1000
+		world = engine.world;
 
 	// create renderer
 	// 整个屏幕所占用的大小
@@ -327,26 +327,28 @@ DC.do = function() {
 	// add bodies
 	var options = {
 		isStatic: true,
+		background: 'transparent',
 		render: {
-			fillStyle: '#c6c6c6'
+			fillStyle: '#f84851'
 		}
 	};
 
 	world.bodies = [];
 
-	//设置运行范围
+	//设置运行范围 围墙
 	$('#d-c').css('min-width', document.documentElement.clientWidth)
 	var width = document.documentElement.clientWidth,
 		height = document.documentElement.clientHeight,
-		offset = width* 0.2;
-	var range = Bodies.rectangle(0, height*0.62, width*3, 0.01, options);
-	// range = Bodies.rectangle(0, height-offset, width+offset, 48, options);
+		offset = 150, thick = 0.01;
+
+	var bottomWall = Bodies.rectangle(0, height* 0.62, width* 3, thick, options),
+		upperWall = Bodies.rectangle(0, 0, width* 2.5, thick, options),
+		leftWall = Bodies.rectangle(-offset, height* 0.315, thick, height* 0.62, options), //3-厚度 4-高度
+		rightWall = Bodies.rectangle(width*0.62, height* 0.315, thick, height* 0.62, options); //3-厚度 4-高度
 	World.add(world, [
-		range,
-		// Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options), //上
-		// Bodies.rectangle(0, 600 + offset, 800.5 + 2 * offset, 50.5, options), //下
-		// Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options), //右
-		// Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)  //左
+		bottomWall,
+		leftWall,
+		rightWall
 	]);
 	var dblChoseAlert, clicked = false,
 		clickFun = function() {
@@ -380,6 +382,7 @@ DC.do = function() {
 									dblChoseAlert.close();
 									World.clear(world)
 									$('#d-c').remove()
+									bhObj.dispose()
 								}
 							}
 						})
@@ -389,7 +392,40 @@ DC.do = function() {
 		}
 	$('.start-btn').click(clickFun)
 
-	var stack = DC.do.createStacks();
+	//物品池
+	var cnt = 0,
+		criteria = {
+			x: 180,
+			y: 350,
+			columns: 12,
+			rows: 1,
+		}
+	setInterval(function(){
+		cnt++
+		if(cnt > 3) return
+		var stack = DC.do.createStacks(criteria);
+		World.add(world, stack);
+		criteria.x *= 0.5
+		criteria.columns += 6
+		criteria.rows += 1
+	}, timeout* 0.8)
+
+	setTimeout(function(){
+		//物品散开
+		explosion(engine);
+		//爪子出现
+		setTimeout(function(){
+			World.add(world, [ropeC, ragdoll, ragdollConstraint, upperWall]);
+			//开始按钮出现
+			$('.start-btn').css('display', 'block');
+			ragdollShow = true
+			setTimeout(function(){
+				ragdollMove = true;
+			}, timeout)
+		}, timeout* 3)
+	}, timeout* 3)
+
+
 	//开始按钮位置
 	// var bodyStart = Bodies.circle(width*0.4, height*0.1, 25, {
 	// 	density: 0.0005,
@@ -407,8 +443,6 @@ DC.do = function() {
 	// 	World.add(world, bodyStart);
 	// }, timeout* 4)
 
-	//物品池
-	World.add(world, stack);
 	// var five;
 	// var vertexs = [];
 	// $(svg_data).find('path').each(function(i, path) {
@@ -443,9 +477,6 @@ DC.do = function() {
 			}
 		}
 	};
-	setTimeout(function(){
-		explosion(engine);
-	}, timeout* 1.5)
 
 	//svg加入元素；2代表两行, 280->横坐标，-3100->纵坐标
 	// World.add(world, Composites.stack(300, -2500, 3, 58, 3, 5, function(x, y) {
@@ -567,17 +598,6 @@ DC.do = function() {
 		}
 	});
 
-	//爪子出现
-	setTimeout(function(){
-		World.add(world, [ropeC, ragdoll, ragdollConstraint]);
-		//开始按钮出现
-		$('.start-btn').css('display', 'block');
-		ragdollShow = true
-		setTimeout(function(){
-			ragdollMove = true;
-		}, timeout)
-	}, timeout*5)
-
 	var catched = false,
 		x = 0.5, y = -0.5,
 		i = 3.5, j = -3.5,
@@ -622,7 +642,8 @@ DC.do = function() {
 
 		//弹簧滑动
 		if(ragdollMove){
-			counter += 0.012
+			//控制速度
+			counter += 0.015
 			if (counter < 0) return
 			springPx = spring_x + 250 * Math.sin(counter);
 			!clicked && (spring.pointA.x = springPx)
@@ -698,6 +719,7 @@ DC.do = function() {
 	$('.d-c-close').click(function(){
 		World.clear(world)
 		$('#d-c').remove()
+		bhObj.dispose();
 	})
 
 	// context for MatterTools.Demo
