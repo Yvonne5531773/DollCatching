@@ -338,13 +338,12 @@ DC.do = function() {
 	//设置运行范围 围墙
 	$('#d-c').css('min-width', document.documentElement.clientWidth)
 	var width = document.documentElement.clientWidth,
-		height = document.documentElement.clientHeight,
-		offset = 150, thick = 0.01;
+		offset = 40, thick = 0.01;
 
-	var bottomWall = Bodies.rectangle(0, height* 0.62, width* 3, thick, options),
-		upperWall = Bodies.rectangle(0, 0, width* 2.5, thick, options),
-		leftWall = Bodies.rectangle(-offset, height* 0.315, thick, height* 0.62, options), //3-厚度 4-高度
-		rightWall = Bodies.rectangle(width*0.62, height* 0.315, thick, height* 0.62, options); //3-厚度 4-高度
+	var bottomWall = Bodies.rectangle(0, 600, width* 3, thick, options),
+		upperWall = Bodies.rectangle(0, 0, width* 3, thick, options),
+		leftWall = Bodies.rectangle(-width* 0.13+offset, 300, thick, 620, options), //3-厚度 4-高度
+		rightWall = Bodies.rectangle(width* 0.6+offset, 300, thick, 620, options); //3-厚度 4-高度
 	World.add(world, [
 		bottomWall,
 		leftWall,
@@ -359,7 +358,7 @@ DC.do = function() {
 			ragdollMove = false
 			clicked = true
 			//禁止鼠标操作
-			World.remove(world, mouseConstraint);
+			// World.remove(world, mouseConstraint);
 			//弹簧伸长
 			spring.length = 280
 			//抓娃娃状态
@@ -464,16 +463,24 @@ DC.do = function() {
 	// }, timeout*6)
 
 	//物品散开
-	var explosion = function(engine) {
-		var bodies = Composite.allBodies(engine.world);
-		for (var i = 0; i < bodies.length; i++) {
-			var body = bodies[i];
-			if (!body.isStatic && body.position.y >= 100) {
-				var forceMagnitude = 0.05* body.mass;
-				Body.applyForce(body, body.position, {
-					x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
-					y: -forceMagnitude + Common.random() * -forceMagnitude
-				});
+	var explosion = function(engine, b) {
+		if(b){
+			var fm = 0.0025* b.mass;
+			Body.applyForce(b, b.position, {
+				x: (fm + Common.random() * fm) * Common.choose([1, -1]),
+				y: -fm + Common.random() * -fm
+			});
+		}else{
+			var bodies = Composite.allBodies(engine.world);
+			for (var i = 0; i < bodies.length; i++) {
+				var body = bodies[i];
+				if (!body.isStatic && body.position.y >= 100) {
+					var forceMagnitude = 0.05* body.mass;
+					Body.applyForce(body, body.position, {
+						x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
+						y: -forceMagnitude + Common.random() * -forceMagnitude
+					});
+				}
 			}
 		}
 	};
@@ -534,6 +541,7 @@ DC.do = function() {
 	//链的个数，属性
 	var ropeC = Composites.stack(changeVal, 0, 2, 1, 0, 10, function(x, y) {
 		return Bodies.rectangle(x, y, 30, 15, {
+			label: 'component',
 			collisionFilter: { group: group },
 			chamfer: 0.5, //节点的四角弧度
 			render: {
@@ -547,6 +555,7 @@ DC.do = function() {
 	});
 
 	var arm = Bodies.rectangle(400, 100, 40, 25, {
+		label: 'arm',
 		render: {
 			strokeStyle: '#3c3f41',
 			sprite: {
@@ -623,7 +632,7 @@ DC.do = function() {
 					ragdollMove = true;
 					playAgain = false;
 					clicked = false;
-					World.add(world, mouseConstraint);
+					// World.add(world, mouseConstraint);
 				}
 			}else{
 				i -= 0.02;j += 0.02;x -= 0.01;y += 0.01
@@ -650,33 +659,38 @@ DC.do = function() {
 		}
 	});
 
-	// Events.on(render, 'afterRender', function() {
-	// 	var mouse = mouseConstraint.mouse,
-	// 		context = render.context,
-	// 		bodies = Composite.allBodies(engine.world),
-	// 		startPoint = { x: 400, y: 100 },
-	// 		endPoint = mouse.position;
-	// 	var collisions = Query.ray(bodies, startPoint, endPoint);
-	// 	Render.startViewTransform(render);
-	// 	context.beginPath();
-	// 	context.moveTo(startPoint.x, startPoint.y);
-	// 	context.lineTo(endPoint.x, endPoint.y);
-	// 	if (collisions.length > 0) {
-	// 		context.strokeStyle = '#fff';
-	// 	} else {
-	// 		context.strokeStyle = '#555';
-	// 	}
-	// 	context.lineWidth = 0.5;
-	// 	// context.stroke();
-	// 	for (var i = 0; i < collisions.length; i++) {
-	// 		var collision = collisions[i];
-	// 		// Sleeping.set(collision.bodyA, false)
-	// 		context.rect(collision.bodyA.position.x - 4.5, collision.bodyA.position.y - 4.5, 8, 8);
-	// 	}
-	// 	// context.fillStyle = 'rgba(255,165,0,0.7)';
-	// 	// context.fill();
-	// 	Render.endViewTransform(render);
-	// });
+	Events.on(render, 'afterRender', function() {
+		if(!ragdollShow) return
+		var mouse = mouseConstraint.mouse,
+			context = render.context,
+			bodies = Composite.allBodies(engine.world),
+			startPoint = { x: 400, y: 100 },
+			endPoint = mouse.position;
+		var collisions = Query.ray(bodies, startPoint, endPoint);
+		Render.startViewTransform(render);
+		context.beginPath();
+		context.moveTo(startPoint.x, startPoint.y);
+		context.lineTo(endPoint.x, endPoint.y);
+		if (collisions.length > 0) {
+			context.strokeStyle = '#fff';
+		} else {
+			context.strokeStyle = '#555';
+		}
+		//线
+		// context.lineWidth = 1.5;
+		// context.stroke();
+		for (var i = 0; i < collisions.length; i++) {
+			var collision = collisions[i];
+			// Sleeping.set(collision.bodyA, false)
+			//过滤超过一定高度的物品
+			//过滤爪子
+			collision && !~['chest', 'left-arm', 'right-arm', 'right-lower-arm', 'left-lower-arm', 'component', 'arm', 'spring'].indexOf(collision.body.label) && (collision.body.position.y >= 450 && explosion(engine, collision.bodyA))
+			// context.rect(collision.bodyA.position.x - 4.5, collision.bodyA.position.y - 4.5, 8, 8);
+		}
+		// context.fillStyle = 'rgba(255,165,0,0.7)';
+		// context.fill();
+		Render.endViewTransform(render);
+	});
 
 	// add mouse control
 	var mouse = Mouse.create(render.canvas),
@@ -690,7 +704,7 @@ DC.do = function() {
 			}
 		});
 
-	World.add(world, mouseConstraint);
+	// World.add(world, mouseConstraint);
 
 	//爪子伸下去后增加压力
 	Events.on(mouseConstraint, 'mouseup', function(event) {

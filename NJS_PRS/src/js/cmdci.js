@@ -55,7 +55,6 @@ var dcDemo, playAgain = false, bhObj = {}, timeout = 1000,
 
 (function() {
 	//设置屏幕宽度的最小支持
-	console.log('document.documentElement.clientWidth', document.documentElement.clientWidth)
 	if(document.documentElement.clientWidth < 1263) return
 
 	loadSource();
@@ -94,7 +93,7 @@ var dcDemo, playAgain = false, bhObj = {}, timeout = 1000,
 		MatterTools.Demo.start(dcDemo);
 	}
 	setTimeout(function(){
-		bhObj = doblackhole();
+		// bhObj = doblackhole();
 		// var st = setTimeout(function(){
 		// 	bhObj.dispose();
 		// 	play();
@@ -105,10 +104,11 @@ var dcDemo, playAgain = false, bhObj = {}, timeout = 1000,
 		// 		play();
 		// 	}
 		// })
-		bhObj.init()
-		setTimeout(function(){
-			play();
-		}, timeout)
+		play();
+		// bhObj.init()
+		// setTimeout(function(){
+		// 	play();
+		// }, timeout)
 	}, timeout);
 
 })();
