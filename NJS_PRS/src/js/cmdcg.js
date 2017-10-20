@@ -22,6 +22,177 @@ DC.do = function() {
 		Query = Matter.Query,
 		Sleeping = Matter.Sleeping;
 
+	//爪子构造
+	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
+	DC.do.createRagdoll = function(x, y, scale, options, vertexSets) {
+		scale = typeof scale === 'undefined' ? 1 : scale;
+		var chestOptions = Common.extend({
+			label: 'chest',
+			collisionFilter: {
+				group: Body.nextGroup(true)
+			},
+			chamfer: {
+				radius: [10 * scale, 10 * scale, 16 * scale, 16 * scale]
+			},
+			render: {
+				sprite: {
+					xScale: 0.7,
+					yScale: 0.7,
+					texture: sourceLinkRoot + 'img/chest.png'
+				}
+			}
+		}, options);
+		var leftArmOptions = Common.extend({
+			label: 'left-arm',
+			collisionFilter: {
+				group: Body.nextGroup(true)
+			},
+			chamfer: {
+				radius: 10 * scale
+			},
+			render: {
+				fillStyle: '#bdbabb'
+			},
+			stiffness: 0.8,
+		}, options);
+		var leftLowerArmOptions = Common.extend({}, leftArmOptions, {
+			label: 'left-lower-arm',
+			render: {
+				fillStyle: '#cfcdd2'
+			},
+			chamfer: {
+				radius: 6 * scale
+			},
+			friction: 0.7
+		});
+		var rightArmOptions = Common.extend({
+			label: 'right-arm',
+			collisionFilter: {
+				group: Body.nextGroup(true)
+			},
+			chamfer: {
+				radius: 10 * scale
+			},
+			render: {
+				fillStyle: '#bdbabb'
+			},
+			stiffness: 0.8,
+		}, options);
+		var rightLowerArmOptions = Common.extend({}, rightArmOptions, {
+			label: 'right-lower-arm',
+			render: {
+				fillStyle: '#cfcdd2'
+			},
+			chamfer: {
+				radius: 6 * scale
+			},
+			friction: 0.7
+		});
+		var chest = Bodies.rectangle(x, y, 45 * scale, 30 * scale, chestOptions);
+		var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 17 * scale, 54 * scale, rightArmOptions);
+		var rightLowerArm = Bodies.rectangle(x + 39 * scale, y + 25 * scale, 14 * scale, 86 * scale, rightLowerArmOptions);
+		var leftUpperArm = Bodies.rectangle(x - 39 * scale, y - 15 * scale, 17 * scale, 54 * scale, leftArmOptions);
+		var leftLowerArm = Bodies.rectangle(x - 39 * scale, y + 25 * scale, 14 * scale, 86 * scale, leftLowerArmOptions);
+		// var leftLowerArm = Bodies.fromVertices(x - 39 * scale, y + 25 * scale, vertexSets, {
+		// 	render: {
+		// 		fillStyle: '#556270',
+		// 		strokeStyle: '#556270',
+		// 		lineWidth: 1
+		// 	}
+		// }, true)
+		var chestToRightUpperArm = Constraint.create({
+			label: 'CHEST_TO_RIGHT_UPPER',
+			bodyA: chest,
+			pointA: {
+				x: 24 * scale,
+				y: 0  //与手的位置
+			},
+			pointB: {
+				x: 0,
+				y: -32 * scale
+			},
+			bodyB: rightUpperArm,
+			stiffness: 0.8,
+			angularStiffness: 0.2, //跟上部分爪子的硬度有关
+			length: 0,
+			render: {
+				anchors: false,
+				visible: false //弹簧是否显示
+			}
+		});
+		var chestToLeftUpperArm = Constraint.create({
+			label: 'CHEST_TO_LEFT_UPPER',
+			bodyA: chest,
+			pointA: {
+				x: -24 * scale,
+				y: 0
+			},
+			pointB: {
+				x: 0,
+				y: -32 * scale
+			},
+			bodyB: leftUpperArm,
+			stiffness: 0.8,
+			angularStiffness: 0.2,
+			length: 0,
+			render: {
+				anchors: false,
+				visible: false
+			}
+		});
+		var upperToLowerRightArm = Constraint.create({
+			label: 'UPPER_TO_LOWER_RIGHT',
+			bodyA: rightUpperArm,
+			bodyB: rightLowerArm,
+			pointA: {
+				x: 0,
+				y: 20 * scale
+			},
+			pointB: {
+				x: 0,
+				y: -36 * scale
+			},
+			stiffness: 0.6,
+			angularStiffness: 1.2,  //节点的角硬度
+			render: {
+				visible: true,
+				anchors: false //锚点
+			},
+			length: 0
+		});
+		var upperToLowerLeftArm = Constraint.create({
+			label: 'UPPER_TO_LOWER_LEFT',
+			bodyA: leftUpperArm,
+			bodyB: leftLowerArm,
+			pointA: {
+				x: 0,
+				y: 20 * scale
+			},
+			pointB: {
+				x: 0,
+				y: -36 * scale
+			},
+			stiffness: 0.6,
+			angularStiffness: 1.2,
+			render: {
+				visible: true,
+				anchors: false
+			},
+			length: 0
+		});
+
+		return Composite.create({
+			bodies: [
+				chest, leftLowerArm, leftUpperArm,
+				rightLowerArm, rightUpperArm,
+			],
+			constraints: [
+				upperToLowerLeftArm, upperToLowerRightArm, chestToLeftUpperArm,
+				chestToRightUpperArm,
+			]
+		});
+	};
+
 	//构造物品
 	DC.do.createStacks = function(criteria){
 		// return Composites.stack(-60, 0, 24, 6, 0, 0, function(x, y) {
@@ -597,7 +768,7 @@ DC.do = function() {
 		color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58']);
 
 	//连接, 第三个参数是爪子的大小比例, (400,100)-初始位置
-	ragdoll = DC.do.ragdoll(400, 100, 1.1, {}, vertexSets);
+	ragdoll = DC.do.createRagdoll(400, 100, 1.1, {}, vertexSets);
 	var ragdollConstraint = Constraint.create({
 		bodyA: ropeC.bodies[ropeC.bodies.length-1],
 		bodyB: ragdoll.bodies[0],
@@ -694,7 +865,6 @@ DC.do = function() {
 		Render.endViewTransform(render);
 	});
 
-	// add mouse control
 	var mouse = Mouse.create(render.canvas),
 		mouseConstraint = MouseConstraint.create(engine, {
 			mouse: mouse,
@@ -726,7 +896,6 @@ DC.do = function() {
 
 	render.mouse = mouse;
 
-	// fit the render viewport to the scene
 	// 可控制空间所占用的大小
 	Render.lookAt(render, {
 		min: { x: 0, y: 0 },
@@ -740,7 +909,9 @@ DC.do = function() {
 		bhObj.dispose();
 	})
 
-	// context for MatterTools.Demo
+	//更改鼠标样式
+	$('#d-c').css({cursor:"url('https://www.duba.com/static/v2/images/point.cur'),auto"})
+
 	return {
 		engine: engine,
 		runner: runner,
@@ -751,190 +922,4 @@ DC.do = function() {
 			Matter.Runner.stop(runner);
 		}
 	};
-};
-
-//爪子构造
-//捉住有两个因素，1.改变节点角度，2.改变摩擦力
-DC.do.ragdoll = function(x, y, scale, options, vertexSets) {
-	scale = typeof scale === 'undefined' ? 1 : scale;
-
-	var Body = Matter.Body,
-		Bodies = Matter.Bodies,
-		Constraint = Matter.Constraint,
-		Composite = Matter.Composite,
-		Common = Matter.Common;
-
-	var chestOptions = Common.extend({
-		label: 'chest',
-		collisionFilter: {
-			group: Body.nextGroup(true)
-		},
-		chamfer: {
-			radius: [10 * scale, 10 * scale, 16 * scale, 16 * scale]
-		},
-		render: {
-			sprite: {
-				xScale: 0.7,
-				yScale: 0.7,
-				texture: sourceLinkRoot + 'img/chest.png'
-			}
-		}
-	}, options);
-
-	var leftArmOptions = Common.extend({
-		label: 'left-arm',
-		collisionFilter: {
-			group: Body.nextGroup(true)
-		},
-		chamfer: {
-			radius: 10 * scale
-		},
-		render: {
-			fillStyle: '#bdbabb'
-		},
-		stiffness: 0.8,
-	}, options);
-
-	var leftLowerArmOptions = Common.extend({}, leftArmOptions, {
-		label: 'left-lower-arm',
-		render: {
-			fillStyle: '#cfcdd2'
-		},
-		chamfer: {
-			radius: 6 * scale
-		},
-		friction: 0.7
-	});
-
-	var rightArmOptions = Common.extend({
-		label: 'right-arm',
-		collisionFilter: {
-			group: Body.nextGroup(true)
-		},
-		chamfer: {
-			radius: 10 * scale
-		},
-		render: {
-			fillStyle: '#bdbabb'
-		},
-		stiffness: 0.8,
-	}, options);
-
-	var rightLowerArmOptions = Common.extend({}, rightArmOptions, {
-		label: 'right-lower-arm',
-		render: {
-			fillStyle: '#cfcdd2'
-		},
-		chamfer: {
-			radius: 6 * scale
-		},
-		friction: 0.7
-	});
-
-	var chest = Bodies.rectangle(x, y, 45 * scale, 30 * scale, chestOptions);
-	var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 17 * scale, 54 * scale, rightArmOptions);
-	var rightLowerArm = Bodies.rectangle(x + 39 * scale, y + 25 * scale, 14 * scale, 86 * scale, rightLowerArmOptions);
-	var leftUpperArm = Bodies.rectangle(x - 39 * scale, y - 15 * scale, 17 * scale, 54 * scale, leftArmOptions);
-	var leftLowerArm = Bodies.rectangle(x - 39 * scale, y + 25 * scale, 14 * scale, 86 * scale, leftLowerArmOptions);
-	// var leftLowerArm = Bodies.fromVertices(x - 39 * scale, y + 25 * scale, vertexSets, {
-	// 	render: {
-	// 		fillStyle: '#556270',
-	// 		strokeStyle: '#556270',
-	// 		lineWidth: 1
-	// 	}
-	// }, true)
-	var chestToRightUpperArm = Constraint.create({
-		label: 'CHEST_TO_RIGHT_UPPER',
-		bodyA: chest,
-		pointA: {
-			x: 24 * scale,
-			y: 0  //与手的位置
-		},
-		pointB: {
-			x: 0,
-			y: -32 * scale
-		},
-		bodyB: rightUpperArm,
-		stiffness: 0.8,
-		angularStiffness: 0.2, //跟上部分爪子的硬度有关
-		length: 0,
-		render: {
-			anchors: false,
-			visible: false //弹簧是否显示
-		}
-	});
-
-	var chestToLeftUpperArm = Constraint.create({
-		label: 'CHEST_TO_LEFT_UPPER',
-		bodyA: chest,
-		pointA: {
-			x: -24 * scale,
-			y: 0
-		},
-		pointB: {
-			x: 0,
-			y: -32 * scale
-		},
-		bodyB: leftUpperArm,
-		stiffness: 0.8,
-		angularStiffness: 0.2,
-		length: 0,
-		render: {
-			anchors: false,
-			visible: false
-		}
-	});
-
-	var upperToLowerRightArm = Constraint.create({
-		label: 'UPPER_TO_LOWER_RIGHT',
-		bodyA: rightUpperArm,
-		bodyB: rightLowerArm,
-		pointA: {
-			x: 0,
-			y: 20 * scale
-		},
-		pointB: {
-			x: 0,
-			y: -36 * scale
-		},
-		stiffness: 0.6,
-		angularStiffness: 1.2,  //节点的角硬度
-		render: {
-			visible: true,
-			anchors: false //锚点
-		},
-    length: 0
-	});
-
-	var upperToLowerLeftArm = Constraint.create({
-		label: 'UPPER_TO_LOWER_LEFT',
-		bodyA: leftUpperArm,
-		bodyB: leftLowerArm,
-		pointA: {
-			x: 0,
-			y: 20 * scale
-		},
-		pointB: {
-			x: 0,
-			y: -36 * scale
-		},
-		stiffness: 0.6,
-		angularStiffness: 1.2,
-		render: {
-			visible: true,
-			anchors: false
-		},
-		length: 0
-	});
-
-	return Composite.create({
-		bodies: [
-			chest, leftLowerArm, leftUpperArm,
-			rightLowerArm, rightUpperArm,
-		],
-		constraints: [
-			upperToLowerLeftArm, upperToLowerRightArm, chestToLeftUpperArm,
-			chestToRightUpperArm,
-		]
-	});
 };

@@ -71,8 +71,8 @@ var dcDemo, playAgain = false, bhObj = {}, timeout = 1000,
 				exampleSelect: false
 			},
 			tools: {
-				inspector: false, //调试工具
-				gui: false //调试工具
+				inspector: false,
+				gui: false
 			},
 			inline: false,
 			preventZoom: true,
@@ -84,7 +84,7 @@ var dcDemo, playAgain = false, bhObj = {}, timeout = 1000,
 					name: 'DOLL_CATCHING',
 					id: 'cmdcg',
 					init: DC.do,
-					sourceLink: sourceLinkRoot + 'cmdcg.js'
+					sourceLink: sourceLinkRoot + 'js/cmdcg.js'
 				},
 			]
 		}
@@ -93,18 +93,18 @@ var dcDemo, playAgain = false, bhObj = {}, timeout = 1000,
 		MatterTools.Demo.start(dcDemo);
 	}
 	setTimeout(function(){
-		// bhObj = doblackhole();
-		// var st = setTimeout(function(){
-		// 	bhObj.dispose();
-		// 	play();
-		// }, timeout* 6);
-		// bhObj.init(function(res){
-		// 	if(res === 1){
-		// 		clearTimeout(st);
-		// 		play();
-		// 	}
-		// })
-		play();
+		bhObj = doblackhole();
+		var st = setTimeout(function(){
+			bhObj.dispose();
+			play();
+		}, timeout* 6);
+		bhObj.init(function(res){
+			if(res === 1){
+				clearTimeout(st);
+				play();
+			}
+		})
+		// play();
 		// bhObj.init()
 		// setTimeout(function(){
 		// 	play();
