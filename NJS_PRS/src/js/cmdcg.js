@@ -349,10 +349,12 @@ DC.do = function() {
 		leftWall,
 		rightWall
 	]);
+
 	var dblChoseAlert, clicked = false,
 		clickFun = function() {
 			if(clicked){
-				$('#switch1').prop("checked", false)
+				!playAgain && $('#switch1').prop("checked", false)
+				playAgain && $('#switch1').prop("checked", true)
 				return
 			}
 			ragdollMove = false
@@ -717,9 +719,11 @@ DC.do = function() {
 		// for (var i = 0; i < collisions.length; i++) {
 		// 	console.log('mouseup collisions', collisions[i].bodyA)
 		// }
+		if(!ragdollShow) return
+		$('#switch1').prop("checked", false);
+		clickFun()
 	});
 
-	// keep the mouse in sync with rendering
 	render.mouse = mouse;
 
 	// fit the render viewport to the scene
