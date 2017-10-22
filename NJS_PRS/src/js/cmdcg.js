@@ -576,6 +576,7 @@ DC.do = function() {
 			x: 180,
 			y: 350,
 			columns: 12,
+			// columns: 1,
 			rows: 1,
 		}
 	setInterval(function(){

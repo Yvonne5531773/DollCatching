@@ -295,30 +295,23 @@ Example.sprites = function() {
 	var vertexSets = [],
 		ragdoll,
 		color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58']);
-	$.get('./svg/iconmonstr-check-mark-8-icon.svg').done(function(data) {
-		$(data).find('path').each(function(i, path) {
-			var points = Svg.pathToVertices(path, 30);
-			vertexSets.push(Vertices.scale(points, 0.2, 0.2));
-		});
-
-		//连接, 第三个参数是爪子的大小比例, (400,100)-初始位置
-		ragdoll = Example.sprites.ragdoll(400, 100, 1.1, {}, vertexSets);
-		var ragdollConstraint = Constraint.create({
-			bodyA: ropeC.bodies[ropeC.bodies.length-1],
-			bodyB: ragdoll.bodies[0],
-			pointA: { x: 28, y: 0 },
-			pointB: { x: 0, y: -10 }, //爪子的连接位置
-			stiffness: 0,
-			length: 0
-		});
-
-		//爪子出现
-		setTimeout(function(){
-			World.add(world, [ropeC, ragdoll, ragdollConstraint]);
-		}, timeout*3)
-
-		console.log('ragdoll:', ragdoll)
+	//连接, 第三个参数是爪子的大小比例, (400,100)-初始位置
+	ragdoll = Example.sprites.ragdoll(400, 100, 1.1, {}, vertexSets);
+	var ragdollConstraint = Constraint.create({
+		bodyA: ropeC.bodies[ropeC.bodies.length-1],
+		bodyB: ragdoll.bodies[0],
+		pointA: { x: 28, y: 0 },
+		pointB: { x: 0, y: -10 }, //爪子的连接位置
+		stiffness: 0,
+		length: 0
 	});
+
+	//爪子出现
+	setTimeout(function(){
+		World.add(world, [ropeC, ragdoll, ragdollConstraint]);
+	}, timeout*3)
+
+	console.log('ragdoll:', ragdoll)
 
 	var hasCatched = false,
 		i = 3.3, j = -3.15,
@@ -383,11 +376,9 @@ Example.sprites = function() {
 		console.log('mouseup at ' + mousePosition.x + ' ' + mousePosition.y);
 
 		var py = 300 + 100 * Math.sin(engine.timing.timestamp * 0.002);
-		console.log('mouseup', ragdoll.bodies[0]);
 		// Body.setVelocity(ragdoll.bodies[0], { x: 0, y: py - ragdoll.bodies[0].position.y });
 		// Body.setVelocity(ragdoll.bodies[0], { x: 0, y: 10 });
 		// Body.setPosition(ragdoll.bodies[0], { x: 404, y: 403 });
-		console.log('ropeC.constraints[2]', ropeC.constraints[2]);
 		ropeC.constraints[2].length = 250
 		//抓娃娃状态
 		setTimeout(function(){

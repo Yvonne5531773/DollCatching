@@ -1,5 +1,5 @@
 
-var sourceLinkRoot = '//10.20.240.179:8000/build/';
+var sourceLinkRoot = '//localhost:8000/build/';
 // var sourceLinkRoot = '//localhost:8000/build/';
 var dcDemo, playAgain = false,
 	isInclude = function (name) {
@@ -47,12 +47,12 @@ var dcDemo, playAgain = false,
 		oHead.appendChild(alertCss)
 		oHead.appendChild(tipCss)
 		oHead.appendChild(mScript);
-		// oHead.appendChild(jScript);
+		oHead.appendChild(jScript);
 		setTimeout(function () {
-			// oHead.appendChild(dScript);
-			// oHead.appendChild(pScript);
-			// oHead.appendChild(mwScript);
-			// oHead.appendChild(miScript);
+			oHead.appendChild(dScript);
+			oHead.appendChild(pScript);
+			oHead.appendChild(mwScript);
+			oHead.appendChild(miScript);
 			oHead.appendChild(mgScript);
 			oHead.appendChild(mdScript);
 			oHead.appendChild(mainScript);
@@ -68,28 +68,17 @@ var dcDemo, playAgain = false,
 		var obj = {
 			toolbar: {
 				title: '天猫双11主场',
-				url: '',
-				reset: false,
-				source: false,
-				inspector: false,
-				tools: false,
-				fullscreen: false,
-				exampleSelect: false
 			},
 			tools: {
 				inspector: false, //调试工具
-				gui: false //调试工具
+				gui: true //调试工具
 			},
-			inline: false,
-			preventZoom: true,
-			resetOnOrientation: true,
-			routing: true,
 			startExample: 'cmdcg',
 			examples: [
 				{
 					name: 'DOLL_CATCHING',
 					id: 'cmdcg',
-					init: DC.do,
+					init: Example.sprites,
 					sourceLink: sourceLinkRoot + 'cmdcg.js'
 				},
 			]

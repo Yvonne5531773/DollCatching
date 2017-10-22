@@ -1,6 +1,7 @@
 
 var CMDC = {
-	sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+	sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+	// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 	//sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/output/',
 	dc: {},
 	playAgain : false,
@@ -49,7 +50,7 @@ var CMDC = {
 		oHead.appendChild(pfScript);
 		oHead.appendChild(mScript);
 		setTimeout(function () {
-			// oHead.appendChild(mgScript);
+			oHead.appendChild(mgScript);
 			oHead.appendChild(mdScript);
 			oHead.appendChild(mainScript);
 			oHead.appendChild(alertScript);
@@ -94,7 +95,7 @@ var CMDC = {
 			},
 			tools: {
 				inspector: false,
-				gui: false
+				gui: true
 			},
 			startExample: 'cmdcg',
 			examples: [
