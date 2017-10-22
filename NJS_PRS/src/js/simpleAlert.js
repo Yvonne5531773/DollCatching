@@ -19,7 +19,8 @@ var simpleAlert = function (opts) {
     var $simpleAlertBodyClose = $('<img class="simpleAlertBodyClose" src="//act.cmcmcdn.com/upload/201710/7786d69341d763eae037823c7c6fbb6e.png" height="14" width="14"/>');
     var $simpleAlertBodyContent = $('<p class="simpleAlertBodyContent">' + option.content + '</p>');
     dialog.init = function () {
-        $simpleAlertBody.append($simpleAlertBodyClose).append($simpleAlertBodyContent);
+        $simpleAlertBody.append($simpleAlertBodyContent);
+	    // $simpleAlertBody.append($simpleAlertBodyClose).append($simpleAlertBodyContent);
         var num = 0;
         var only = false;
         var onlyArr = [];

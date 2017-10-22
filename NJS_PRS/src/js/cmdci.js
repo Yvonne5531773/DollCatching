@@ -1,17 +1,21 @@
 
-// var sourceLinkRoot = '//10.20.240.179:8000/NJS_PRS/output/';
-var sourceLinkRoot = '//10.20.240.179:8000/NJS_PRS/src/';
-
-var dcDemo, playAgain = false, bhObj = {}, timeout = 1000,
-	isInclude = function (name) {
+var CMDC = {
+	sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+	//sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/output/',
+	dc: {},
+	playAgain : false,
+	bhObj : {},
+	timeout : 1000,
+	eventOff : false,
+	isInclude : function (name) {
 		var js = /js$/i.test(name);
 		var es = document.getElementsByTagName(js ? 'script' : 'link');
 		for (var i = 0; i < es.length; i++)
 			if (es[i][js ? 'src' : 'href'].indexOf(name) !== -1)return true;
 		return false;
 	},
-	loadSource = function() {
-		if(isInclude('cmdcg.js')) return
+	loadSource : function() {
+		if(CMDC.isInclude('cmdcg.js')) return
 		var oHead = document.getElementsByTagName('HEAD').item(0),
 			pfScript = document.createElement("script"),
 			mScript = document.createElement("script"),
@@ -22,7 +26,8 @@ var dcDemo, playAgain = false, bhObj = {}, timeout = 1000,
 			bhScript = document.createElement("script"),
 			alertCss = document.createElement("link"),
 			tipScript = document.createElement("script"),
-			tipCss = document.createElement("link");
+			tipCss = document.createElement("link"),
+			sourceLinkRoot = CMDC.sourceLinkRoot;
 
 		pfScript.src = sourceLinkRoot + "js/polyfill.js";
 		mScript.src = sourceLinkRoot + "js/matter-dev.js";
@@ -44,71 +49,85 @@ var dcDemo, playAgain = false, bhObj = {}, timeout = 1000,
 		oHead.appendChild(pfScript);
 		oHead.appendChild(mScript);
 		setTimeout(function () {
-			oHead.appendChild(mgScript);
+			// oHead.appendChild(mgScript);
 			oHead.appendChild(mdScript);
 			oHead.appendChild(mainScript);
 			oHead.appendChild(alertScript);
 			oHead.appendChild(tipScript);
 			oHead.appendChild(bhScript);
 		}, 500)
-	};
+	},
+	removejscssfile : function(filename, filetype){
+		var targetelement=(filetype==="js")? "script" : (filetype==="css")? "link" : "none";
+		var targetattr=(filetype==="js")? "src" : (filetype==="css")? "href" : "none";
+		var allsuspects=document.getElementsByTagName(targetelement);
+		for (var i=allsuspects.length; i>=0; i--){
+			if (allsuspects[i] && allsuspects[i].getAttribute(targetattr) && allsuspects[i].getAttribute(targetattr).indexOf(filename)!==-1){
+				allsuspects[i].parentNode.removeChild(allsuspects[i]);
+			}
+		}
+	},
+	clearSource : function(){
+		var removejscssfile = CMDC.removejscssfile
+		removejscssfile(sourceLinkRoot+"js/simpleAlert.js", 'js')
+		removejscssfile(sourceLinkRoot+"js/tipso.min.js", 'js')
+		removejscssfile(sourceLinkRoot+"js/matter-dev.js", 'js')
+		removejscssfile(sourceLinkRoot+"js/polyfill.js", 'js')
+		removejscssfile(sourceLinkRoot+"js/matter-tools.demo.js", 'js')
+		removejscssfile(sourceLinkRoot+"js/cmdcg.js", 'js')
+		removejscssfile(sourceLinkRoot+"js/cmdcbh.js", 'js')
+		removejscssfile(sourceLinkRoot+"css/simpleAlert.css", 'css')
+		removejscssfile(sourceLinkRoot+"css/tipso.min.css", 'css')
+	}
+};
 
 (function() {
 	//设置屏幕宽度的最小支持
 	if(document.documentElement.clientWidth < 1263) return
 
-	loadSource();
+	CMDC.loadSource();
 	var play = function() {
 		var obj = {
 			toolbar: {
 				title: '天猫双11主场',
 				url: '',
-				reset: false,
-				source: false,
-				inspector: false,
-				tools: false,
-				fullscreen: false,
-				exampleSelect: false
 			},
 			tools: {
 				inspector: false,
 				gui: false
 			},
-			inline: false,
-			preventZoom: true,
-			resetOnOrientation: true,
-			routing: true,
 			startExample: 'cmdcg',
 			examples: [
 				{
 					name: 'DOLL_CATCHING',
 					id: 'cmdcg',
 					init: DC.do,
-					sourceLink: sourceLinkRoot + 'js/cmdcg.js'
+					sourceLink: CMDC.sourceLinkRoot + 'js/cmdcg.js'
 				},
 			]
 		}
-		dcDemo = MatterTools.Demo.create(obj);
-		document.body.appendChild(dcDemo.dom.root);
-		MatterTools.Demo.start(dcDemo);
+		var dc = CMDC.dc;
+		dc = MatterTools.Demo.create(obj);
+		document.body.appendChild(dc.dom.root);
+		MatterTools.Demo.start(dc);
 	}
 	setTimeout(function(){
-		bhObj = doblackhole();
-		var st = setTimeout(function(){
-			bhObj.dispose();
-			play();
-		}, timeout* 6);
-		bhObj.init(function(res){
-			if(res === 1){
-				clearTimeout(st);
-				play();
-			}
-		})
-		// play();
+		// bhObj = doblackhole();
+		// var st = setTimeout(function(){
+		// 	bhObj.dispose();
+		// 	play();
+		// }, timeout* 6);
+		// bhObj.init(function(res){
+		// 	if(res === 1){
+		// 		clearTimeout(st);
+		// 		play();
+		// 	}
+		// })
+		play();
 		// bhObj.init()
 		// setTimeout(function(){
 		// 	play();
 		// }, timeout)
-	}, timeout);
+	}, CMDC.timeout);
 
 })();
