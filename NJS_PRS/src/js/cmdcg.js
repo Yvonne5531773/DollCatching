@@ -32,9 +32,10 @@ DC.do = function() {
 
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
-	var massVal = 1.5;
-	var frictionAirVal = 0.01;
 	DC.do.createRagdoll = function(x, y, scale, options, vertexSets) {
+		var massVal = 1.5,
+			frictionAirVal = 0.01,
+			timeScaleVal = 0.3;
 		scale = typeof scale === 'undefined' ? 1 : scale;
 		var chestOptions = Common.extend({
 			label: 'chest',
@@ -66,7 +67,8 @@ DC.do = function() {
 			},
 			stiffness: 0.7,
 			mass: massVal,
-			frictionAir: frictionAirVal
+			frictionAir: frictionAirVal,
+			timeScale: timeScaleVal
 		}, options);
 		var leftLowerArmOptions = Common.extend({}, leftArmOptions, {
 			label: 'left-lower-arm',
@@ -77,7 +79,8 @@ DC.do = function() {
 				radius: 6 * scale
 			},
 			friction: 0.7,
-			mass: massVal
+			mass: massVal,
+			timeScale: timeScaleVal
 		});
 		var rightArmOptions = Common.extend({
 			label: 'right-arm',
@@ -92,7 +95,8 @@ DC.do = function() {
 			},
 			stiffness: 0.7,
 			mass: massVal,
-			frictionAir: frictionAirVal
+			frictionAir: frictionAirVal,
+			timeScale: timeScaleVal
 		}, options);
 		var rightLowerArmOptions = Common.extend({}, rightArmOptions, {
 			label: 'right-lower-arm',
@@ -104,7 +108,8 @@ DC.do = function() {
 			},
 			friction: 0.7,
 			mass: massVal,
-			frictionAir: frictionAirVal
+			frictionAir: frictionAirVal,
+			timeScale: timeScaleVal
 		});
 		var chest = Bodies.rectangle(x, y, 45 * scale, 30 * scale, chestOptions);
 		var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 17 * scale, 54 * scale, rightArmOptions);
@@ -600,7 +605,8 @@ DC.do = function() {
 
 	//爪子出现
 	setTimeout(function(){
-		World.add(world, [ropeC, ragdoll, ragdollConstraint, upperWall]);
+		World.add(world, [ropeC, ragdoll, ragdollConstraint,]);
+		// World.add(world, [ropeC, ragdoll, ragdollConstraint, upperWall]);
 		//开始按钮出现
 		$('.start-btn').css('display', 'block');
 		ragdollShow = true
@@ -896,7 +902,7 @@ DC.do = function() {
 		mouseConstraint = MouseConstraint.create(engine, {
 			mouse: mouse,
 			constraint: {
-				stiffness: 1,  //0-鼠标不能捕获
+				stiffness: 0.2,  //0-鼠标不能捕获
 				render: {
 					visible: false
 				}
