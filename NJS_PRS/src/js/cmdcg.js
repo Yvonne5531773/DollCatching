@@ -32,9 +32,10 @@ DC.do = function() {
 
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
-	var massVal = 1.5;
-	var frictionAirVal = 0.01;
 	DC.do.createRagdoll = function(x, y, scale, options, vertexSets) {
+		var massVal = 1.5,
+			frictionAirVal = 0.01,
+			timeScaleVal = 0.3;
 		scale = typeof scale === 'undefined' ? 1 : scale;
 		var chestOptions = Common.extend({
 			label: 'chest',
@@ -66,7 +67,8 @@ DC.do = function() {
 			},
 			stiffness: 0.7,
 			mass: massVal,
-			frictionAir: frictionAirVal
+			frictionAir: frictionAirVal,
+			timeScale: timeScaleVal
 		}, options);
 		var leftLowerArmOptions = Common.extend({}, leftArmOptions, {
 			label: 'left-lower-arm',
@@ -77,7 +79,8 @@ DC.do = function() {
 				radius: 6 * scale
 			},
 			friction: 0.7,
-			mass: massVal
+			mass: massVal,
+			timeScale: timeScaleVal
 		});
 		var rightArmOptions = Common.extend({
 			label: 'right-arm',
@@ -92,7 +95,8 @@ DC.do = function() {
 			},
 			stiffness: 0.7,
 			mass: massVal,
-			frictionAir: frictionAirVal
+			frictionAir: frictionAirVal,
+			timeScale: timeScaleVal
 		}, options);
 		var rightLowerArmOptions = Common.extend({}, rightArmOptions, {
 			label: 'right-lower-arm',
@@ -104,7 +108,8 @@ DC.do = function() {
 			},
 			friction: 0.7,
 			mass: massVal,
-			frictionAir: frictionAirVal
+			frictionAir: frictionAirVal,
+			timeScale: timeScaleVal
 		});
 		var chest = Bodies.rectangle(x, y, 45 * scale, 30 * scale, chestOptions);
 		var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 17 * scale, 54 * scale, rightArmOptions);
@@ -171,6 +176,7 @@ DC.do = function() {
 				y: -36 * scale
 			},
 			stiffness: 0.6,
+			// angularStiffness: 1.2,  //节点的角硬度
 			angularStiffness: 1.2,  //节点的角硬度
 			render: {
 				visible: true,
@@ -600,7 +606,8 @@ DC.do = function() {
 
 	//爪子出现
 	setTimeout(function(){
-		World.add(world, [ropeC, ragdoll, ragdollConstraint, upperWall]);
+		// World.add(world, [ropeC, ragdoll, ragdollConstraint, upperWall]);
+		World.add(world, [ropeC, ragdoll, ragdollConstraint]);
 		//开始按钮出现
 		$('.start-btn').css('display', 'block');
 		ragdollShow = true
@@ -734,11 +741,12 @@ DC.do = function() {
 	// }));
 
 	//弹簧
-	var changeVal = 400;
+	//如果要改变弹簧的样式，可以把链条当做弹簧，再把弹簧的长度设成0
+	var changeVal = 400, armY = 150;
 	var group = Body.nextGroup(true),
 		counter = -1;
 	//链的个数，属性
-	var ropeC = Composites.stack(changeVal, 0, 2, 1, 0, 10, function(x, y) {
+	var ropeC = Composites.stack(changeVal, 0, 2, 1, 0, 0, function(x, y) {
 		return Bodies.rectangle(x, y, 30, 15, {
 			label: 'component',
 			collisionFilter: { group: group },
@@ -753,7 +761,8 @@ DC.do = function() {
 		});
 	});
 
-	var arm = Bodies.rectangle(400, 100, 40, 25, {
+	//构建手柄
+	var arm = Bodies.rectangle(changeVal, 0, 40, 25, {
 		label: 'arm',
 		render: {
 			strokeStyle: '#3c3f41',
@@ -768,19 +777,19 @@ DC.do = function() {
 
 	//链，length：节点长度
 	Composites.chain(ropeC, 0.5, 0, -0.5, 0, {
-		stiffness: 1,
-		length: 0, //连接处的长度
+		stiffness: 0.8,
+		length: 5, //连接处的长度
 		render: {
 			visible: false
 		}
 	});
 	Composite.add(ropeC, Constraint.create({
 		label: 'spring',
-		bodyB: ropeC.bodies[0],
-		pointB: { x: -20, y: 0 },
 		pointA: { x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y },
-		stiffness: 0.01, //弹簧, 0是线
-		damping: 1,
+		pointB: { x: -20, y: 0 },
+		bodyB: ropeC.bodies[0],
+		stiffness: 0, //弹簧, 0是线
+		damping: 0,
 		length: 10,
 		render: {
 			visible: true,
