@@ -1,7 +1,7 @@
 
 var CMDC = {
-	sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-	// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+	// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+	sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 	//sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/output/',
 	dc: {},
 	playAgain : false,
@@ -69,7 +69,8 @@ var CMDC = {
 		}
 	},
 	clearSource : function(){
-		var removejscssfile = CMDC.removejscssfile
+		var removejscssfile = CMDC.removejscssfile,
+			sourceLinkRoot = CMDC.sourceLinkRoot;
 		removejscssfile(sourceLinkRoot+"js/simpleAlert.js", 'js')
 		removejscssfile(sourceLinkRoot+"js/tipso.min.js", 'js')
 		removejscssfile(sourceLinkRoot+"js/matter-dev.js", 'js')
@@ -79,6 +80,79 @@ var CMDC = {
 		removejscssfile(sourceLinkRoot+"js/cmdcbh.js", 'js')
 		removejscssfile(sourceLinkRoot+"css/simpleAlert.css", 'css')
 		removejscssfile(sourceLinkRoot+"css/tipso.min.css", 'css')
+	},
+	Interface: {
+		close: function(action) {
+			try {
+				if (action === 'receive') {
+					parkOur.receive();
+				} else {
+					parkOur.gameOver();
+				}
+			} catch (e) {}
+
+			this.reportClose(action || 'exit');
+		},
+		ready: function() {
+			if (window.requestAnimationFrame && Adventrue.sizeSupport()) {
+				try {
+					parkOur.ready();
+				} catch (e) {}
+
+				this.reportShow('show');
+				return true;
+			}
+			// 浏览器版本过低
+			try {
+				parkOur.notSupport();
+			} catch (e) {}
+			this.reportShow('not-support');
+			return false;
+		},
+		click: function() {
+			try {
+				parkOur.receive();
+			} catch (e) {}
+		},
+		reportShow: function(action) {
+			this.report({
+				snode: 1365,
+				expand: action
+			});
+		},
+		reportClick: function(action, idx, shuang11) {
+			var data = {
+				snode: 1163,
+				expand: action,
+				idx: idx || 1
+			};
+			if (shuang11) {
+				data.shuang11 = 1;
+			}
+			this.report(data);
+		},
+		reportClose: function(action) {
+			this.report({
+				snode: 10147,
+				expand: action
+			});
+		},
+		report: function(obj) {
+			var data = {
+				node: 1031100
+			};
+
+			for (var i in obj) {
+				data[i] = obj[i];
+			}
+			data.w = 'zpgame';
+			data.cid = '';
+			try {
+				parkOur.report(data);
+			} catch (e) {
+				window.console && console.log('report', data);
+			}
+		}
 	}
 };
 
