@@ -32,6 +32,8 @@ DC.do = function() {
 
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
+	var massVal = 1.5;
+	var frictionAirVal = 0.01;
 	DC.do.createRagdoll = function(x, y, scale, options, vertexSets) {
 		scale = typeof scale === 'undefined' ? 1 : scale;
 		var chestOptions = Common.extend({
@@ -48,7 +50,8 @@ DC.do = function() {
 					yScale: 0.7,
 					texture: sourceLinkRoot + 'img/chest.png'
 				}
-			}
+			},
+			frictionAir: frictionAirVal
 		}, options);
 		var leftArmOptions = Common.extend({
 			label: 'left-arm',
@@ -62,6 +65,8 @@ DC.do = function() {
 				fillStyle: '#bdbabb'
 			},
 			stiffness: 0.8,
+			mass: massVal,
+			frictionAir: frictionAirVal
 		}, options);
 		var leftLowerArmOptions = Common.extend({}, leftArmOptions, {
 			label: 'left-lower-arm',
@@ -71,7 +76,8 @@ DC.do = function() {
 			chamfer: {
 				radius: 6 * scale
 			},
-			friction: 0.7
+			friction: 0.7,
+			mass: massVal
 		});
 		var rightArmOptions = Common.extend({
 			label: 'right-arm',
@@ -85,6 +91,8 @@ DC.do = function() {
 				fillStyle: '#bdbabb'
 			},
 			stiffness: 0.8,
+			mass: massVal,
+			frictionAir: frictionAirVal
 		}, options);
 		var rightLowerArmOptions = Common.extend({}, rightArmOptions, {
 			label: 'right-lower-arm',
@@ -94,7 +102,9 @@ DC.do = function() {
 			chamfer: {
 				radius: 6 * scale
 			},
-			friction: 0.7
+			friction: 0.7,
+			mass: massVal,
+			frictionAir: frictionAirVal
 		});
 		var chest = Bodies.rectangle(x, y, 45 * scale, 30 * scale, chestOptions);
 		var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 17 * scale, 54 * scale, rightArmOptions);
@@ -479,7 +489,7 @@ DC.do = function() {
 	var ragdollShow = false,
 		ragdollMove = false,
 		scaleoffest = 0.1,
-		timeScaleVal = 0.8;
+		timeScaleVal = 0.6;
 	var	engine = Engine.create({
 			// enableSleeping: true
 		});
@@ -535,7 +545,7 @@ DC.do = function() {
 			//禁止鼠标操作
 			// World.remove(world, mouseConstraint);
 			//弹簧伸长
-			spring.length = 280
+			spring.length = 300
 			//抓娃娃状态
 			setTimeout(function () {
 				catched = true
@@ -563,7 +573,7 @@ DC.do = function() {
 								}
 							}
 						})
-						setRagdollStatic(true)
+						// setRagdollStatic(true)
 					}, timeout * 3)
 				}, timeout * 2.5)
 			}, timeout)
@@ -571,37 +581,47 @@ DC.do = function() {
 	$('.start-btn').click(clickFun)
 
 	//物品池
-	var cnt = 0,
-		criteria = {
-			x: 180,
-			y: 350,
-			columns: 12,
-			rows: 1,
+	var	criteria = {
+			x: -150,
+			y: 0,
+			columns: 30,
+			rows: 3,
 		}
-	setInterval(function(){
-		cnt++
-		if(cnt > 3) return
-		var stack = DC.do.createStacks(criteria);
-		World.add(world, stack);
-		criteria.x *= 0.5
-		criteria.columns += 6
-		criteria.rows += 1
-	}, timeout* 0.8)
+	var stack = DC.do.createStacks(criteria);
+	World.add(world, stack);
+	// var cnt = 0,
+	// setInterval(function(){
+	// 	cnt++
+	// 	if(cnt > 3) return
+	// 	criteria.x *= 0.5
+	// 	criteria.columns += 6
+	// 	criteria.rows += 1
+	// }, timeout* 0.8)
 
+	//爪子出现
 	setTimeout(function(){
-		//物品散开
-		explosion(engine);
-		//爪子出现
+		World.add(world, [ropeC, ragdoll, ragdollConstraint, upperWall]);
+		//开始按钮出现
+		$('.start-btn').css('display', 'block');
+		ragdollShow = true
 		setTimeout(function(){
-			World.add(world, [ropeC, ragdoll, ragdollConstraint, upperWall]);
-			//开始按钮出现
-			$('.start-btn').css('display', 'block');
-			ragdollShow = true
-			setTimeout(function(){
-				ragdollMove = true;
-			}, timeout)
-		}, timeout* 3)
-	}, timeout* 3)
+			ragdollMove = true;
+		}, timeout)
+	}, timeout* 2)
+	// setTimeout(function(){
+	// 	//物品散开
+	// 	explosion(engine);
+	// 	//爪子出现
+	// 	setTimeout(function(){
+	// 		World.add(world, [ropeC, ragdoll, ragdollConstraint, upperWall]);
+	// 		//开始按钮出现
+	// 		$('.start-btn').css('display', 'block');
+	// 		ragdollShow = true
+	// 		setTimeout(function(){
+	// 			ragdollMove = true;
+	// 		}, timeout)
+	// 	}, timeout* 3)
+	// }, timeout* 3)
 
 
 	//开始按钮位置
@@ -839,38 +859,38 @@ DC.do = function() {
 		}
 	});
 
-	Events.on(render, 'afterRender', function() {
-		if(!ragdollShow || catched || eventOff) return
-		var mouse = mouseConstraint.mouse,
-			context = render.context,
-			bodies = Composite.allBodies(engine.world),
-			startPoint = { x: 400, y: 100 },
-			endPoint = mouse.position;
-		var collisions = Query.ray(bodies, startPoint, endPoint);
-		Render.startViewTransform(render);
-		context.beginPath();
-		context.moveTo(startPoint.x, startPoint.y);
-		context.lineTo(endPoint.x, endPoint.y);
-		if (collisions.length > 0) {
-			context.strokeStyle = '#fff';
-		} else {
-			context.strokeStyle = '#555';
-		}
-		//线
-		// context.lineWidth = 1.5;
-		// context.stroke();
-		for (var i = 0; i < collisions.length; i++) {
-			var collision = collisions[i];
-			// Sleeping.set(collision.bodyA, false)
-			//过滤超过一定高度的物品
-			//过滤爪子
-			collision && !~['chest', 'left-arm', 'right-arm', 'right-lower-arm', 'left-lower-arm', 'component', 'arm', 'spring'].indexOf(collision.body.label) && (collision.body.position.y >= 450 && explosion(engine, collision.bodyA))
-			// context.rect(collision.bodyA.position.x - 4.5, collision.bodyA.position.y - 4.5, 8, 8);
-		}
-		// context.fillStyle = 'rgba(255,165,0,0.7)';
-		// context.fill();
-		Render.endViewTransform(render);
-	});
+	// Events.on(render, 'afterRender', function() {
+	// 	if(!ragdollShow || catched || eventOff) return
+	// 	var mouse = mouseConstraint.mouse,
+	// 		context = render.context,
+	// 		bodies = Composite.allBodies(engine.world),
+	// 		startPoint = { x: 400, y: 100 },
+	// 		endPoint = mouse.position;
+	// 	var collisions = Query.ray(bodies, startPoint, endPoint);
+	// 	Render.startViewTransform(render);
+	// 	context.beginPath();
+	// 	context.moveTo(startPoint.x, startPoint.y);
+	// 	context.lineTo(endPoint.x, endPoint.y);
+	// 	if (collisions.length > 0) {
+	// 		context.strokeStyle = '#fff';
+	// 	} else {
+	// 		context.strokeStyle = '#555';
+	// 	}
+	// 	//线
+	// 	// context.lineWidth = 1.5;
+	// 	// context.stroke();
+	// 	for (var i = 0; i < collisions.length; i++) {
+	// 		var collision = collisions[i];
+	// 		// Sleeping.set(collision.bodyA, false)
+	// 		//过滤超过一定高度的物品
+	// 		//过滤爪子
+	// 		collision && !~['chest', 'left-arm', 'right-arm', 'right-lower-arm', 'left-lower-arm', 'component', 'arm', 'spring'].indexOf(collision.body.label) && (collision.body.position.y >= 450 && explosion(engine, collision.bodyA))
+	// 		// context.rect(collision.bodyA.position.x - 4.5, collision.bodyA.position.y - 4.5, 8, 8);
+	// 	}
+	// 	// context.fillStyle = 'rgba(255,165,0,0.7)';
+	// 	// context.fill();
+	// 	Render.endViewTransform(render);
+	// });
 
 	var mouse = Mouse.create(render.canvas),
 		mouseConstraint = MouseConstraint.create(engine, {
