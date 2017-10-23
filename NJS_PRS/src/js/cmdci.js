@@ -158,8 +158,7 @@ var CMDC = {
 
 (function() {
 	//设置屏幕宽度的最小支持
-	if(document.documentElement.clientWidth < 1263) return
-
+	// if(document.documentElement.clientWidth < 1263) return
 	CMDC.loadSource();
 	var play = function() {
 		var obj = {

@@ -64,7 +64,7 @@ DC.do = function() {
 			render: {
 				fillStyle: '#bdbabb'
 			},
-			stiffness: 0.8,
+			stiffness: 0.7,
 			mass: massVal,
 			frictionAir: frictionAirVal
 		}, options);
@@ -90,7 +90,7 @@ DC.do = function() {
 			render: {
 				fillStyle: '#bdbabb'
 			},
-			stiffness: 0.8,
+			stiffness: 0.7,
 			mass: massVal,
 			frictionAir: frictionAirVal
 		}, options);
@@ -529,8 +529,8 @@ DC.do = function() {
 		rightWall = Bodies.rectangle(width* 0.6+offset, 300, thick, 620, options); //3-厚度 4-高度
 	World.add(world, [
 		bottomWall,
-		leftWall,
-		rightWall
+		// leftWall,
+		// rightWall
 	]);
 
 	var dblChoseAlert, clicked = false,
