@@ -29,11 +29,10 @@ DC.do = function() {
 		playAgain = CMDC.playAgain,
 		sourceLinkRoot = CMDC.sourceLinkRoot;
 
-
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
 	DC.do.createRagdoll = function(x, y, scale, options, vertexSets) {
-		var massVal = 1.3,
+		var massVal = 1,
 			frictionAirVal = 0.01,
 			timeScaleVal = 1;
 		scale = typeof scale === 'undefined' ? 1 : scale;
@@ -218,7 +217,7 @@ DC.do = function() {
 
 	//构造物品
 	DC.do.createStacks = function(criteria){
-		var massVal = 0.05
+		var massVal = 0.1
 		// return Composites.stack(-60, 0, 24, 6, 0, 0, function(x, y) {
 		return Composites.stack(criteria.x, criteria.y, criteria.columns, criteria.rows, 0, 0, function(x, y) {
 			if (Common.random() < 0.05) {
@@ -525,7 +524,7 @@ DC.do = function() {
 		element: document.body,
 		engine: engine,
 		options: {
-			width: document.documentElement.clientWidth,
+			width: 1180,
 			height: document.documentElement.clientHeight,
 			background: 'transparent',
 			showAngleIndicator: false,
@@ -541,24 +540,26 @@ DC.do = function() {
 		}
 	};
 	var width = document.documentElement.clientWidth,
-		offset = 40, thick = 0.01;
+		offset = 10, thick = 0.01;
 
 	Render.run(render);
 	Runner.run(runner, engine);
 
 	world.bodies = [];
 	//设置运行范围 围墙
-	$('#d-c').css('min-width', width)
+	$('#d-c').css('min-width', 1180)
 	var bottomWall = Bodies.rectangle(0, 600, width* 3, thick, options),
 		upperWall = Bodies.rectangle(0, 0, width* 3, thick, options),
 		leftWall = Bodies.rectangle(-width* 0.13+offset, 300, thick, 620, options), //3-厚度 4-高度
 		rightWall = Bodies.rectangle(width* 0.6+offset, 300, thick, 620, options); //3-厚度 4-高度
 	World.add(world, [
 		// bottomWall,
-		Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options), //上
-		Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options), //下
-		Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options), //右
-		Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)  //左
+		// leftWall,
+		// rightWall
+		Bodies.rectangle(0, 0, 800.5 + 2 * offset, thick, options), //上
+		Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, thick, options), //下
+		Bodies.rectangle(800 + offset, 300, thick, 600.5 + 2 * offset, options), //右
+		Bodies.rectangle(-offset, 300, thick, 600.5 + 2 * offset, options)  //左
 	]);
 
 	var dblChoseAlert, clicked = false,
@@ -578,7 +579,7 @@ DC.do = function() {
 			// 	spring.length += 30
 			// }, 100)
 			spring.stiffness = 0.005
-			spring.length = 300
+			spring.length = 260
 			//抓娃娃状态
 			setTimeout(function () {
 				catched = true
@@ -591,8 +592,6 @@ DC.do = function() {
 							"content": "游戏结束啦！",
 							"buttons": {
 								"再玩一次": function () {
-									// setRagdollStatic(false)
-									spring.stiffness = 0.04
 									setBodiesStatic(engine, false)
 									playAgain = true;
 									$('#switch1').prop("checked", true)
@@ -608,7 +607,6 @@ DC.do = function() {
 								}
 							}
 						})
-						// setRagdollStatic(true)
 						setBodiesStatic(engine, true)
 					}, timeout * 3)
 				}, timeout * 2.5)
@@ -888,6 +886,7 @@ DC.do = function() {
 					ragdollMove = true;
 					playAgain = false;
 					clicked = false;
+					spring.stiffness = 0.01
 					// World.add(world, mouseConstraint);
 				}
 			}else{
@@ -909,8 +908,7 @@ DC.do = function() {
 			//控制速度
 			counter += 0.015
 			if (counter < 0) return
-			springPx = spring_x + 250 * Math.sin(counter);
-			// console.log('ragdoll', ragdoll)
+			springPx = spring_x + 200 * Math.sin(counter);
 			if(!clicked){
 				spring.pointA.x = springPx
 				// ragdoll.bodies[0].position.x = springPx
