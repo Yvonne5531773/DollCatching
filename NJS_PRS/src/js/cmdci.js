@@ -1,7 +1,7 @@
 
 var CMDC = {
-	sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-	// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+	// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+	sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 	//sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/output/',
 	dc: {},
 	playAgain : false,

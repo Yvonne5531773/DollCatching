@@ -33,9 +33,9 @@ DC.do = function() {
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
 	DC.do.createRagdoll = function(x, y, scale, options, vertexSets) {
-		var massVal = 1.5,
+		var massVal = 1.3,
 			frictionAirVal = 0.01,
-			timeScaleVal = 0.3;
+			timeScaleVal = 1;
 		scale = typeof scale === 'undefined' ? 1 : scale;
 		var chestOptions = Common.extend({
 			label: 'chest',
@@ -52,7 +52,7 @@ DC.do = function() {
 					texture: sourceLinkRoot + 'img/chest.png'
 				}
 			},
-			frictionAir: frictionAirVal
+			frictionAir: 0
 		}, options);
 		var leftArmOptions = Common.extend({
 			label: 'left-arm',
@@ -66,8 +66,8 @@ DC.do = function() {
 				fillStyle: '#bdbabb'
 			},
 			stiffness: 0.7,
-			mass: massVal,
-			frictionAir: frictionAirVal,
+			// mass: massVal,
+			// frictionAir: frictionAirVal,
 			timeScale: timeScaleVal
 		}, options);
 		var leftLowerArmOptions = Common.extend({}, leftArmOptions, {
@@ -79,7 +79,7 @@ DC.do = function() {
 				radius: 6 * scale
 			},
 			friction: 0.7,
-			mass: massVal,
+			// mass: massVal,
 			timeScale: timeScaleVal
 		});
 		var rightArmOptions = Common.extend({
@@ -94,8 +94,8 @@ DC.do = function() {
 				fillStyle: '#bdbabb'
 			},
 			stiffness: 0.7,
-			mass: massVal,
-			frictionAir: frictionAirVal,
+			// mass: massVal,
+			// frictionAir: frictionAirVal,
 			timeScale: timeScaleVal
 		}, options);
 		var rightLowerArmOptions = Common.extend({}, rightArmOptions, {
@@ -107,7 +107,7 @@ DC.do = function() {
 				radius: 6 * scale
 			},
 			friction: 0.7,
-			mass: massVal,
+			// mass: massVal,
 			frictionAir: frictionAirVal,
 			timeScale: timeScaleVal
 		});
@@ -135,7 +135,7 @@ DC.do = function() {
 				y: -32 * scale
 			},
 			bodyB: rightUpperArm,
-			stiffness: 0.8,
+			// stiffness: 0.8,
 			angularStiffness: 0.2, //跟上部分爪子的硬度有关
 			length: 0,
 			render: {
@@ -155,7 +155,7 @@ DC.do = function() {
 				y: -32 * scale
 			},
 			bodyB: leftUpperArm,
-			stiffness: 0.8,
+			// stiffness: 0.8,
 			angularStiffness: 0.2,
 			length: 0,
 			render: {
@@ -175,8 +175,8 @@ DC.do = function() {
 				x: 0,
 				y: -36 * scale
 			},
-			stiffness: 0.6,
-			angularStiffness: 1.2,  //节点的角硬度
+			// stiffness: 0.6,
+			angularStiffness: 1,  //节点的角硬度
 			render: {
 				visible: true,
 				anchors: false //锚点
@@ -196,7 +196,7 @@ DC.do = function() {
 				y: -36 * scale
 			},
 			stiffness: 0.6,
-			angularStiffness: 1.2,
+			angularStiffness: 1,
 			render: {
 				visible: true,
 				anchors: false
@@ -218,6 +218,7 @@ DC.do = function() {
 
 	//构造物品
 	DC.do.createStacks = function(criteria){
+		var massVal = 0.05
 		// return Composites.stack(-60, 0, 24, 6, 0, 0, function(x, y) {
 		return Composites.stack(criteria.x, criteria.y, criteria.columns, criteria.rows, 0, 0, function(x, y) {
 			if (Common.random() < 0.05) {
@@ -231,7 +232,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			}
 			else if(Common.random() > 0.05 && Common.random() < 0.1){
@@ -245,7 +247,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			} else if(Common.random() > 0.1 && Common.random() < 0.15){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 22, 30, {
@@ -258,7 +261,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			} else if(Common.random() > 0.15 && Common.random() < 0.2){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 24, 24, {
@@ -271,7 +275,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			}  else if(Common.random() > 0.2 && Common.random() < 0.25){
 				return Bodies.circle(x+Common.random()*15, y+Common.random()*5, 16, {
@@ -283,7 +288,8 @@ DC.do = function() {
 						}
 					},
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			} else if(Common.random() > 0.25 && Common.random() < 0.3){
 				return Bodies.circle(x+Common.random()*15, y+Common.random()*10, 12, {
@@ -295,7 +301,8 @@ DC.do = function() {
 						}
 					},
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			}else if(Common.random() > 0.3 && Common.random() < 0.35){
 				return Bodies.circle(x+Common.random()*15, y+Common.random()*5, 16, {
@@ -307,7 +314,8 @@ DC.do = function() {
 						}
 					},
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			}else if(Common.random() > 0.35 && Common.random() < 0.4){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 38, {
@@ -320,7 +328,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			} else if(Common.random() > 0.4 && Common.random() < 0.45){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*45, 38, 18, {
@@ -333,7 +342,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			} else if(Common.random() > 0.45 && Common.random() < 0.5){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*40, 28, 23, {
@@ -346,7 +356,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			} else if(Common.random() > 0.5 && Common.random() < 0.55){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*32, 38, 23, {
@@ -359,7 +370,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			} else if(Common.random() > 0.55 && Common.random() < 0.6){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*44, 38, 23, {
@@ -372,7 +384,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			} else if(Common.random() > 0.6 && Common.random() < 0.65){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*21, 63, 23, {
@@ -385,7 +398,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			} else if(Common.random() > 0.65 && Common.random() < 0.7){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*29, 28, 23, {
@@ -398,7 +412,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			} else if(Common.random() > 0.7 && Common.random() < 0.75){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 28, {
@@ -411,7 +426,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			} else if(Common.random() > 0.75 && Common.random() < 0.8){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 28, {
@@ -424,7 +440,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			}else if(Common.random() > 0.8 && Common.random() < 0.85){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 28, {
@@ -437,7 +454,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			}else if(Common.random() > 0.85 && Common.random() < 0.9){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 28, {
@@ -450,7 +468,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			}else if(Common.random() > 0.95 && Common.random() < 1){
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 28, 28, {
@@ -463,7 +482,8 @@ DC.do = function() {
 					},
 					chamfer: { radius: 5 },
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			}else {
 				return Bodies.circle(x+Common.random()*15, y+Common.random()*15, 16, {
@@ -475,7 +495,8 @@ DC.do = function() {
 						}
 					},
 					friction: 0.7,
-					timeScale: timeScaleVal
+					timeScale: timeScaleVal,
+					mass: massVal
 				});
 			}
 			// else if(Common.random() > 0.45 && Common.random() < 0.5){
@@ -550,6 +571,11 @@ DC.do = function() {
 			//禁止鼠标操作
 			// World.remove(world, mouseConstraint);
 			//弹簧伸长
+			// setInterval(function(){
+			// 	if(spring.length >= 400) return
+			// 	spring.length += 30
+			// }, 100)
+			spring.stiffness = 0.005
 			spring.length = 300
 			//抓娃娃状态
 			setTimeout(function () {
@@ -563,7 +589,9 @@ DC.do = function() {
 							"content": "游戏结束啦！",
 							"buttons": {
 								"再玩一次": function () {
-									setRagdollStatic(false)
+									// setRagdollStatic(false)
+									spring.stiffness = 0.015
+									setBodiesStatic(engine, false)
 									playAgain = true;
 									$('#switch1').prop("checked", true)
 									dblChoseAlert.close();
@@ -579,6 +607,7 @@ DC.do = function() {
 							}
 						})
 						// setRagdollStatic(true)
+						setBodiesStatic(engine, true)
 					}, timeout * 3)
 				}, timeout * 2.5)
 			}, timeout)
@@ -588,7 +617,7 @@ DC.do = function() {
 	//物品池
 	var	criteria = {
 			x: -150,
-			y: 0,
+			y: 400,
 			columns: 30,
 			rows: 3,
 		}
@@ -613,7 +642,7 @@ DC.do = function() {
 		setTimeout(function(){
 			ragdollMove = true;
 		}, timeout)
-	}, timeout* 2)
+	}, timeout)
 	// setTimeout(function(){
 	// 	//物品散开
 	// 	explosion(engine);
@@ -690,6 +719,17 @@ DC.do = function() {
 		}
 	};
 
+	var setBodiesStatic = function(engine, bool){
+		var bodies = Composite.allBodies(engine.world);
+		for (var i = 0; i < bodies.length; i++) {
+			var body = bodies[i];
+			console.log('body', body)
+			if (body.position.y <= 400 && !~['chest', 'left-arm', 'right-arm', ].indexOf(body.label)) {
+				Body.setStatic(body, bool);
+			}
+		}
+	}
+
 	//svg加入元素；2代表两行, 280->横坐标，-3100->纵坐标
 	// World.add(world, Composites.stack(300, -2500, 3, 58, 3, 5, function(x, y) {
 	// 	if (Query.point([five], { x: x, y: y }).length === 0) {
@@ -755,10 +795,10 @@ DC.do = function() {
 					yScale: 0.6,
 					texture: sourceLinkRoot + 'img/component.png'
 				}
-			}
+			},
+			frictionAirVal: 0
 		});
 	});
-
 	var arm = Bodies.rectangle(400, 100, 40, 25, {
 		label: 'arm',
 		render: {
@@ -768,7 +808,8 @@ DC.do = function() {
 				yScale: 0.8,
 				texture: sourceLinkRoot + 'img/arm.png'
 			}
-		}
+		},
+		frictionAirVal: 0
 	});
 	ropeC.bodies.push(arm)
 
@@ -785,9 +826,9 @@ DC.do = function() {
 		bodyB: ropeC.bodies[0],
 		pointB: { x: -20, y: 0 },
 		pointA: { x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y },
-		stiffness: 0.01, //弹簧, 0是线
+		stiffness: 0.04, //弹簧, 0是线
 		damping: 1,
-		length: 10,
+		length: 0,
 		render: {
 			visible: true,
 			lineWidth: 1.5,
@@ -809,7 +850,9 @@ DC.do = function() {
 		length: 0,
 		render: {
 			visible: false,
-		}
+		},
+		stiffness: 1,
+		// angularStiffness: 1
 	});
 
 	var catched = false,
@@ -818,6 +861,10 @@ DC.do = function() {
 		spring_x = spring.pointA.x, springPx;
 	function setRagdollStatic(bool){
 		Body.setStatic(ragdoll.bodies[0], bool);
+		// Body.setStatic(ragdoll.bodies[1], bool);
+		// Body.setStatic(ragdoll.bodies[2], bool);
+		// Body.setStatic(ragdoll.bodies[3], bool);
+		// Body.setStatic(ragdoll.bodies[4], bool);
 	}
 	Events.on(engine, 'beforeUpdate', function(event) {
 		if(!ragdoll || ragdoll.length <= 0 || eventOff) return
@@ -861,7 +908,11 @@ DC.do = function() {
 			counter += 0.015
 			if (counter < 0) return
 			springPx = spring_x + 250 * Math.sin(counter);
-			!clicked && (spring.pointA.x = springPx)
+			// console.log('ragdoll', ragdoll)
+			if(!clicked){
+				spring.pointA.x = springPx
+				// ragdoll.bodies[0].position.x = springPx
+			}
 		}
 	});
 
