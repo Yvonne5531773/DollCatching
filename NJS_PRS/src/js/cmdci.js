@@ -31,17 +31,17 @@ var CMDC = {
 			sourceLinkRoot = CMDC.sourceLinkRoot;
 
 		pfScript.src = sourceLinkRoot + "js/polyfill.js";
-		mScript.src = sourceLinkRoot + "js/matter-dev.js";
+		mScript.src = sourceLinkRoot + "js/matter.min.js";
 		mgScript.src = sourceLinkRoot + "js/matter-tools.gui.js";
 		mdScript.src = sourceLinkRoot + "js/matter-tools.demo.js";
 		bhScript.src = sourceLinkRoot + "js/cmdcbh.js";
 		mainScript.src = sourceLinkRoot + "js/cmdcg.js";
 		alertScript.src = sourceLinkRoot + "js/simpleAlert.js";
+		tipScript.src = sourceLinkRoot + "js/tipso.min.js";
 		alertCss.href = sourceLinkRoot + "css/simpleAlert.css";
+		tipCss.href = sourceLinkRoot + "css/tipso.min.css";
 		alertCss.rel = 'stylesheet';
 		alertCss.type = 'text/css';
-		tipScript.src = sourceLinkRoot + "js/tipso.min.js";
-		tipCss.href = sourceLinkRoot + "css/tipso.min.css";
 		tipCss.rel = 'stylesheet';
 		tipCss.type = 'text/css';
 
@@ -153,14 +153,8 @@ var CMDC = {
 				window.console && console.log('report', data);
 			}
 		}
-	}
-};
-
-(function() {
-	//设置屏幕宽度的最小支持
-	// if(document.documentElement.clientWidth < 1263) return
-	CMDC.loadSource();
-	var play = function() {
+	},
+	play: function(){
 		var obj = {
 			toolbar: {
 				title: '天猫双11主场',
@@ -168,7 +162,7 @@ var CMDC = {
 			},
 			tools: {
 				inspector: false,
-				gui: true
+				gui: false
 			},
 			startExample: 'cmdcg',
 			examples: [
@@ -185,23 +179,15 @@ var CMDC = {
 		document.body.appendChild(dc.dom.root);
 		MatterTools.Demo.start(dc);
 	}
+};
+
+(function() {
+	//设置屏幕宽度的最小支持
+	// if(document.documentElement.clientWidth < 1263) return
+	CMDC.loadSource();
+
 	setTimeout(function(){
-		// bhObj = doblackhole();
-		// var st = setTimeout(function(){
-		// 	bhObj.dispose();
-		// 	play();
-		// }, timeout* 6);
-		// bhObj.init(function(res){
-		// 	if(res === 1){
-		// 		clearTimeout(st);
-		// 		play();
-		// 	}
-		// })
-		play();
-		// bhObj.init()
-		// setTimeout(function(){
-		// 	play();
-		// }, timeout)
+		CMDC.play();
 	}, CMDC.timeout);
 
 })();
