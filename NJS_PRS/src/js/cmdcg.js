@@ -590,7 +590,7 @@ DC.do = function() {
 							"buttons": {
 								"再玩一次": function () {
 									// setRagdollStatic(false)
-									spring.stiffness = 0.015
+									spring.stiffness = 0.04
 									setBodiesStatic(engine, false)
 									playAgain = true;
 									$('#switch1').prop("checked", true)
