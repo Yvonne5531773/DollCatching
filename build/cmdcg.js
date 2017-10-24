@@ -3,586 +3,584 @@ var svg_data = '<?xml version="1.0" encoding="utf-8"?> <!-- Generator: Adobe Ill
 var Example = Example || {};
 
 Example.sprites = function() {
-	var Engine = Matter.Engine,
-		Render = Matter.Render,
-		Runner = Matter.Runner,
-		Body = Matter.Body,
-		Composite = Matter.Composite,
-		Composites = Matter.Composites,
-		Common = Matter.Common,
-		Constraint = Matter.Constraint,
-		MouseConstraint = Matter.MouseConstraint,
-		Mouse = Matter.Mouse,
-		World = Matter.World,
-		Events = Matter.Events,
-		Bodies = Matter.Bodies,
-		Vertices = Matter.Vertices,
-		Svg = Matter.Svg,
-		Query = Matter.Query;
+    var Engine = Matter.Engine,
+        Render = Matter.Render,
+        Runner = Matter.Runner,
+        Body = Matter.Body,
+        Composite = Matter.Composite,
+        Composites = Matter.Composites,
+        Common = Matter.Common,
+        Constraint = Matter.Constraint,
+        MouseConstraint = Matter.MouseConstraint,
+        Mouse = Matter.Mouse,
+        World = Matter.World,
+        Events = Matter.Events,
+        Bodies = Matter.Bodies,
+        Vertices = Matter.Vertices,
+        Svg = Matter.Svg,
+        Query = Matter.Query;
 
-	// create engine
-	var engine = Engine.create(),
-		world = engine.world,
-		timeout = 1000
+    // create engine
+    var engine = Engine.create(),
+        world = engine.world,
+        timeout = 1000
 
-	// create renderer
-	// 整个屏幕所占用的大小
-	var render = Render.create({
-		element: document.body,
-		engine: engine,
-		options: {
-			width: 1000,
-			height: 800,
-			background: '#f7f8f8',
-			showAngleIndicator: false,
-			wireframes: false,
+    // create renderer
+    // 整个屏幕所占用的大小
+    var render = Render.create({
+        element: document.body,
+        engine: engine,
+        options: {
+            width: 1000,
+            height: 800,
+            background: '#f7f8f8',
+            showAngleIndicator: false,
+            wireframes: false,
 
-		}
-	});
+        }
+    });
 
-	Render.run(render);
+    Render.run(render);
 
-	// create runner
-	var runner = Runner.create();
-	Runner.run(runner, engine);
+    // create runner
+    var runner = Runner.create();
+    Runner.run(runner, engine);
 
-	// add bodies
-	var offset = 10,
-		options = {
-			isStatic: true,
-			render: {
-				fillStyle: '#c6c6c6'
-			}
-		};
+    // add bodies
+    var offset = 10,
+        options = {
+            isStatic: true,
+            render: {
+                fillStyle: '#c6c6c6'
+            }
+        };
 
-	world.bodies = [];
+    world.bodies = [];
 
-	World.add(world, [
-		Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options), //上
-		Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options), //下
-		Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options), //右
-		Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)  //左
-	]);
+    World.add(world, [
+        Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options), //上
+        Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options), //下
+        Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options), //右
+        Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)  //左
+    ]);
 
-	var stack = Composites.stack(20, 20, 28, 6, 0, 0, function(x, y) {
-		if (Common.random() < 0.2) {
-			return Bodies.rectangle(x, y, 32, 20, {
-				frictionAir: 0.01,
-				render: {
-					strokeStyle: '#14151f',
-					sprite: {
-						texture: '//act.cmcmcdn.com/upload/201710/f8e6bdd1572a5e8a2e2f73d8c52b1bf6.png'
-					}
-				}
-			});
-		} else if(Common.random() > 0.2 && Common.random() < 0.3){
-			return Bodies.rectangle(x, y, 32, 30, {
-				frictionAir: 0.01,
-				render: {
-					strokeStyle: '#ffffff',
-					sprite: {
-						texture: '//act.cmcmcdn.com/upload/201710/f8e6bdd1572a5e8a2e2f73d8c52b1bf6.png'
-					}
-				}
-			});
-		} else if(Common.random() > 0.3 && Common.random() < 0.4){
-			return Bodies.rectangle(x, y, 28, 36, {
-				frictionAir: 0.01,
-				render: {
-					strokeStyle: '#ffffff',
-					sprite: {
-						texture: '//act.cmcmcdn.com/upload/201710/f8e6bdd1572a5e8a2e2f73d8c52b1bf6.png'
-					}
-				}
-			});
-		}
-		// else if(Common.random() > 0.45 && Common.random() < 0.65){
-		// 	//三角形, 第三个参数代表边数
-		// 	return Bodies.polygon(x, y, Math.round(3), Common.random(20, 50), {
-		// 		render: {
-		// 			strokeStyle: '#ffffff',
-		// 			sprite: {
-		// 				texture: './img/sandwich.png'
-		// 			}
-		// 		}
-		// 	});
-		// }
-		else if(Common.random() > 0.4 && Common.random() < 0.5){
-			return Bodies.rectangle(x, y, 30, 30, {
-				frictionAir: 0.01,
-				render: {
-					strokeStyle: '#ffffff',
-					sprite: {
-						texture: '//act.cmcmcdn.com/upload/201710/f8e6bdd1572a5e8a2e2f73d8c52b1bf6.png'
-					}
-				}
-			});
-		}  else if(Common.random() > 0.5 && Common.random() < 0.6){
-			return Bodies.circle(x, y, 20, {
-				density: 0.0005,
-				frictionAir: 0.01,
-				restitution: 0,
-				friction: 0,
-				render: {
-					sprite: {
-						texture: '//act.cmcmcdn.com/upload/201710/f8e6bdd1572a5e8a2e2f73d8c52b1bf6.png'
-					}
-				}
-			});
-		} else if(Common.random() > 0.6 && Common.random() < 0.8){
-			return Bodies.circle(x, y, 16, {
-				density: 0.0005,
-				frictionAir: 0.01,
-				restitution: 0,
-				friction: 0,
-				render: {
-					sprite: {
-						texture: '//act.cmcmcdn.com/upload/201710/f8e6bdd1572a5e8a2e2f73d8c52b1bf6.png'
-					}
-				}
-			});
-		}else {
-			return Bodies.circle(x, y, 22, {
-				density: 0.0005,
-				frictionAir: 0.01,
-				restitution: 0,
-				friction: 0,
-				render: {
-					sprite: {
-						texture: '//act.cmcmcdn.com/upload/201710/f8e6bdd1572a5e8a2e2f73d8c52b1bf6.png'
-					}
-				}
-			});
-		}
-	});
+    var stack = Composites.stack(20, 20, 28, 6, 0, 0, function(x, y) {
+        if (Common.random() < 0.2) {
+            return Bodies.rectangle(x, y, 32, 20, {
+                frictionAir: 0.01,
+                render: {
+                    strokeStyle: '#14151f',
+                    sprite: {
+                        texture: './img/double11_1.png'
+                    }
+                }
+            });
+        } else if(Common.random() > 0.2 && Common.random() < 0.3){
+            return Bodies.rectangle(x, y, 32, 30, {
+                frictionAir: 0.01,
+                render: {
+                    strokeStyle: '#ffffff',
+                    sprite: {
+                        texture: './img/tmall.png'
+                    }
+                }
+            });
+        } else if(Common.random() > 0.3 && Common.random() < 0.4){
+            return Bodies.rectangle(x, y, 28, 36, {
+                frictionAir: 0.01,
+                render: {
+                    strokeStyle: '#ffffff',
+                    sprite: {
+                        texture: './img/red.png'
+                    }
+                }
+            });
+        }
+        // else if(Common.random() > 0.45 && Common.random() < 0.65){
+        // 	//三角形, 第三个参数代表边数
+        // 	return Bodies.polygon(x, y, Math.round(3), Common.random(20, 50), {
+        // 		render: {
+        // 			strokeStyle: '#ffffff',
+        // 			sprite: {
+        // 				texture: './img/sandwich.png'
+        // 			}
+        // 		}
+        // 	});
+        // }
+        else if(Common.random() > 0.4 && Common.random() < 0.5){
+            return Bodies.rectangle(x, y, 30, 30, {
+                frictionAir: 0.01,
+                render: {
+                    strokeStyle: '#ffffff',
+                    sprite: {
+                        texture: './img/gift.png'
+                    }
+                }
+            });
+        }  else if(Common.random() > 0.5 && Common.random() < 0.6){
+            return Bodies.circle(x, y, 20, {
+                density: 0.0005,
+                frictionAir: 0.01,
+                restitution: 0,
+                friction: 0,
+                render: {
+                    sprite: {
+                        texture: './img/coin.png'
+                    }
+                }
+            });
+        } else if(Common.random() > 0.6 && Common.random() < 0.8){
+            return Bodies.circle(x, y, 16, {
+                density: 0.0005,
+                frictionAir: 0.01,
+                restitution: 0,
+                friction: 0,
+                render: {
+                    sprite: {
+                        texture: './img/duck.png'
+                    }
+                }
+            });
+        }else {
+            return Bodies.circle(x, y, 22, {
+                density: 0.0005,
+                frictionAir: 0.01,
+                restitution: 0,
+                friction: 0,
+                render: {
+                    sprite: {
+                        texture: './img/liebao.png'
+                    }
+                }
+            });
+        }
+    });
 
-	var explosion = function(engine) {
-		var bodies = Composite.allBodies(engine.world);
-		for (var i = 0; i < bodies.length; i++) {
-			var body = bodies[i];
-			if (!body.isStatic && body.position.y >= 300) {
-				var forceMagnitude = 0.05 * body.mass;
-				Body.applyForce(body, body.position, {
-					x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
-					y: -forceMagnitude + Common.random() * -forceMagnitude
-				});
-			}
-		}
-	};
+    var explosion = function(engine) {
+        var bodies = Composite.allBodies(engine.world);
+        for (var i = 0; i < bodies.length; i++) {
+            var body = bodies[i];
+            if (!body.isStatic && body.position.y >= 300) {
+                var forceMagnitude = 0.05 * body.mass;
+                Body.applyForce(body, body.position, {
+                    x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
+                    y: -forceMagnitude + Common.random() * -forceMagnitude
+                });
+            }
+        }
+    };
 
-	//池
-	World.add(world, stack);
-	// var five;
-	// var vertexs = [];
-	// $(svg_data).find('path').each(function(i, path) {
-	// 	vertexs.push(Vertices.scale(Svg.pathToVertices(path, 30), 0.8, 0.8));
-	// });
-	// five = Bodies.fromVertices(400, 400, vertexs, {
-	// 	isStatic: true,
-	// 	render: {
-	// 		fillStyle: 'transparent',
-	// 		strokeStyle: 'transparent',
-	// 		lineWidth: 0
-	// 	}
-	// }, true);
-	// World.add(world, five);
-	// setTimeout(function(){
-	// 	World.add(world, Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options))
-	// 	World.remove(world, five);
-	// 	World.add(world, stack);
-	// }, timeout*6)
-	setTimeout(function(){
-		explosion(engine);
-	}, timeout*1.5)
+    //池
+    World.add(world, stack);
+    // var five;
+    // var vertexs = [];
+    // $(svg_data).find('path').each(function(i, path) {
+    // 	vertexs.push(Vertices.scale(Svg.pathToVertices(path, 30), 0.8, 0.8));
+    // });
+    // five = Bodies.fromVertices(400, 400, vertexs, {
+    // 	isStatic: true,
+    // 	render: {
+    // 		fillStyle: 'transparent',
+    // 		strokeStyle: 'transparent',
+    // 		lineWidth: 0
+    // 	}
+    // }, true);
+    // World.add(world, five);
+    // setTimeout(function(){
+    // 	World.add(world, Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options))
+    // 	World.remove(world, five);
+    // 	World.add(world, stack);
+    // }, timeout*6)
+    setTimeout(function(){
+        explosion(engine);
+    }, timeout*1.5)
 
-	//svg加入元素；2代表两行, 280->横坐标，-3100->纵坐标
-	// World.add(world, Composites.stack(300, -2500, 3, 58, 3, 5, function(x, y) {
-	// 	if (Query.point([five], { x: x, y: y }).length === 0) {
-	// 		// return Bodies.polygon(x, y, 6, 12, {
-	// 		// 	frictionAir: 0.02,
-	// 		// 	friction: 0.01,
-	// 		// 	restitution: 0,
-	// 		// 	render: {
-	// 		// 		fillStyle: ["#FFFFFF", "#4285F4", "#EA4335", "#FBBC05", "#34A853"][Math.round(Math.random() * 4)]
-	// 		// 	}
-	// 		// });
-	// 		if (Common.random() < 0.3) {
-	// 			return Bodies.circle(x, y, 10, {
-	// 				density: 0.0005,
-	// 				frictionAir: 0.01,
-	// 				restitution: 0,
-	// 				friction: 0,
-	// 				render: {
-	// 					sprite: {
-	// 						texture: './img/tmall.png'
-	// 					}
-	// 				}
-	// 			});
-	// 		}else if(Common.random() > 0.3 && Common.random() < 0.6){
-	// 			return Bodies.rectangle(x, y, 18, 26, {
-	// 				frictionAir: 0.01,
-	// 				render: {
-	// 					strokeStyle: '#ffffff',
-	// 					sprite: {
-	// 						texture: './img/red2.png'
-	// 					}
-	// 				}
-	// 			})
-	// 		}else{
-	// 			return Bodies.circle(x, y, 10, {
-	// 				density: 0.0005,
-	// 				frictionAir: 0.01,
-	// 				restitution: 0,
-	// 				friction: 0,
-	// 				render: {
-	// 					sprite: {
-	// 						texture: './img/taobao2.png'
-	// 					}
-	// 				}
-	// 			});
-	// 		}
-	// 	}
-	// }));
+    //svg加入元素；2代表两行, 280->横坐标，-3100->纵坐标
+    // World.add(world, Composites.stack(300, -2500, 3, 58, 3, 5, function(x, y) {
+    // 	if (Query.point([five], { x: x, y: y }).length === 0) {
+    // 		// return Bodies.polygon(x, y, 6, 12, {
+    // 		// 	frictionAir: 0.02,
+    // 		// 	friction: 0.01,
+    // 		// 	restitution: 0,
+    // 		// 	render: {
+    // 		// 		fillStyle: ["#FFFFFF", "#4285F4", "#EA4335", "#FBBC05", "#34A853"][Math.round(Math.random() * 4)]
+    // 		// 	}
+    // 		// });
+    // 		if (Common.random() < 0.3) {
+    // 			return Bodies.circle(x, y, 10, {
+    // 				density: 0.0005,
+    // 				frictionAir: 0.01,
+    // 				restitution: 0,
+    // 				friction: 0,
+    // 				render: {
+    // 					sprite: {
+    // 						texture: './img/tmall.png'
+    // 					}
+    // 				}
+    // 			});
+    // 		}else if(Common.random() > 0.3 && Common.random() < 0.6){
+    // 			return Bodies.rectangle(x, y, 18, 26, {
+    // 				frictionAir: 0.01,
+    // 				render: {
+    // 					strokeStyle: '#ffffff',
+    // 					sprite: {
+    // 						texture: './img/red2.png'
+    // 					}
+    // 				}
+    // 			})
+    // 		}else{
+    // 			return Bodies.circle(x, y, 10, {
+    // 				density: 0.0005,
+    // 				frictionAir: 0.01,
+    // 				restitution: 0,
+    // 				friction: 0,
+    // 				render: {
+    // 					sprite: {
+    // 						texture: './img/taobao2.png'
+    // 					}
+    // 				}
+    // 			});
+    // 		}
+    // 	}
+    // }));
 
-	//弹簧
-	var changeVal = 400;
-	var group = Body.nextGroup(true),
-		counter = -1;
-	//链的个数，属性
-	var ropeC = Composites.stack(changeVal, 0, 2, 1, 0, 10, function(x, y) {
-		return Bodies.rectangle(x, y, 30, 15, {
-			collisionFilter: { group: group },
-			chamfer: 0.5, //节点的四角弧度
-		});
-	});
+    //弹簧
+    var changeVal = 400;
+    var group = Body.nextGroup(true),
+        counter = -1;
+    //链的个数，属性
+    var ropeC = Composites.stack(changeVal, 0, 2, 1, 0, 10, function(x, y) {
+        return Bodies.rectangle(x, y, 30, 15, {
+            collisionFilter: { group: group },
+            chamfer: 0.5, //节点的四角弧度
+        });
+    });
 
-	var arm = Bodies.rectangle(400, 100, 40, 25, {
-		render: {
-			strokeStyle: '#3c3f41',
-			sprite: {
-				texture: '//act.cmcmcdn.com/upload/201710/bd2bd1fb94a20ca2f9eea1088925050a.png'
-			}
-		}
-	});
-	ropeC.bodies.push(arm)
+    var arm = Bodies.rectangle(400, 100, 40, 25, {
+        render: {
+            strokeStyle: '#3c3f41',
+            sprite: {
+                texture: './img/arm.png'
+            }
+        }
+    });
+    ropeC.bodies.push(arm)
 
-	//链，length：节点长度
-	Composites.chain(ropeC, 0.5, 0, -0.5, 0, {
-		stiffness: 1,
-		length: 0, //连接处的长度
-		render: {
-			visible: false
-		}
-	});
-	Composite.add(ropeC, Constraint.create({
-		bodyB: ropeC.bodies[0],
-		pointB: { x: -20, y: 0 },
-		pointA: { x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y },
-		// stiffness: 0.03, //弹簧, 0是线
-		stiffness: 0.015,
-		damping: 1,
-		length: 10,
-		render: {
-			visible: true,
-			strokeStyle: '#14151f',
-			sprite: {
-				texture: '//act.cmcmcdn.com/upload/201710/bd2bd1fb94a20ca2f9eea1088925050a.png'
-			}
-		}
-	}));
-	console.log('ropeC', ropeC.constraints[2])
+    //链，length：节点长度
+    Composites.chain(ropeC, 0.5, 0, -0.5, 0, {
+        stiffness: 1,
+        length: 0, //连接处的长度
+        render: {
+            visible: false
+        }
+    });
+    Composite.add(ropeC, Constraint.create({
+        bodyB: ropeC.bodies[0],
+        pointB: { x: -20, y: 0 },
+        pointA: { x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y },
+        // stiffness: 0.03, //弹簧, 0是线
+        stiffness: 0.015,
+        damping: 1,
+        length: 10,
+        render: {
+            visible: true,
+            strokeStyle: '#14151f',
+            sprite: {
+                texture: './img/liebao.png'
+            }
+        }
+    }));
+    console.log('ropeC', ropeC.constraints[2])
 
-	var vertexSets = [],
-		ragdoll,
-		color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58']);
-	//连接, 第三个参数是爪子的大小比例, (400,100)-初始位置
-	ragdoll = Example.sprites.ragdoll(400, 100, 1.1, {}, vertexSets);
-	var ragdollConstraint = Constraint.create({
-		bodyA: ropeC.bodies[ropeC.bodies.length-1],
-		bodyB: ragdoll.bodies[0],
-		pointA: { x: 28, y: 0 },
-		pointB: { x: 0, y: -10 }, //爪子的连接位置
-		stiffness: 0,
-		length: 0
-	});
+    var vertexSets = [],
+        ragdoll,
+        color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58']);
+    //连接, 第三个参数是爪子的大小比例, (400,100)-初始位置
+    ragdoll = Example.sprites.ragdoll(400, 100, 1.1, {}, vertexSets);
+    var ragdollConstraint = Constraint.create({
+        bodyA: ropeC.bodies[ropeC.bodies.length-1],
+        bodyB: ragdoll.bodies[0],
+        pointA: { x: 28, y: 0 },
+        pointB: { x: 0, y: -10 }, //爪子的连接位置
+        stiffness: 0,
+        length: 0
+    });
 
-	//爪子出现
-	setTimeout(function(){
-		World.add(world, [ropeC, ragdoll, ragdollConstraint]);
-	}, timeout*3)
+    //爪子出现
+    setTimeout(function(){
+        World.add(world, [ropeC, ragdoll, ragdollConstraint]);
+    }, timeout*3)
 
-	console.log('ragdoll:', ragdoll)
+    console.log('ragdoll:', ragdoll)
 
-	var hasCatched = false,
-		i = 3.3, j = -3.15,
-		x = 0.5, y = -0.4
-	Events.on(engine, 'beforeUpdate', function(event) {
-		if(!ragdoll || ragdoll.length <= 0) return
+    var hasCatched = false,
+        i = 3.3, j = -3.15,
+        x = 0.5, y = -0.4
+    Events.on(engine, 'beforeUpdate', function(event) {
+        if(!ragdoll || ragdoll.length <= 0) return
 
-		//链条摇摆的调整
-		counter += 0.03;
-		if (counter < 0) {
-			return;
-		}
-		var px = 400 + 100 * Math.sin(counter);
-		// Body.setVelocity(ropeC.bodies[0], { x: px - ropeC.bodies[0].position.x, y: 0 }); //速度
-		// Body.setPosition(ropeC.bodies[0], { x: px, y: ropeC.bodies[0].position.y });
+        //链条摇摆的调整
+        counter += 0.03;
+        if (counter < 0) {
+            return;
+        }
+        var px = 400 + 100 * Math.sin(counter);
+        // Body.setVelocity(ropeC.bodies[0], { x: px - ropeC.bodies[0].position.x, y: 0 }); //速度
+        // Body.setPosition(ropeC.bodies[0], { x: px, y: ropeC.bodies[0].position.y });
 
-		// var py = 400 + 100 * Math.sin(engine.timing.timestamp * 0.002);
-		// // Body.setVelocity(ropeC.bodies[0], { x: 0, y: py - ropeC.bodies[0].position.y });
-		// Body.setPosition(ropeC.bodies[0], { x: 0, y: py });
+        // var py = 400 + 100 * Math.sin(engine.timing.timestamp * 0.002);
+        // // Body.setVelocity(ropeC.bodies[0], { x: 0, y: py - ropeC.bodies[0].position.y });
+        // Body.setPosition(ropeC.bodies[0], { x: 0, y: py });
 
-		//初始爪子状态
-		if(!hasCatched){
-			Body.setAngle(ragdoll.bodies[1], 0.5);
-			Body.setAngle(ragdoll.bodies[2], 3.3);
-			Body.setAngle(ragdoll.bodies[3], -0.4);
-			Body.setAngle(ragdoll.bodies[4], -3.15);
-		}else{
-			i -= 0.01;j += 0.01;x -= 0.005;y += 0.005
-			if(i <= 1.5) {
-				i = 1.5;j = -1.5;
-			}
-			if(x <= -0.9){
-				x = -0.9; y = 0.9;
-			}
-			// x = 0.5; y = -0.4
-			Body.setAngle(ragdoll.bodies[1], x);
-			Body.setAngle(ragdoll.bodies[2], i);
-			Body.setAngle(ragdoll.bodies[3], y);
-			Body.setAngle(ragdoll.bodies[4], j);
-		}
-		Body.set(ragdoll.bodies[1], 'friction', 1)
-		Body.set(ragdoll.bodies[3], 'friction', 1)
-	});
+        //初始爪子状态
+        if(!hasCatched){
+            Body.setAngle(ragdoll.bodies[1], 0.5);
+            Body.setAngle(ragdoll.bodies[2], 3.3);
+            Body.setAngle(ragdoll.bodies[3], -0.4);
+            Body.setAngle(ragdoll.bodies[4], -3.15);
+        }else{
+            i -= 0.01;j += 0.01;x -= 0.005;y += 0.005
+            if(i <= 1.5) {
+                i = 1.5;j = -1.5;
+            }
+            if(x <= -0.9){
+                x = -0.9; y = 0.9;
+            }
+            // x = 0.5; y = -0.4
+            Body.setAngle(ragdoll.bodies[1], x);
+            Body.setAngle(ragdoll.bodies[2], i);
+            Body.setAngle(ragdoll.bodies[3], y);
+            Body.setAngle(ragdoll.bodies[4], j);
+        }
+        Body.set(ragdoll.bodies[1], 'friction', 1)
+        Body.set(ragdoll.bodies[3], 'friction', 1)
+    });
 
-	// add mouse control
-	var mouse = Mouse.create(render.canvas),
-		mouseConstraint = MouseConstraint.create(engine, {
-			mouse: mouse,
-			constraint: {
-				stiffness: 0.2,
-				render: {
-					visible: false
-				}
-			}
-		});
+    // add mouse control
+    var mouse = Mouse.create(render.canvas),
+        mouseConstraint = MouseConstraint.create(engine, {
+            mouse: mouse,
+            constraint: {
+                stiffness: 0.2,
+                render: {
+                    visible: false
+                }
+            }
+        });
 
-	World.add(world, mouseConstraint);
+    World.add(world, mouseConstraint);
 
-	//爪子伸下去后增加压力
-	Events.on(mouseConstraint, 'mouseup', function(event) {
-		var mousePosition = event.mouse.position;
-		console.log('mouseup at ' + mousePosition.x + ' ' + mousePosition.y);
+    //爪子伸下去后增加压力
+    Events.on(mouseConstraint, 'mouseup', function(event) {
+        var mousePosition = event.mouse.position;
+        console.log('mouseup at ' + mousePosition.x + ' ' + mousePosition.y);
 
-		var py = 300 + 100 * Math.sin(engine.timing.timestamp * 0.002);
-		console.log('mouseup', ragdoll.bodies[0]);
-		// Body.setVelocity(ragdoll.bodies[0], { x: 0, y: py - ragdoll.bodies[0].position.y });
-		// Body.setVelocity(ragdoll.bodies[0], { x: 0, y: 10 });
-		// Body.setPosition(ragdoll.bodies[0], { x: 404, y: 403 });
-		console.log('ropeC.constraints[2]', ropeC.constraints[2]);
-		ropeC.constraints[2].length = 250
-		//抓娃娃状态
-		setTimeout(function(){
-			hasCatched = true
-		}, timeout*3)
-		setTimeout(function(){
-			ropeC.constraints[2].length = 10
-		}, timeout*8)
-	});
+        var py = 300 + 100 * Math.sin(engine.timing.timestamp * 0.002);
+        // Body.setVelocity(ragdoll.bodies[0], { x: 0, y: py - ragdoll.bodies[0].position.y });
+        // Body.setVelocity(ragdoll.bodies[0], { x: 0, y: 10 });
+        // Body.setPosition(ragdoll.bodies[0], { x: 404, y: 403 });
+        ropeC.constraints[2].length = 250
+        //抓娃娃状态
+        setTimeout(function(){
+            hasCatched = true
+        }, timeout*3)
+        setTimeout(function(){
+            ropeC.constraints[2].length = 10
+        }, timeout*8)
+    });
 
-	// keep the mouse in sync with rendering
-	render.mouse = mouse;
+    // keep the mouse in sync with rendering
+    render.mouse = mouse;
 
-	// fit the render viewport to the scene
-	// 可控制空间所占用的大小
-	Render.lookAt(render, {
-		min: { x: 0, y: 0 },
-		max: { x: 800, y: 600 }
-	});
+    // fit the render viewport to the scene
+    // 可控制空间所占用的大小
+    Render.lookAt(render, {
+        min: { x: 0, y: 0 },
+        max: { x: 800, y: 600 }
+    });
 
-	// context for MatterTools.Demo
-	return {
-		engine: engine,
-		runner: runner,
-		render: render,
-		canvas: render.canvas,
-		stop: function() {
-			Matter.Render.stop(render);
-			Matter.Runner.stop(runner);
-		}
-	};
+    // context for MatterTools.Demo
+    return {
+        engine: engine,
+        runner: runner,
+        render: render,
+        canvas: render.canvas,
+        stop: function() {
+            Matter.Render.stop(render);
+            Matter.Runner.stop(runner);
+        }
+    };
 };
 
 //爪子
 //捉住有两个因素，1.改变节点角度，2.改变摩擦力
 Example.sprites.ragdoll = function(x, y, scale, options, vertexSets) {
-	scale = typeof scale === 'undefined' ? 1 : scale;
+    scale = typeof scale === 'undefined' ? 1 : scale;
 
-	var Body = Matter.Body,
-		Bodies = Matter.Bodies,
-		Constraint = Matter.Constraint,
-		Composite = Matter.Composite,
-		Common = Matter.Common;
+    var Body = Matter.Body,
+        Bodies = Matter.Bodies,
+        Constraint = Matter.Constraint,
+        Composite = Matter.Composite,
+        Common = Matter.Common;
 
-	var chestOptions = Common.extend({
-		label: 'chest',
-		collisionFilter: {
-			group: Body.nextGroup(true)
-		},
-		chamfer: {
-			radius: [20 * scale, 20 * scale, 26 * scale, 26 * scale]
-		},
-		render: {
-			fillStyle: '#d81e06',
-			sprite: {
-				texture: '//act.cmcmcdn.com/upload/201710/bd2bd1fb94a20ca2f9eea1088925050a.png'
-			}
-		}
-	}, options);
+    var chestOptions = Common.extend({
+        label: 'chest',
+        collisionFilter: {
+            group: Body.nextGroup(true)
+        },
+        chamfer: {
+            radius: [20 * scale, 20 * scale, 26 * scale, 26 * scale]
+        },
+        render: {
+            fillStyle: '#d81e06',
+            sprite: {
+                texture: './img/chest.png'
+            }
+        }
+    }, options);
 
-	var leftArmOptions = Common.extend({
-		label: 'left-arm',
-		collisionFilter: {
-			group: Body.nextGroup(true)
-		},
-		chamfer: {
-			radius: 10 * scale
-		},
-		render: {
-			fillStyle: '#feb742'
-		}
-	}, options);
+    var leftArmOptions = Common.extend({
+        label: 'left-arm',
+        collisionFilter: {
+            group: Body.nextGroup(true)
+        },
+        chamfer: {
+            radius: 10 * scale
+        },
+        render: {
+            fillStyle: '#feb742'
+        }
+    }, options);
 
-	var leftLowerArmOptions = Common.extend({}, leftArmOptions, {
-		label: 'left-lower-arm',
-		render: {
-			fillStyle: '#fed259'
-		}
-	});
+    var leftLowerArmOptions = Common.extend({}, leftArmOptions, {
+        label: 'left-lower-arm',
+        render: {
+            fillStyle: '#fed259'
+        }
+    });
 
-	var rightArmOptions = Common.extend({
-		label: 'right-arm',
-		collisionFilter: {
-			group: Body.nextGroup(true)
-		},
-		chamfer: {
-			radius: 10 * scale
-		},
-		render: {
-			fillStyle: '#feb742'
-		}
-	}, options);
+    var rightArmOptions = Common.extend({
+        label: 'right-arm',
+        collisionFilter: {
+            group: Body.nextGroup(true)
+        },
+        chamfer: {
+            radius: 10 * scale
+        },
+        render: {
+            fillStyle: '#feb742'
+        }
+    }, options);
 
-	var rightLowerArmOptions = Common.extend({}, rightArmOptions, {
-		label: 'right-lower-arm',
-		render: {
-			fillStyle: '#fed259'
-		}
-	});
+    var rightLowerArmOptions = Common.extend({}, rightArmOptions, {
+        label: 'right-lower-arm',
+        render: {
+            fillStyle: '#fed259'
+        }
+    });
 
-	var chest = Bodies.rectangle(x, y, 60 * scale, 30 * scale, chestOptions);
-	var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 20 * scale, 54 * scale, rightArmOptions);
-	var rightLowerArm = Bodies.rectangle(x + 39 * scale, y + 25 * scale, 18 * scale, 78 * scale, rightLowerArmOptions);
-	var leftUpperArm = Bodies.rectangle(x - 39 * scale, y - 15 * scale, 20 * scale, 54 * scale, leftArmOptions);
-	var leftLowerArm = Bodies.rectangle(x - 39 * scale, y + 25 * scale, 18 * scale, 78 * scale, leftLowerArmOptions);
-	// var leftLowerArm = Bodies.fromVertices(x - 39 * scale, y + 25 * scale, vertexSets, {
-	// 	render: {
-	// 		fillStyle: '#556270',
-	// 		strokeStyle: '#556270',
-	// 		lineWidth: 1
-	// 	}
-	// }, true)
-	var chestToRightUpperArm = Constraint.create({
-		label: 'CHEST_TO_RIGHT_UPPER',
-		bodyA: chest,
-		pointA: {
-			x: 24 * scale,
-			y: 0  //与手的位置
-		},
-		pointB: {
-			x: 0,
-			// y: -18 * scale
-			y: -38 * scale
-		},
-		bodyB: rightUpperArm,
-		stiffness: 1,
-		angularStiffness: 0.1,
-		length: 0,
-		render: {
-			visible: false //弹簧是否显示
-		}
-	});
+    var chest = Bodies.rectangle(x, y, 60 * scale, 30 * scale, chestOptions);
+    var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 20 * scale, 54 * scale, rightArmOptions);
+    var rightLowerArm = Bodies.rectangle(x + 39 * scale, y + 25 * scale, 18 * scale, 78 * scale, rightLowerArmOptions);
+    var leftUpperArm = Bodies.rectangle(x - 39 * scale, y - 15 * scale, 20 * scale, 54 * scale, leftArmOptions);
+    var leftLowerArm = Bodies.rectangle(x - 39 * scale, y + 25 * scale, 18 * scale, 78 * scale, leftLowerArmOptions);
+    // var leftLowerArm = Bodies.fromVertices(x - 39 * scale, y + 25 * scale, vertexSets, {
+    // 	render: {
+    // 		fillStyle: '#556270',
+    // 		strokeStyle: '#556270',
+    // 		lineWidth: 1
+    // 	}
+    // }, true)
+    var chestToRightUpperArm = Constraint.create({
+        label: 'CHEST_TO_RIGHT_UPPER',
+        bodyA: chest,
+        pointA: {
+            x: 24 * scale,
+            y: 0  //与手的位置
+        },
+        pointB: {
+            x: 0,
+            // y: -18 * scale
+            y: -38 * scale
+        },
+        bodyB: rightUpperArm,
+        stiffness: 1,
+        angularStiffness: 0.1,
+        length: 0,
+        render: {
+            visible: false //弹簧是否显示
+        }
+    });
 
-	var chestToLeftUpperArm = Constraint.create({
-		label: 'CHEST_TO_LEFT_UPPER',
-		bodyA: chest,
-		pointA: {
-			x: -24 * scale,
-			y: 0
-		},
-		pointB: {
-			x: 0,
-			// y: -18 * scale
-			y: -38 * scale
-		},
-		bodyB: leftUpperArm,
-		stiffness: 1,
-		angularStiffness: 0.1,
-		length: 0,
-		render: {
-			visible: false
-		}
-	});
+    var chestToLeftUpperArm = Constraint.create({
+        label: 'CHEST_TO_LEFT_UPPER',
+        bodyA: chest,
+        pointA: {
+            x: -24 * scale,
+            y: 0
+        },
+        pointB: {
+            x: 0,
+            // y: -18 * scale
+            y: -38 * scale
+        },
+        bodyB: leftUpperArm,
+        stiffness: 1,
+        angularStiffness: 0.1,
+        length: 0,
+        render: {
+            visible: false
+        }
+    });
 
-	var upperToLowerRightArm = Constraint.create({
-		label: 'UPPER_TO_LOWER_RIGHT',
-		bodyA: rightUpperArm,
-		bodyB: rightLowerArm,
-		pointA: {
-			x: 0,
-			y: 20 * scale
-		},
-		pointB: {
-			x: 0,
-			y: -25 * scale
-		},
-		stiffness: 1,
-		angularStiffness: 1.5,  //节点的角硬度
-		render: {
-			visible: false
-		}
-	});
+    var upperToLowerRightArm = Constraint.create({
+        label: 'UPPER_TO_LOWER_RIGHT',
+        bodyA: rightUpperArm,
+        bodyB: rightLowerArm,
+        pointA: {
+            x: 0,
+            y: 20 * scale
+        },
+        pointB: {
+            x: 0,
+            y: -25 * scale
+        },
+        stiffness: 1,
+        angularStiffness: 1.5,  //节点的角硬度
+        render: {
+            visible: false
+        }
+    });
 
-	var upperToLowerLeftArm = Constraint.create({
-		label: 'UPPER_TO_LOWER_LEFT',
-		bodyA: leftUpperArm,
-		bodyB: leftLowerArm,
-		pointA: {
-			x: 0,
-			y: 20 * scale
-		},
-		pointB: {
-			x: 0,
-			y: -25 * scale
-		},
-		stiffness: 1,
-		angularStiffness: 1.5,
-		render: {
-			visible: false
-		}
-	});
+    var upperToLowerLeftArm = Constraint.create({
+        label: 'UPPER_TO_LOWER_LEFT',
+        bodyA: leftUpperArm,
+        bodyB: leftLowerArm,
+        pointA: {
+            x: 0,
+            y: 20 * scale
+        },
+        pointB: {
+            x: 0,
+            y: -25 * scale
+        },
+        stiffness: 1,
+        angularStiffness: 1.5,
+        render: {
+            visible: false
+        }
+    });
 
-	var person = Composite.create({
-		bodies: [
-			chest, leftLowerArm, leftUpperArm,
-			rightLowerArm, rightUpperArm,
-		],
-		constraints: [
-			upperToLowerLeftArm, upperToLowerRightArm, chestToLeftUpperArm,
-			chestToRightUpperArm,
-		]
-	});
+    var person = Composite.create({
+        bodies: [
+            chest, leftLowerArm, leftUpperArm,
+            rightLowerArm, rightUpperArm,
+        ],
+        constraints: [
+            upperToLowerLeftArm, upperToLowerRightArm, chestToLeftUpperArm,
+            chestToRightUpperArm,
+        ]
+    });
 
-	return person;
+    return person;
 };

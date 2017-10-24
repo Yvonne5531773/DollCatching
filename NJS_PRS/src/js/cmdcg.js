@@ -554,9 +554,11 @@ DC.do = function() {
 		leftWall = Bodies.rectangle(-width* 0.13+offset, 300, thick, 620, options), //3-厚度 4-高度
 		rightWall = Bodies.rectangle(width* 0.6+offset, 300, thick, 620, options); //3-厚度 4-高度
 	World.add(world, [
-		bottomWall,
-		// leftWall,
-		// rightWall
+		// bottomWall,
+		Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options), //上
+		Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options), //下
+		Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options), //右
+		Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)  //左
 	]);
 
 	var dblChoseAlert, clicked = false,
@@ -723,7 +725,7 @@ DC.do = function() {
 		var bodies = Composite.allBodies(engine.world);
 		for (var i = 0; i < bodies.length; i++) {
 			var body = bodies[i];
-			console.log('body', body)
+			// console.log('body', body)
 			if (body.position.y <= 400 && !~['chest', 'left-arm', 'right-arm', ].indexOf(body.label)) {
 				Body.setStatic(body, bool);
 			}
