@@ -8,7 +8,16 @@
 
 (function() {
 	var sourceLinkRoot = 'https://github.com/liabru/matter-js/blob/master/examples';
-
+	var CMDC = {
+		sourceLinkRoot: '//localhost:8000/examples/',
+		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+		//sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/output/',
+		dc: {},
+		playAgain: false,
+		bhObj: {},
+		timeout: 1000,
+		eventOff: false,
+	}
 	var demo = MatterTools.Demo.create({
 		// toolbar: {
 		// 	title: 'doll-catching-demo',
@@ -45,6 +54,12 @@
 				id: 'airFriction',
 				init: Example.airFriction,
 				sourceLink: sourceLinkRoot + '/airFriction.js'
+			},
+			{
+				name: 'Main',
+				id: 'main',
+				init: DC.do,
+				sourceLink: CMDC.sourceLinkRoot + '/main.js'
 			},
 			{
 				name: 'Avalanche',
