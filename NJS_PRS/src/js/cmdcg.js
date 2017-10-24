@@ -32,7 +32,7 @@ DC.do = function() {
 	DC.do.createRagdoll = function(x, y, scale, options, vertexSets) {
 		var massVal = 1,
 			frictionAirVal = 0.01,
-			timeScaleVal = 1;
+			timeScaleVal = 0.8;
 		scale = typeof scale === 'undefined' ? 1 : scale;
 		var chestOptions = Common.extend({
 			label: 'chest',
@@ -215,7 +215,7 @@ DC.do = function() {
 
 	//构造物品
 	DC.do.createStacks = function(criteria){
-		var massVal = 0.1
+		var massVal = 0.1, timeScaleVal = 0.7;
 		return Composites.stack(criteria.x, criteria.y, criteria.columns, criteria.rows, 0, 0, function(x, y) {
 			if (Common.random() < 0.05) {
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 26, 16, {
@@ -227,7 +227,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -242,7 +242,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -256,7 +256,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -270,7 +270,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -283,7 +283,7 @@ DC.do = function() {
 							texture: sourceLinkRoot + 'img/coin.png'
 						}
 					},
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -296,7 +296,7 @@ DC.do = function() {
 							texture: sourceLinkRoot + 'img/duck.png'
 						}
 					},
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -309,7 +309,7 @@ DC.do = function() {
 							texture: '//act.cmcmcdn.com/upload/201710/bd2bd1fb94a20ca2f9eea1088925050a.png'
 						}
 					},
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -323,7 +323,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -337,7 +337,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -351,7 +351,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -365,7 +365,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -379,7 +379,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -393,7 +393,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -407,7 +407,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -421,7 +421,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -435,7 +435,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -449,7 +449,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -463,7 +463,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -477,7 +477,7 @@ DC.do = function() {
 						}
 					},
 					chamfer: { radius: 5 },
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -490,7 +490,7 @@ DC.do = function() {
 							texture: sourceLinkRoot + 'img/liebao.png'
 						}
 					},
-					friction: 0.7,
+					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal
 				});
@@ -510,11 +510,14 @@ DC.do = function() {
 
 	var ragdollShow = false,
 		ragdollMove = false,
-		scaleoffest = 0.1,
-		timeScaleVal = 0.6;
+		scaleoffest = 0.1;
 	var	engine = Engine.create({
-			// enableSleeping: true
-		});
+		// velocityIterations: 1,
+		// constraintIterations: 1,
+		// positionIterations: 1
+		// enableSleeping: true
+		timeScale: 0.8
+	});
 	var	world = engine.world;
 	// 整个屏幕所占用的大小
 	var render = Render.create({
@@ -611,7 +614,7 @@ DC.do = function() {
 		}
 	$('.start-btn').click(clickFun)
 
-	//物品池
+	//物品池, 最好不超过40个
 	var	criteria = {
 			x: 0,
 			y: 400,
@@ -708,11 +711,11 @@ DC.do = function() {
 		}
 	};
 
+	//设置静态
 	var setBodiesStatic = function(engine, bool){
 		var bodies = Composite.allBodies(engine.world);
 		for (var i = 0; i < bodies.length; i++) {
 			var body = bodies[i];
-			// console.log('body', body)
 			if (body.position.y <= 400 && !~['chest', 'left-arm', 'right-arm', ].indexOf(body.label)) {
 				Body.setStatic(body, bool);
 			}
@@ -949,9 +952,11 @@ DC.do = function() {
 				}
 			}
 		});
+
 	//允许scroll
 	mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
 	mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
+	//允许鼠标拖动
 	// World.add(world, mouseConstraint);
 
 	//爪子伸下去后增加压力
@@ -969,7 +974,6 @@ DC.do = function() {
 		$('#cm-dc-switch1').prop("checked", false);
 		clickFun()
 	});
-
 	render.mouse = mouse;
 
 	// 可控制空间所占用的大小
@@ -989,6 +993,14 @@ DC.do = function() {
 
 	//更改鼠标样式
 	$('#d-c').css({cursor:"url('https://www.duba.com/static/v2/images/point.cur'),auto"})
+
+
+	//减少引擎更新时间
+	function enginRun() {
+		window.requestAnimationFrame(enginRun);
+		Engine.update(engine, 1000 / 60);
+	}
+	// enginRun()
 
 	return {
 		engine: engine,

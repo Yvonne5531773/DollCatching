@@ -158,11 +158,11 @@ var CMDC = {
 		var obj = {
 			toolbar: {
 				title: '天猫双11主场',
-				url: '',
+				url: ''
 			},
 			tools: {
 				inspector: false,
-				gui: false
+				gui: true
 			},
 			startExample: 'cmdcg',
 			examples: [
