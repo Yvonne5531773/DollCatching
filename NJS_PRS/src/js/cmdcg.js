@@ -215,7 +215,7 @@ DC.do = function() {
 
 	//构造物品
 	DC.do.createStacks = function(criteria){
-		var massVal = 0.1, timeScaleVal = 0.7;
+		var massVal = 0.1, timeScaleVal = 0.5;
 		return Composites.stack(criteria.x, criteria.y, criteria.columns, criteria.rows, 0, 0, function(x, y) {
 			if (Common.random() < 0.05) {
 				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*15, 26, 16, {
@@ -879,7 +879,7 @@ DC.do = function() {
 					ragdollMove = true;
 					playAgain = false;
 					clicked = false;
-					spring.stiffness = 0.01
+					spring.stiffness = 0.02
 					// World.add(world, mouseConstraint);
 				}
 			}else{
