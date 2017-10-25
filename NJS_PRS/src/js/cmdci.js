@@ -1,8 +1,9 @@
 
 var CMDC = {
 	// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-	sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+	// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 	//sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/output/',
+	sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
 	dc: {},
 	playAgain : false,
 	bhObj : {},
@@ -24,17 +25,15 @@ var CMDC = {
 			mdScript = document.createElement("script"),
 			mainScript = document.createElement("script"),
 			alertScript = document.createElement("script"),
-			bhScript = document.createElement("script"),
 			alertCss = document.createElement("link"),
 			tipScript = document.createElement("script"),
 			tipCss = document.createElement("link"),
 			sourceLinkRoot = CMDC.sourceLinkRoot;
 
 		pfScript.src = sourceLinkRoot + "js/polyfill.js";
-		mScript.src = sourceLinkRoot + "js/matter.min.js";
+		mScript.src = sourceLinkRoot + "js/matter.js";
 		mgScript.src = sourceLinkRoot + "js/matter-tools.gui.js";
 		mdScript.src = sourceLinkRoot + "js/matter-tools.demo.js";
-		bhScript.src = sourceLinkRoot + "js/cmdcbh.js";
 		mainScript.src = sourceLinkRoot + "js/cmdcg.js";
 		alertScript.src = sourceLinkRoot + "js/simpleAlert.js";
 		tipScript.src = sourceLinkRoot + "js/tipso.min.js";
@@ -55,7 +54,6 @@ var CMDC = {
 			oHead.appendChild(mainScript);
 			oHead.appendChild(alertScript);
 			oHead.appendChild(tipScript);
-			oHead.appendChild(bhScript);
 		}, 500)
 	},
 	removejscssfile : function(filename, filetype){
@@ -161,8 +159,7 @@ var CMDC = {
 				url: ''
 			},
 			tools: {
-				inspector: false,
-				gui: true
+				gui: false
 			},
 			startExample: 'cmdcg',
 			examples: [
@@ -178,6 +175,58 @@ var CMDC = {
 		dc = MatterTools.Demo.create(obj);
 		document.body.appendChild(dc.dom.root);
 		MatterTools.Demo.start(dc);
+	},
+	buildWalls: function(){
+		var resource = {
+			cmdcObjectBotImg: '//act.cmcmcdn.com/upload/201710/1a0ea44ac368226ee4bb035db276356a.png',
+			cmdcObjectLeftImg: '//act.cmcmcdn.com/upload/201710/1a0ea44ac368226ee4bb035db276356a.png',
+		}
+		var cmdcObjectObj = {
+			$: function(className){
+				return document.querySelector(className);
+			},
+			init: function(resource){
+				cmdcObjectObj.createDom(resource)
+			},
+			createDom: function(resource){
+				var cssStr = '@-webkit-keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-100px);transform: translateY(-100px);}} @keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-100px);transform: translateY(-100px); }}' +
+					'.move_upper { -webkit-animation-name: move_upper;animation-name: move_upper; -webkit-animation-duration: .7s;animation-duration: .7s; -webkit-animation-iteration-count: 1;animation-iteration-count: 1; -webkit-animation-fill-mode: forwards;animation-fill-mode: forwards;}' +
+					'.cm-dc-bottom {cursor: pointer;z-index:99999;width:100%;height:100px;line-height:35px;position:fixed;bottom:0;left:0;font-size:14px;color:#000;text-align:center;;display:none} ' +
+					'.cm-dc-left {cursor: pointer;z-index:99999;position:fixed;bottom:0;left:0;top:0;display:none}';
+				var cssStyle = {};
+				cssStyle = document.createElement('style');
+				cssStyle.type = 'text/css';
+				cssStyle.innerHTML = cssStr;
+				document.getElementsByTagName('HEAD').item(0).appendChild(cssStyle);
+				var cmdcObjectBot = document.createElement('div'),
+					cmdcObjectLeft = document.createElement('div'),
+					cmdcObjectBotImg = document.createElement('img'),
+					cmdcObjectLeftImg = document.createElement('img')
+				cmdcObjectBot.className = 'cm-dc-bottom';
+				cmdcObjectLeft.className = 'cm-dc-left';
+
+				cmdcObjectBotImg.src = resource.cmdcObjectBotImg;
+				cmdcObjectBotImg.style.display = 'inline-block';
+				cmdcObjectLeftImg.src = resource.cmdcObjectLeftImg;
+				cmdcObjectLeftImg.style.display = 'inline-block'
+				cmdcObjectBot.appendChild(cmdcObjectBotImg);
+				cmdcObjectLeft.appendChild(cmdcObjectLeftImg);
+				document.body.appendChild(cmdcObjectBot);
+				document.body.appendChild(cmdcObjectLeft);
+			},
+			show: function(){
+				cmdcObjectObj.cmdcObjectBotEL.style.display = 'block'
+				cmdcObjectObj.cmdcObjectLeftEL.style.display = 'block'
+				cmdcObjectObj.cmdcObjectBotEL.style.bottom = '-100px'
+				cmdcObjectObj.cmdcObjectBotEL.classList.toggle('move_upper');
+			},
+			cmdcObjectBotEL: {},
+			cmdcObjectLeftEL: {},
+		}
+		cmdcObjectObj.init(resource);
+		cmdcObjectObj.cmdcObjectBotEL = cmdcObjectObj.$(".cm-dc-bottom")
+		cmdcObjectObj.cmdcObjectLeftEL = cmdcObjectObj.$(".cm-dc-left")
+		// cmdcObjectBotObj.show();
 	}
 };
 
@@ -185,6 +234,9 @@ var CMDC = {
 	//设置屏幕宽度的最小支持
 	// if(document.documentElement.clientWidth < 1263) return
 	CMDC.loadSource();
+
+	//建立周边
+	CMDC.buildWalls();
 
 	setTimeout(function(){
 		CMDC.play();

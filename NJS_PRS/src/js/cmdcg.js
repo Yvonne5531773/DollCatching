@@ -30,7 +30,7 @@ DC.do = function() {
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
 	DC.do.createRagdoll = function(x, y, scale, options, vertexSets) {
-		var massVal = 1,
+		var massVal = 1.5,
 			frictionAirVal = 0.01,
 			timeScaleVal = 0.8;
 		scale = typeof scale === 'undefined' ? 1 : scale;
@@ -75,9 +75,9 @@ DC.do = function() {
 			chamfer: {
 				radius: 6 * scale
 			},
-			friction: 0.7,
+			// friction: 0.7,
 			// mass: massVal,
-			timeScale: timeScaleVal
+			// timeScale: timeScaleVal
 		});
 		var rightArmOptions = Common.extend({
 			label: 'right-arm',
@@ -103,10 +103,10 @@ DC.do = function() {
 			chamfer: {
 				radius: 6 * scale
 			},
-			friction: 0.7,
+			// friction: 0.7,
 			// mass: massVal,
-			frictionAir: frictionAirVal,
-			timeScale: timeScaleVal
+			// frictionAir: frictionAirVal,
+			// timeScale: timeScaleVal
 		});
 		var chest = Bodies.rectangle(x, y, 45 * scale, 30 * scale, chestOptions);
 		var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 17 * scale, 54 * scale, rightArmOptions);
@@ -516,7 +516,7 @@ DC.do = function() {
 		// constraintIterations: 1,
 		// positionIterations: 1
 		// enableSleeping: true
-		timeScale: 0.8
+		// timeScale: 0.8
 	});
 	var	world = engine.world;
 	// 整个屏幕所占用的大小
@@ -547,7 +547,7 @@ DC.do = function() {
 
 	world.bodies = [];
 	//设置运行范围 围墙
-	$('#d-c').css('min-width', 1180)
+	$('#cm-d-c').css('min-width', 1180)
 	var bottomWall = Bodies.rectangle(0, 600, width* 3, thick, options),
 		upperWall = Bodies.rectangle(0, 0, width* 3, thick, options),
 		leftWall = Bodies.rectangle(-width* 0.13+offset, 300, thick, 620, options), //3-厚度 4-高度
@@ -556,7 +556,7 @@ DC.do = function() {
 		// bottomWall,
 		// leftWall,
 		// rightWall
-		Bodies.rectangle(0, 0, 800.5 + 2 * offset, thick, options), //上
+		// Bodies.rectangle(0, 0, 800.5 + 2 * offset, thick, options), //上
 		Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, thick, options), //下
 		Bodies.rectangle(800 + offset, 300, thick, 600.5 + 2 * offset, options), //右
 		Bodies.rectangle(-offset, 300, thick, 600.5 + 2 * offset, options)  //左
@@ -579,7 +579,7 @@ DC.do = function() {
 			// 	spring.length += 30
 			// }, 100)
 			spring.stiffness = 0.005
-			spring.length = 260
+			spring.length = 300
 			//抓娃娃状态
 			setTimeout(function () {
 				catched = true
@@ -602,7 +602,7 @@ DC.do = function() {
 									eventOff = true
 									dblChoseAlert.close()
 									World.clear(world)
-									$('#d-c').remove()
+									$('#cm-d-c').remove()
 									bhObj.dispose()
 								}
 							}
@@ -817,7 +817,7 @@ DC.do = function() {
 		bodyB: ropeC.bodies[0],
 		pointB: { x: -20, y: 0 },
 		pointA: { x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y },
-		stiffness: 0.04, //弹簧, 0是线
+		stiffness: 0.02, //弹簧, 0是线
 		damping: 1,
 		length: 0,
 		render: {
@@ -983,16 +983,16 @@ DC.do = function() {
 	});
 
 	//关闭按钮事件
-	$('.d-c-close').click(function(){
+	$('.cm-d-c-close').click(function(){
 		clearSource()
 		eventOff = true
 		World.clear(world)
-		$('#d-c').remove()
+		$('#cm-d-c').remove()
 		bhObj.dispose()
 	})
 
 	//更改鼠标样式
-	$('#d-c').css({cursor:"url('https://www.duba.com/static/v2/images/point.cur'),auto"})
+	$('#cm-d-c').css({cursor:"url('https://www.duba.com/static/v2/images/point.cur'),auto"})
 
 
 	//减少引擎更新时间
