@@ -37,9 +37,9 @@
 			mgScript.src = sourceLinkRoot + "js/matter-tools.gui.js";
 			mdScript.src = sourceLinkRoot + "js/matter-tools.demo.js";
 			mainScript.src = sourceLinkRoot + "js/cmdcg.js";
-			alertScript.src = sourceLinkRoot + "js/simpleAlert.js";
+			alertScript.src = sourceLinkRoot + "js/alert.js";
 			tipScript.src = sourceLinkRoot + "js/tipso.min.js";
-			alertCss.href = sourceLinkRoot + "css/simpleAlert.css";
+			alertCss.href = sourceLinkRoot + "css/alert.css";
 			tipCss.href = sourceLinkRoot + "css/tipso.min.css";
 			alertCss.rel = 'stylesheet';
 			alertCss.type = 'text/css';
@@ -71,14 +71,14 @@
 		clearSource : function(){
 			var removejscssfile = CMDC.removejscssfile,
 				sourceLinkRoot = CMDC.sourceLinkRoot;
-			removejscssfile(sourceLinkRoot+"js/simpleAlert.js", 'js')
+			removejscssfile(sourceLinkRoot+"js/alert.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/tipso.min.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/matter-dev.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/polyfill.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/matter-tools.demo.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/cmdcg.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/cmdcbh.js", 'js')
-			removejscssfile(sourceLinkRoot+"css/simpleAlert.css", 'css')
+			removejscssfile(sourceLinkRoot+"css/alert.css", 'css')
 			removejscssfile(sourceLinkRoot+"css/tipso.min.css", 'css')
 		},
 		Interface: {
@@ -162,7 +162,7 @@
 				startExample: 'cmdcg',
 				examples: [
 					{
-						name: 'DOLL_CATCHING',
+						name: 'DOLL-CATCHING',
 						id: 'cmdcg',
 						init: DC.do,
 						sourceLink: CMDC.sourceLinkRoot + 'js/cmdcg.js'
@@ -173,7 +173,6 @@
 			dc = MatterTools.Demo.create(obj);
 			document.body.appendChild(dc.dom.root);
 			MatterTools.Demo.start(dc);
-			// DC.do()
 		},
 		buildWalls: function(){
 			var sourceLinkRoot = CMDC.sourceLinkRoot
@@ -192,13 +191,13 @@
 					cmdcObj.createDom(resource)
 				},
 				createDom: function(resource){
-					var cssStr = '@-webkit-keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-100px);transform: translateY(-100px);}} @keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-100px);transform: translateY(-100px); }}' +
+					var cssStr = '@-webkit-keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-60px);transform: translateY(-60px);}} @keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-60px);transform: translateY(-60px); }}' +
 						'.move_upper { -webkit-animation-name: move_upper;animation-name: move_upper; -webkit-animation-duration: .7s;animation-duration: .7s; -webkit-animation-iteration-count: 1;animation-iteration-count: 1; -webkit-animation-fill-mode: forwards;animation-fill-mode: forwards;}' +
-						'.cm-dc-bottom {cursor: pointer;z-index:12;width:100%;height:100px;line-height:35px;position:fixed;bottom:-88px;left:0;font-size:14px;color:#000;text-align:center;;display:none;} ' +
-						'.cm-dc-left {cursor: pointer;z-index:999;position:fixed;bottom:0;left:0;top:0;display:none}' +
-						'.cm-dc-middle {z-index: 9;position: fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1400px;cursor: pointer;background-repeat: no-repeat;display: none}' +
-						'.cm-dc-bottom-bak {position: absolute;margin:auto;top: -207px;left: -380px;right: 0;bottom: 0;width: 111.5%;cursor: pointer;background-repeat: no-repeat;} ' +
-						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index: 15;position: fixed; right:28px;background-repeat: no-repeat;}';
+						'.cm-dc-bottom {z-index:9;width:100%;height:100px;line-height:35px;position:fixed;bottom:-60px;left:0;font-size:14px;color:#000;text-align:center;;display:none;} ' +
+						'.cm-dc-left {z-index:99;position:fixed;bottom:0;left:0;top:0;display:none}' +
+						'.cm-dc-middle {z-index: 10;position: fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1400px;background-repeat: no-repeat;display: none}' +
+						'.cm-dc-bottom-bak {z-index:8;position: fixed;margin:auto;top:-207px;left:-377px;right: 0;bottom: 0;width:1560px;background-repeat: no-repeat;display: none} ' +
+						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index: 15;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close:hover {background-position: -80px} .cm-dc-close:active {background-position: -160px}';
 					var cssStyle = {};
 					cssStyle = document.createElement('style');
 					cssStyle.type = 'text/css';
@@ -229,24 +228,27 @@
 					leftImg.style.display = 'inline-block'
 
 					bot.appendChild(botImg);
-					left.appendChild(leftImg);
-					middle.appendChild(bottombak);
+					// left.appendChild(leftImg);
+					// middle.appendChild(bottombak);
 					cmdc.appendChild(bot);
 					cmdc.appendChild(left);
 					cmdc.appendChild(middle);
 					cmdc.appendChild(close);
+					cmdc.appendChild(bottombak);
 					document.body.appendChild(cmdc);
 				},
 				show: function(){
 					cmdcObj.botEL.style.display = 'block'
-					// cmdcObj.leftEL.style.display = 'block'
+					cmdcObj.leftEL.style.display = 'block'
 					cmdcObj.middleEL.style.display = 'block'
-					cmdcObj.botEL.style.bottom = '-100px'
+					cmdcObj.bottombakEL.style.display = 'block'
+					cmdcObj.botEL.style.bottom = '-60px'
 					cmdcObj.botEL.classList.toggle('move_upper');
 				},
 				botEL: {},
 				leftEL: {},
 				middleEL: {},
+				bottombakEL: {},
 			}
 			cmdcObj.init(resource);
 			cmdcObj.botEL = cmdcObj.$(".cm-dc-bottom")
@@ -258,6 +260,9 @@
 	};
 
 	window.CMDC = CMDC;
+
+	//滚动到指定位置，避免在顶部产生性能问题
+	window.scrollTo(250, 500)
 
 	//设置屏幕宽度的最小支持
 	// if(document.documentElement.clientWidth < 1263) return
