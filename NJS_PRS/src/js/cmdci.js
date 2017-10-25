@@ -156,12 +156,8 @@
 		},
 		play: function(){
 			var obj = {
-				toolbar: {
-					title: '天猫双11主场',
-					url: ''
-				},
 				tools: {
-					gui: false
+					gui: true
 				},
 				startExample: 'cmdcg',
 				examples: [
@@ -177,11 +173,16 @@
 			dc = MatterTools.Demo.create(obj);
 			document.body.appendChild(dc.dom.root);
 			MatterTools.Demo.start(dc);
+			// DC.do()
 		},
 		buildWalls: function(){
+			var sourceLinkRoot = CMDC.sourceLinkRoot
 			var resource = {
-				botImg: '//act.cmcmcdn.com/upload/201710/1a0ea44ac368226ee4bb035db276356a.png',
-				leftImg: '//act.cmcmcdn.com/upload/201710/1a0ea44ac368226ee4bb035db276356a.png',
+				botImg: sourceLinkRoot + 'img/allbodies.png',
+				leftImg: sourceLinkRoot + 'img/hull.png',
+				middleImg: sourceLinkRoot + 'img/hull.png',
+				bottombakImg: sourceLinkRoot + 'img/bottombak.png',
+				closeImg: sourceLinkRoot + 'img/close.png',
 			}
 			var cmdcObj = {
 				$: function(className){
@@ -193,42 +194,66 @@
 				createDom: function(resource){
 					var cssStr = '@-webkit-keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-100px);transform: translateY(-100px);}} @keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-100px);transform: translateY(-100px); }}' +
 						'.move_upper { -webkit-animation-name: move_upper;animation-name: move_upper; -webkit-animation-duration: .7s;animation-duration: .7s; -webkit-animation-iteration-count: 1;animation-iteration-count: 1; -webkit-animation-fill-mode: forwards;animation-fill-mode: forwards;}' +
-						'.cm-dc-bottom {cursor: pointer;z-index:99999;width:100%;height:100px;line-height:35px;position:fixed;bottom:0;left:0;font-size:14px;color:#000;text-align:center;;display:none} ' +
-						'.cm-dc-left {cursor: pointer;z-index:99999;position:fixed;bottom:0;left:0;top:0;display:none}';
+						'.cm-dc-bottom {cursor: pointer;z-index:12;width:100%;height:100px;line-height:35px;position:fixed;bottom:-88px;left:0;font-size:14px;color:#000;text-align:center;;display:none;} ' +
+						'.cm-dc-left {cursor: pointer;z-index:999;position:fixed;bottom:0;left:0;top:0;display:none}' +
+						'.cm-dc-middle {z-index: 9;position: fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1400px;cursor: pointer;background-repeat: no-repeat;display: none}' +
+						'.cm-dc-bottom-bak {position: absolute;margin:auto;top: -207px;left: -380px;right: 0;bottom: 0;width: 111.5%;cursor: pointer;background-repeat: no-repeat;} ' +
+						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index: 15;position: fixed; right:28px;background-repeat: no-repeat;}';
 					var cssStyle = {};
 					cssStyle = document.createElement('style');
 					cssStyle.type = 'text/css';
 					cssStyle.innerHTML = cssStr;
 					document.getElementsByTagName('HEAD').item(0).appendChild(cssStyle);
-					var bot = document.createElement('div'),
+					var cmdc = document.createElement('div'),
+						bot = document.createElement('div'),
 						left = document.createElement('div'),
+						middle = document.createElement('div'),
+						bottombak = document.createElement('div'),
+						close = document.createElement('div'),
 						botImg = document.createElement('img'),
-						leftImg = document.createElement('img')
+						leftImg = document.createElement('img');
+					cmdc.className = 'cm-dc-class'
 					bot.className = 'cm-dc-bottom';
 					left.className = 'cm-dc-left';
+					middle.className = 'cm-dc-middle';
+					bottombak.className = 'cm-dc-bottom-bak';
+					close.className = 'cm-dc-close';
+					middle.style.backgroundImage = 'url(' + resource.middleImg + ')'
+					bottombak.style.backgroundImage = 'url(' + resource.bottombakImg + ')'
+					close.style.backgroundImage = 'url(' + resource.closeImg + ')'
 
 					botImg.src = resource.botImg;
+					botImg.style.width = '1180px';
 					botImg.style.display = 'inline-block';
 					leftImg.src = resource.leftImg;
 					leftImg.style.display = 'inline-block'
+
 					bot.appendChild(botImg);
 					left.appendChild(leftImg);
-					document.body.appendChild(bot);
-					document.body.appendChild(left);
+					middle.appendChild(bottombak);
+					cmdc.appendChild(bot);
+					cmdc.appendChild(left);
+					cmdc.appendChild(middle);
+					cmdc.appendChild(close);
+					document.body.appendChild(cmdc);
 				},
 				show: function(){
 					cmdcObj.botEL.style.display = 'block'
-					cmdcObj.leftEL.style.display = 'block'
+					// cmdcObj.leftEL.style.display = 'block'
+					cmdcObj.middleEL.style.display = 'block'
 					cmdcObj.botEL.style.bottom = '-100px'
 					cmdcObj.botEL.classList.toggle('move_upper');
 				},
 				botEL: {},
 				leftEL: {},
+				middleEL: {},
 			}
 			cmdcObj.init(resource);
 			cmdcObj.botEL = cmdcObj.$(".cm-dc-bottom")
 			cmdcObj.leftEL = cmdcObj.$(".cm-dc-left")
-			// BotObj.show();
+			cmdcObj.middleEL = cmdcObj.$(".cm-dc-middle")
+			cmdcObj.bottombakEL = cmdcObj.$(".cm-dc-bottom-bak")
+			cmdcObj.show();
 		}
 	};
 

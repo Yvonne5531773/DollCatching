@@ -60,7 +60,12 @@ DC.do = function() {
 				radius: 10 * scale
 			},
 			render: {
-				fillStyle: '#bdbabb'
+				fillStyle: '#bdbabb',
+				// sprite: {
+				// 	xScale: 0.7,
+				// 	yScale: 0.7,
+				// 	texture: sourceLinkRoot + 'img/left-upper-arm.png'
+				// }
 			},
 			// stiffness: 0.7,
 			// mass: massVal,
@@ -70,7 +75,12 @@ DC.do = function() {
 		var leftLowerArmOptions = Common.extend({}, leftArmOptions, {
 			label: 'left-lower-arm',
 			render: {
-				fillStyle: '#cfcdd2'
+				fillStyle: '#cfcdd2',
+				// sprite: {
+				// 	xScale: 0.7,
+				// 	yScale: 0.7,
+				// 	texture: sourceLinkRoot + 'img/left-bottom-arm.png'
+				// }
 			},
 			chamfer: {
 				radius: 6 * scale
@@ -619,17 +629,15 @@ DC.do = function() {
 			x: 0,
 			y: 400,
 			columns: 28,
-			rows: 2,
+			rows: 1,
 		}
 	var stack = DC.do.createStacks(criteria);
-	World.add(world, stack);
+	// World.add(world, stack);
 
 	//爪子出现
 	setTimeout(function(){
 		World.add(world, [ropeC, ragdoll, ragdollConstraint,]);
 		// World.add(world, [ropeC, ragdoll, ragdollConstraint, upperWall]);
-		//开始按钮出现
-		$('.start-btn').css('display', 'block');
 		ragdollShow = true
 		setTimeout(function(){
 			ragdollMove = true;
@@ -822,8 +830,8 @@ DC.do = function() {
 		length: 0,
 		render: {
 			visible: true,
-			lineWidth: 1.5,
-			strokeStyle: '#29a3f1', //弹簧颜色
+			lineWidth: 4,
+			strokeStyle: '#3442c7', //弹簧颜色
 		}
 	}));
 
