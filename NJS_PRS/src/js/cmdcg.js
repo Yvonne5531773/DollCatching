@@ -109,10 +109,10 @@ DC.do = function() {
 			// timeScale: timeScaleVal
 		});
 		var chest = Bodies.rectangle(x, y, 45 * scale, 30 * scale, chestOptions);
-		var rightUpperArm = Bodies.rectangle(x + 39 * scale, y - 15 * scale, 17 * scale, 54 * scale, rightArmOptions);
-		var rightLowerArm = Bodies.rectangle(x + 39 * scale, y + 25 * scale, 14 * scale, 86 * scale, rightLowerArmOptions);
-		var leftUpperArm = Bodies.rectangle(x - 39 * scale, y - 15 * scale, 17 * scale, 54 * scale, leftArmOptions);
-		var leftLowerArm = Bodies.rectangle(x - 39 * scale, y + 25 * scale, 14 * scale, 86 * scale, leftLowerArmOptions);
+		var rightUpperArm = Bodies.rectangle(x + 25 * scale, y - 10 * scale, 17 * scale, 54 * scale, rightArmOptions);
+		var rightLowerArm = Bodies.rectangle(x + 25 * scale, y + 20 * scale, 14 * scale, 86 * scale, rightLowerArmOptions);
+		var leftUpperArm = Bodies.rectangle(x - 25 * scale, y - 10 * scale, 17 * scale, 54 * scale, leftArmOptions);
+		var leftLowerArm = Bodies.rectangle(x - 25 * scale, y + 20 * scale, 14 * scale, 86 * scale, leftLowerArmOptions);
 		// var leftLowerArm = Bodies.fromVertices(x - 39 * scale, y + 25 * scale, vertexSets, {
 		// 	render: {
 		// 		fillStyle: '#556270',
@@ -635,6 +635,7 @@ DC.do = function() {
 			ragdollMove = true;
 		}, timeout)
 	}, timeout)
+
 	// setTimeout(function(){
 	// 	//物品散开
 	// 	explosion(engine);
@@ -649,7 +650,6 @@ DC.do = function() {
 	// 		}, timeout)
 	// 	}, timeout* 3)
 	// }, timeout* 3)
-
 
 	//开始按钮位置
 	// var bodyStart = Bodies.circle(width*0.4, height*0.1, 25, {
@@ -817,7 +817,7 @@ DC.do = function() {
 		bodyB: ropeC.bodies[0],
 		pointB: { x: -20, y: 0 },
 		pointA: { x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y },
-		stiffness: 0.02, //弹簧, 0是线
+		stiffness: 0.009, //弹簧, 0是线
 		damping: 1,
 		length: 0,
 		render: {
@@ -851,14 +851,6 @@ DC.do = function() {
 		i = 3.5, j = -3.5,
 		spring_x = spring.pointA.x, springPx;
 
-	function setRagdollStatic(bool){
-		Body.setStatic(ragdoll.bodies[0], bool);
-		// Body.setStatic(ragdoll.bodies[1], bool);
-		// Body.setStatic(ragdoll.bodies[2], bool);
-		// Body.setStatic(ragdoll.bodies[3], bool);
-		// Body.setStatic(ragdoll.bodies[4], bool);
-	}
-
 	Events.on(engine, 'beforeUpdate', function(event) {
 		if(!ragdoll || ragdoll.length <= 0 || eventOff) return
 		//初始爪子状态
@@ -879,7 +871,7 @@ DC.do = function() {
 					ragdollMove = true;
 					playAgain = false;
 					clicked = false;
-					spring.stiffness = 0.02
+					spring.stiffness = 0.009
 					// World.add(world, mouseConstraint);
 				}
 			}else{
@@ -998,9 +990,9 @@ DC.do = function() {
 	//减少引擎更新时间
 	function enginRun() {
 		window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 60);
+		Engine.update(engine, 1000 / 200);
 	}
-	// enginRun()
+	enginRun()
 
 	return {
 		engine: engine,
