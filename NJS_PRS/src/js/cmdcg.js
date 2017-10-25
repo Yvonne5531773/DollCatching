@@ -109,10 +109,10 @@ DC.do = function() {
 			// timeScale: timeScaleVal
 		});
 		var chest = Bodies.rectangle(x, y, 45 * scale, 30 * scale, chestOptions);
-		var rightUpperArm = Bodies.rectangle(x + 25 * scale, y - 10 * scale, 17 * scale, 54 * scale, rightArmOptions);
-		var rightLowerArm = Bodies.rectangle(x + 25 * scale, y + 20 * scale, 14 * scale, 86 * scale, rightLowerArmOptions);
-		var leftUpperArm = Bodies.rectangle(x - 25 * scale, y - 10 * scale, 17 * scale, 54 * scale, leftArmOptions);
-		var leftLowerArm = Bodies.rectangle(x - 25 * scale, y + 20 * scale, 14 * scale, 86 * scale, leftLowerArmOptions);
+		var rightUpperArm = Bodies.rectangle(x + 45 * scale, y - 10 * scale, 17 * scale, 54 * scale, rightArmOptions);
+		var rightLowerArm = Bodies.rectangle(x + 45 * scale, y + 20 * scale, 14 * scale, 86 * scale, rightLowerArmOptions);
+		var leftUpperArm = Bodies.rectangle(x - 45 * scale, y - 10 * scale, 17 * scale, 54 * scale, leftArmOptions);
+		var leftLowerArm = Bodies.rectangle(x - 45 * scale, y + 20 * scale, 14 * scale, 86 * scale, leftLowerArmOptions);
 		// var leftLowerArm = Bodies.fromVertices(x - 39 * scale, y + 25 * scale, vertexSets, {
 		// 	render: {
 		// 		fillStyle: '#556270',
@@ -133,7 +133,7 @@ DC.do = function() {
 			},
 			bodyB: rightUpperArm,
 			// stiffness: 0.8,
-			angularStiffness: 0.2, //跟上部分爪子的硬度有关
+			angularStiffness: 0.4, //跟上部分爪子的硬度有关
 			length: 0,
 			render: {
 				anchors: false,
@@ -153,7 +153,7 @@ DC.do = function() {
 			},
 			bodyB: leftUpperArm,
 			// stiffness: 0.8,
-			angularStiffness: 0.2,
+			angularStiffness: 0.4,
 			length: 0,
 			render: {
 				anchors: false,
@@ -579,7 +579,7 @@ DC.do = function() {
 			// 	spring.length += 30
 			// }, 100)
 			spring.stiffness = 0.005
-			spring.length = 300
+			spring.length = 350
 			//抓娃娃状态
 			setTimeout(function () {
 				catched = true
@@ -848,22 +848,22 @@ DC.do = function() {
 
 	var catched = false,
 		x = 0.5, y = -0.5,
-		i = 3.5, j = -3.5,
+		i = 2, j = -2,
 		spring_x = spring.pointA.x, springPx;
 
 	Events.on(engine, 'beforeUpdate', function(event) {
 		if(!ragdoll || ragdoll.length <= 0 || eventOff) return
 		//初始爪子状态
 		if(!catched){
-			Body.setAngle(ragdoll.bodies[1], 0.5); //左上
-			Body.setAngle(ragdoll.bodies[2], 3.3); //左下
-			Body.setAngle(ragdoll.bodies[3], -0.5); //右上
-			Body.setAngle(ragdoll.bodies[4], -3.3); //右下
+			Body.setAngle(ragdoll.bodies[1], 0.5); //左下
+			Body.setAngle(ragdoll.bodies[2], 2.2); //左上
+			Body.setAngle(ragdoll.bodies[3], -0.5); //右下
+			Body.setAngle(ragdoll.bodies[4], -2.2); //右上
 		}else{
 			if(playAgain){
 				i += 0.03;j -= 0.03;x += 0.01;y -= 0.01
-				if(i >= 3.5) {
-					i = 3.5;j = -3.5;
+				if(i >= 2) {
+					i = 2;j = -2;
 				}
 				if(x >= 0.5){
 					x = 0.5; y = -0.5;
@@ -876,8 +876,8 @@ DC.do = function() {
 				}
 			}else{
 				i -= 0.02;j += 0.02;x -= 0.01;y += 0.01
-				if(i <= 1.2) {
-					i = 1.2;j = -1.2;
+				if(i <= 1) {
+					i = 1;j = -1;
 				}
 				if(x <= -0.95){
 					x = -0.95; y = 0.95;
@@ -891,7 +891,7 @@ DC.do = function() {
 		//弹簧滑动
 		if(ragdollMove){
 			//控制速度
-			counter += 0.015
+			counter += 0.01
 			if (counter < 0) return
 			springPx = spring_x + 200 * Math.sin(counter);
 			if(!clicked){
