@@ -236,10 +236,11 @@ CMDCG.do = function() {
 	//构造物品
 	CMDCG.do.createStacks = function(criteria){
 		var massVal = 0.05,
-			timeScaleVal = 0.6
+			timeScaleVal = 0.6,
+			radiusVal = 15;
 		return Composites.stack(criteria.x, criteria.y, criteria.columns, criteria.rows, 0, 0, function(x, y) {
 			if (Common.random() < 0.2) {
-				return Bodies.rectangle(x+Common.random()*5, y+Common.random()*5, 36, 46, {
+				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*5, 36, 46, {
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -247,7 +248,7 @@ CMDCG.do = function() {
 							texture: sourceLinkRoot + 'img/rred.png'
 						}
 					},
-					chamfer: { radius: 5 },
+					chamfer: { radius: radiusVal },
 					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal,
@@ -255,7 +256,7 @@ CMDCG.do = function() {
 				});
 			}
 			else if(Common.random() > 0.2 && Common.random() < 0.3){
-				return Bodies.rectangle(x+Common.random()*5, y+Common.random(), 36, 46, {
+				return Bodies.rectangle(x+Common.random()*25, y+Common.random(), 36, 46, {
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -263,14 +264,14 @@ CMDCG.do = function() {
 							texture: sourceLinkRoot + 'img/pred.png'
 						}
 					},
-					chamfer: { radius: 5 },
+					chamfer: { radius: radiusVal },
 					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
 			} else if(Common.random() > 0.3 && Common.random() < 0.4){
-				return Bodies.rectangle(x+Common.random(), y+Common.random(), 30, 40, {
+				return Bodies.rectangle(x+Common.random()*25, y+Common.random(), 30, 40, {
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -278,14 +279,14 @@ CMDCG.do = function() {
 							texture: sourceLinkRoot + 'img/rgift.png'
 						}
 					},
-					chamfer: { radius: 5 },
+					chamfer: { radius: radiusVal },
 					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
 			} else if(Common.random() > 0.4 && Common.random() < 0.5){
-				return Bodies.rectangle(x+Common.random()*5, y+Common.random()*15, 30, 40, {
+				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*15, 30, 40, {
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -293,14 +294,14 @@ CMDCG.do = function() {
 							texture: sourceLinkRoot + 'img/ggift.png'
 						}
 					},
-					chamfer: { radius: 5 },
+					chamfer: { radius: radiusVal },
 					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
 			}else if(Common.random() > 0.5 && Common.random() < 0.6){
-				return Bodies.rectangle(x+Common.random()*5, y+Common.random()*15, 30, 40, {
+				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*15, 30, 40, {
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -308,14 +309,14 @@ CMDCG.do = function() {
 							texture: sourceLinkRoot + 'img/pgift.png'
 						}
 					},
-					chamfer: { radius: 5 },
+					chamfer: { radius: radiusVal },
 					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
 			} else if(Common.random() > 0.6 && Common.random() < 0.7){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*4, 30, 40, {
+				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*4, 30, 40, {
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -323,14 +324,14 @@ CMDCG.do = function() {
 							texture: sourceLinkRoot + 'img/bgift.png'
 						}
 					},
-					chamfer: { radius: 5 },
+					chamfer: { radius: radiusVal },
 					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
 			} else if(Common.random() > 0.7 && Common.random() < 0.8){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*4, 30, 44, {
+				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*4, 30, 44, {
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -338,14 +339,14 @@ CMDCG.do = function() {
 							texture: sourceLinkRoot + 'img/obag.png'
 						}
 					},
-					chamfer: { radius: 5 },
+					chamfer: { radius: radiusVal },
 					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
 			} else if(Common.random() > 0.8 && Common.random() < 0.9){
-				return Bodies.rectangle(x+Common.random()*5, y+Common.random()*3, 30, 44, {
+				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*3, 30, 44, {
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -353,14 +354,14 @@ CMDCG.do = function() {
 							texture: sourceLinkRoot + 'img/pbag.png'
 						}
 					},
-					chamfer: { radius: 5 },
+					chamfer: { radius: radiusVal },
 					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
 			} else if(Common.random() > 0.9 && Common.random() < 0.95){
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*44, 30, 44, {
+				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*44, 30, 44, {
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -368,14 +369,14 @@ CMDCG.do = function() {
 							texture: sourceLinkRoot + '/img/rbag.png'
 						}
 					},
-					chamfer: { radius: 5 },
+					chamfer: { radius: radiusVal },
 					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
 			} else{
-				return Bodies.rectangle(x+Common.random()*15, y+Common.random()*4, 30, 44, {
+				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*4, 30, 44, {
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -383,7 +384,7 @@ CMDCG.do = function() {
 							texture: sourceLinkRoot + '/img/gbag.png'
 						}
 					},
-					chamfer: { radius: 5 },
+					chamfer: { radius: radiusVal },
 					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal,
@@ -449,7 +450,7 @@ CMDCG.do = function() {
 		// leftWall,
 		// rightWall
 		//3-厚度 4-高度
-		// Bodies.rectangle(0, 0, 800.5 + 2 * offset, thick, options), //上
+		// Bodies.rectangle(400, 50, 800.5 + 2 * offset, 10.5, options), //上
 		Bodies.rectangle(400, 470 + offset, 800.5 + 2 * offset, thick, options), //下
 		Bodies.rectangle(800 + offset, 300, thick, 600.5 + 2 * offset, options), //右
 		Bodies.rectangle(-offset, 300, thick, 600.5 + 2 * offset, options)  //左
@@ -616,7 +617,7 @@ CMDCG.do = function() {
 	var group = Body.nextGroup(true),
 		counter = -1;
 	//链的个数，属性
-	var ropeC = Composites.stack(changeVal, 40, 1, 1, 0, 10, function(x, y) {
+	var ropeC = Composites.stack(changeVal, 45, 1, 1, 0, 10, function(x, y) {
 		return Bodies.rectangle(x, y, 25, 15, {
 			label: 'component',
 			collisionFilter: { group: group },
@@ -672,6 +673,7 @@ CMDCG.do = function() {
 
 	//连接, 第三个参数是爪子的大小比例, (400,100)-初始位置
 	ragdoll = CMDCG.do.createRagdoll(400, 100, 1.1, {}, vertexSets);
+	console.log('ragdoll', ragdoll)
 	var ragdollConstraint = Constraint.create({
 		bodyA: ropeC.bodies[ropeC.bodies.length-1],
 		bodyB: ragdoll.bodies[0],
@@ -728,16 +730,16 @@ CMDCG.do = function() {
 			Body.setAngle(ragdoll.bodies[4], j);
 		}
 		//弹簧滑动
-		if(ragdollMove){
-			//控制速度
-			counter += 0.01
-			if (counter < 0) return
-			springPx = spring_x + 200 * Math.sin(counter);
-			if(!clicked){
-				spring.pointA.x = springPx
-				// ragdoll.bodies[0].position.x = springPx
-			}
-		}
+		// if(ragdollMove){
+		// 	//控制速度
+		// 	counter += 0.01
+		// 	if (counter < 0) return
+		// 	springPx = spring_x + 200 * Math.sin(counter);
+		// 	if(!clicked){
+		// 		spring.pointA.x = springPx
+		// 		// ragdoll.bodies[0].position.x = springPx
+		// 	}
+		// }
 	});
 
 	// Events.on(render, 'afterRender', function() {
@@ -785,8 +787,8 @@ CMDCG.do = function() {
 		});
 
 	//允许scroll
-	mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
-	mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
+	// mouse.element.removeEventListener("mousewheel", mouse.mousewheel);
+	// mouse.element.removeEventListener("DOMMouseScroll", mouse.mousewheel);
 	//允许鼠标拖动
 	// World.add(world, mouseConstraint);
 
@@ -812,6 +814,11 @@ CMDCG.do = function() {
 		max: { x: 800, y: 600 }
 	});
 
+	//开始按钮事件
+	$('.cm-dc-start-btn').click(function(){
+		if(!ragdollShow) return
+		clickFun()
+	})
 	//关闭按钮事件
 	$('.cm-dc-close').click(function(){
 		clearSource()

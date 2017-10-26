@@ -157,7 +157,7 @@
 		play: function(){
 			var obj = {
 				tools: {
-					gui: false
+					gui: true
 				},
 				startExample: 'cmdcg',
 				examples: [
@@ -183,8 +183,15 @@
 				bottombakImg: sourceLinkRoot + 'img/allbodies.png',
 				closeImg: sourceLinkRoot + 'img/close.png',
 				logoImg: sourceLinkRoot + 'img/11logo.png',
+				rockerImg: sourceLinkRoot + 'img/rocker.png',
+				startBtnImg: sourceLinkRoot + 'img/button.png',
 			}
 			var cmdcObj = {
+				botEL: {},
+				leftEL: {},
+				middleEL: {},
+				bottombakEL: {},
+				rockerEL: {},
 				$: function(className){
 					return document.querySelector(className);
 				},
@@ -194,14 +201,16 @@
 				createDom: function(resource){
 					var cssStr = '@-webkit-keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-60px);transform: translateY(-60px);}} @keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-60px);transform: translateY(-60px); }}' +
 						'.move_upper { -webkit-animation-name: move_upper;animation-name: move_upper; -webkit-animation-duration: .7s;animation-duration: .7s; -webkit-animation-iteration-count: 1;animation-iteration-count: 1; -webkit-animation-fill-mode: forwards;animation-fill-mode: forwards;}' +
-						'.cm-dc-bottom {position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;width: 1400px;z-index:16;height:240px;line-height:35px;background-repeat: no-repeat;display:none;} ' +
+						'.cm-dc-bottom {max-width: 1220px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;min-width:1180px;z-index:28;height:240px;line-height:35px;background-repeat: no-repeat;background-position: center top;display:none;} ' +
 						'.cm-dc-left {z-index:99;position:fixed;bottom:0;right: 50%;top:0;margin-right: 700px;width: 18%;height: 100%;background: #ec2040;}' +
 						'.cm-dc-right {z-index:2;position:fixed;bottom:0;left: 50%;top:0;margin-left: 700px;width: 18%;height: 100%;background: #ec2040;}' +
-						'.cm-dc-middle {z-index: 10;position: fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1400px;background-repeat: no-repeat;display: none}' +
+						'.cm-dc-middle {z-index:21;position:fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;min-width:1180px;background-repeat: no-repeat;background-position: center top;display: none}' +
 						'.cm-dc-bottom-bak {position: fixed;  margin: auto;  left: 0;  right: 0;  bottom: -10px;  width: 1400px;z-index:5;height:300px;background-repeat: no-repeat;display: none} ' +
-						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index: 15;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close:hover {background-position: -80px} .cm-dc-close:active {background-position: -160px}' +
+						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index:23;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close:hover {background-position: -80px} .cm-dc-close:active {background-position: -160px}' +
 						'.cm-dc-11logo-left {margin-left: 140px;display: inline-block;width: 200px; height: 100%;background-image: url(../images/11logo.png);}' +
-						'.cm-dc-11logo-right {display: inline-block;width: 200px; height: 100%;background-image: url(../images/11logo.png);}';
+						'.cm-dc-11logo-right {display: inline-block;width: 200px; height: 100%;background-image: url(../images/11logo.png);}' +
+						'.cm-dc-rocker {float:left;bottom:15px;position: relative;left: 100px;width: 160px;height: 270px;background-repeat: no-repeat;}' +
+						'.cm-dc-start-btn {top:105px;cursor:pointer;position: relative;left:400px;width:408px;height: 130px;background-repeat: no-repeat;} .cm-dc-start-btn:hover {background-position: -406px} .cm-dc-start-btn:active {background-position: -810px} ';
 					var cssStyle = {};
 					cssStyle = document.createElement('style');
 					cssStyle.type = 'text/css';
@@ -214,6 +223,8 @@
 						middle = document.createElement('div'),
 						bottombak = document.createElement('div'),
 						close = document.createElement('div'),
+						rocker = document.createElement('div'),
+						start = document.createElement('div'),
 						botImg = document.createElement('img'),
 						leftImg = document.createElement('img'),
 						leftlogo = document.createElement('a'),
@@ -227,12 +238,16 @@
 					close.className = 'cm-dc-close';
 					leftlogo.className = 'cm-dc-11logo-left';
 					rightlogo.className = 'cm-dc-11logo-right';
+					rocker.className = 'cm-dc-rocker';
+					start.className = 'cm-dc-start-btn';
 					bot.style.backgroundImage = 'url(' + resource.botImg + ')'
 					middle.style.backgroundImage = 'url(' + resource.middleImg + ')'
 					bottombak.style.backgroundImage = 'url(' + resource.bottombakImg + ')'
 					close.style.backgroundImage = 'url(' + resource.closeImg + ')'
 					leftlogo.style.backgroundImage = 'url(' + resource.logoImg + ')'
 					rightlogo.style.backgroundImage = 'url(' + resource.logoImg + ')'
+					rocker.style.backgroundImage = 'url(' + resource.rockerImg + ')'
+					start.style.backgroundImage = 'url(' + resource.startBtnImg + ')'
 
 					botImg.src = resource.botImg;
 					botImg.style.width = '1180px';
@@ -240,9 +255,10 @@
 					leftImg.src = resource.leftImg;
 					leftImg.style.display = 'inline-block'
 
-					// bot.appendChild(botImg);
 					left.appendChild(leftlogo);
 					right.appendChild(rightlogo);
+					bot.appendChild(rocker);
+					bot.appendChild(start);
 					cmdc.appendChild(bot);
 					cmdc.appendChild(left);
 					cmdc.appendChild(right);
@@ -258,17 +274,18 @@
 					cmdcObj.bottombakEL.style.display = 'block'
 					cmdcObj.botEL.style.bottom = '-60px'
 					cmdcObj.botEL.classList.toggle('move_upper');
+					setInterval(function(){
+						var x = cmdcObj.rockerEL.style.backgroundPositionX
+						cmdcObj.rockerEL.style.backgroundPositionX = x==='0px'? '-166px':'0px'
+					}, CMDC.timeout* 0.6)
 				},
-				botEL: {},
-				leftEL: {},
-				middleEL: {},
-				bottombakEL: {},
 			}
 			cmdcObj.init(resource);
 			cmdcObj.botEL = cmdcObj.$(".cm-dc-bottom")
 			cmdcObj.leftEL = cmdcObj.$(".cm-dc-left")
 			cmdcObj.middleEL = cmdcObj.$(".cm-dc-middle")
 			cmdcObj.bottombakEL = cmdcObj.$(".cm-dc-bottom-bak")
+			cmdcObj.rockerEL = cmdcObj.$(".cm-dc-rocker")
 			cmdcObj.show();
 		}
 	};
@@ -276,7 +293,7 @@
 	window.CMDC = CMDC;
 
 	//滚动到指定位置，避免在顶部产生性能问题
-	window.scrollTo(250, 500)
+	window.scrollTo(255, 502)
 
 	//设置屏幕宽度的最小支持
 	// if(document.documentElement.clientWidth < 1263) return
@@ -287,6 +304,9 @@
 	CMDC.buildWalls();
 
 	setTimeout(function(){
+
+		// Catcher.report({node:1031100, snode:1163, w:"dcgame", cid:""})
+
 		CMDC.play();
 	}, CMDC.timeout);
 
