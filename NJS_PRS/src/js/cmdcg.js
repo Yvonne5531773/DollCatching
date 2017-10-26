@@ -43,7 +43,12 @@ CMDCG.do = function() {
 				radius: [10 * scale, 10 * scale, 16 * scale, 16 * scale]
 			},
 			render: {
-				visible: false
+				visible: false,
+				sprite: {
+					// xScale: scaleVal,
+					// yScale: scaleVal,
+					texture: sourceLinkRoot + 'img/flash.png'
+				}
 			},
 			frictionAir: 0
 		}, options);
@@ -239,7 +244,7 @@ CMDCG.do = function() {
 			timeScaleVal = 0.6,
 			radiusVal = 15;
 		return Composites.stack(criteria.x, criteria.y, criteria.columns, criteria.rows, 0, 0, function(x, y) {
-			if (Common.random() < 0.2) {
+			if (Common.random() < 0.3) {
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*5, 36, 46, {
 					render: {
 						sprite: {
@@ -252,10 +257,10 @@ CMDCG.do = function() {
 					// friction: 0.7,
 					timeScale: timeScaleVal,
 					mass: massVal,
-					angle: -Math.PI * Common.random(0, 1)
+					angle: -Math.PI * Common.random(0, 1),
 				});
 			}
-			else if(Common.random() > 0.2 && Common.random() < 0.3){
+			else if(Common.random() > 0.3 && Common.random() < 0.5){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random(), 36, 46, {
 					render: {
 						sprite: {
@@ -270,7 +275,7 @@ CMDCG.do = function() {
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
-			} else if(Common.random() > 0.3 && Common.random() < 0.4){
+			} else if(Common.random() > 0.5 && Common.random() < 0.55){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random(), 30, 40, {
 					render: {
 						sprite: {
@@ -285,7 +290,7 @@ CMDCG.do = function() {
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
-			} else if(Common.random() > 0.4 && Common.random() < 0.5){
+			} else if(Common.random() > 0.55 && Common.random() < 0.6){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*15, 30, 40, {
 					render: {
 						sprite: {
@@ -300,7 +305,7 @@ CMDCG.do = function() {
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
-			}else if(Common.random() > 0.5 && Common.random() < 0.6){
+			}else if(Common.random() > 0.65 && Common.random() < 0.7){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*15, 30, 40, {
 					render: {
 						sprite: {
@@ -315,7 +320,7 @@ CMDCG.do = function() {
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
-			} else if(Common.random() > 0.6 && Common.random() < 0.7){
+			} else if(Common.random() > 0.7 && Common.random() < 0.75){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*4, 30, 40, {
 					render: {
 						sprite: {
@@ -330,7 +335,7 @@ CMDCG.do = function() {
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
-			} else if(Common.random() > 0.7 && Common.random() < 0.8){
+			} else if(Common.random() > 0.75 && Common.random() < 0.8){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*4, 30, 44, {
 					render: {
 						sprite: {
@@ -475,27 +480,32 @@ CMDCG.do = function() {
 			setTimeout(function () {
 				catched = true
 				setTimeout(function () {
-					spring.length = 10
+					spring.length = 20
+					//光芒出现
+					setTimeout(function(){
+						ragdoll.bodies[0].label === 'chest' && (ragdoll.bodies[0].render.visible = true)
+					}, timeout* 0.5)
+
 					setTimeout(function () {
 						//防止多次出现提示框出
-						if($('.simpleAlert').length > 0) return;
-						dblChoseAlert = simpleAlert({
-							"content": "游戏结束啦！",
-							"buttons": {
-								"再玩一次": function () {
-									setBodiesStatic(engine, false)
-									playAgain = true;
-									dblChoseAlert.close();
-								},
-								"退出": function () {
-									clearSource()
-									eventOff = true
-									dblChoseAlert.close()
-									World.clear(world)
-									$('#cm-d-c').remove()
-								}
-							}
-						})
+						// if($('.simpleAlert').length > 0) return;
+						// dblChoseAlert = simpleAlert({
+						// 	"content": "游戏结束啦！",
+						// 	"buttons": {
+						// 		"再玩一次": function () {
+						// 			setBodiesStatic(engine, false)
+						// 			playAgain = true;
+						// 			dblChoseAlert.close();
+						// 		},
+						// 		"退出": function () {
+						// 			clearSource()
+						// 			eventOff = true
+						// 			dblChoseAlert.close()
+						// 			World.clear(world)
+						// 			$('#cm-d-c').remove()
+						// 		}
+						// 	}
+						// })
 						setBodiesStatic(engine, true)
 					}, timeout * 3)
 				}, timeout * 1.5)
@@ -673,7 +683,6 @@ CMDCG.do = function() {
 
 	//连接, 第三个参数是爪子的大小比例, (400,100)-初始位置
 	ragdoll = CMDCG.do.createRagdoll(400, 100, 1.1, {}, vertexSets);
-	console.log('ragdoll', ragdoll)
 	var ragdollConstraint = Constraint.create({
 		bodyA: ropeC.bodies[ropeC.bodies.length-1],
 		bodyB: ragdoll.bodies[0],
@@ -730,16 +739,16 @@ CMDCG.do = function() {
 			Body.setAngle(ragdoll.bodies[4], j);
 		}
 		//弹簧滑动
-		// if(ragdollMove){
-		// 	//控制速度
-		// 	counter += 0.01
-		// 	if (counter < 0) return
-		// 	springPx = spring_x + 200 * Math.sin(counter);
-		// 	if(!clicked){
-		// 		spring.pointA.x = springPx
-		// 		// ragdoll.bodies[0].position.x = springPx
-		// 	}
-		// }
+		if(ragdollMove){
+			//控制速度
+			counter += 0.01
+			if (counter < 0) return
+			springPx = spring_x + 200 * Math.sin(counter);
+			if(!clicked){
+				spring.pointA.x = springPx
+				// ragdoll.bodies[0].position.x = springPx
+			}
+		}
 	});
 
 	// Events.on(render, 'afterRender', function() {
