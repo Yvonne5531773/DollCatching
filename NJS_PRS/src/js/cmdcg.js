@@ -484,7 +484,7 @@ CMDCG.do = function() {
 					//光芒出现
 					setTimeout(function(){
 						ragdoll.bodies[0].label === 'chest' && (ragdoll.bodies[0].render.visible = true)
-					}, timeout* 0.5)
+					}, timeout* 0.3)
 
 					setTimeout(function () {
 						//防止多次出现提示框出
