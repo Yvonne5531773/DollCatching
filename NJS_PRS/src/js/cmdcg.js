@@ -411,6 +411,18 @@ CMDCG.do = function() {
 		}
 	}
 
+	CMDCG.do.openNewWindow = function(url, id){
+		var a = document.createElement('a');
+		a.setAttribute('href', url);
+		a.setAttribute('target', 'blank');
+		a.setAttribute('id', id);
+
+		if(!document.getElementById(id)) {
+			document.body.appendChild(a);
+		}
+		a.click();
+	}
+
 	var ragdollShow = false,
 		ragdollMove = false,
 		scaleoffest = 0.55;
