@@ -1,7 +1,7 @@
 
-var DC = DC || {};
+var CMDCG = CMDCG || {};
 
-DC.do = function() {
+CMDCG.do = function() {
 	var Engine = Matter.Engine,
 		Render = Matter.Render,
 		Runner = Matter.Runner,
@@ -23,16 +23,16 @@ DC.do = function() {
 	var clearSource = CMDC.clearSource,
 		eventOff = CMDC.eventOff,
 		timeout = CMDC.timeout,
-		bhObj = CMDC.bhObj,
 		playAgain = CMDC.playAgain,
 		sourceLinkRoot = CMDC.sourceLinkRoot;
 
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
-	DC.do.createRagdoll = function(x, y, scale, options, vertexSets) {
+	CMDCG.do.createRagdoll = function(x, y, scale, options, vertexSets) {
 		var massVal = 1.5,
 			frictionAirVal = 0.01,
-			timeScaleVal = 0.8;
+			timeScaleVal = 0.8,
+			scaleVal = 0.6;
 		scale = typeof scale === 'undefined' ? 1 : scale;
 		var chestOptions = Common.extend({
 			label: 'chest',
@@ -43,11 +43,7 @@ DC.do = function() {
 				radius: [10 * scale, 10 * scale, 16 * scale, 16 * scale]
 			},
 			render: {
-				sprite: {
-					xScale: 0.7,
-					yScale: 0.7,
-					texture: sourceLinkRoot + 'img/chest.png'
-				}
+				visible: false
 			},
 			frictionAir: 0
 		}, options);
@@ -61,11 +57,12 @@ DC.do = function() {
 			},
 			render: {
 				fillStyle: '#bdbabb',
-				// sprite: {
-				// 	xScale: 0.7,
-				// 	yScale: 0.7,
-				// 	texture: sourceLinkRoot + 'img/left-upper-arm.png'
-				// }
+				visible: false,
+				sprite: {
+					xScale: scaleVal,
+					yScale: scaleVal,
+					texture: sourceLinkRoot + 'img/left-upper-arm.png'
+				}
 			},
 			// stiffness: 0.7,
 			// mass: massVal,
@@ -76,11 +73,12 @@ DC.do = function() {
 			label: 'left-lower-arm',
 			render: {
 				fillStyle: '#cfcdd2',
-				// sprite: {
-				// 	xScale: 0.7,
-				// 	yScale: 0.7,
-				// 	texture: sourceLinkRoot + 'img/left-bottom-arm.png'
-				// }
+				visible: false,
+				sprite: {
+					xScale: scaleVal,
+					yScale: scaleVal,
+					texture: sourceLinkRoot + 'img/left-bottom-arm.png'
+				}
 			},
 			chamfer: {
 				radius: 6 * scale
@@ -98,7 +96,13 @@ DC.do = function() {
 				radius: 10 * scale
 			},
 			render: {
-				fillStyle: '#bdbabb'
+				fillStyle: '#bdbabb',
+				visible: false,
+				sprite: {
+					xScale: scaleVal,
+					yScale: scaleVal,
+					texture: sourceLinkRoot + 'img/right-upper-arm.png'
+				}
 			},
 			// stiffness: 0.7,
 			// mass: massVal,
@@ -108,7 +112,13 @@ DC.do = function() {
 		var rightLowerArmOptions = Common.extend({}, rightArmOptions, {
 			label: 'right-lower-arm',
 			render: {
-				fillStyle: '#cfcdd2'
+				fillStyle: '#cfcdd2',
+				visible: false,
+				sprite: {
+					xScale: scaleVal,
+					yScale: scaleVal,
+					texture: sourceLinkRoot + 'img/right-bottom-arm.png'
+				}
 			},
 			chamfer: {
 				radius: 6 * scale
@@ -118,7 +128,7 @@ DC.do = function() {
 			// frictionAir: frictionAirVal,
 			// timeScale: timeScaleVal
 		});
-		var chest = Bodies.rectangle(x, y, 45 * scale, 30 * scale, chestOptions);
+		var chest = Bodies.rectangle(x, y, 70 * scale, 25 * scale, chestOptions);
 		var rightUpperArm = Bodies.rectangle(x + 45 * scale, y - 10 * scale, 17 * scale, 54 * scale, rightArmOptions);
 		var rightLowerArm = Bodies.rectangle(x + 45 * scale, y + 20 * scale, 14 * scale, 86 * scale, rightLowerArmOptions);
 		var leftUpperArm = Bodies.rectangle(x - 45 * scale, y - 10 * scale, 17 * scale, 54 * scale, leftArmOptions);
@@ -138,8 +148,8 @@ DC.do = function() {
 				y: 0  //与手的位置
 			},
 			pointB: {
-				x: 0,
-				y: -32 * scale
+				x: -5,
+				y: -45 * scale
 			},
 			bodyB: rightUpperArm,
 			// stiffness: 0.8,
@@ -158,8 +168,8 @@ DC.do = function() {
 				y: 0
 			},
 			pointB: {
-				x: 0,
-				y: -32 * scale
+				x: 5,
+				y: -45 * scale
 			},
 			bodyB: leftUpperArm,
 			// stiffness: 0.8,
@@ -179,13 +189,13 @@ DC.do = function() {
 				y: 20 * scale
 			},
 			pointB: {
-				x: 0,
-				y: -36 * scale
+				x: -8,
+				y: -38 * scale
 			},
 			// stiffness: 0.6,
 			angularStiffness: 1,  //节点的角硬度
 			render: {
-				visible: true,
+				visible: false,
 				anchors: false //锚点
 			},
 			length: 0
@@ -199,13 +209,13 @@ DC.do = function() {
 				y: 20 * scale
 			},
 			pointB: {
-				x: 0,
-				y: -36 * scale
+				x: 8,
+				y: -38 * scale
 			},
 			// stiffness: 0.6,
 			angularStiffness: 1,
 			render: {
-				visible: true,
+				visible: false,
 				anchors: false
 			},
 			length: 0
@@ -224,10 +234,9 @@ DC.do = function() {
 	};
 
 	//构造物品
-	DC.do.createStacks = function(criteria){
-		var massVal = 0.1,
-			timeScaleVal = 0.5,
-			angelVal = -Math.PI * 0.75
+	CMDCG.do.createStacks = function(criteria){
+		var massVal = 0.05,
+			timeScaleVal = 0.6
 		return Composites.stack(criteria.x, criteria.y, criteria.columns, criteria.rows, 0, 0, function(x, y) {
 			if (Common.random() < 0.2) {
 				return Bodies.rectangle(x+Common.random()*5, y+Common.random()*5, 36, 46, {
@@ -384,9 +393,21 @@ DC.do = function() {
 		});
 	}
 
+	//设置显示
+	CMDCG.do.setVisible = function(){
+		spring.render.visible = true
+		for(var i = 0; i < ropeC.bodies.length; i++){
+			ropeC.bodies[i].render.visible = true
+		}
+		for(var r = 0; r < ragdoll.bodies.length; r++){
+			var body = ragdoll.bodies[r]
+			body.label!=='chest' && (body.render.visible = true)
+		}
+	}
+
 	var ragdollShow = false,
 		ragdollMove = false,
-		scaleoffest = 0.6;
+		scaleoffest = 0.55;
 	var	engine = Engine.create({
 		// velocityIterations: 1,
 		// constraintIterations: 1,
@@ -415,8 +436,7 @@ DC.do = function() {
 			fillStyle: '#f84851'
 		}
 	};
-	var width = document.documentElement.clientWidth,
-		offset = 10, thick = 0.01;
+	var offset = 10, thick = 0.01;
 
 	Render.run(render);
 	Runner.run(runner, engine);
@@ -430,7 +450,7 @@ DC.do = function() {
 		// rightWall
 		//3-厚度 4-高度
 		// Bodies.rectangle(0, 0, 800.5 + 2 * offset, thick, options), //上
-		Bodies.rectangle(400, 550 + offset, 800.5 + 2 * offset, thick, options), //下
+		Bodies.rectangle(400, 470 + offset, 800.5 + 2 * offset, thick, options), //下
 		Bodies.rectangle(800 + offset, 300, thick, 600.5 + 2 * offset, options), //右
 		Bodies.rectangle(-offset, 300, thick, 600.5 + 2 * offset, options)  //左
 	]);
@@ -438,28 +458,25 @@ DC.do = function() {
 	var dblChoseAlert, clicked = false,
 		clickFun = function() {
 			if(clicked){
-				!playAgain && $('#cm-dc-switch1').prop("checked", false)
-				playAgain && $('#cm-dc-switch1').prop("checked", true)
 				return
 			}
 			ragdollMove = false
 			clicked = true
 			//禁止鼠标操作
 			// World.remove(world, mouseConstraint);
-			//弹簧伸长
-			// setInterval(function(){
-			// 	if(spring.length >= 400) return
-			// 	spring.length += 30
-			// }, 100)
 			spring.stiffness = 0.005
-			spring.length = 350
+			//弹簧伸长
+			var si = setInterval(function(){
+				if(spring.length >= 200) clearInterval(si)
+				spring.length += 30
+			}, 80)
 			//抓娃娃状态
 			setTimeout(function () {
 				catched = true
 				setTimeout(function () {
 					spring.length = 10
 					setTimeout(function () {
-						//防止多次现提示框出
+						//防止多次出现提示框出
 						if($('.simpleAlert').length > 0) return;
 						dblChoseAlert = simpleAlert({
 							"content": "游戏结束啦！",
@@ -467,7 +484,6 @@ DC.do = function() {
 								"再玩一次": function () {
 									setBodiesStatic(engine, false)
 									playAgain = true;
-									$('#cm-dc-switch1').prop("checked", true)
 									dblChoseAlert.close();
 								},
 								"退出": function () {
@@ -476,36 +492,38 @@ DC.do = function() {
 									dblChoseAlert.close()
 									World.clear(world)
 									$('#cm-d-c').remove()
-									bhObj.dispose()
 								}
 							}
 						})
 						setBodiesStatic(engine, true)
 					}, timeout * 3)
-				}, timeout * 2.5)
+				}, timeout * 1.5)
 			}, timeout)
 		}
 	$('.start-btn').click(clickFun)
 
 	//物品池, 最好不超过40个
 	var	criteria = {
-			x: 25,
-			y: 400,
+			x: 5,
+			y: 300,
 			columns: 24,
 			rows: 1,
 		}
-	var stack = DC.do.createStacks(criteria);
+	var stack = CMDCG.do.createStacks(criteria);
 	World.add(world, stack);
 
-	//爪子出现
+	//爪子整体构造连接, 延迟
 	setTimeout(function(){
-		World.add(world, [ropeC, ragdoll, ragdollConstraint,]);
-		// World.add(world, [ropeC, ragdoll, ragdollConstraint, upperWall]);
+		//控制显示层级
+		World.add(world, [ragdoll, ragdollConstraint, ropeC]);
 		ragdollShow = true
 		setTimeout(function(){
 			ragdollMove = true;
+		}, timeout* 1.5)
+		setTimeout(function(){
+			CMDCG.do.setVisible()
 		}, timeout)
-	}, timeout)
+	}, timeout* 0.3)
 
 	// setTimeout(function(){
 	// 	//物品散开
@@ -593,86 +611,36 @@ DC.do = function() {
 		}
 	}
 
-	//svg加入元素；2代表两行, 280->横坐标，-3100->纵坐标
-	// World.add(world, Composites.stack(300, -2500, 3, 58, 3, 5, function(x, y) {
-	// 	if (Query.point([five], { x: x, y: y }).length === 0) {
-	// 		// return Bodies.polygon(x, y, 6, 12, {
-	// 		// 	frictionAir: 0.02,
-	// 		// 	friction: 0.01,
-	// 		// 	restitution: 0,
-	// 		// 	render: {
-	// 		// 		fillStyle: ["#FFFFFF", "#4285F4", "#EA4335", "#FBBC05", "#34A853"][Math.round(Math.random() * 4)]
-	// 		// 	}
-	// 		// });
-	// 		if (Common.random() < 0.3) {
-	// 			return Bodies.circle(x, y, 10, {
-	// 				density: 0.0005,
-	// 				frictionAir: 0.01,
-	// 				restitution: 0,
-	// 				friction: 0,
-	// 				render: {
-	// 					sprite: {
-	// 						texture: './img/tmall.png'
-	// 					}
-	// 				}
-	// 			});
-	// 		}else if(Common.random() > 0.3 && Common.random() < 0.6){
-	// 			return Bodies.rectangle(x, y, 18, 26, {
-	// 				frictionAir: 0.01,
-	// 				render: {
-	// 					strokeStyle: '#ffffff',
-	// 					sprite: {
-	// 						texture: './img/red2.png'
-	// 					}
-	// 				}
-	// 			})
-	// 		}else{
-	// 			return Bodies.circle(x, y, 10, {
-	// 				density: 0.0005,
-	// 				frictionAir: 0.01,
-	// 				restitution: 0,
-	// 				friction: 0,
-	// 				render: {
-	// 					sprite: {
-	// 						texture: './img/taobao2.png'
-	// 					}
-	// 				}
-	// 			});
-	// 		}
-	// 	}
-	// }));
-
 	//弹簧
 	var changeVal = 400;
 	var group = Body.nextGroup(true),
 		counter = -1;
 	//链的个数，属性
-	var ropeC = Composites.stack(changeVal, 0, 2, 1, 0, 10, function(x, y) {
-		return Bodies.rectangle(x, y, 30, 15, {
+	var ropeC = Composites.stack(changeVal, 40, 1, 1, 0, 10, function(x, y) {
+		return Bodies.rectangle(x, y, 25, 15, {
 			label: 'component',
 			collisionFilter: { group: group },
 			chamfer: 0.5, //节点的四角弧度
 			render: {
+				visible: false,
 				sprite: {
-					xScale: 0.6,
-					yScale: 0.6,
-					texture: sourceLinkRoot + 'img/component.png'
+					xScale: 0.66,
+					yScale: 0.66,
+					texture: sourceLinkRoot + 'img/connect.png',
 				}
 			},
-			frictionAirVal: 0
 		});
 	});
-	var arm = Bodies.rectangle(changeVal, 100, 40, 25, {
+	var arm = Bodies.rectangle(changeVal, 100, 35, 55, {
 		label: 'arm',
 		render: {
-			strokeStyle: '#3c3f41',
+			visible: false,
 			sprite: {
-				xScale: 0.8,
-				yScale: 0.8,
-				texture: sourceLinkRoot + 'img/arm.png'
+				xScale: 0.66,
+				yScale: 0.66,
+				texture: sourceLinkRoot + 'img/chest.png',
 			}
 		},
-		frictionAirVal: 0
 	});
 	ropeC.bodies.push(arm)
 
@@ -686,29 +654,29 @@ DC.do = function() {
 	Composite.add(ropeC, Constraint.create({
 		label: 'spring',
 		bodyB: ropeC.bodies[0],
-		pointB: { x: -20, y: 0 },
+		pointB: { x: -5, y: 0 },
 		pointA: { x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y },
 		stiffness: 0.009, //弹簧, 0是线
 		damping: 1,
 		length: 0,
 		render: {
-			visible: true,
+			visible: false,
 			lineWidth: 4,
 			strokeStyle: '#3442c7', //弹簧颜色
 		}
 	}));
 
-	var vertexSets = [], spring = ropeC.constraints[2],
+	var vertexSets = [], spring = ropeC.constraints[1],
 		ragdoll,
 		color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58']);
 
 	//连接, 第三个参数是爪子的大小比例, (400,100)-初始位置
-	ragdoll = DC.do.createRagdoll(400, 100, 1.1, {}, vertexSets);
+	ragdoll = CMDCG.do.createRagdoll(400, 100, 1.1, {}, vertexSets);
 	var ragdollConstraint = Constraint.create({
 		bodyA: ropeC.bodies[ropeC.bodies.length-1],
 		bodyB: ragdoll.bodies[0],
 		pointA: { x: 28, y: 0 },
-		pointB: { x: 0, y: -7 }, //爪子的连接位置
+		pointB: { x: 0, y: -5 }, //爪子的连接位置
 		length: 0,
 		render: {
 			visible: false,
@@ -747,8 +715,8 @@ DC.do = function() {
 				}
 			}else{
 				i -= 0.02;j += 0.02;x -= 0.01;y += 0.01
-				if(i <= 1) {
-					i = 1;j = -1;
+				if(i <= 0.75) { //值越小，上臂收缩的角度越大
+					i = 0.75;j = -0.75;
 				}
 				if(x <= -0.95){
 					x = -0.95; y = 0.95;
@@ -834,7 +802,6 @@ DC.do = function() {
 		// 	console.log('mouseup collisions', collisions[i].bodyA)
 		// }
 		if(!ragdollShow) return
-		$('#cm-dc-switch1').prop("checked", false);
 		clickFun()
 	});
 	render.mouse = mouse;
@@ -846,12 +813,14 @@ DC.do = function() {
 	});
 
 	//关闭按钮事件
-	$('.cm-d-c-close').click(function(){
+	$('.cm-dc-close').click(function(){
 		clearSource()
 		eventOff = true
 		World.clear(world)
 		$('#cm-d-c').remove()
-		bhObj.dispose()
+		$('.cm-dc-class').remove()
+		$('#cm-d-c-style').remove()
+		$('.simpleAlert').remove()
 	})
 
 	//更改鼠标样式

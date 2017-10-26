@@ -1,13 +1,12 @@
 
 (function() {
 	var CMDC = {
-		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		//sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/output/',
 		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
 		dc: {},
 		playAgain : false,
-		bhObj : {},
 		timeout : 1000,
 		eventOff : false,
 		isInclude : function (name) {
@@ -73,9 +72,10 @@
 				sourceLinkRoot = CMDC.sourceLinkRoot;
 			removejscssfile(sourceLinkRoot+"js/alert.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/tipso.min.js", 'js')
-			removejscssfile(sourceLinkRoot+"js/matter-dev.js", 'js')
+			removejscssfile(sourceLinkRoot+"js/matter.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/polyfill.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/matter-tools.demo.js", 'js')
+			removejscssfile(sourceLinkRoot+"js/matter-tools.gui.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/cmdcg.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/cmdcbh.js", 'js')
 			removejscssfile(sourceLinkRoot+"css/alert.css", 'css')
@@ -157,14 +157,14 @@
 		play: function(){
 			var obj = {
 				tools: {
-					gui: true
+					gui: false
 				},
 				startExample: 'cmdcg',
 				examples: [
 					{
 						name: 'DOLL-CATCHING',
 						id: 'cmdcg',
-						init: DC.do,
+						init: CMDCG.do,
 						sourceLink: CMDC.sourceLinkRoot + 'js/cmdcg.js'
 					},
 				]
@@ -177,11 +177,12 @@
 		buildWalls: function(){
 			var sourceLinkRoot = CMDC.sourceLinkRoot
 			var resource = {
-				botImg: sourceLinkRoot + 'img/allbodies.png',
+				botImg: sourceLinkRoot + 'img/control.png',
 				leftImg: sourceLinkRoot + 'img/hull.png',
 				middleImg: sourceLinkRoot + 'img/hull.png',
-				bottombakImg: sourceLinkRoot + 'img/bottombak.png',
+				bottombakImg: sourceLinkRoot + 'img/allbodies.png',
 				closeImg: sourceLinkRoot + 'img/close.png',
+				logoImg: sourceLinkRoot + 'img/11logo.png',
 			}
 			var cmdcObj = {
 				$: function(className){
@@ -193,11 +194,14 @@
 				createDom: function(resource){
 					var cssStr = '@-webkit-keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-60px);transform: translateY(-60px);}} @keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-60px);transform: translateY(-60px); }}' +
 						'.move_upper { -webkit-animation-name: move_upper;animation-name: move_upper; -webkit-animation-duration: .7s;animation-duration: .7s; -webkit-animation-iteration-count: 1;animation-iteration-count: 1; -webkit-animation-fill-mode: forwards;animation-fill-mode: forwards;}' +
-						'.cm-dc-bottom {z-index:9;width:100%;height:100px;line-height:35px;position:fixed;bottom:-60px;left:0;font-size:14px;color:#000;text-align:center;;display:none;} ' +
-						'.cm-dc-left {z-index:99;position:fixed;bottom:0;left:0;top:0;display:none}' +
+						'.cm-dc-bottom {position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;width: 1400px;z-index:16;height:240px;line-height:35px;background-repeat: no-repeat;display:none;} ' +
+						'.cm-dc-left {z-index:99;position:fixed;bottom:0;right: 50%;top:0;margin-right: 700px;width: 18%;height: 100%;background: #ec2040;}' +
+						'.cm-dc-right {z-index:2;position:fixed;bottom:0;left: 50%;top:0;margin-left: 700px;width: 18%;height: 100%;background: #ec2040;}' +
 						'.cm-dc-middle {z-index: 10;position: fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1400px;background-repeat: no-repeat;display: none}' +
-						'.cm-dc-bottom-bak {z-index:8;position: fixed;margin:auto;top:-207px;left:-377px;right: 0;bottom: 0;width:1560px;background-repeat: no-repeat;display: none} ' +
-						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index: 15;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close:hover {background-position: -80px} .cm-dc-close:active {background-position: -160px}';
+						'.cm-dc-bottom-bak {position: fixed;  margin: auto;  left: 0;  right: 0;  bottom: -10px;  width: 1400px;z-index:5;height:300px;background-repeat: no-repeat;display: none} ' +
+						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index: 15;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close:hover {background-position: -80px} .cm-dc-close:active {background-position: -160px}' +
+						'.cm-dc-11logo-left {margin-left: 140px;display: inline-block;width: 200px; height: 100%;background-image: url(../images/11logo.png);}' +
+						'.cm-dc-11logo-right {display: inline-block;width: 200px; height: 100%;background-image: url(../images/11logo.png);}';
 					var cssStyle = {};
 					cssStyle = document.createElement('style');
 					cssStyle.type = 'text/css';
@@ -206,20 +210,29 @@
 					var cmdc = document.createElement('div'),
 						bot = document.createElement('div'),
 						left = document.createElement('div'),
+						right = document.createElement('div'),
 						middle = document.createElement('div'),
 						bottombak = document.createElement('div'),
 						close = document.createElement('div'),
 						botImg = document.createElement('img'),
-						leftImg = document.createElement('img');
+						leftImg = document.createElement('img'),
+						leftlogo = document.createElement('a'),
+						rightlogo = document.createElement('a');
 					cmdc.className = 'cm-dc-class'
 					bot.className = 'cm-dc-bottom';
 					left.className = 'cm-dc-left';
+					right.className = 'cm-dc-right';
 					middle.className = 'cm-dc-middle';
 					bottombak.className = 'cm-dc-bottom-bak';
 					close.className = 'cm-dc-close';
+					leftlogo.className = 'cm-dc-11logo-left';
+					rightlogo.className = 'cm-dc-11logo-right';
+					bot.style.backgroundImage = 'url(' + resource.botImg + ')'
 					middle.style.backgroundImage = 'url(' + resource.middleImg + ')'
 					bottombak.style.backgroundImage = 'url(' + resource.bottombakImg + ')'
 					close.style.backgroundImage = 'url(' + resource.closeImg + ')'
+					leftlogo.style.backgroundImage = 'url(' + resource.logoImg + ')'
+					rightlogo.style.backgroundImage = 'url(' + resource.logoImg + ')'
 
 					botImg.src = resource.botImg;
 					botImg.style.width = '1180px';
@@ -227,11 +240,12 @@
 					leftImg.src = resource.leftImg;
 					leftImg.style.display = 'inline-block'
 
-					bot.appendChild(botImg);
-					// left.appendChild(leftImg);
-					// middle.appendChild(bottombak);
+					// bot.appendChild(botImg);
+					left.appendChild(leftlogo);
+					right.appendChild(rightlogo);
 					cmdc.appendChild(bot);
 					cmdc.appendChild(left);
+					cmdc.appendChild(right);
 					cmdc.appendChild(middle);
 					cmdc.appendChild(close);
 					cmdc.appendChild(bottombak);
