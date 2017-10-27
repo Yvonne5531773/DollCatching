@@ -19,7 +19,6 @@
 		},
 		loadSource : function() {
 			if(CMDC.isInclude('cmdcg.js')) return
-
 			var oHead = document.getElementsByTagName('HEAD').item(0),
 				pfScript = document.createElement("script"),
 				mScript = document.createElement("script"),
@@ -28,7 +27,6 @@
 				mainScript = document.createElement("script"),
 				alertScript = document.createElement("script"),
 				alertCss = document.createElement("link"),
-				tipCss = document.createElement("link"),
 				sourceLinkRoot = CMDC.sourceLinkRoot;
 
 			pfScript.src = sourceLinkRoot + "js/polyfill.js";
@@ -42,11 +40,10 @@
 			alertCss.type = 'text/css';
 
 			oHead.appendChild(alertCss);
-			oHead.appendChild(tipCss);
 			oHead.appendChild(pfScript);
 			oHead.appendChild(mScript);
 			setTimeout(function () {
-				oHead.appendChild(mgScript);
+				// oHead.appendChild(mgScript); //debug tool
 				oHead.appendChild(mdScript);
 				oHead.appendChild(mainScript);
 				oHead.appendChild(alertScript);
@@ -65,53 +62,48 @@
 		clearSource : function(){
 			var removejscssfile = CMDC.removejscssfile,
 				sourceLinkRoot = CMDC.sourceLinkRoot;
+			removejscssfile(sourceLinkRoot+"css/alert.css", 'css')
 			removejscssfile(sourceLinkRoot+"js/alert.js", 'js')
-			removejscssfile(sourceLinkRoot+"js/tipso.min.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/matter.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/polyfill.js", 'js')
-			removejscssfile(sourceLinkRoot+"js/matter-tools.demo.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/matter-tools.gui.js", 'js')
 			removejscssfile(sourceLinkRoot+"js/cmdcg.js", 'js')
-			removejscssfile(sourceLinkRoot+"js/cmdcbh.js", 'js')
-			removejscssfile(sourceLinkRoot+"css/alert.css", 'css')
-			removejscssfile(sourceLinkRoot+"css/tipso.min.css", 'css')
+			removejscssfile(sourceLinkRoot+"js/cmdctool.js", 'js')
 		},
 		Interface: {
-			close: function(action) {
+			close: function(action, index) {
 				try {
 					if (action === 'receive') {
 						Catcher.receive();
 					} else {
 						Catcher.gameOver();
 					}
-				} catch (e) {}
-
-				this.reportClose(action || 'exit');
+				} catch (e) {Catcher.error()}
+				this.reportClose(action, index);
 			},
 			ready: function() {
 				if (window.requestAnimationFrame) {
 					try {
 						Catcher.ready();
-					} catch (e) {}
-					this.reportShow('show');
+					} catch (e) {Catcher.error()}
 					return true;
 				}
 				// 浏览器版本过低
 				try {
 					Catcher.notSupport();
-				} catch (e) {}
+				} catch (e) {Catcher.error()}
 				this.reportShow('not-support');
 				return false;
 			},
 			click: function() {
 				try {
 					Catcher.receive();
-				} catch (e) {}
+				} catch (e) {Catcher.error()}
 			},
 			error: function(){
 				try {
 					Catcher.error();
-				} catch (e) {}
+				} catch (e) {Catcher.error()}
 			},
 			reportShow: function(action) {
 				this.report({
@@ -130,10 +122,11 @@
 				}
 				this.report(data);
 			},
-			reportClose: function(action) {
+			reportClose: function(action, index) {
 				this.report({
 					snode: 10147,
-					expand: action
+					expand: action,
+					idx: index || 1
 				});
 			},
 			report: function(obj) {
@@ -144,7 +137,7 @@
 				for (var i in obj) {
 					data[i] = obj[i];
 				}
-				data.w = 'zpgame';
+				data.w = 'dcgame';
 				data.cid = '';
 				try {
 					Catcher.report(data);
@@ -165,7 +158,7 @@
 						id: 'cmdcg',
 						init: CMDCG.do,
 						sourceLink: CMDC.sourceLinkRoot + 'js/cmdcg.js'
-					},
+					}
 				]
 			}
 			var dc = CMDC.dc;
@@ -292,25 +285,24 @@
 
 	window.CMDC = CMDC;
 
-	//滚动到指定位置，避免在顶部产生性能问题
-	window.scrollTo(255, $('.link_break')[1].offsetTop)
+	if(CMDC.Interface.ready()){
+		CMDC.loadSource();
 
-	//设置屏幕宽度的最小支持
-	// if(document.documentElement.clientWidth < 1263) return
+		setTimeout(function(){
+			try{
+				//滚动到指定位置，避免在顶部产生性能问题
+				$('.link_break')[1] && window.scrollTo(255, $('.link_break')[1].offsetTop)
+				//建立游戏周边场景
+				CMDC.buildWalls();
+				//建立娃娃机场景
+				CMDC.play();
+			}catch(e){
+				CMDC.Interface.error()
+				CMDC.Interface.reportClose('error-exit')
+				console.log('error', e)
+			}
 
-	CMDC.loadSource();
-
-	//建立周边
-	CMDC.buildWalls();
-
-	setTimeout(function(){
-		window.open('_blank');
-	}, 100)
-
-	setTimeout(function(){
-
-		CMDC.play();
-
-	}, CMDC.timeout);
+		}, CMDC.timeout* 1.5);
+	}
 
 })();

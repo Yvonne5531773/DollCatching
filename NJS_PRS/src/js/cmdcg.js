@@ -25,7 +25,16 @@ CMDCG.do = function() {
 		timeout = CMDC.timeout,
 		playAgain = CMDC.playAgain,
 		sourceLinkRoot = CMDC.sourceLinkRoot,
-		tmallLink = CMDC.tmallLink
+		tmallLink = CMDC.tmallLink,
+		redAlertShow = false,
+		disappearSTO = {},
+		sto1 = {},
+		sto1p5 = {},
+		sto0p3 = {},
+		sto3 = {},
+		sto0p2 = {},
+		sto1p2 = {},
+		sto2 = {}
 
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
@@ -408,6 +417,91 @@ CMDCG.do = function() {
 		a.click();
 	}
 
+	CMDCG.do.clickFun = function() {
+		if (clicked || !ragdollMove) {
+			return
+		}
+		ragdollMove = false
+		clicked = true
+		//禁止鼠标操作
+		// World.remove(world, mouseConstraint);
+		spring.stiffness = 0.005
+		//弹簧伸长
+		var si = setInterval(function () {
+			if (spring.length >= 200) clearInterval(si)
+			spring.length += 30
+		}, 80)
+		//抓娃娃状态
+		sto1 = setTimeout(function () {
+			catched = true
+			sto1p5 = setTimeout(function () {
+				spring.length = 20
+				//光芒出现
+				sto0p3 = setTimeout(function () {
+					ragdoll.bodies[0].label === 'chest' && (ragdoll.bodies[0].render.visible = true)
+				}, timeout * 0.3)
+				sto3 = setTimeout(function () {
+					//防止多次出现提示框出
+					if ($('.simpleAlert').length > 0) return;
+					redAlertShow = ture
+					dblChoseAlert = simpleAlert({
+						"content": "游戏结束啦！",
+						"buttons": {
+							"再玩一次": function () {
+								setBodiesStatic(engine, false)
+								playAgain = true;
+								dblChoseAlert.close();
+							}
+						}
+					})
+					setBodiesStatic(engine, true)
+				}, timeout * 3)
+			}, timeout * 1.5)
+		}, timeout)
+	}
+
+	CMDCG.do.closeFun = function(action, index) {
+		//返回顶部
+		window.scrollTo(255, 0)
+		clearSource()
+		//阻止beforeUpdate事件继续
+		eventOff = true
+		World.clear(world)
+		$('#cm-d-c').remove()
+		$('.cm-dc-class').remove()
+		$('#cm-d-c-style').remove()
+		$('.simpleAlert').remove()
+		disappearSTO && clearTimeout(disappearSTO)
+		sto1 && clearTimeout(sto1)
+		sto1p5 && clearTimeout(sto1p5)
+		sto0p3 && clearTimeout(sto0p3)
+		sto3 && clearTimeout(sto3)
+		sto0p2 && clearTimeout(sto0p2)
+		sto1p2 && clearTimeout(sto1p2)
+		sto2 && clearTimeout(sto2)
+		CMDCG.do.unbindEvents()
+		CMDC.Interface.close(action, index)
+	}
+
+	CMDCG.do.bindEvents = function(){
+		//开始抓取按钮事件
+		$('.cm-dc-start-btn').bind('click', function(){
+			CMDCG.do.clickFun()
+			CMDC.Interface.reportClick('click', 1)
+		})
+		//关闭按钮事件
+		$('.cm-dc-close').bind('click', function(){
+			//红包出现前/出现后
+			!redAlertShow && CMDCG.do.closeFun('exit', 1)
+			redAlertShow && CMDCG.do.closeFun('exit', 2)
+		})
+	}
+
+	CMDCG.do.unbindEvents = function(){
+		$('.cm-dc-start-btn').unbind('click')
+		$('.cm-dc-close').unbind('click')
+	}
+
 	var ragdollShow = false,
 		ragdollMove = false,
 		scaleoffest = 0.55;
@@ -455,67 +549,7 @@ CMDCG.do = function() {
 		Bodies.rectangle(-offset, 300, thick, 600.5 + 2 * offset, options)  //左
 	]);
 
-	var dblChoseAlert, clicked = false,
-		clickFun = function() {
-			if(clicked || !ragdollMove){
-				return
-			}
-			ragdollMove = false
-			clicked = true
-			//禁止鼠标操作
-			// World.remove(world, mouseConstraint);
-			spring.stiffness = 0.005
-			//弹簧伸长
-			var si = setInterval(function(){
-				if(spring.length >= 200) clearInterval(si)
-				spring.length += 30
-			}, 80)
-			//抓娃娃状态
-			setTimeout(function () {
-				catched = true
-				setTimeout(function () {
-					spring.length = 20
-					//光芒出现
-					setTimeout(function(){
-						ragdoll.bodies[0].label === 'chest' && (ragdoll.bodies[0].render.visible = true)
-					}, timeout* 0.3)
-					setTimeout(function () {
-						//防止多次出现提示框出
-						// if($('.simpleAlert').length > 0) return;
-						// dblChoseAlert = simpleAlert({
-						// 	"content": "游戏结束啦！",
-						// 	"buttons": {
-						// 		"再玩一次": function () {
-						// 			setBodiesStatic(engine, false)
-						// 			playAgain = true;
-						// 			dblChoseAlert.close();
-						// 		},
-						// 		"退出": function () {
-						// 			clearSource()
-						// 			eventOff = true
-						// 			dblChoseAlert.close()
-						// 			World.clear(world)
-						// 			$('#cm-d-c').remove()
-						// 		}
-						// 	}
-						// })
-						window.open(tmallLink);
-						setBodiesStatic(engine, true)
-						// CMDCG.do.openNewWindow(tmallLink, 'cm-tmall-link')
-						closeFun()
-					}, timeout * 3)
-				}, timeout * 1.5)
-			}, timeout)
-		},
-		closeFun = function(){
-			clearSource()
-			eventOff = true
-			World.clear(world)
-			window.scrollTo(255, 0)
-			$('#cm-d-c').remove()
-			$('.cm-dc-class').remove()
-			$('#cm-d-c-style').remove()
-		}
+	var dblChoseAlert, clicked = false;
 
 	//物品池, 最好不超过40个
 	var	criteria = {
@@ -528,17 +562,17 @@ CMDCG.do = function() {
 	World.add(world, stack);
 
 	//爪子整体构造连接, 延迟
-	setTimeout(function(){
+	sto0p2 = setTimeout(function(){
 		//控制显示层级
 		World.add(world, [ragdoll, ragdollConstraint, ropeC]);
 		ragdollShow = true
-		setTimeout(function(){
-			ragdollMove = true;
-		}, timeout* 1.5)
-		setTimeout(function(){
+		sto1p2 = setTimeout(function(){
 			CMDCG.do.setVisible()
-		}, timeout)
-	}, timeout* 0.3)
+		}, timeout* 1.2)
+		sto2 = setTimeout(function(){
+			ragdollMove = true;
+		}, timeout* 2)
+	}, timeout* 0.2)
 
 	// setTimeout(function(){
 	// 	//物品散开
@@ -621,6 +655,7 @@ CMDCG.do = function() {
 		for (var i = 0; i < bodies.length; i++) {
 			var body = bodies[i];
 			if (body.position.y <= 400 && !~['chest', 'left-arm', 'right-arm', ].indexOf(body.label)) {
+				console.log('setBodiesStatic body', body)
 				Body.setStatic(body, bool);
 			}
 		}
@@ -677,7 +712,7 @@ CMDCG.do = function() {
 		render: {
 			visible: false,
 			lineWidth: 4,
-			strokeStyle: '#3442c7', //弹簧颜色
+			strokeStyle: '#3442c7' //弹簧颜色
 		}
 	}));
 
@@ -815,9 +850,12 @@ CMDCG.do = function() {
 		// for (var i = 0; i < collisions.length; i++) {
 		// 	console.log('mouseup collisions', collisions[i].bodyA)
 		// }
-		clickFun()
+		CMDCG.do.clickFun()
+		CMDC.Interface.reportClick('click', 2)
 	});
 	render.mouse = mouse;
+
+	CMDCG.do.bindEvents()
 
 	// 可控制空间所占用的大小
 	Render.lookAt(render, {
@@ -825,22 +863,19 @@ CMDCG.do = function() {
 		max: { x: 800, y: 600 }
 	});
 
-	//开始按钮事件
-	$('.cm-dc-start-btn').click(function(){
-		clickFun()
-
-	})
-	//关闭按钮事件
-	$('.cm-dc-close').click(function(){
-		closeFun()
-	})
-
 	//减少引擎更新时间
 	function enginRun() {
 		window.requestAnimationFrame(enginRun);
 		Engine.update(engine, 1000 / 200);
 	}
 	enginRun()
+
+	disappearSTO = setTimeout(function(){
+		!clicked && CMDCG.do.closeFun('disappear')
+	}, timeout* 20)
+
+	//完全加载完进行展示上报
+	CMDC.Interface.reportShow('winpop')
 
 	return {
 		engine: engine,
