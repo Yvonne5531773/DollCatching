@@ -662,7 +662,8 @@ CMDCG.do = function() {
 	}
 
 	//弹簧
-	var changeVal = 400;
+	//如果要改变弹簧的样式，可以把链条当做弹簧，再把弹簧的长度设成0
+	var changeVal = 400, armY = 150;
 	var group = Body.nextGroup(true),
 		counter = -1;
 	//链的个数，属性
@@ -681,6 +682,7 @@ CMDCG.do = function() {
 			},
 		});
 	});
+
 	var arm = Bodies.rectangle(changeVal, 100, 35, 55, {
 		label: 'arm',
 		render: {
@@ -716,9 +718,9 @@ CMDCG.do = function() {
 		}
 	}));
 
-	var vertexSets = [], spring = ropeC.constraints[1],
-		ragdoll,
-		color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58']);
+	var vertexSets = [],
+		spring = ropeC.constraints[1],
+		ragdoll;
 
 	//连接, 第三个参数是爪子的大小比例, (400,100)-初始位置
 	ragdoll = CMDCG.do.createRagdoll(400, 100, 1.1, {}, vertexSets);

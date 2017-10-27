@@ -7,18 +7,18 @@
 		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
-		playAgain : false,
-		timeout : 1000,
-		eventOff : false,
-		isInclude : function (name) {
+		playAgain: false,
+		timeout: 1000,
+		eventOff: false,
+		isInclude: function (name) {
 			var js = /js$/i.test(name);
 			var es = document.getElementsByTagName(js ? 'script' : 'link');
 			for (var i = 0; i < es.length; i++)
-				if (es[i][js ? 'src' : 'href'].indexOf(name) !== -1)return true;
+				if (es[i][js ? 'src' : 'href'].indexOf(name) !== -1) return true;
 			return false;
 		},
-		loadSource : function() {
-			if(CMDC.isInclude('cmdcg.js')) return
+		loadSource: function () {
+			if (CMDC.isInclude('cmdcg.js')) return
 			var oHead = document.getElementsByTagName('HEAD').item(0),
 				pfScript = document.createElement("script"),
 				mScript = document.createElement("script"),
@@ -49,69 +49,79 @@
 				oHead.appendChild(alertScript);
 			}, 500)
 		},
-		removejscssfile : function(filename, filetype){
-			var targetelement=(filetype==="js")? "script" : (filetype==="css")? "link" : "none";
-			var targetattr=(filetype==="js")? "src" : (filetype==="css")? "href" : "none";
-			var allsuspects=document.getElementsByTagName(targetelement);
-			for (var i=allsuspects.length; i>=0; i--){
-				if (allsuspects[i] && allsuspects[i].getAttribute(targetattr) && allsuspects[i].getAttribute(targetattr).indexOf(filename)!==-1){
+		removejscssfile: function (filename, filetype) {
+			var targetelement = (filetype === "js") ? "script" : (filetype === "css") ? "link" : "none";
+			var targetattr = (filetype === "js") ? "src" : (filetype === "css") ? "href" : "none";
+			var allsuspects = document.getElementsByTagName(targetelement);
+			for (var i = allsuspects.length; i >= 0; i--) {
+				if (allsuspects[i] && allsuspects[i].getAttribute(targetattr) && allsuspects[i].getAttribute(targetattr).indexOf(filename) !== -1) {
 					allsuspects[i].parentNode.removeChild(allsuspects[i]);
 				}
 			}
 		},
-		clearSource : function(){
+		clearSource: function () {
 			var removejscssfile = CMDC.removejscssfile,
 				sourceLinkRoot = CMDC.sourceLinkRoot;
-			removejscssfile(sourceLinkRoot+"css/alert.css", 'css')
-			removejscssfile(sourceLinkRoot+"js/alert.js", 'js')
-			removejscssfile(sourceLinkRoot+"js/matter.js", 'js')
-			removejscssfile(sourceLinkRoot+"js/polyfill.js", 'js')
-			removejscssfile(sourceLinkRoot+"js/matter-tools.gui.js", 'js')
-			removejscssfile(sourceLinkRoot+"js/cmdcg.js", 'js')
-			removejscssfile(sourceLinkRoot+"js/cmdctool.js", 'js')
+			removejscssfile(sourceLinkRoot + "css/alert.css", 'css')
+			removejscssfile(sourceLinkRoot + "js/alert.js", 'js')
+			removejscssfile(sourceLinkRoot + "js/matter.js", 'js')
+			removejscssfile(sourceLinkRoot + "js/polyfill.js", 'js')
+			removejscssfile(sourceLinkRoot + "js/matter-tools.gui.js", 'js')
+			removejscssfile(sourceLinkRoot + "js/cmdcg.js", 'js')
+			removejscssfile(sourceLinkRoot + "js/cmdctool.js", 'js')
 		},
 		Interface: {
-			close: function(action, index) {
+			close: function (action, index) {
 				try {
 					if (action === 'receive') {
 						Catcher.receive();
 					} else {
 						Catcher.gameOver();
 					}
-				} catch (e) {Catcher.error()}
+				} catch (e) {
+					Catcher.error()
+				}
 				this.reportClose(action, index);
 			},
-			ready: function() {
+			ready: function () {
 				if (window.requestAnimationFrame) {
 					try {
 						Catcher.ready();
-					} catch (e) {Catcher.error()}
+					} catch (e) {
+						Catcher.error()
+					}
 					return true;
 				}
 				// 浏览器版本过低
 				try {
 					Catcher.notSupport();
-				} catch (e) {Catcher.error()}
+				} catch (e) {
+					Catcher.error()
+				}
 				this.reportShow('not-support');
 				return false;
 			},
-			click: function() {
+			click: function () {
 				try {
 					Catcher.receive();
-				} catch (e) {Catcher.error()}
+				} catch (e) {
+					Catcher.error()
+				}
 			},
-			error: function(){
+			error: function () {
 				try {
 					Catcher.error();
-				} catch (e) {Catcher.error()}
+				} catch (e) {
+					Catcher.error()
+				}
 			},
-			reportShow: function(action) {
+			reportShow: function (action) {
 				this.report({
 					snode: 1365,
 					expand: action
 				});
 			},
-			reportClick: function(action, idx, shuang11) {
+			reportClick: function (action, idx, shuang11) {
 				var data = {
 					snode: 1163,
 					expand: action,
@@ -122,14 +132,14 @@
 				}
 				this.report(data);
 			},
-			reportClose: function(action, index) {
+			reportClose: function (action, index) {
 				this.report({
 					snode: 10147,
 					expand: action,
 					idx: index || 1
 				});
 			},
-			report: function(obj) {
+			report: function (obj) {
 				var data = {
 					node: 1031100
 				};
@@ -146,7 +156,7 @@
 				}
 			}
 		},
-		play: function(){
+		play: function () {
 			var obj = {
 				tools: {
 					gui: false
@@ -166,7 +176,7 @@
 			document.body.appendChild(dc.dom.root);
 			MatterTools.Demo.start(dc);
 		},
-		buildWalls: function(){
+		buildWalls: function () {
 			var sourceLinkRoot = CMDC.sourceLinkRoot
 			var resource = {
 				botImg: sourceLinkRoot + 'img/control.png',
@@ -184,13 +194,13 @@
 				middleEL: {},
 				bottombakEL: {},
 				rockerEL: {},
-				$: function(className){
+				$: function (className) {
 					return document.querySelector(className);
 				},
-				init: function(resource){
+				init: function (resource) {
 					cmdcObj.createDom(resource)
 				},
-				createDom: function(resource){
+				createDom: function (resource) {
 					var cssStr = '@-webkit-keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-60px);transform: translateY(-60px);}} @keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-60px);transform: translateY(-60px); }}' +
 						'.move_upper { -webkit-animation-name: move_upper;animation-name: move_upper; -webkit-animation-duration: .7s;animation-duration: .7s; -webkit-animation-iteration-count: 1;animation-iteration-count: 1; -webkit-animation-fill-mode: forwards;animation-fill-mode: forwards;}' +
 						'.cm-dc-bottom {min-width:1180px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:28;height:240px;background-repeat: no-repeat;background-position: center top;display:none;} ' +
@@ -260,17 +270,17 @@
 					cmdc.appendChild(start);
 					document.body.appendChild(cmdc);
 				},
-				show: function(){
+				show: function () {
 					cmdcObj.botEL.style.display = 'block'
 					cmdcObj.leftEL.style.display = 'block'
 					cmdcObj.middleEL.style.display = 'block'
 					cmdcObj.bottombakEL.style.display = 'block'
 					cmdcObj.botEL.style.bottom = '-60px'
 					cmdcObj.botEL.classList.toggle('move_upper');
-					setInterval(function(){
+					setInterval(function () {
 						var x = cmdcObj.rockerEL.style.backgroundPositionX
-						cmdcObj.rockerEL.style.backgroundPositionX = x==='0px'? '-166px':'0px'
-					}, CMDC.timeout* 0.6)
+						cmdcObj.rockerEL.style.backgroundPositionX = x === '0px' ? '-166px' : '0px'
+					}, CMDC.timeout * 0.6)
 				},
 			}
 			cmdcObj.init(resource);
