@@ -21,20 +21,24 @@ CMDCG.do = function() {
 		Sleeping = Matter.Sleeping;
 
 	var clearSource = CMDC.clearSource,
-		eventOff = CMDC.eventOff,
 		timeout = CMDC.timeout,
 		playAgain = CMDC.playAgain,
 		sourceLinkRoot = CMDC.sourceLinkRoot,
-		tmallLink = CMDC.tmallLink,
-		redAlertShow = false,
-		disappearSTO = {},
-		sto1 = {},
-		sto1p5 = {},
-		sto0p3 = {},
-		sto3 = {},
-		sto0p2 = {},
-		sto1p2 = {},
-		sto2 = {}
+		tmallLink = CMDC.tmallLink;
+
+	CMDCG.do.disappearSTO = {}
+	CMDCG.do.sto1 = {}
+	CMDCG.do.sto1p5 = {}
+	CMDCG.do.sto0p3 = {}
+	CMDCG.do.sto3 = {}
+	CMDCG.do.sto0p2 = {}
+	CMDCG.do.sto1p2 = {}
+	CMDCG.do.sto2 = {}
+	CMDCG.do.clicked = false
+	CMDCG.do.redAlertShow = false
+	CMDCG.do.ragdollMove = false
+	CMDCG.do.raf = {}
+	CMDCG.do.engineCallback = {}
 
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
@@ -252,7 +256,8 @@ CMDCG.do = function() {
 	CMDCG.do.createStacks = function(criteria){
 		var massVal = 0.05,
 			timeScaleVal = 0.6,
-			radiusVal = 15;
+			radiusVal = 15,
+			scaleoffest = 0.55;
 		return Composites.stack(criteria.x, criteria.y, criteria.columns, criteria.rows, 0, 0, function(x, y) {
 			if (Common.random() < 0.3) {
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*5, 36, 46, {
@@ -418,11 +423,11 @@ CMDCG.do = function() {
 	}
 
 	CMDCG.do.clickFun = function() {
-		if (clicked || !ragdollMove) {
+		if (CMDCG.do.clicked || !CMDCG.do.ragdollMove) {
 			return
 		}
-		ragdollMove = false
-		clicked = true
+		CMDCG.do.ragdollMove = false
+		CMDCG.do.clicked = true
 		//禁止鼠标操作
 		// World.remove(world, mouseConstraint);
 		spring.stiffness = 0.005
@@ -432,19 +437,19 @@ CMDCG.do = function() {
 			spring.length += 30
 		}, 80)
 		//抓娃娃状态
-		sto1 = setTimeout(function () {
+		CMDCG.do.sto1 = setTimeout(function () {
 			catched = true
-			sto1p5 = setTimeout(function () {
+			CMDCG.do.sto1p5 = setTimeout(function () {
 				spring.length = 20
 				//光芒出现
-				sto0p3 = setTimeout(function () {
+				CMDCG.do.sto0p3 = setTimeout(function () {
 					ragdoll.bodies[0].label === 'chest' && (ragdoll.bodies[0].render.visible = true)
 				}, timeout * 0.3)
-				sto3 = setTimeout(function () {
+				CMDCG.do.sto3 = setTimeout(function () {
 					//防止多次出现提示框出
 					if ($('.simpleAlert').length > 0) return;
-					redAlertShow = ture
-					dblChoseAlert = simpleAlert({
+					CMDCG.do.redAlertShow = true
+					var dblChoseAlert = simpleAlert({
 						"content": "游戏结束啦！",
 						"buttons": {
 							"再玩一次": function () {
@@ -461,24 +466,29 @@ CMDCG.do = function() {
 	}
 
 	CMDCG.do.closeFun = function(action, index) {
+		CMDCG.do.disappearSTO && clearTimeout(CMDCG.do.disappearSTO)
+		CMDCG.do.sto1 && clearTimeout(CMDCG.do.sto1)
+		CMDCG.do.sto1p5 && clearTimeout(CMDCG.do.sto1p5)
+		CMDCG.do.sto0p3 && clearTimeout(CMDCG.do.sto0p3)
+		CMDCG.do.sto3 && clearTimeout(CMDCG.do.sto3)
+		CMDCG.do.sto0p2 && clearTimeout(CMDCG.do.sto0p2)
+		CMDCG.do.sto1p2 && clearTimeout(CMDCG.do.sto1p2)
+		CMDCG.do.sto2 && clearTimeout(CMDCG.do.sto2)
+
+		//清除事件
+		cancelAnimationFrame(CMDCG.do.raf)
+		setTimeout(function () {
+			Events.off(engine, 'beforeUpdate', CMDCG.do.engineCallback)
+		}, timeout)
+
 		//返回顶部
 		window.scrollTo(255, 0)
 		clearSource()
-		//阻止beforeUpdate事件继续
-		eventOff = true
 		World.clear(world)
 		$('#cm-d-c').remove()
 		$('.cm-dc-class').remove()
 		$('#cm-d-c-style').remove()
 		$('.simpleAlert').remove()
-		disappearSTO && clearTimeout(disappearSTO)
-		sto1 && clearTimeout(sto1)
-		sto1p5 && clearTimeout(sto1p5)
-		sto0p3 && clearTimeout(sto0p3)
-		sto3 && clearTimeout(sto3)
-		sto0p2 && clearTimeout(sto0p2)
-		sto1p2 && clearTimeout(sto1p2)
-		sto2 && clearTimeout(sto2)
 		CMDCG.do.unbindEvents()
 		CMDC.Interface.close(action, index)
 	}
@@ -492,8 +502,8 @@ CMDCG.do = function() {
 		//关闭按钮事件
 		$('.cm-dc-close').bind('click', function(){
 			//红包出现前/出现后
-			!redAlertShow && CMDCG.do.closeFun('exit', 1)
-			redAlertShow && CMDCG.do.closeFun('exit', 2)
+			!CMDCG.do.redAlertShow && CMDCG.do.closeFun('exit', 1)
+			CMDCG.do.redAlertShow && CMDCG.do.closeFun('exit', 2)
 		})
 	}
 
@@ -502,9 +512,6 @@ CMDCG.do = function() {
 		$('.cm-dc-close').unbind('click')
 	}
 
-	var ragdollShow = false,
-		ragdollMove = false,
-		scaleoffest = 0.55;
 	var	engine = Engine.create({
 		// velocityIterations: 1,
 		// constraintIterations: 1,
@@ -549,8 +556,6 @@ CMDCG.do = function() {
 		Bodies.rectangle(-offset, 300, thick, 600.5 + 2 * offset, options)  //左
 	]);
 
-	var dblChoseAlert, clicked = false;
-
 	//物品池, 最好不超过40个
 	var	criteria = {
 			x: 5,
@@ -562,15 +567,14 @@ CMDCG.do = function() {
 	World.add(world, stack);
 
 	//爪子整体构造连接, 延迟
-	sto0p2 = setTimeout(function(){
+	CMDCG.do.sto0p2 = setTimeout(function(){
 		//控制显示层级
 		World.add(world, [ragdoll, ragdollConstraint, ropeC]);
-		ragdollShow = true
-		sto1p2 = setTimeout(function(){
+		CMDCG.do.sto1p2 = setTimeout(function(){
 			CMDCG.do.setVisible()
 		}, timeout* 1.2)
-		sto2 = setTimeout(function(){
-			ragdollMove = true;
+		CMDCG.do.sto2 = setTimeout(function(){
+			CMDCG.do.ragdollMove = true;
 		}, timeout* 2)
 	}, timeout* 0.2)
 
@@ -651,6 +655,7 @@ CMDCG.do = function() {
 
 	//设置静态
 	var setBodiesStatic = function(engine, bool){
+		console.log('in setBodiesStatic')
 		var bodies = Composite.allBodies(engine.world);
 		for (var i = 0; i < bodies.length; i++) {
 			var body = bodies[i];
@@ -742,8 +747,8 @@ CMDCG.do = function() {
 		i = 2, j = -2,
 		spring_x = spring.pointA.x, springPx;
 
-	Events.on(engine, 'beforeUpdate', function(event) {
-		if(!ragdoll || ragdoll.length <= 0 || eventOff) return
+	CMDCG.do.engineCallback = Events.on(engine, 'beforeUpdate', function(event) {
+		if(!ragdoll || ragdoll.length <= 0) return
 		//初始爪子状态
 		if(!catched){
 			Body.setAngle(ragdoll.bodies[1], 0.5); //左下
@@ -759,11 +764,9 @@ CMDCG.do = function() {
 				if(x >= 0.5){
 					x = 0.5; y = -0.5;
 					catched = false;
-					ragdollMove = true;
+					CMDCG.do.ragdollMove = true;
 					playAgain = false;
-					clicked = false;
 					spring.stiffness = 0.009
-					// World.add(world, mouseConstraint);
 				}
 			}else{
 				i -= 0.02;j += 0.02;x -= 0.01;y += 0.01
@@ -780,12 +783,12 @@ CMDCG.do = function() {
 			Body.setAngle(ragdoll.bodies[4], j);
 		}
 		//弹簧滑动
-		if(ragdollMove){
+		if(CMDCG.do.ragdollMove){
 			//控制速度，值越大速度越快
 			counter += 0.012
 			if (counter < 0) return
 			springPx = spring_x + 200 * Math.sin(counter);
-			if(!clicked){
+			if(!CMDCG.do.clicked){
 				spring.pointA.x = springPx
 			}
 		}
@@ -857,8 +860,6 @@ CMDCG.do = function() {
 	});
 	render.mouse = mouse;
 
-	CMDCG.do.bindEvents()
-
 	// 可控制空间所占用的大小
 	Render.lookAt(render, {
 		min: { x: 0, y: 0 },
@@ -867,14 +868,18 @@ CMDCG.do = function() {
 
 	//减少引擎更新时间
 	function enginRun() {
-		window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 200);
+		CMDCG.do.raf = window.requestAnimationFrame(enginRun);
+		Engine.update(engine, 1000 / 500);
 	}
 	enginRun()
 
-	disappearSTO = setTimeout(function(){
-		!clicked && CMDCG.do.closeFun('disappear')
+	CMDCG.do.disappearSTO = setTimeout(function(){
+		console.log('20s left clicked CMDCG.do.clicked', CMDCG.do.clicked)
+		!CMDCG.do.clicked && CMDCG.do.closeFun('disappear')
 	}, timeout* 20)
+
+	//绑定事件
+	CMDCG.do.bindEvents()
 
 	//完全加载完进行展示上报
 	CMDC.Interface.reportShow('winpop')

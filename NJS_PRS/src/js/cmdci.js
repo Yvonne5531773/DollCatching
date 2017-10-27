@@ -1,15 +1,14 @@
 
 (function() {
 	var CMDC = {
-		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-		sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		//sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/output/',
 		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
 		playAgain: false,
 		timeout: 1000,
-		eventOff: false,
 		isInclude: function (name) {
 			var js = /js$/i.test(name);
 			var es = document.getElementsByTagName(js ? 'script' : 'link');
@@ -74,45 +73,49 @@
 			close: function (action, index) {
 				try {
 					if (action === 'receive') {
-						Catcher.receive();
+						Catcher && Catcher.receive();
 					} else {
-						Catcher.gameOver();
+						Catcher && Catcher.gameOver();
 					}
 				} catch (e) {
-					Catcher.error()
+					Catcher && Catcher.error()
 				}
 				this.reportClose(action, index);
 			},
 			ready: function () {
 				if (window.requestAnimationFrame) {
 					try {
-						Catcher.ready();
+						Catcher && Catcher.ready();
 					} catch (e) {
-						Catcher.error()
+						Catcher && Catcher.error()
+						console.log('error',e)
 					}
 					return true;
 				}
 				// 浏览器版本过低
 				try {
-					Catcher.notSupport();
+					Catcher && Catcher.notSupport();
 				} catch (e) {
-					Catcher.error()
+					Catcher && Catcher.error()
+					console.log('error',e)
 				}
 				this.reportShow('not-support');
 				return false;
 			},
 			click: function () {
 				try {
-					Catcher.receive();
+					Catcher && Catcher.receive();
 				} catch (e) {
-					Catcher.error()
+					Catcher && Catcher.error()
+					console.log('error',e)
 				}
 			},
 			error: function () {
 				try {
-					Catcher.error();
+					Catcher && Catcher.error();
 				} catch (e) {
-					Catcher.error()
+					Catcher && Catcher.error()
+					console.log('error',e)
 				}
 			},
 			reportShow: function (action) {
@@ -150,9 +153,9 @@
 				data.w = 'dcgame';
 				data.cid = '';
 				try {
-					Catcher.report(data);
+					Catcher && Catcher.report(data);
 				} catch (e) {
-					window.console && console.log('report', data);
+					console.log('error',e)
 				}
 			}
 		},
@@ -174,7 +177,7 @@
 			var dc = CMDC.dc;
 			dc = MatterTools.Demo.create(obj);
 			document.body.appendChild(dc.dom.root);
-			MatterTools.Demo.start(dc);
+			// MatterTools.Demo.start(dc); //start与appendChild功能一样
 		},
 		buildWalls: function () {
 			var sourceLinkRoot = CMDC.sourceLinkRoot
@@ -295,9 +298,9 @@
 
 	window.CMDC = CMDC;
 
-	if(CMDC.Interface.ready()){
-		CMDC.loadSource();
+	// if(CMDC.Interface.ready()){
 
+		CMDC.loadSource();
 		setTimeout(function(){
 			try{
 				//滚动到指定位置，避免在顶部产生性能问题
@@ -313,6 +316,6 @@
 			}
 
 		}, CMDC.timeout* 1.5);
-	}
+	// }
 
 })();
