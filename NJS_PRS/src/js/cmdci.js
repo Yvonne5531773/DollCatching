@@ -1,10 +1,11 @@
 
 (function() {
 	var CMDC = {
-		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		//sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/output/',
 		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
+		tmallLink: '',
 		dc: {},
 		playAgain : false,
 		timeout : 1000,
@@ -27,23 +28,18 @@
 				mainScript = document.createElement("script"),
 				alertScript = document.createElement("script"),
 				alertCss = document.createElement("link"),
-				tipScript = document.createElement("script"),
 				tipCss = document.createElement("link"),
 				sourceLinkRoot = CMDC.sourceLinkRoot;
 
 			pfScript.src = sourceLinkRoot + "js/polyfill.js";
 			mScript.src = sourceLinkRoot + "js/matter.js";
 			mgScript.src = sourceLinkRoot + "js/matter-tools.gui.js";
-			mdScript.src = sourceLinkRoot + "js/matter-tools.demo.js";
+			mdScript.src = sourceLinkRoot + "js/cmdctool.js";
 			mainScript.src = sourceLinkRoot + "js/cmdcg.js";
 			alertScript.src = sourceLinkRoot + "js/alert.js";
-			tipScript.src = sourceLinkRoot + "js/tipso.min.js";
 			alertCss.href = sourceLinkRoot + "css/alert.css";
-			tipCss.href = sourceLinkRoot + "css/tipso.min.css";
 			alertCss.rel = 'stylesheet';
 			alertCss.type = 'text/css';
-			tipCss.rel = 'stylesheet';
-			tipCss.type = 'text/css';
 
 			oHead.appendChild(alertCss);
 			oHead.appendChild(tipCss);
@@ -54,7 +50,6 @@
 				oHead.appendChild(mdScript);
 				oHead.appendChild(mainScript);
 				oHead.appendChild(alertScript);
-				oHead.appendChild(tipScript);
 			}, 500)
 		},
 		removejscssfile : function(filename, filetype){
@@ -157,7 +152,7 @@
 		play: function(){
 			var obj = {
 				tools: {
-					gui: true
+					gui: false
 				},
 				startExample: 'cmdcg',
 				examples: [
@@ -201,7 +196,7 @@
 				createDom: function(resource){
 					var cssStr = '@-webkit-keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-60px);transform: translateY(-60px);}} @keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-60px);transform: translateY(-60px); }}' +
 						'.move_upper { -webkit-animation-name: move_upper;animation-name: move_upper; -webkit-animation-duration: .7s;animation-duration: .7s; -webkit-animation-iteration-count: 1;animation-iteration-count: 1; -webkit-animation-fill-mode: forwards;animation-fill-mode: forwards;}' +
-						'.cm-dc-bottom {max-width: 1220px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;min-width:1180px;z-index:28;height:240px;line-height:35px;background-repeat: no-repeat;background-position: center top;display:none;} ' +
+						'.cm-dc-bottom {min-width:1180px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:28;height:240px;background-repeat: no-repeat;background-position: center top;display:none;} ' +
 						'.cm-dc-left {z-index:99;position:fixed;bottom:0;right: 50%;top:0;margin-right: 700px;width: 18%;height: 100%;background: #ec2040;}' +
 						'.cm-dc-right {z-index:2;position:fixed;bottom:0;left: 50%;top:0;margin-left: 700px;width: 18%;height: 100%;background: #ec2040;}' +
 						'.cm-dc-middle {z-index:21;position:fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;min-width:1180px;background-repeat: no-repeat;background-position: center top;display: none}' +
@@ -209,8 +204,8 @@
 						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index:23;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close:hover {background-position: -80px} .cm-dc-close:active {background-position: -160px}' +
 						'.cm-dc-11logo-left {margin-left: 140px;display: inline-block;width: 200px; height: 100%;background-image: url(../images/11logo.png);}' +
 						'.cm-dc-11logo-right {display: inline-block;width: 200px; height: 100%;background-image: url(../images/11logo.png);}' +
-						'.cm-dc-rocker {float:left;bottom:15px;position: relative;left: 100px;width: 160px;height: 270px;background-repeat: no-repeat;}' +
-						'.cm-dc-start-btn {top:105px;cursor:pointer;position: relative;left:400px;width:408px;height: 130px;background-repeat: no-repeat;} .cm-dc-start-btn:hover {background-position: -406px} .cm-dc-start-btn:active {background-position: -810px} ';
+						'.cm-dc-rocker {position:fixed;margin:auto;left:0;right:830px;bottom:-20px;z-index:30;width:160px;height: 270px;background-repeat: no-repeat;}' +
+						'.cm-dc-start-btn {cursor:pointer;position:fixed;margin:auto;left:0;right:0;bottom: 0px;z-index:30;width:408px;height: 130px;background-repeat: no-repeat;} .cm-dc-start-btn:hover {background-position: -406px} .cm-dc-start-btn:active {background-position: -810px} ';
 					var cssStyle = {};
 					cssStyle = document.createElement('style');
 					cssStyle.type = 'text/css';
@@ -257,14 +252,15 @@
 
 					left.appendChild(leftlogo);
 					right.appendChild(rightlogo);
-					bot.appendChild(rocker);
-					bot.appendChild(start);
+					cmdc.appendChild(rocker);
 					cmdc.appendChild(bot);
 					cmdc.appendChild(left);
 					cmdc.appendChild(right);
 					cmdc.appendChild(middle);
 					cmdc.appendChild(close);
 					cmdc.appendChild(bottombak);
+					cmdc.appendChild(bottombak);
+					cmdc.appendChild(start);
 					document.body.appendChild(cmdc);
 				},
 				show: function(){
@@ -306,8 +302,8 @@
 	setTimeout(function(){
 
 		// Catcher.report({node:1031100, snode:1163, w:"dcgame", cid:""})
-
 		CMDC.play();
+
 	}, CMDC.timeout);
 
 })();

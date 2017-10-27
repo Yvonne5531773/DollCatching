@@ -45,8 +45,8 @@ CMDCG.do = function() {
 			render: {
 				visible: false,
 				sprite: {
-					// xScale: scaleVal,
-					// yScale: scaleVal,
+					xScale: 1.3,
+					yScale: 1.3,
 					texture: sourceLinkRoot + 'img/flash.png'
 				}
 			},
@@ -259,8 +259,7 @@ CMDCG.do = function() {
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1),
 				});
-			}
-			else if(Common.random() > 0.3 && Common.random() < 0.5){
+			} else if(Common.random() > 0.3 && Common.random() < 0.6){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random(), 36, 46, {
 					render: {
 						sprite: {
@@ -275,22 +274,7 @@ CMDCG.do = function() {
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
-			} else if(Common.random() > 0.5 && Common.random() < 0.55){
-				return Bodies.rectangle(x+Common.random()*25, y+Common.random(), 30, 40, {
-					render: {
-						sprite: {
-							xScale: scaleoffest,
-							yScale: scaleoffest,
-							texture: sourceLinkRoot + 'img/rgift.png'
-						}
-					},
-					chamfer: { radius: radiusVal },
-					// friction: 0.7,
-					timeScale: timeScaleVal,
-					mass: massVal,
-					angle: -Math.PI * Common.random(0, 1)
-				});
-			} else if(Common.random() > 0.55 && Common.random() < 0.6){
+			} else if(Common.random() > 0.6 && Common.random() < 0.65){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*15, 30, 40, {
 					render: {
 						sprite: {
@@ -350,7 +334,7 @@ CMDCG.do = function() {
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
-			} else if(Common.random() > 0.8 && Common.random() < 0.9){
+			} else if(Common.random() > 0.8 && Common.random() < 0.85){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*3, 30, 44, {
 					render: {
 						sprite: {
@@ -365,7 +349,7 @@ CMDCG.do = function() {
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1)
 				});
-			} else if(Common.random() > 0.9 && Common.random() < 0.95){
+			} else if(Common.random() > 0.85 && Common.random() < 0.9){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*44, 30, 44, {
 					render: {
 						sprite: {
@@ -386,7 +370,7 @@ CMDCG.do = function() {
 						sprite: {
 							xScale: scaleoffest,
 							yScale: scaleoffest,
-							texture: sourceLinkRoot + '/img/gbag.png'
+							texture: sourceLinkRoot + '/img/rred.png'
 						}
 					},
 					chamfer: { radius: radiusVal },
@@ -463,9 +447,6 @@ CMDCG.do = function() {
 	//设置运行范围 围墙
 	$('#cm-d-c').css('min-width', 1180)
 	World.add(world, [
-		// bottomWall,
-		// leftWall,
-		// rightWall
 		//3-厚度 4-高度
 		// Bodies.rectangle(400, 50, 800.5 + 2 * offset, 10.5, options), //上
 		Bodies.rectangle(400, 470 + offset, 800.5 + 2 * offset, thick, options), //下
@@ -475,7 +456,7 @@ CMDCG.do = function() {
 
 	var dblChoseAlert, clicked = false,
 		clickFun = function() {
-			if(clicked){
+			if(clicked || !ragdollMove){
 				return
 			}
 			ragdollMove = false
@@ -752,13 +733,12 @@ CMDCG.do = function() {
 		}
 		//弹簧滑动
 		if(ragdollMove){
-			//控制速度
-			counter += 0.01
+			//控制速度，值越大速度越快
+			counter += 0.012
 			if (counter < 0) return
 			springPx = spring_x + 200 * Math.sin(counter);
 			if(!clicked){
 				spring.pointA.x = springPx
-				// ragdoll.bodies[0].position.x = springPx
 			}
 		}
 	});
@@ -824,7 +804,6 @@ CMDCG.do = function() {
 		// for (var i = 0; i < collisions.length; i++) {
 		// 	console.log('mouseup collisions', collisions[i].bodyA)
 		// }
-		if(!ragdollShow) return
 		clickFun()
 	});
 	render.mouse = mouse;
@@ -837,7 +816,6 @@ CMDCG.do = function() {
 
 	//开始按钮事件
 	$('.cm-dc-start-btn').click(function(){
-		if(!ragdollShow) return
 		clickFun()
 	})
 	//关闭按钮事件
@@ -845,20 +823,17 @@ CMDCG.do = function() {
 		clearSource()
 		eventOff = true
 		World.clear(world)
+		window.scrollTo(255, 0)
 		$('#cm-d-c').remove()
 		$('.cm-dc-class').remove()
 		$('#cm-d-c-style').remove()
 		$('.simpleAlert').remove()
 	})
 
-	//更改鼠标样式
-	$('#cm-d-c').css({cursor:"url('https://www.duba.com/static/v2/images/point.cur'),auto"})
-
-
 	//减少引擎更新时间
 	function enginRun() {
 		window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 300);
+		Engine.update(engine, 1000 / 200);
 	}
 	enginRun()
 
