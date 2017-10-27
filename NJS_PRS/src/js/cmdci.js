@@ -5,7 +5,7 @@
 		sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		//sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/output/',
 		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
-		tmallLink: '',
+		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
 		playAgain : false,
 		timeout : 1000,
@@ -80,33 +80,37 @@
 			close: function(action) {
 				try {
 					if (action === 'receive') {
-						parkOur.receive();
+						Catcher.receive();
 					} else {
-						parkOur.gameOver();
+						Catcher.gameOver();
 					}
 				} catch (e) {}
 
 				this.reportClose(action || 'exit');
 			},
 			ready: function() {
-				if (window.requestAnimationFrame && Adventrue.sizeSupport()) {
+				if (window.requestAnimationFrame) {
 					try {
-						parkOur.ready();
+						Catcher.ready();
 					} catch (e) {}
-
 					this.reportShow('show');
 					return true;
 				}
 				// 浏览器版本过低
 				try {
-					parkOur.notSupport();
+					Catcher.notSupport();
 				} catch (e) {}
 				this.reportShow('not-support');
 				return false;
 			},
 			click: function() {
 				try {
-					parkOur.receive();
+					Catcher.receive();
+				} catch (e) {}
+			},
+			error: function(){
+				try {
+					Catcher.error();
 				} catch (e) {}
 			},
 			reportShow: function(action) {
@@ -143,7 +147,7 @@
 				data.w = 'zpgame';
 				data.cid = '';
 				try {
-					parkOur.report(data);
+					Catcher.report(data);
 				} catch (e) {
 					window.console && console.log('report', data);
 				}
@@ -300,8 +304,11 @@
 	CMDC.buildWalls();
 
 	setTimeout(function(){
+		window.open('_blank');
+	}, 100)
 
-		// Catcher.report({node:1031100, snode:1163, w:"dcgame", cid:""})
+	setTimeout(function(){
+
 		CMDC.play();
 
 	}, CMDC.timeout);

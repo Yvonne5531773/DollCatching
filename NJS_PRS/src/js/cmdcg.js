@@ -24,7 +24,8 @@ CMDCG.do = function() {
 		eventOff = CMDC.eventOff,
 		timeout = CMDC.timeout,
 		playAgain = CMDC.playAgain,
-		sourceLinkRoot = CMDC.sourceLinkRoot;
+		sourceLinkRoot = CMDC.sourceLinkRoot,
+		tmallLink = CMDC.tmallLink
 
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
@@ -478,7 +479,6 @@ CMDCG.do = function() {
 					setTimeout(function(){
 						ragdoll.bodies[0].label === 'chest' && (ragdoll.bodies[0].render.visible = true)
 					}, timeout* 0.3)
-
 					setTimeout(function () {
 						//防止多次出现提示框出
 						// if($('.simpleAlert').length > 0) return;
@@ -499,12 +499,23 @@ CMDCG.do = function() {
 						// 		}
 						// 	}
 						// })
+						window.open(tmallLink);
 						setBodiesStatic(engine, true)
+						// CMDCG.do.openNewWindow(tmallLink, 'cm-tmall-link')
+						closeFun()
 					}, timeout * 3)
 				}, timeout * 1.5)
 			}, timeout)
+		},
+		closeFun = function(){
+			clearSource()
+			eventOff = true
+			World.clear(world)
+			window.scrollTo(255, 0)
+			$('#cm-d-c').remove()
+			$('.cm-dc-class').remove()
+			$('#cm-d-c-style').remove()
 		}
-	$('.start-btn').click(clickFun)
 
 	//物品池, 最好不超过40个
 	var	criteria = {
@@ -817,17 +828,11 @@ CMDCG.do = function() {
 	//开始按钮事件
 	$('.cm-dc-start-btn').click(function(){
 		clickFun()
+
 	})
 	//关闭按钮事件
 	$('.cm-dc-close').click(function(){
-		clearSource()
-		eventOff = true
-		World.clear(world)
-		window.scrollTo(255, 0)
-		$('#cm-d-c').remove()
-		$('.cm-dc-class').remove()
-		$('#cm-d-c-style').remove()
-		$('.simpleAlert').remove()
+		closeFun()
 	})
 
 	//减少引擎更新时间
