@@ -41,13 +41,18 @@ Example.events = function() {
     });
 
     // an example of using beforeUpdate event on an engine
-    Events.on(engine, 'beforeUpdate', function(event) {
+    var cal = Events.on(engine, 'beforeUpdate', function(event) {
+        console.log('beforeUpdate')
         var engine = event.source;
 
         // apply random forces every 5 secs
         if (event.timestamp % 5000 < 50)
             shakeScene(engine);
     });
+
+    setTimeout(function(){
+	    Events.off(engine, 'beforeUpdate', cal)
+    },1000)
 
     // an example of using collisionStart event on an engine
     Events.on(engine, 'collisionStart', function(event) {
