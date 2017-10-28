@@ -1,8 +1,8 @@
 
 (function() {
 	var CMDC = {
-		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-		sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
@@ -55,11 +55,10 @@
 		clearSource: function () {
 			var removejscssfile = CMDC.removejscssfile,
 				sourceLinkRoot = CMDC.sourceLinkRoot;
-			// removejscssfile(sourceLinkRoot + "css/alert.css", 'css')
-			// removejscssfile(sourceLinkRoot + "js/alert.js", 'js')
-			removejscssfile(sourceLinkRoot + "js/matter.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/polyfill.js", 'js')
+			removejscssfile(sourceLinkRoot + "js/matter.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/cmdcg.js", 'js')
+			removejscssfile(sourceLinkRoot + "js/cmdci.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/cmdctool.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/jquery-1.11.0.min.js", 'js')
 		},

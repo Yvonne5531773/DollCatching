@@ -1,5 +1,5 @@
 
-var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t,e),n={},s=$('<div class="simpleAlert">'),i=$('<div class="simpleAlertShelter">'),c=$('<div class="simpleAlertBody">'),o=$('<img class="simpleAlertBodyClose" height="14" width="14"/>'), a=$('<p class="simpleAlertBodyContent">'+l.content+"</p>");return n.init=function(){for(var e=0,t=!1,n=[],o=0;o<2;o++)for(var p in l.buttons)switch(o){case 0:n.push(p);break;case 1:t=n.length<=1,e++;var r=$('<a class="simpleAlertBtn simpleAlertBtn'+e+'">'+"</a>");r.bind("click", l.buttons[p]), c.bind("click", l.buttons[p]), c.append(r)}s.append(i).append(c),$("body").append(s),c.show().animate({marginTop:"100px", opacity:"1"}, 350)},o.bind("click",function(){l.closeAll=!1,n.close()}),n.close=function(){l.closeAll?$(".simpleAlert").remove():c.animate({marginTop:"-188px",opacity:"0"},200,function(){$(".simpleAlert").last().remove()})},n.init(),n};
+var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t,e),n={},s=$('<div class="simpleAlert">'),i=$('<div class="simpleAlertShelter">'),c=$('<div class="simpleAlertBody">'),o=$('<img class="simpleAlertBodyClose" height="14" width="14"/>'), a=$('<p class="simpleAlertBodyContent">'+l.content+"</p>");return n.init=function(){for(var e=0,t=!1,n=[],o=0;o<2;o++)for(var p in l.buttons)switch(o){case 0:n.push(p);break;case 1:t=n.length<=1,e++;var r=$('<a class="simpleAlertBtn simpleAlertBtn'+e+'">'+"</a>");r.bind("click", l.buttons[p]), c.bind("click", l.buttons[p]), c.append(r)}s.append(i).append(c),$("body").append(s),c.show().animate({marginTop:"35px", opacity:"1"}, 350)},o.bind("click",function(){l.closeAll=!1,n.close()}),n.close=function(){l.closeAll?$(".simpleAlert").remove():c.animate({marginTop:"-188px",opacity:"0"},200,function(){$(".simpleAlert").last().remove()})},n.init(),n};
 
 var CMDCG = CMDCG || {};
 
@@ -32,7 +32,7 @@ CMDCG.do = function() {
 	CMDCG.do.sto1 = {}
 	CMDCG.do.sto1p5 = {}
 	CMDCG.do.sto0p3 = {}
-	CMDCG.do.sto3 = {}
+	CMDCG.do.sto1p3 = {}
 	CMDCG.do.sto0p2 = {}
 	CMDCG.do.sto1p2 = {}
 	CMDCG.do.sto2 = {}
@@ -459,7 +459,7 @@ CMDCG.do = function() {
 				// CMDCG.do.sto0p3 = setTimeout(function () {
 				// 	ragdoll.bodies[0].label === 'chest' && (ragdoll.bodies[0].render.visible = true)
 				// }, timeout * 0.3)
-				CMDCG.do.sto3 = setTimeout(function () {
+				CMDCG.do.sto1p3 = setTimeout(function () {
 					//防止多次出现提示框出
 					if ($('.simpleAlert').length > 0) return;
 					CMDCG.do.redAlertShow = true
@@ -475,7 +475,7 @@ CMDCG.do = function() {
 						}
 					})
 					CMDCG.do.setBodiesStatic(engine, true)
-				}, timeout * 2.5)
+				}, timeout * 1.3)
 			}, timeout * 1.5)
 		}, timeout)
 		CMDC.Interface.reportClick('click', index)
@@ -486,7 +486,7 @@ CMDCG.do = function() {
 		CMDCG.do.sto1 && clearTimeout(CMDCG.do.sto1)
 		CMDCG.do.sto1p5 && clearTimeout(CMDCG.do.sto1p5)
 		CMDCG.do.sto0p3 && clearTimeout(CMDCG.do.sto0p3)
-		CMDCG.do.sto3 && clearTimeout(CMDCG.do.sto3)
+		CMDCG.do.sto1p3 && clearTimeout(CMDCG.do.sto1p3)
 		CMDCG.do.sto0p2 && clearTimeout(CMDCG.do.sto0p2)
 		CMDCG.do.sto1p2 && clearTimeout(CMDCG.do.sto1p2)
 		CMDCG.do.sto2 && clearTimeout(CMDCG.do.sto2)
@@ -568,7 +568,6 @@ CMDCG.do = function() {
 	//自动消失
 	CMDCG.do.disappear = function(){
 		CMDCG.do.disappearSTO = setTimeout(function(){
-			console.log('20s left clicked CMDCG.do.clicked', CMDCG.do.clicked)
 			!CMDCG.do.clicked && CMDCG.do.closeFun('disappear')
 		}, timeout* 20)
 	}
@@ -717,12 +716,11 @@ CMDCG.do = function() {
 	};
 
 	//弹簧
-	//如果要改变弹簧的样式，可以把链条当做弹簧，再把弹簧的长度设成0
 	var changeVal = 400, armY = 150;
 	var group = Body.nextGroup(true),
 		counter = -1;
 	//链的个数，属性
-	var ropeC = Composites.stack(changeVal, 45, 1, 1, 0, 10, function(x, y) {
+	var ropeC = Composites.stack(changeVal, 38, 1, 1, 0, 10, function(x, y) {
 		return Bodies.rectangle(x, y, 25, 15, {
 			label: 'component',
 			collisionFilter: { group: group },
