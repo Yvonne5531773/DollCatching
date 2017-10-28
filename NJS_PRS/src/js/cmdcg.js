@@ -32,7 +32,7 @@ CMDCG.do = function() {
 	CMDCG.do.sto1 = {}
 	CMDCG.do.sto1p5 = {}
 	CMDCG.do.sto0p3 = {}
-	CMDCG.do.sto1p3 = {}
+	CMDCG.do.sto1p8 = {}
 	CMDCG.do.sto0p2 = {}
 	CMDCG.do.sto1p2 = {}
 	CMDCG.do.sto2 = {}
@@ -459,7 +459,7 @@ CMDCG.do = function() {
 				// CMDCG.do.sto0p3 = setTimeout(function () {
 				// 	ragdoll.bodies[0].label === 'chest' && (ragdoll.bodies[0].render.visible = true)
 				// }, timeout * 0.3)
-				CMDCG.do.sto1p3 = setTimeout(function () {
+				CMDCG.do.sto1p8 = setTimeout(function () {
 					//防止多次出现提示框出
 					if ($('.simpleAlert').length > 0) return;
 					CMDCG.do.redAlertShow = true
@@ -475,7 +475,7 @@ CMDCG.do = function() {
 						}
 					})
 					CMDCG.do.setBodiesStatic(engine, true)
-				}, timeout * 1.3)
+				}, timeout * 1.8)
 			}, timeout * 1.5)
 		}, timeout)
 		CMDC.Interface.reportClick('click', index)
@@ -486,7 +486,7 @@ CMDCG.do = function() {
 		CMDCG.do.sto1 && clearTimeout(CMDCG.do.sto1)
 		CMDCG.do.sto1p5 && clearTimeout(CMDCG.do.sto1p5)
 		CMDCG.do.sto0p3 && clearTimeout(CMDCG.do.sto0p3)
-		CMDCG.do.sto1p3 && clearTimeout(CMDCG.do.sto1p3)
+		CMDCG.do.sto1p8 && clearTimeout(CMDCG.do.sto1p8)
 		CMDCG.do.sto0p2 && clearTimeout(CMDCG.do.sto0p2)
 		CMDCG.do.sto1p2 && clearTimeout(CMDCG.do.sto1p2)
 		CMDCG.do.sto2 && clearTimeout(CMDCG.do.sto2)
@@ -553,16 +553,20 @@ CMDCG.do = function() {
 	CMDCG.do.setBodiesStatic = function(engine, bool){
 		var bodies = Composite.allBodies(engine.world),
 			body,
-			includeStack = false
+			includeStack = false,
+			notStatic = false;
 		for (var i = 0; i < bodies.length; i++) {
 			body = bodies[i]
 			if (body.position.y <= 400 && !~['chest', 'left-arm', 'right-arm', ].indexOf(body.label)) {
 				body.label === 'stack' && (includeStack = true)
 				Body.setStatic(body, bool);
+			}else if((body.label==='left-lower-arm'||body.label==='right-lower-arm') && body.position.y > 430){
+				notStatic = true
 			}
 		}
 		//判断是否抓住红包
 		includeStack && CMDC.Interface.reportClick('click', 3)
+		!includeStack && notStatic && CMDC.Interface.reportClick('click', 3)
 	}
 
 	//自动消失
@@ -613,7 +617,7 @@ CMDCG.do = function() {
 	World.add(world, [
 		//3-厚度 4-高度
 		// Bodies.rectangle(400, 50, 800.5 + 2 * offset, 10.5, options), //上
-		Bodies.rectangle(400, 470 + offset, 800.5 + 2 * offset, thick, options), //下
+		Bodies.rectangle(400, 450 + offset, 800.5 + 2 * offset, thick, options), //下
 		Bodies.rectangle(800 + offset, 300, thick, 600.5 + 2 * offset, options), //右
 		Bodies.rectangle(-offset, 300, thick, 600.5 + 2 * offset, options)  //左
 	]);
@@ -622,7 +626,7 @@ CMDCG.do = function() {
 	var	criteria = {
 			x: 5,
 			y: 300,
-			columns: 24,
+			columns: 14,
 			rows: 1,
 		}
 	var stack = CMDCG.do.createStacks(criteria);
@@ -634,7 +638,7 @@ CMDCG.do = function() {
 		World.add(world, [ragdoll, ragdollConstraint, ropeC]);
 		CMDCG.do.sto1p2 = setTimeout(function(){
 			CMDCG.do.setVisible()
-		}, timeout* 1.2)
+		}, timeout* 1.5)
 		CMDCG.do.sto2 = setTimeout(function(){
 			CMDCG.do.ragdollMove = true;
 		}, timeout* 2)
@@ -833,7 +837,7 @@ CMDCG.do = function() {
 		//弹簧滑动
 		if(CMDCG.do.ragdollMove){
 			//控制速度，值越大速度越快
-			counter += 0.012
+			counter += 0.0135
 			if (counter < 0) return
 			springPx = spring_x + 200 * Math.sin(counter);
 			if(!CMDCG.do.clicked){
@@ -908,7 +912,7 @@ CMDCG.do = function() {
 	//减少引擎更新时间
 	function enginRun() {
 		CMDCG.do.raf = window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 300);
+		Engine.update(engine, 1000 / 200);
 	}
 	enginRun()
 
