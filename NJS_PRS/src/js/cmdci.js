@@ -1,9 +1,9 @@
 
 (function() {
 	var CMDC = {
-		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
-		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
+		sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
 		playAgain: false,
@@ -40,7 +40,7 @@
 				typeof jQuery === 'undefined' && oHead.appendChild(jquery);
 				oHead.appendChild(mdScript);
 				// oHead.appendChild(mgScript); //debug tool
-			}, 500)
+			}, CMDC.timeout* 0.3)
 		},
 		removejscssfile: function (filename, filetype) {
 			var targetelement = (filetype === "js") ? "script" : (filetype === "css") ? "link" : "none";
@@ -159,8 +159,8 @@
 				startExample: 'cmdcg',
 				examples: [
 					{
-						name: 'DOLL-CATCHING',
-						id: 'cmdcg',
+						name: 'cm-dollcatching-game',
+						id: '',
 						init: CMDCG.do,
 						sourceLink: CMDC.sourceLinkRoot + 'js/cmdcg.js'
 					}
@@ -317,7 +317,7 @@
 				CMDC.buildWalls();
 				//建立娃娃机场景
 				CMDC.play();
-			}, CMDC.timeout* 1.5);
+			}, CMDC.timeout);
 
 		}catch (e){
 			console.log('error', e)
