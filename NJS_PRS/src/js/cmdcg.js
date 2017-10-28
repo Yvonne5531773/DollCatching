@@ -515,13 +515,25 @@ CMDCG.do = function() {
 	}
 
 	CMDCG.do.bindEvents = function(){
-		//点击屏幕事件
-		$('.cm-dc-middle').bind('click', function(){
-			CMDCG.do.clickFun(1)
+		//屏幕事件 点击/移入/移出
+		$('.cm-dc-middle').bind('click mouseover mouseout', function(event){
+			if(event.type === "mouseover"){
+				CMDCG.do.disappearSTO && clearTimeout(CMDCG.do.disappearSTO)
+			}else if(event.type === "mouseout"){
+				CMDCG.do.disappear()
+			}else if(event.type === "click"){
+				CMDCG.do.clickFun(1)
+			}
 		})
-		//点击抓取按钮事件
-		$('.cm-dc-start-btn').bind('click', function(){
-			CMDCG.do.clickFun(2)
+		//抓取按钮事件 点击/移入/移出
+		$('.cm-dc-start-btn').bind('click mouseover mouseout', function(){
+			if(event.type === "mouseover"){
+				CMDCG.do.disappearSTO && clearTimeout(CMDCG.do.disappearSTO)
+			}else if(event.type === "mouseout"){
+				CMDCG.do.disappear()
+			}else if(event.type === "click"){
+				CMDCG.do.clickFun(2)
+			}
 		})
 		//关闭按钮事件
 		$('.cm-dc-close').bind('click', function(){
@@ -532,8 +544,8 @@ CMDCG.do = function() {
 	}
 
 	CMDCG.do.unbindEvents = function(){
-		$('.cm-dc-middle').unbind('click')
-		$('.cm-dc-start-btn').unbind('click')
+		$('.cm-dc-middle').unbind('click mouseover mouseout')
+		$('.cm-dc-start-btn').unbind('click mouseover mouseout')
 		$('.cm-dc-close').unbind('click')
 	}
 
@@ -552,6 +564,16 @@ CMDCG.do = function() {
 		//判断是否抓住红包
 		includeStack && CMDC.Interface.reportClick('click', 3)
 	}
+
+	//自动消失
+	CMDCG.do.disappear = function(){
+		CMDCG.do.disappearSTO = setTimeout(function(){
+			console.log('20s left clicked CMDCG.do.clicked', CMDCG.do.clicked)
+			!CMDCG.do.clicked && CMDCG.do.closeFun('disappear')
+		}, timeout* 20)
+	}
+
+	CMDCG.do.disappear()
 
 	var	engine = Engine.create({
 		// velocityIterations: 1,
@@ -891,11 +913,6 @@ CMDCG.do = function() {
 		Engine.update(engine, 1000 / 300);
 	}
 	enginRun()
-
-	CMDCG.do.disappearSTO = setTimeout(function(){
-		console.log('20s left clicked CMDCG.do.clicked', CMDCG.do.clicked)
-		!CMDCG.do.clicked && CMDCG.do.closeFun('disappear')
-	}, timeout* 20)
 
 	//绑定事件
 	CMDCG.do.bindEvents()
