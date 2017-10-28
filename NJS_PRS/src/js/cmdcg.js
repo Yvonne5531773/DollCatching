@@ -1,4 +1,6 @@
 
+var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t,e),n={},s=$('<div class="simpleAlert">'),i=$('<div class="simpleAlertShelter">'),c=$('<div class="simpleAlertBody">'),o=$('<img class="simpleAlertBodyClose" height="14" width="14"/>'), a=$('<p class="simpleAlertBodyContent">'+l.content+"</p>");return n.init=function(){for(var e=0,t=!1,n=[],o=0;o<2;o++)for(var p in l.buttons)switch(o){case 0:n.push(p);break;case 1:t=n.length<=1,e++;var r=$('<a class="simpleAlertBtn simpleAlertBtn'+e+'">'+"</a>");r.bind("click", l.buttons[p]), c.bind("click", l.buttons[p]), c.append(r)}s.append(i).append(c),$("body").append(s),c.show().animate({marginTop:"100px", opacity:"1"}, 350)},o.bind("click",function(){l.closeAll=!1,n.close()}),n.close=function(){l.closeAll?$(".simpleAlert").remove():c.animate({marginTop:"-188px",opacity:"0"},200,function(){$(".simpleAlert").last().remove()})},n.init(),n};
+
 var CMDCG = CMDCG || {};
 
 CMDCG.do = function() {
@@ -39,6 +41,7 @@ CMDCG.do = function() {
 	CMDCG.do.ragdollMove = false
 	CMDCG.do.raf = {}
 	CMDCG.do.engineCallback = {}
+	CMDCG.do.alert = {}
 
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
@@ -258,7 +261,7 @@ CMDCG.do = function() {
 		var massVal = 0.05,
 			timeScaleVal = 0.6,
 			radiusVal = 15,
-			scaleoffest = 0.55,
+			scaleoffest = 0.65,
 			label = 'stack';
 		return Composites.stack(criteria.x, criteria.y, criteria.columns, criteria.rows, 0, 0, function(x, y) {
 			if (Common.random() < 0.3) {
@@ -433,7 +436,7 @@ CMDCG.do = function() {
 		a.click();
 	}
 
-	CMDCG.do.clickFun = function() {
+	CMDCG.do.clickFun = function(index) {
 		if (CMDCG.do.clicked || !CMDCG.do.ragdollMove) {
 			return
 		}
@@ -460,14 +463,13 @@ CMDCG.do = function() {
 					//防止多次出现提示框出
 					if ($('.simpleAlert').length > 0) return;
 					CMDCG.do.redAlertShow = true
-					var dblChoseAlert = simpleAlert({
+					CMDCG.do.alert = cmdcAlert({
 						"buttons": {
 							"gotmall": function () {
 								// CMDCG.do.setBodiesStatic(engine, false)
 								// playAgain = true;
 								window.open(tmallLink)
-								dblChoseAlert.close()
-								CMDCG.do.closeFun()
+								CMDCG.do.closeFun('receive')
 								CMDC.Interface.reportClick('click', 4, 1)
 							}
 						}
@@ -476,6 +478,7 @@ CMDCG.do = function() {
 				}, timeout * 2.5)
 			}, timeout * 1.5)
 		}, timeout)
+		CMDC.Interface.reportClick('click', index)
 	}
 
 	CMDCG.do.closeFun = function(action, index) {
@@ -494,8 +497,11 @@ CMDCG.do = function() {
 			Events.off(engine, 'beforeUpdate', CMDCG.do.engineCallback)
 		}, timeout)
 
+		//显示scroll
+		$('body').css('overflow-y', 'auto')
 		//返回顶部
 		window.scrollTo(255, 0)
+		//清除加载的文件
 		clearSource()
 		World.clear(world)
 		$('#cm-d-c').remove()
@@ -503,14 +509,19 @@ CMDCG.do = function() {
 		$('#cm-d-c-style').remove()
 		$('.simpleAlert').remove()
 		CMDCG.do.unbindEvents()
+		//关闭弹窗红包
+		CMDCG.do.alert && CMDCG.do.alert.close()
 		CMDC.Interface.close(action, index)
 	}
 
 	CMDCG.do.bindEvents = function(){
-		//开始抓取按钮事件
+		//点击屏幕事件
+		$('.cm-dc-middle').bind('click', function(){
+			CMDCG.do.clickFun(1)
+		})
+		//点击抓取按钮事件
 		$('.cm-dc-start-btn').bind('click', function(){
-			CMDCG.do.clickFun()
-			CMDC.Interface.reportClick('click', 1)
+			CMDCG.do.clickFun(2)
 		})
 		//关闭按钮事件
 		$('.cm-dc-close').bind('click', function(){
@@ -521,20 +532,19 @@ CMDCG.do = function() {
 	}
 
 	CMDCG.do.unbindEvents = function(){
+		$('.cm-dc-middle').unbind('click')
 		$('.cm-dc-start-btn').unbind('click')
 		$('.cm-dc-close').unbind('click')
 	}
 
 	//设置静态
 	CMDCG.do.setBodiesStatic = function(engine, bool){
-		console.log('in setBodiesStatic')
 		var bodies = Composite.allBodies(engine.world),
 			body,
 			includeStack = false
 		for (var i = 0; i < bodies.length; i++) {
 			body = bodies[i]
 			if (body.position.y <= 400 && !~['chest', 'left-arm', 'right-arm', ].indexOf(body.label)) {
-				console.log('setBodiesStatic body', body)
 				body.label === 'stack' && (includeStack = true)
 				Body.setStatic(body, bool);
 			}
@@ -863,19 +873,10 @@ CMDCG.do = function() {
 	// World.add(world, mouseConstraint);
 
 	//爪子伸下去后增加压力
-	Events.on(mouseConstraint, 'mouseup', function(event) {
-		//点击获取body id
-		// var mouse = mouseConstraint.mouse,
-		// 	bodies = Composite.allBodies(engine.world),
-		// 	startPoint = { x: 400, y: 100 },
-		// 	endPoint = mouse.position;
-		// var collisions = Query.ray(bodies, startPoint, endPoint);
-		// for (var i = 0; i < collisions.length; i++) {
-		// 	console.log('mouseup collisions', collisions[i].bodyA)
-		// }
-		CMDCG.do.clickFun()
-		CMDC.Interface.reportClick('click', 2)
-	});
+	// Events.on(mouseConstraint, 'mouseup', function(event) {
+	// 	CMDCG.do.clickFun()
+	// 	CMDC.Interface.reportClick('click', 2)
+	// });
 	render.mouse = mouse;
 
 	// 可控制空间所占用的大小

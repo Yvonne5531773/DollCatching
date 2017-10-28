@@ -23,9 +23,7 @@
 				mgScript = document.createElement("script"),
 				mdScript = document.createElement("script"),
 				mainScript = document.createElement("script"),
-				alertScript = document.createElement("script"),
 				jquery = document.createElement("script"),
-				alertCss = document.createElement("link"),
 				sourceLinkRoot = CMDC.sourceLinkRoot;
 
 			pfScript.src = sourceLinkRoot + "js/polyfill.js";
@@ -33,21 +31,15 @@
 			mgScript.src = sourceLinkRoot + "js/matter-tools.gui.js";
 			mdScript.src = sourceLinkRoot + "js/cmdctool.js";
 			mainScript.src = sourceLinkRoot + "js/cmdcg.js";
-			alertScript.src = sourceLinkRoot + "js/alert.js";
 			jquery.src = sourceLinkRoot + "js/jquery-1.11.0.min.js";
-			alertCss.href = sourceLinkRoot + "css/alert.css";
-			alertCss.rel = 'stylesheet';
-			alertCss.type = 'text/css';
 
-			// oHead.appendChild(alertCss);
 			oHead.appendChild(pfScript);
 			oHead.appendChild(mScript);
 			setTimeout(function () {
 				oHead.appendChild(mainScript);
-				typeof jQuery === 'undefined' && oHead.appendChild(jquery)
+				typeof jQuery === 'undefined' && oHead.appendChild(jquery);
 				oHead.appendChild(mdScript);
 				// oHead.appendChild(mgScript); //debug tool
-				oHead.appendChild(alertScript);
 			}, 500)
 		},
 		removejscssfile: function (filename, filetype) {
@@ -63,8 +55,8 @@
 		clearSource: function () {
 			var removejscssfile = CMDC.removejscssfile,
 				sourceLinkRoot = CMDC.sourceLinkRoot;
-			removejscssfile(sourceLinkRoot + "css/alert.css", 'css')
-			removejscssfile(sourceLinkRoot + "js/alert.js", 'js')
+			// removejscssfile(sourceLinkRoot + "css/alert.css", 'css')
+			// removejscssfile(sourceLinkRoot + "js/alert.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/matter.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/polyfill.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/cmdcg.js", 'js')
@@ -78,11 +70,11 @@
 						Catcher && Catcher.receive();
 					} else {
 						Catcher && Catcher.gameOver();
+						this.reportClose(action, index);
 					}
 				} catch (e) {
 					Catcher && Catcher.error()
 				}
-				this.reportClose(action, index);
 			},
 			ready: function () {
 				if (window.requestAnimationFrame) {
@@ -148,7 +140,6 @@
 				var data = {
 					node: 1031100
 				};
-
 				for (var i in obj) {
 					data[i] = obj[i];
 				}
@@ -213,7 +204,7 @@
 						'.cm-dc-bottom {min-width:1180px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:28;height:240px;background-repeat: no-repeat;background-position: center top;display:none;} ' +
 						'.cm-dc-left {z-index:99;position:fixed;bottom:0;right: 50%;top:0;margin-right: 700px;width: 18%;height: 100%;background: #e9445f;}' +
 						'.cm-dc-right {z-index:2;position:fixed;bottom:0;left: 50%;top:0;margin-left: 700px;width: 18%;height: 100%;background: #e9445f;}' +
-						'.cm-dc-middle {z-index:21;position:fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;min-width:1180px;background-repeat: no-repeat;background-position: center top;display: none}' +
+						'.cm-dc-middle {z-index:21;position:fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;min-width:1180px;background-repeat: no-repeat;background-position: center top;display: none;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto}' +
 						'.cm-dc-bottom-bak {position: fixed;  margin: auto;  left: 0;  right: 0;  bottom: -10px;  width: 1400px;z-index:5;height:300px;background-repeat: no-repeat;display: none} ' +
 						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index:101;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close:hover {background-position: -80px} .cm-dc-close:active {background-position: -160px}' +
 						'.cm-dc-11logo-left {margin-left: 140px;display: inline-block;width: 200px; height: 100%;background-image: url(../images/11logo.png);}' +
@@ -222,7 +213,7 @@
 						'.cm-dc-start-btn {cursor:pointer;position:fixed;margin:auto;left:0;right:0;bottom: 0px;z-index:30;width:408px;height: 130px;background-repeat: no-repeat;} .cm-dc-start-btn:hover {background-position: -406px} .cm-dc-start-btn:active {background-position: -810px} ' +
 						'.simpleAlert {position: fixed;z-index: 100;}\n' +
 						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color: #000;opacity: 0.3;filter:alpha(opacity=30);}\n' +
-						'.simpleAlertBody {position:fixed;display: none;width: 600px;height: 560px;top:0;left:0;right:0;bottom:0;margin:auto;opacity:0;background-repeat: no-repeat;background: url("' + resource.alertImg +
+						'.simpleAlertBody {cursor:pointer;position:fixed;display: none;width: 600px;height: 560px;top:0;left:0;right:0;bottom:0;margin:auto;opacity:0;background-repeat: no-repeat;background: url("' + resource.alertImg +
 						'")}' +
 						'.simpleAlertBtn {position:absolute;width: 190px;height:80px;bottom:110px;cursor:pointer;}\n' +
 						'.simpleAlertBtn1 {left:32%;background: url("' + resource.alertbtnImg +
@@ -304,29 +295,36 @@
 			cmdcObj.bottombakEL = cmdcObj.$(".cm-dc-bottom-bak")
 			cmdcObj.rockerEL = cmdcObj.$(".cm-dc-rocker")
 			cmdcObj.show();
+		},
+		/*1. 滚动到指定位置，避免在顶部产生性能问题
+			2. 隐藏scroll
+		*/
+		dosomethingforbkg: function(){
+			$('.link_break')[1] && window.scrollTo(255, $('.link_break')[1].offsetTop)
+			$('body').css('overflow-y', 'hidden')
 		}
 	};
 
 	window.CMDC = CMDC;
 
 	// if(CMDC.Interface.ready()){
+		try{
+			CMDC.loadSource();
 
-		CMDC.loadSource();
-		setTimeout(function(){
-			try{
-				//滚动到指定位置，避免在顶部产生性能问题
-				$('.link_break')[1] && window.scrollTo(255, $('.link_break')[1].offsetTop)
+			setTimeout(function(){
+				CMDC.dosomethingforbkg()
+
 				//建立游戏周边场景
 				CMDC.buildWalls();
 				//建立娃娃机场景
 				CMDC.play();
-			}catch(e){
-				CMDC.Interface.error()
-				CMDC.Interface.reportClose('error-exit')
-				console.log('error', e)
-			}
+			}, CMDC.timeout* 1.5);
 
-		}, CMDC.timeout* 1.5);
+		}catch (e){
+			console.log('error', e)
+			CMDC.Interface.error()
+			CMDC.Interface.reportClose('error-exit')
+		}
 	// }
 
 })();
