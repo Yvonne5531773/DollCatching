@@ -66,7 +66,6 @@
 			removejscssfile(sourceLinkRoot + "js/alert.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/matter.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/polyfill.js", 'js')
-			removejscssfile(sourceLinkRoot + "js/matter-tools.gui.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/cmdcg.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/cmdctool.js", 'js')
 		},
