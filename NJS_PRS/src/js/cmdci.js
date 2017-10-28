@@ -1,9 +1,8 @@
 
 (function() {
 	var CMDC = {
-		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
-		//sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/output/',
+		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
@@ -25,6 +24,7 @@
 				mdScript = document.createElement("script"),
 				mainScript = document.createElement("script"),
 				alertScript = document.createElement("script"),
+				jquery = document.createElement("script"),
 				alertCss = document.createElement("link"),
 				sourceLinkRoot = CMDC.sourceLinkRoot;
 
@@ -34,17 +34,19 @@
 			mdScript.src = sourceLinkRoot + "js/cmdctool.js";
 			mainScript.src = sourceLinkRoot + "js/cmdcg.js";
 			alertScript.src = sourceLinkRoot + "js/alert.js";
+			jquery.src = sourceLinkRoot + "js/jquery-1.11.0.min.js";
 			alertCss.href = sourceLinkRoot + "css/alert.css";
 			alertCss.rel = 'stylesheet';
 			alertCss.type = 'text/css';
 
-			oHead.appendChild(alertCss);
+			// oHead.appendChild(alertCss);
 			oHead.appendChild(pfScript);
 			oHead.appendChild(mScript);
 			setTimeout(function () {
-				// oHead.appendChild(mgScript); //debug tool
-				oHead.appendChild(mdScript);
 				oHead.appendChild(mainScript);
+				typeof jQuery === 'undefined' && oHead.appendChild(jquery)
+				oHead.appendChild(mdScript);
+				// oHead.appendChild(mgScript); //debug tool
 				oHead.appendChild(alertScript);
 			}, 500)
 		},
@@ -67,6 +69,7 @@
 			removejscssfile(sourceLinkRoot + "js/polyfill.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/cmdcg.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/cmdctool.js", 'js')
+			removejscssfile(sourceLinkRoot + "js/jquery-1.11.0.min.js", 'js')
 		},
 		Interface: {
 			close: function (action, index) {
@@ -189,6 +192,8 @@
 				logoImg: sourceLinkRoot + 'img/11logo.png',
 				rockerImg: sourceLinkRoot + 'img/rocker.png',
 				startBtnImg: sourceLinkRoot + 'img/button.png',
+				alertImg: sourceLinkRoot + 'img/alertbkg.png',
+				alertbtnImg: sourceLinkRoot + 'img/alertbtn.png',
 			}
 			var cmdcObj = {
 				botEL: {},
@@ -206,15 +211,22 @@
 					var cssStr = '@-webkit-keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-60px);transform: translateY(-60px);}} @keyframes move_upper {from {opacity: 0;}to {opacity: 1; -webkit-transform: translateY(-60px);transform: translateY(-60px); }}' +
 						'.move_upper { -webkit-animation-name: move_upper;animation-name: move_upper; -webkit-animation-duration: .7s;animation-duration: .7s; -webkit-animation-iteration-count: 1;animation-iteration-count: 1; -webkit-animation-fill-mode: forwards;animation-fill-mode: forwards;}' +
 						'.cm-dc-bottom {min-width:1180px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:28;height:240px;background-repeat: no-repeat;background-position: center top;display:none;} ' +
-						'.cm-dc-left {z-index:99;position:fixed;bottom:0;right: 50%;top:0;margin-right: 700px;width: 18%;height: 100%;background: #ec2040;}' +
-						'.cm-dc-right {z-index:2;position:fixed;bottom:0;left: 50%;top:0;margin-left: 700px;width: 18%;height: 100%;background: #ec2040;}' +
+						'.cm-dc-left {z-index:99;position:fixed;bottom:0;right: 50%;top:0;margin-right: 700px;width: 18%;height: 100%;background: #e9445f;}' +
+						'.cm-dc-right {z-index:2;position:fixed;bottom:0;left: 50%;top:0;margin-left: 700px;width: 18%;height: 100%;background: #e9445f;}' +
 						'.cm-dc-middle {z-index:21;position:fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;min-width:1180px;background-repeat: no-repeat;background-position: center top;display: none}' +
 						'.cm-dc-bottom-bak {position: fixed;  margin: auto;  left: 0;  right: 0;  bottom: -10px;  width: 1400px;z-index:5;height:300px;background-repeat: no-repeat;display: none} ' +
-						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index:23;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close:hover {background-position: -80px} .cm-dc-close:active {background-position: -160px}' +
+						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index:101;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close:hover {background-position: -80px} .cm-dc-close:active {background-position: -160px}' +
 						'.cm-dc-11logo-left {margin-left: 140px;display: inline-block;width: 200px; height: 100%;background-image: url(../images/11logo.png);}' +
 						'.cm-dc-11logo-right {display: inline-block;width: 200px; height: 100%;background-image: url(../images/11logo.png);}' +
 						'.cm-dc-rocker {position:fixed;margin:auto;left:0;right:830px;bottom:-20px;z-index:30;width:160px;height: 270px;background-repeat: no-repeat;}' +
-						'.cm-dc-start-btn {cursor:pointer;position:fixed;margin:auto;left:0;right:0;bottom: 0px;z-index:30;width:408px;height: 130px;background-repeat: no-repeat;} .cm-dc-start-btn:hover {background-position: -406px} .cm-dc-start-btn:active {background-position: -810px} ';
+						'.cm-dc-start-btn {cursor:pointer;position:fixed;margin:auto;left:0;right:0;bottom: 0px;z-index:30;width:408px;height: 130px;background-repeat: no-repeat;} .cm-dc-start-btn:hover {background-position: -406px} .cm-dc-start-btn:active {background-position: -810px} ' +
+						'.simpleAlert {position: fixed;z-index: 100;}\n' +
+						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color: #000;opacity: 0.3;filter:alpha(opacity=30);}\n' +
+						'.simpleAlertBody {position:fixed;display: none;width: 600px;height: 560px;top:0;left:0;right:0;bottom:0;margin:auto;opacity:0;background-repeat: no-repeat;background: url("' + resource.alertImg +
+						'")}' +
+						'.simpleAlertBtn {position:absolute;width: 190px;height:80px;bottom:110px;cursor:pointer;}\n' +
+						'.simpleAlertBtn1 {left:32%;background: url("' + resource.alertbtnImg +
+						'") no-repeat} .simpleAlertBtn1:hover {background-position: -192px} .simpleAlertBtn1:active {background-position: -384px}';
 					var cssStyle = {};
 					cssStyle = document.createElement('style');
 					cssStyle.type = 'text/css';

@@ -58,11 +58,12 @@ CMDCG.do = function() {
 			},
 			render: {
 				visible: false,
-				sprite: {
-					xScale: 1.3,
-					yScale: 1.3,
-					texture: sourceLinkRoot + 'img/flash.png'
-				}
+				// visible: false,
+				// sprite: {
+				// 	xScale: 1.3,
+				// 	yScale: 1.3,
+				// 	texture: sourceLinkRoot + 'img/flash.png'
+				// }
 			},
 			frictionAir: 0
 		}, options);
@@ -257,10 +258,12 @@ CMDCG.do = function() {
 		var massVal = 0.05,
 			timeScaleVal = 0.6,
 			radiusVal = 15,
-			scaleoffest = 0.55;
+			scaleoffest = 0.55,
+			label = 'stack';
 		return Composites.stack(criteria.x, criteria.y, criteria.columns, criteria.rows, 0, 0, function(x, y) {
 			if (Common.random() < 0.3) {
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*5, 36, 46, {
+					label: label,
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -276,6 +279,7 @@ CMDCG.do = function() {
 				});
 			} else if(Common.random() > 0.3 && Common.random() < 0.6){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random(), 36, 46, {
+					label: label,
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -291,6 +295,7 @@ CMDCG.do = function() {
 				});
 			} else if(Common.random() > 0.6 && Common.random() < 0.65){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*15, 30, 40, {
+					label: label,
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -306,6 +311,7 @@ CMDCG.do = function() {
 				});
 			}else if(Common.random() > 0.65 && Common.random() < 0.7){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*15, 30, 40, {
+					label: label,
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -321,6 +327,7 @@ CMDCG.do = function() {
 				});
 			} else if(Common.random() > 0.7 && Common.random() < 0.75){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*4, 30, 40, {
+					label: label,
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -336,6 +343,7 @@ CMDCG.do = function() {
 				});
 			} else if(Common.random() > 0.75 && Common.random() < 0.8){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*4, 30, 44, {
+					label: label,
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -351,6 +359,7 @@ CMDCG.do = function() {
 				});
 			} else if(Common.random() > 0.8 && Common.random() < 0.85){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*3, 30, 44, {
+					label: label,
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -366,6 +375,7 @@ CMDCG.do = function() {
 				});
 			} else if(Common.random() > 0.85 && Common.random() < 0.9){
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*44, 30, 44, {
+					label: label,
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -381,6 +391,7 @@ CMDCG.do = function() {
 				});
 			} else{
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*4, 30, 44, {
+					label: label,
 					render: {
 						sprite: {
 							xScale: scaleoffest,
@@ -442,25 +453,27 @@ CMDCG.do = function() {
 			CMDCG.do.sto1p5 = setTimeout(function () {
 				spring.length = 20
 				//光芒出现
-				CMDCG.do.sto0p3 = setTimeout(function () {
-					ragdoll.bodies[0].label === 'chest' && (ragdoll.bodies[0].render.visible = true)
-				}, timeout * 0.3)
+				// CMDCG.do.sto0p3 = setTimeout(function () {
+				// 	ragdoll.bodies[0].label === 'chest' && (ragdoll.bodies[0].render.visible = true)
+				// }, timeout * 0.3)
 				CMDCG.do.sto3 = setTimeout(function () {
 					//防止多次出现提示框出
 					if ($('.simpleAlert').length > 0) return;
 					CMDCG.do.redAlertShow = true
 					var dblChoseAlert = simpleAlert({
-						"content": "游戏结束啦！",
 						"buttons": {
-							"再玩一次": function () {
-								setBodiesStatic(engine, false)
-								playAgain = true;
-								dblChoseAlert.close();
+							"gotmall": function () {
+								// CMDCG.do.setBodiesStatic(engine, false)
+								// playAgain = true;
+								window.open(tmallLink)
+								dblChoseAlert.close()
+								CMDCG.do.closeFun()
+								CMDC.Interface.reportClick('click', 4, 1)
 							}
 						}
 					})
-					setBodiesStatic(engine, true)
-				}, timeout * 3)
+					CMDCG.do.setBodiesStatic(engine, true)
+				}, timeout * 2.5)
 			}, timeout * 1.5)
 		}, timeout)
 	}
@@ -512,6 +525,24 @@ CMDCG.do = function() {
 		$('.cm-dc-close').unbind('click')
 	}
 
+	//设置静态
+	CMDCG.do.setBodiesStatic = function(engine, bool){
+		console.log('in setBodiesStatic')
+		var bodies = Composite.allBodies(engine.world),
+			body,
+			includeStack = false
+		for (var i = 0; i < bodies.length; i++) {
+			body = bodies[i]
+			if (body.position.y <= 400 && !~['chest', 'left-arm', 'right-arm', ].indexOf(body.label)) {
+				console.log('setBodiesStatic body', body)
+				body.label === 'stack' && (includeStack = true)
+				Body.setStatic(body, bool);
+			}
+		}
+		//判断是否抓住红包
+		includeStack && CMDC.Interface.reportClick('click', 3)
+	}
+
 	var	engine = Engine.create({
 		// velocityIterations: 1,
 		// constraintIterations: 1,
@@ -546,7 +577,7 @@ CMDCG.do = function() {
 	Runner.run(runner, engine);
 
 	world.bodies = [];
-	//设置运行范围 围墙
+	//设置运行范围
 	$('#cm-d-c').css('min-width', 1180)
 	World.add(world, [
 		//3-厚度 4-高度
@@ -652,19 +683,6 @@ CMDCG.do = function() {
 			}
 		}
 	};
-
-	//设置静态
-	var setBodiesStatic = function(engine, bool){
-		console.log('in setBodiesStatic')
-		var bodies = Composite.allBodies(engine.world);
-		for (var i = 0; i < bodies.length; i++) {
-			var body = bodies[i];
-			if (body.position.y <= 400 && !~['chest', 'left-arm', 'right-arm', ].indexOf(body.label)) {
-				console.log('setBodiesStatic body', body)
-				Body.setStatic(body, bool);
-			}
-		}
-	}
 
 	//弹簧
 	//如果要改变弹簧的样式，可以把链条当做弹簧，再把弹簧的长度设成0
@@ -869,7 +887,7 @@ CMDCG.do = function() {
 	//减少引擎更新时间
 	function enginRun() {
 		CMDCG.do.raf = window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 500);
+		Engine.update(engine, 1000 / 300);
 	}
 	enginRun()
 
