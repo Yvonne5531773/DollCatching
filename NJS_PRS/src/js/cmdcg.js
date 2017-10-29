@@ -16,11 +16,11 @@ CMDCG.do = function() {
 		Mouse = Matter.Mouse,
 		World = Matter.World,
 		Events = Matter.Events,
-		Bodies = Matter.Bodies,
-		Vertices = Matter.Vertices,
-		Svg = Matter.Svg,
-		Query = Matter.Query,
-		Sleeping = Matter.Sleeping;
+		Bodies = Matter.Bodies
+		// Vertices = Matter.Vertices,
+		// Svg = Matter.Svg,
+		// Query = Matter.Query,
+		// Sleeping = Matter.Sleeping;
 
 	var clearSource = CMDC.clearSource,
 		timeout = CMDC.timeout,
@@ -549,9 +549,15 @@ CMDCG.do = function() {
 			!CMDCG.do.redAlertShow && CMDCG.do.closeFun('exit1')
 			CMDCG.do.redAlertShow && CMDCG.do.closeFun('exit2')
 		})
+		//键盘事件
 		document.onkeydown = function(event) {
 			CMDCG.do.clickFun('click3')
 		};
+		//两边点击事件
+		$('.cm-dc-left, .cm-dc-right').bind('click', function(){
+			window.open(tmallLink)
+			CMDC.Interface.reportClick('click4', 1)
+		})
 	}
 
 	CMDCG.do.unbindEvents = function(){
@@ -560,6 +566,7 @@ CMDCG.do = function() {
 		$('.cm-dc-start-small-btn').unbind('click mouseover mouseout')
 		$('.cm-dc-close').unbind('click')
 		document.onkeydown = function(event) {};
+		$('.cm-dc-left, .cm-dc-right').unbind('click')
 	}
 
 	//设置静态
@@ -955,7 +962,7 @@ CMDCG.do = function() {
 	//减少引擎更新时间
 	function enginRun() {
 		CMDCG.do.raf = window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 200);
+		Engine.update(engine, 1000 / 60, 1);
 	}
 	enginRun()
 
