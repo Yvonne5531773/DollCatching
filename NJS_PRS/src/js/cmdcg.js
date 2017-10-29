@@ -47,7 +47,7 @@ CMDCG.do = function() {
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
 	CMDCG.do.createRagdoll = function(x, y, scale, options, vertexSets) {
-		var massVal = 1.5,
+		var massVal = 0.6,
 			frictionAirVal = 0.01,
 			timeScaleVal = 0.8,
 			scaleVal = 0.6;
@@ -89,7 +89,7 @@ CMDCG.do = function() {
 				}
 			},
 			// stiffness: 0.7,
-			// mass: massVal,
+			mass: massVal,
 			// frictionAir: frictionAirVal,
 			timeScale: timeScaleVal
 		}, options);
@@ -129,8 +129,7 @@ CMDCG.do = function() {
 				}
 			},
 			// stiffness: 0.7,
-			// mass: massVal,
-			// frictionAir: frictionAirVal,
+			mass: massVal,
 			timeScale: timeScaleVal
 		}, options);
 		var rightLowerArmOptions = Common.extend({}, rightArmOptions, {
@@ -149,7 +148,6 @@ CMDCG.do = function() {
 			},
 			// friction: 0.7,
 			// mass: massVal,
-			// frictionAir: frictionAirVal,
 			// timeScale: timeScaleVal
 		});
 		var chest = Bodies.rectangle(x, y, 70 * scale, 25 * scale, chestOptions);
@@ -259,7 +257,7 @@ CMDCG.do = function() {
 
 	//构造物品
 	CMDCG.do.createStacks = function(criteria){
-		var massVal = 0.05,
+		var massVal = 0.02,
 			timeScaleVal = 0.6,
 			radiusVal = 15,
 			scaleoffest = 0.65,
@@ -574,17 +572,17 @@ CMDCG.do = function() {
 
 	//自动消失
 	CMDCG.do.disappear = function(){
-		CMDCG.do.disappearSTO = setTimeout(function(){
-			!CMDCG.do.clicked && CMDCG.do.closeFun('disappear')
-		}, timeout* 20)
+		// CMDCG.do.disappearSTO = setTimeout(function(){
+		// 	!CMDCG.do.clicked && CMDCG.do.closeFun('disappear')
+		// }, timeout* 20)
 	}
 
 	CMDCG.do.disappear()
 
 	var	engine = Engine.create({
-		// velocityIterations: 1,
-		// constraintIterations: 1,
-		// positionIterations: 1
+		// positionIterations: 10,
+		// velocityIterations: 10,
+		// constraintIterations: 10,
 		// enableSleeping: true
 		// timeScale: 0.8
 	});
@@ -629,8 +627,8 @@ CMDCG.do = function() {
 	var	criteria = {
 			x: 5,
 			y: 350,
-			columns: 10,
-		// columns: 14,
+			// columns: 10,
+			columns: 14,
 			rows: 1,
 		}
 	var stack = CMDCG.do.createStacks(criteria);
@@ -769,9 +767,10 @@ CMDCG.do = function() {
 		bodyB: ropeC.bodies[0],
 		pointB: { x: -5, y: 0 },
 		pointA: { x: ropeC.bodies[0].position.x, y: ropeC.bodies[0].position.y },
-		stiffness: 0.009, //弹簧, 0是线
+		stiffness: 0.05, //弹簧, 0是线
+		// stiffness: 0.009, //弹簧, 0是线
 		damping: 1,
-		length: 0,
+		length: 80,
 		render: {
 			visible: false,
 			lineWidth: 4,
@@ -802,7 +801,7 @@ CMDCG.do = function() {
 		x = 0.5, y = -0.5,
 		i = 2, j = -2,
 		spring_x = spring.pointA.x, springPx;
-
+	var changeImg = false
 	CMDCG.do.engineCallback = Events.on(engine, 'beforeUpdate', function(event) {
 		if(!ragdoll || ragdoll.length <= 0) return
 		//初始爪子状态
@@ -847,6 +846,34 @@ CMDCG.do = function() {
 			if(!CMDCG.do.clicked){
 				spring.pointA.x = springPx
 			}
+		}
+		//动态改变底部图片大小
+		if(window.innerHeight <= 800 && !changeImg){
+			cmdcObj.botEL.style.backgroundImage = 'url(' + sourceLinkRoot + 'img/control-small.png' + ')'
+			cmdcObj.botEL.style.height = '180px'
+			cmdcObj.buttonEL.style.backgroundImage = 'url(' + sourceLinkRoot + 'img/button-small.png' + ')'
+			cmdcObj.buttonEL.classList.contains('cm-dc-start-btn') && cmdcObj.buttonEL.classList.remove('cm-dc-start-btn');
+			cmdcObj.rockerEL.classList.contains('cm-dc-rocker') && cmdcObj.rockerEL.classList.remove('cm-dc-rocker');
+			cmdcObj.buttonEL.classList.toggle('cm-dc-start-small-btn');
+			cmdcObj.rockerEL.classList.toggle('cm-dc-rocker-small');
+			cmdcObj.rockerEL.style.backgroundImage = 'url(' + sourceLinkRoot + 'img/rocker-small.png' + ')'
+			cmdcObj.bottombakEL.style.height = '250px'
+			clearInterval(cmdcObj.si)
+			cmdcObj.changeRockerSmall()
+			changeImg = true
+		}else if(window.innerHeight > 800 && changeImg){
+			cmdcObj.botEL.style.backgroundImage = 'url(' + sourceLinkRoot + 'img/control.png' + ')'
+			cmdcObj.botEL.style.height = '240px'
+			cmdcObj.buttonEL.style.backgroundImage = 'url(' + sourceLinkRoot + 'img/button.png' + ')'
+			cmdcObj.buttonEL.classList.contains('cm-dc-start-small-btn') && cmdcObj.buttonEL.classList.remove('cm-dc-start-small-btn');
+			cmdcObj.rockerEL.classList.contains('cm-dc-rocker-small') && cmdcObj.rockerEL.classList.remove('cm-dc-rocker-small');
+			cmdcObj.buttonEL.classList.toggle('cm-dc-start-btn');
+			cmdcObj.rockerEL.classList.toggle('cm-dc-rocker');
+			cmdcObj.rockerEL.style.backgroundImage = 'url(' + sourceLinkRoot + 'img/rocker.png' + ')'
+			cmdcObj.bottombakEL.style.height = '300px'
+			clearInterval(cmdcObj.sis)
+			cmdcObj.changeRocker()
+			changeImg = false
 		}
 	});
 
@@ -916,7 +943,7 @@ CMDCG.do = function() {
 	//减少引擎更新时间
 	function enginRun() {
 		CMDCG.do.raf = window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 100);
+		Engine.update(engine, 1000 / 300);
 	}
 	enginRun()
 
