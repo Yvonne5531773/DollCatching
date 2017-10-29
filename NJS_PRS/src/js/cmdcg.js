@@ -1,5 +1,5 @@
 
-var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t,e),n={},s=$('<div class="simpleAlert">'),i=$('<div class="simpleAlertShelter">'),c=$('<div class="simpleAlertBody">'),o=$('<img class="simpleAlertBodyClose" height="14" width="14"/>'), a=$('<p class="simpleAlertBodyContent">'+l.content+"</p>");return n.init=function(){for(var e=0,t=!1,n=[],o=0;o<2;o++)for(var p in l.buttons)switch(o){case 0:n.push(p);break;case 1:t=n.length<=1,e++;var r=$('<a class="simpleAlertBtn simpleAlertBtn'+e+'">'+"</a>");r.bind("click", l.buttons[p]), c.bind("click", l.buttons[p]), c.append(r)}s.append(i).append(c),$("body").append(s),c.show().animate({marginTop:"35px", opacity:"1"}, 350)},o.bind("click",function(){l.closeAll=!1,n.close()}),n.close=function(){l.closeAll?$(".simpleAlert").remove():c.animate({marginTop:"-188px",opacity:"0"},200,function(){$(".simpleAlert").last().remove()})},n.init(),n};
+var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t,e),n={},s=$('<div class="simpleAlert">'),i=$('<div class="simpleAlertShelter">'),c=$('<div class="simpleAlertBody">'),o=$('<img class="simpleAlertBodyClose" height="14" width="14"/>'), a=$('<p class="simpleAlertBodyContent">'+l.content+"</p>");return n.init=function(){for(var e=0,t=!1,n=[],o=0;o<2;o++)for(var p in l.buttons)switch(o){case 0:n.push(p);break;case 1:t=n.length<=1,e++;var r=$('<a class="simpleAlertBtn simpleAlertBtn'+e+'">'+"</a>");var f=$('<div class="simpleAlertFlash'+'">'+"</div>");r.bind("click", l.buttons[p]), c.bind("click", l.buttons[p]), f.bind("click", l.buttons[p]), c.append(r)}s.append(i).append(c).append(f),$("body").append(s),c.show().animate({ opacity:"1"}, 350)},o.bind("click",function(){l.closeAll=!1,n.close()}),n.close=function(){l.closeAll?$(".simpleAlert").remove():c.animate({marginTop:"-188px",opacity:"0"},200,function(){$(".simpleAlert").last().remove()})},n.init(),n};
 
 var CMDCG = CMDCG || {};
 
@@ -41,7 +41,6 @@ CMDCG.do = function() {
 	CMDCG.do.ragdollMove = false
 	CMDCG.do.raf = {}
 	CMDCG.do.engineCallback = {}
-	CMDCG.do.alert = {}
 
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
@@ -436,7 +435,7 @@ CMDCG.do = function() {
 		a.click();
 	}
 
-	CMDCG.do.clickFun = function(index) {
+	CMDCG.do.clickFun = function(action) {
 		if (CMDCG.do.clicked || !CMDCG.do.ragdollMove) {
 			return
 		}
@@ -470,7 +469,7 @@ CMDCG.do = function() {
 								// playAgain = true;
 								window.open(tmallLink)
 								CMDCG.do.closeFun('receive')
-								CMDC.Interface.reportClick('click', 4, 1)
+								CMDC.Interface.reportClick('click4', 1)
 							}
 						}
 					})
@@ -478,10 +477,12 @@ CMDCG.do = function() {
 				}, timeout * 1.8)
 			}, timeout * 1.5)
 		}, timeout)
-		CMDC.Interface.reportClick('click', index)
+		CMDC.Interface.reportClick(action)
 	}
 
-	CMDCG.do.closeFun = function(action, index) {
+	CMDCG.do.closeFun = function(action) {
+		action !== 'disappear' && cmdcCookie.setToday('cmdcg', 1);
+
 		CMDCG.do.disappearSTO && clearTimeout(CMDCG.do.disappearSTO)
 		CMDCG.do.sto1 && clearTimeout(CMDCG.do.sto1)
 		CMDCG.do.sto1p5 && clearTimeout(CMDCG.do.sto1p5)
@@ -511,7 +512,7 @@ CMDCG.do = function() {
 		CMDCG.do.unbindEvents()
 		//关闭弹窗红包
 		CMDCG.do.alert && CMDCG.do.alert.close()
-		CMDC.Interface.close(action, index)
+		CMDC.Interface.close(action)
 	}
 
 	CMDCG.do.bindEvents = function(){
@@ -522,7 +523,7 @@ CMDCG.do = function() {
 			}else if(event.type === "mouseout"){
 				CMDCG.do.disappear()
 			}else if(event.type === "click"){
-				CMDCG.do.clickFun(1)
+				CMDCG.do.clickFun('click1')
 			}
 		})
 		//抓取按钮事件 点击/移入/移出
@@ -532,14 +533,14 @@ CMDCG.do = function() {
 			}else if(event.type === "mouseout"){
 				CMDCG.do.disappear()
 			}else if(event.type === "click"){
-				CMDCG.do.clickFun(2)
+				CMDCG.do.clickFun('click2')
 			}
 		})
 		//关闭按钮事件
 		$('.cm-dc-close').bind('click', function(){
 			//红包出现前/出现后
-			!CMDCG.do.redAlertShow && CMDCG.do.closeFun('exit', 1)
-			CMDCG.do.redAlertShow && CMDCG.do.closeFun('exit', 2)
+			!CMDCG.do.redAlertShow && CMDCG.do.closeFun('exit1')
+			CMDCG.do.redAlertShow && CMDCG.do.closeFun('exit2')
 		})
 	}
 
@@ -565,8 +566,8 @@ CMDCG.do = function() {
 			}
 		}
 		//判断是否抓住红包
-		includeStack && CMDC.Interface.reportClick('click', 3)
-		!includeStack && notStatic && CMDC.Interface.reportClick('click', 3)
+		includeStack && CMDC.Interface.reportClick('click3')
+		!includeStack && notStatic && CMDC.Interface.reportClick('click3')
 	}
 
 	//自动消失

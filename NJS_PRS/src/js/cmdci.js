@@ -1,9 +1,68 @@
 
+(function(undefined) {
+	function cookie(name, value) {
+		return name != null ?
+			cookie[value === undefined ? "get" : "set"].apply(null, arguments) :
+			undefined;
+	}
+	// 获取cookie
+	cookie.get = function(name) {
+		var ret, arr,
+			i, len;
+		if (document.cookie) {
+			arr = document.cookie.split("; ");
+			for (i = 0, len = arr.length; i < len; i++) {
+				if (arr[i].indexOf(name + "=") === 0) {
+					ret = decodeURIComponent(arr[i].substr(name.length + 1));
+					break;
+				}
+			}
+		}
+		return ret;
+	};
+	// 设置cookie
+	cookie.set = function(name, value, options) {
+		var arr = [],
+			date;
+		options = options || {};
+		if (!value) {
+			value = "";
+			options.expires = -1;
+		}
+		if (typeof options.expires === "number") {
+			date = new Date();
+			date.setTime(date.getTime() + options.expires * 1000);
+		} else if (options.expires instanceof Date) {
+			date = options.expires;
+		}
+		arr.push(name + "=" + encodeURIComponent(value));
+		date && arr.push("expires=" + date.toUTCString());
+		options.path && arr.push("path=" + options.path);
+		options.domain && arr.push("domain=" + options.domain);
+		options.secure && arr.push("secure");
+		return document.cookie = arr.join("; ");
+	};
+	cookie.setToday = function(name, value, options) {
+		var d = new Date(),
+			c = d.getTime();
+		d.setHours(0);
+		d.setMinutes(0);
+		d.setSeconds(0);
+		d.setMilliseconds(0);
+		if (typeof options !== "object") {
+			options = {};
+		}
+		options.expires = Math.round((86400000 - Math.max(c - d.getTime(), 0)) / 1000);
+		this.set(name, value, options);
+	};
+	window.cmdcCookie = cookie;
+})();
+
 (function() {
 	var CMDC = {
-		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
-		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
+		sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
 		playAgain: false,
@@ -69,7 +128,7 @@
 						Catcher && Catcher.receive();
 					} else {
 						Catcher && Catcher.gameOver();
-						this.reportClose(action, index);
+						CMDC.Interface.reportClose(action, index);
 					}
 				} catch (e) {
 					Catcher && Catcher.error()
@@ -81,6 +140,7 @@
 						Catcher && Catcher.ready();
 					} catch (e) {
 						Catcher && Catcher.error()
+						CMDC.Interface.reportClose('error-exit')
 						console.log('error',e)
 					}
 					return true;
@@ -90,6 +150,7 @@
 					Catcher && Catcher.notSupport();
 				} catch (e) {
 					Catcher && Catcher.error()
+					CMDC.Interface.reportClose('error-exit')
 					console.log('error',e)
 				}
 				this.reportShow('not-support');
@@ -100,6 +161,7 @@
 					Catcher && Catcher.receive();
 				} catch (e) {
 					Catcher && Catcher.error()
+					CMDC.Interface.reportClose('error-exit')
 					console.log('error',e)
 				}
 			},
@@ -110,6 +172,7 @@
 					Catcher && Catcher.error()
 					console.log('error',e)
 				}
+				CMDC.Interface.reportClose('error-exit')
 			},
 			reportShow: function (action) {
 				this.report({
@@ -117,22 +180,20 @@
 					expand: action
 				});
 			},
-			reportClick: function (action, idx, shuang11) {
+			reportClick: function (action, shuang11) {
 				var data = {
 					snode: 1163,
-					expand: action,
-					idx: idx || 1
+					expand: action
 				};
 				if (shuang11) {
 					data.shuang11 = 1;
 				}
 				this.report(data);
 			},
-			reportClose: function (action, index) {
+			reportClose: function (action) {
 				this.report({
 					snode: 10147,
-					expand: action,
-					idx: index || 1
+					expand: action
 				});
 			},
 			report: function (obj) {
@@ -147,7 +208,7 @@
 				try {
 					Catcher && Catcher.report(data);
 				} catch (e) {
-					console.log('error',e)
+					console.log('error', e)
 				}
 			}
 		},
@@ -184,6 +245,7 @@
 				startBtnImg: sourceLinkRoot + 'img/button.png',
 				alertImg: sourceLinkRoot + 'img/alertbkg.png',
 				alertbtnImg: sourceLinkRoot + 'img/alertbtn.png',
+				alertFlashImg: sourceLinkRoot + 'img/flash.png',
 			}
 			var cmdcObj = {
 				botEL: {},
@@ -211,12 +273,18 @@
 						'.cm-dc-rocker {position:fixed;margin:auto;left:0;right:830px;bottom:-20px;z-index:30;width:160px;height: 270px;background-repeat: no-repeat;}' +
 						'.cm-dc-start-btn {cursor:pointer;position:fixed;margin:auto;left:0;right:0;bottom: 0px;z-index:30;width:408px;height: 130px;background-repeat: no-repeat;} .cm-dc-start-btn:hover {background-position: -406px} .cm-dc-start-btn:active {background-position: -810px} ' +
 						'.simpleAlert {position: fixed;z-index: 100;}\n' +
-						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color: #000;opacity: 0.3;filter:alpha(opacity=30);}\n' +
-						'.simpleAlertBody {cursor:pointer;position:fixed;display: none;width: 600px;height: 560px;top:0;left:0;right:0;bottom:0;margin:auto;opacity:0;background-repeat: no-repeat;background: url("' + resource.alertImg +
+						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color: #000;opacity: 0.5;filter:alpha(opacity=50);}\n' +
+						'.simpleAlertBody {cursor:pointer;z-index:100;position:fixed;display: none;width:375px;height:348px;top:0;left:0;right:0;bottom:0;margin:auto;opacity:0;background-repeat: no-repeat;background: url("' + resource.alertImg +
 						'")}' +
 						'.simpleAlertBtn {position:absolute;width: 190px;height:80px;bottom:110px;cursor:pointer;}\n' +
-						'.simpleAlertBtn1 {left:32%;background: url("' + resource.alertbtnImg +
-						'") no-repeat} .simpleAlertBtn1:hover {background-position: -192px} .simpleAlertBtn1:active {background-position: -384px}';
+						'.simpleAlertBtn1 {left:26%;bottom:50px;background: url("' + resource.alertbtnImg +
+						'") no-repeat} .simpleAlertBtn1:hover {background-position: -192px} .simpleAlertBtn1:active {background-position: -384px}' +
+						'@-webkit-keyframes rotates{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(360deg)}}\n' +
+						'@-ms-keyframes rotates{from{-ms-transform:rotate(0deg)}to{-ms-transform:rotate(360deg)}}\n' +
+						'@-moz-keyframes rotates{from{-moz-transform:rotate(0deg)}to{-moz-transform:rotate(360deg)}}\n' +
+						'@-o-keyframes rotates{from{-o-transform:rotate(0deg)}to{-o-transform:rotate(360deg)}}' +
+						'.simpleAlertFlash {cursor:pointer;z-index:99;position: fixed;margin: auto;top: 0;left: 0;right: 0;bottom: 0;width: 600px;height: 600px;background-repeat: no-repeat;animation: rotates 15s linear infinite;-moz-animation: rotates 15s linear infinite; -webkit-animation: rotates 15s linear infinite;-ms-animation: rotates 15s linear infinite;-o-animation: rotates 15s linear infinite;background-image: url("' + resource.alertFlashImg +
+						'")}';
 					var cssStyle = {};
 					cssStyle = document.createElement('style');
 					cssStyle.type = 'text/css';
@@ -306,8 +374,12 @@
 
 	window.CMDC = CMDC;
 
-	// if(CMDC.Interface.ready()){
+	if(CMDC.Interface.ready()){
 		try{
+			if(cmdcCookie('cmdcg') === '1'){
+				CMDC.Interface.close('cookie')
+				return
+			}
 			CMDC.loadSource();
 
 			setTimeout(function(){
@@ -322,8 +394,7 @@
 		}catch (e){
 			console.log('error', e)
 			CMDC.Interface.error()
-			CMDC.Interface.reportClose('error-exit')
 		}
-	// }
+	}
 
 })();
