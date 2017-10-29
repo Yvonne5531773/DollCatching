@@ -42,6 +42,8 @@ CMDCG.do = function() {
 	CMDCG.do.raf = {}
 	CMDCG.do.engineCallback = {}
 
+	$('.link_break')[1] && window.scrollTo(255, $('.link_break')[1].offsetTop)
+
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
 	CMDCG.do.createRagdoll = function(x, y, scale, options, vertexSets) {
@@ -474,7 +476,7 @@ CMDCG.do = function() {
 						}
 					})
 					CMDCG.do.setBodiesStatic(engine, true)
-				}, timeout * 1.8)
+				}, timeout * 1.2)
 			}, timeout * 1.5)
 		}, timeout)
 		CMDC.Interface.reportClick(action)
@@ -626,8 +628,9 @@ CMDCG.do = function() {
 	//物品池, 最好不超过40个
 	var	criteria = {
 			x: 5,
-			y: 300,
-			columns: 14,
+			y: 350,
+			columns: 10,
+		// columns: 14,
 			rows: 1,
 		}
 	var stack = CMDCG.do.createStacks(criteria);
@@ -913,7 +916,7 @@ CMDCG.do = function() {
 	//减少引擎更新时间
 	function enginRun() {
 		CMDCG.do.raf = window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 200);
+		Engine.update(engine, 1000 / 100);
 	}
 	enginRun()
 

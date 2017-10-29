@@ -153,7 +153,8 @@
 					CMDC.Interface.reportClose('error-exit')
 					console.log('error',e)
 				}
-				this.reportShow('not-support');
+				console.log('not support')
+				CMDC.Interface.reportShow('not-support');
 				return false;
 			},
 			click: function () {
@@ -222,7 +223,7 @@
 					{
 						name: 'cm-dollcatching-game',
 						id: '',
-						init: CMDCG.do,
+						init: CMDCG && CMDCG.do,
 						sourceLink: CMDC.sourceLinkRoot + 'js/cmdcg.js'
 					}
 				]
@@ -382,14 +383,15 @@
 			}
 			CMDC.loadSource();
 
+			CMDC.dosomethingforbkg()
+
 			setTimeout(function(){
-				CMDC.dosomethingforbkg()
 
 				//建立游戏周边场景
 				CMDC.buildWalls();
 				//建立娃娃机场景
 				CMDC.play();
-			}, CMDC.timeout);
+			}, CMDC.timeout* 1.5);
 
 		}catch (e){
 			console.log('error', e)
