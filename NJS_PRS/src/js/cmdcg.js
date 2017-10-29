@@ -42,6 +42,7 @@ CMDCG.do = function() {
 	CMDCG.do.raf = {}
 	CMDCG.do.engineCallback = {}
 
+	//滚动到指定位置
 	$('.link_break')[1] && window.scrollTo(255, $('.link_break')[1].offsetTop)
 
 	//爪子构造
@@ -62,13 +63,8 @@ CMDCG.do = function() {
 			},
 			render: {
 				visible: false,
-				// visible: false,
-				// sprite: {
-				// 	xScale: 1.3,
-				// 	yScale: 1.3,
-				// 	texture: sourceLinkRoot + 'img/flash.png'
-				// }
 			},
+			mass: massVal,
 			frictionAir: 0
 		}, options);
 		var leftArmOptions = Common.extend({
@@ -107,6 +103,7 @@ CMDCG.do = function() {
 			chamfer: {
 				radius: 6 * scale
 			},
+			mass: massVal,
 			// friction: 0.7,
 			// mass: massVal,
 			// timeScale: timeScaleVal
@@ -146,6 +143,7 @@ CMDCG.do = function() {
 			chamfer: {
 				radius: 6 * scale
 			},
+			mass: massVal,
 			// friction: 0.7,
 			// mass: massVal,
 			// timeScale: timeScaleVal
@@ -180,7 +178,7 @@ CMDCG.do = function() {
 			render: {
 				anchors: false,
 				visible: false //弹簧是否显示
-			}
+			},
 		});
 		var chestToLeftUpperArm = Constraint.create({
 			label: 'CHEST_TO_LEFT_UPPER',
@@ -536,18 +534,32 @@ CMDCG.do = function() {
 				CMDCG.do.clickFun('click2')
 			}
 		})
+		$('.cm-dc-start-small-btn').bind('click mouseover mouseout', function(){
+			if(event.type === "mouseover"){
+				CMDCG.do.disappearSTO && clearTimeout(CMDCG.do.disappearSTO)
+			}else if(event.type === "mouseout"){
+				CMDCG.do.disappear()
+			}else if(event.type === "click"){
+				CMDCG.do.clickFun('click2')
+			}
+		})
 		//关闭按钮事件
 		$('.cm-dc-close').bind('click', function(){
 			//红包出现前/出现后
 			!CMDCG.do.redAlertShow && CMDCG.do.closeFun('exit1')
 			CMDCG.do.redAlertShow && CMDCG.do.closeFun('exit2')
 		})
+		document.onkeydown = function(event) {
+			CMDCG.do.clickFun('click3')
+		};
 	}
 
 	CMDCG.do.unbindEvents = function(){
 		$('.cm-dc-middle').unbind('click mouseover mouseout')
 		$('.cm-dc-start-btn').unbind('click mouseover mouseout')
+		$('.cm-dc-start-small-btn').unbind('click mouseover mouseout')
 		$('.cm-dc-close').unbind('click')
+		document.onkeydown = function(event) {};
 	}
 
 	//设置静态
@@ -561,7 +573,7 @@ CMDCG.do = function() {
 			if (body.position.y <= 400 && !~['chest', 'left-arm', 'right-arm', ].indexOf(body.label)) {
 				body.label === 'stack' && (includeStack = true)
 				Body.setStatic(body, bool);
-			}else if((body.label==='left-lower-arm'||body.label==='right-lower-arm') && body.position.y > 430){
+			}else if((body.label==='left-lower-arm'||body.label==='right-lower-arm') && body.position.y > 405){
 				notStatic = true
 			}
 		}
@@ -943,7 +955,7 @@ CMDCG.do = function() {
 	//减少引擎更新时间
 	function enginRun() {
 		CMDCG.do.raf = window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 300);
+		Engine.update(engine, 1000 / 200);
 	}
 	enginRun()
 

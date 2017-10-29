@@ -67,6 +67,7 @@
 		dc: {},
 		playAgain: false,
 		timeout: 1000,
+		isIE: (navigator.appName === 'Microsoft Internet Explorer' || !!window.ActiveXObject || "ActiveXObject" in window),
 		isInclude: function (name) {
 			var js = /js$/i.test(name);
 			var es = document.getElementsByTagName(js ? 'script' : 'link');
@@ -357,6 +358,7 @@
 					cmdcObj.bottombakEL.style.display = 'block'
 					cmdcObj.botEL.style.bottom = '-60px'
 					cmdcObj.botEL.classList.toggle('move_upper');
+					CMDC.isIE && (cmdcObj.middleEL.style.cursor = 'pointer')
 					cmdcObj.changeRocker()
 				},
 				changeRocker: function(){
@@ -387,7 +389,7 @@
 			2. 隐藏scroll
 		*/
 		dosomethingforbkg: function(){
-			$('.link_break')[1] && window.scrollTo(255, $('.link_break')[1].offsetTop)
+			// $('.link_break')[1] && window.scrollTo(255, $('.link_break')[1].offsetTop)
 			$('body').css('overflow-y', 'hidden')
 		}
 	};
