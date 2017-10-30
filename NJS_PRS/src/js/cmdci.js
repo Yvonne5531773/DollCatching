@@ -105,14 +105,15 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			mainScript.src = sourceLinkRoot + "js/cmdcg.js";
 			jquery.src = sourceLinkRoot + "js/jquery-1.11.0.min.js";
 
+			typeof jQuery === 'undefined' && oHead.appendChild(jquery);
 			// oHead.appendChild(pfScript);
 			// oHead.appendChild(mScript);
-			setTimeout(function () {
+			// setTimeout(function () {
 				// oHead.appendChild(mainScript);
-				typeof jQuery === 'undefined' && oHead.appendChild(jquery);
+				// typeof jQuery === 'undefined' && oHead.appendChild(jquery);
 				// oHead.appendChild(mdScript);
 				// oHead.appendChild(mgScript); //debug tool
-			}, CMDC.timeout)
+			// }, CMDC.timeout)
 		},
 		removejscssfile: function (filename, filetype) {
 			var targetelement = (filetype === "js") ? "script" : (filetype === "css") ? "link" : "none";
@@ -283,7 +284,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 						'.cm-dc-bottom {min-width:1180px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:28;height:240px;background-repeat: no-repeat;background-position: center top;display:none;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto};}' +
 						'.cm-dc-bottom-small {min-width:1180px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:28;height:180px;background-repeat: no-repeat;background-position: center top;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto; background: url("' + resource.botSmallImg + '")}' +
 						'.cm-dc-both-side-body {width:1400px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:2;height:275px;background-position: center top;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto; background: url("' + resource.bothsideBodyImg + '") no-repeat}' +
-						'.cm-dc-left {cursor:pointer;z-index:99;position:fixed;bottom:0;right: 50%;top:0;margin-right: 700px;width: 18%;height: 100%;background: #e9445f;}' +
+						'.cm-dc-left {cursor:pointer;z-index:90;position:fixed;bottom:0;right: 50%;top:0;margin-right: 700px;width: 18%;height: 100%;background: #e9445f;}' +
 						'.cm-dc-right {cursor:pointer;z-index:90;position:fixed;bottom:0;left: 50%;top:0;margin-left: 700px;width: 18%;height: 100%;background: #e9445f;}' +
 						'.cm-dc-middle {z-index:21;position:fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;min-width:1180px;background-repeat: no-repeat;background-position: center top;display: none;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto}' +
 						'.cm-dc-bottom-bak {position: fixed;margin: auto;left: 0;right: 0;bottom:0px;width: 1400px;z-index:5;height:300px;background-repeat: no-repeat;display: none} ' +
@@ -425,12 +426,11 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			CMDC.dosomethingforbkg()
 
 			setTimeout(function(){
-
 				//建立游戏周边场景
 				CMDC.buildWalls();
 				//建立娃娃机场景
 				CMDC.play();
-			}, CMDC.timeout* 2);
+			}, CMDC.timeout* 0.3);
 
 		}catch (e){
 			console.log('error', e)
@@ -977,6 +977,9 @@ CMDCG.do = function() {
 		})
 		//键盘事件
 		document.onkeydown = function(event) {
+			if(event.which == 13) {
+				return
+			}
 			CMDCG.do.clickFun('click4')
 		};
 		//两边点击事件
@@ -1081,7 +1084,7 @@ CMDCG.do = function() {
 
 	//物品池, 最好不超过40个
 	var	criteria = {
-		x: 5,
+		x: -10,
 		y: 350,
 		columns: 15,
 		rows: 1,
