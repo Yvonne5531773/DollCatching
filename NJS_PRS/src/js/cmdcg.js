@@ -590,9 +590,9 @@ CMDCG.do = function() {
 
 	//自动消失
 	CMDCG.do.disappear = function(){
-		// CMDCG.do.disappearSTO = setTimeout(function(){
-		// 	!CMDCG.do.clicked && CMDCG.do.closeFun('disappear')
-		// }, timeout* 20)
+		CMDCG.do.disappearSTO = setTimeout(function(){
+			!CMDCG.do.clicked && CMDCG.do.closeFun('disappear')
+		}, timeout* 20)
 	}
 
 	CMDCG.do.disappear()
@@ -645,8 +645,7 @@ CMDCG.do = function() {
 	var	criteria = {
 			x: 5,
 			y: 350,
-			// columns: 10,
-			columns: 14,
+			columns: 15,
 			rows: 1,
 		}
 	var stack = CMDCG.do.createStacks(criteria);
