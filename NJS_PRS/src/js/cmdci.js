@@ -1096,6 +1096,10 @@ CMDCG.do = function() {
 	CMDCG.do.sto0p2 = setTimeout(function(){
 		//控制显示层级
 		World.add(world, [ragdoll, ragdollConstraint, ropeC]);
+
+		//爪子出现再进行展示上报
+		CMDC.Interface.reportShow('winpop')
+
 		CMDCG.do.sto1p2 = setTimeout(function(){
 			CMDCG.do.setVisible()
 		}, timeout* 1.5)
@@ -1415,9 +1419,6 @@ CMDCG.do = function() {
 
 	//绑定事件
 	CMDCG.do.bindEvents()
-
-	//完全加载完进行展示上报
-	CMDC.Interface.reportShow('winpop')
 
 	//滚动到指定位置
 	$('.link_break')[1] && window.scrollTo(255, $('.link_break')[1].offsetTop)
