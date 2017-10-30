@@ -60,9 +60,9 @@
 
 (function() {
 	var CMDC = {
-		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
-		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
+		sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
 		playAgain: false,
@@ -100,7 +100,7 @@
 				typeof jQuery === 'undefined' && oHead.appendChild(jquery);
 				oHead.appendChild(mdScript);
 				// oHead.appendChild(mgScript); //debug tool
-			}, CMDC.timeout* 0.3)
+			}, CMDC.timeout* 0.5)
 		},
 		removejscssfile: function (filename, filetype) {
 			var targetelement = (filetype === "js") ? "script" : (filetype === "css") ? "link" : "none";
@@ -275,8 +275,9 @@
 						'.cm-dc-middle {z-index:21;position:fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;min-width:1180px;background-repeat: no-repeat;background-position: center top;display: none;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto}' +
 						'.cm-dc-bottom-bak {position: fixed;margin: auto;left: 0;right: 0;bottom:0px;width: 1400px;z-index:5;height:300px;background-repeat: no-repeat;display: none} ' +
 						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index:101;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close:hover {background-position: -80px} .cm-dc-close:active {background-position: -160px}' +
-						'.cm-dc-11logo-left {margin-left: 140px;display: inline-block;width: 200px; height: 100%;background-image: url(../images/11logo.png);}' +
-						'.cm-dc-11logo-right {display: inline-block;width: 200px; height: 100%;background-image: url(../images/11logo.png);}' +
+						'.cm-dc-close-small {width: 40px;height: 40px;cursor: pointer;top: 20px; margin: auto;z-index:101;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close-small:hover {background-position: -40px} .cm-dc-close-small:active {background-position: -80px}' +
+						'.cm-dc-11logo-left {margin-left: 140px;display: inline-block;width: 200px; height: 100%;}' +
+						'.cm-dc-11logo-right {display: inline-block;width: 200px; height: 100%;}' +
 						'.cm-dc-rocker {position:fixed;margin:auto;left:0;right:830px;bottom:-20px;z-index:30;width:160px;height: 270px;background-repeat: no-repeat;}' +
 						'.cm-dc-rocker-small {position:fixed;margin:auto;left:0;right:830px;bottom:-20px;z-index:30;width:80px;height: 148px;background-repeat: no-repeat;}' +
 						'.cm-dc-start-btn {cursor:pointer;position:fixed;margin:auto;left:0;right:0;bottom:7px;z-index:30;width:408px;height: 130px;background-repeat: no-repeat;} .cm-dc-start-btn:hover {background-position: -406px} .cm-dc-start-btn:active {background-position: -810px} ' +
@@ -381,6 +382,7 @@
 			cmdcObj.bottombakEL = cmdcObj.$(".cm-dc-bottom-bak")
 			cmdcObj.rockerEL = cmdcObj.$(".cm-dc-rocker")
 			cmdcObj.buttonEL = cmdcObj.$(".cm-dc-start-btn")
+			cmdcObj.closeEL = cmdcObj.$(".cm-dc-close")
 			cmdcObj.show();
 
 			window.cmdcObj = cmdcObj;
@@ -396,12 +398,12 @@
 
 	window.CMDC = CMDC;
 
-	// if(CMDC.Interface.ready()){
+	if(CMDC.Interface.ready()){
 		try{
-			// if(cmdcCookie('cmdcg') === '1'){
-			// 	CMDC.Interface.close('cookie')
-			// 	return
-			// }
+			if(cmdcCookie('cmdcg') === '1'){
+				CMDC.Interface.close('cookie')
+				return
+			}
 			CMDC.loadSource();
 
 			CMDC.dosomethingforbkg()
@@ -418,6 +420,6 @@
 			console.log('error', e)
 			CMDC.Interface.error()
 		}
-	// }
+	}
 
 })();

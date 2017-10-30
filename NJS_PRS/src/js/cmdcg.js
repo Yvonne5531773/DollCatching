@@ -42,9 +42,6 @@ CMDCG.do = function() {
 	CMDCG.do.raf = {}
 	CMDCG.do.engineCallback = {}
 
-	//滚动到指定位置
-	$('.link_break')[1] && window.scrollTo(255, $('.link_break')[1].offsetTop)
-
 	//爪子构造
 	//捉住有两个因素，1.改变节点角度，2.改变摩擦力
 	CMDCG.do.createRagdoll = function(x, y, scale, options, vertexSets) {
@@ -467,7 +464,7 @@ CMDCG.do = function() {
 								// playAgain = true;
 								window.open(tmallLink)
 								CMDCG.do.closeFun('receive')
-								CMDC.Interface.reportClick('click4', 1)
+								CMDC.Interface.reportClick('click5', 1)
 							}
 						}
 					})
@@ -525,16 +522,7 @@ CMDCG.do = function() {
 			}
 		})
 		//抓取按钮事件 点击/移入/移出
-		$('.cm-dc-start-btn').bind('click mouseover mouseout', function(){
-			if(event.type === "mouseover"){
-				CMDCG.do.disappearSTO && clearTimeout(CMDCG.do.disappearSTO)
-			}else if(event.type === "mouseout"){
-				CMDCG.do.disappear()
-			}else if(event.type === "click"){
-				CMDCG.do.clickFun('click2')
-			}
-		})
-		$('.cm-dc-start-small-btn').bind('click mouseover mouseout', function(){
+		$('.cm-dc-start-btn, .cm-dc-start-small-btn').bind('click mouseover mouseout', function(){
 			if(event.type === "mouseover"){
 				CMDCG.do.disappearSTO && clearTimeout(CMDCG.do.disappearSTO)
 			}else if(event.type === "mouseout"){
@@ -544,29 +532,40 @@ CMDCG.do = function() {
 			}
 		})
 		//关闭按钮事件
-		$('.cm-dc-close').bind('click', function(){
+		$('.cm-dc-close, .cm-dc-close-small').bind('click', function(){
 			//红包出现前/出现后
 			!CMDCG.do.redAlertShow && CMDCG.do.closeFun('exit1')
 			CMDCG.do.redAlertShow && CMDCG.do.closeFun('exit2')
 		})
 		//键盘事件
 		document.onkeydown = function(event) {
-			CMDCG.do.clickFun('click3')
+			CMDCG.do.clickFun('click4')
 		};
 		//两边点击事件
 		$('.cm-dc-left, .cm-dc-right').bind('click', function(){
 			window.open(tmallLink)
-			CMDC.Interface.reportClick('click4', 1)
+			CMDC.Interface.reportClick('click6', 1)
+		})
+		$('.cm-dc-left').bind('mouseover', function(){
+			$('.cm-dc-11logo-left').css('background-image', "url(" + sourceLinkRoot + "img/11logo-hover.png)")
+		})
+		$('.cm-dc-left').bind('mouseout', function(){
+			$('.cm-dc-11logo-left').css('background-image', "url(" + sourceLinkRoot + "img/11logo.png)")
+		})
+		$('.cm-dc-right').bind('mouseover', function(){
+			$('.cm-dc-11logo-right').css('background-image', "url(" + sourceLinkRoot + "img/11logo-hover.png)")
+		})
+		$('.cm-dc-right').bind('mouseout', function(){
+			$('.cm-dc-11logo-right').css('background-image', "url(" + sourceLinkRoot + "img/11logo.png)")
 		})
 	}
 
 	CMDCG.do.unbindEvents = function(){
 		$('.cm-dc-middle').unbind('click mouseover mouseout')
-		$('.cm-dc-start-btn').unbind('click mouseover mouseout')
-		$('.cm-dc-start-small-btn').unbind('click mouseover mouseout')
-		$('.cm-dc-close').unbind('click')
+		$('.cm-dc-start-btn, .cm-dc-start-small-btn').unbind('click mouseover mouseout')
+		$('.cm-dc-close, .cm-dc-close-small').unbind('click')
 		document.onkeydown = function(event) {};
-		$('.cm-dc-left, .cm-dc-right').unbind('click')
+		$('.cm-dc-left, .cm-dc-right').unbind('click mouseover mouseout')
 	}
 
 	//设置静态
@@ -591,9 +590,9 @@ CMDCG.do = function() {
 
 	//自动消失
 	CMDCG.do.disappear = function(){
-		// CMDCG.do.disappearSTO = setTimeout(function(){
-		// 	!CMDCG.do.clicked && CMDCG.do.closeFun('disappear')
-		// }, timeout* 20)
+		CMDCG.do.disappearSTO = setTimeout(function(){
+			!CMDCG.do.clicked && CMDCG.do.closeFun('disappear')
+		}, timeout* 20)
 	}
 
 	CMDCG.do.disappear()
@@ -741,11 +740,11 @@ CMDCG.do = function() {
 	};
 
 	//弹簧
-	var changeVal = 400, armY = 150;
+	var changeVal = 400, armY = 10;
 	var group = Body.nextGroup(true),
 		counter = -1;
 	//链的个数，属性
-	var ropeC = Composites.stack(changeVal, 38, 1, 1, 0, 10, function(x, y) {
+	var ropeC = Composites.stack(changeVal, armY, 1, 1, 0, 10, function(x, y) {
 		return Bodies.rectangle(x, y, 25, 15, {
 			label: 'component',
 			collisionFilter: { group: group },
@@ -876,7 +875,11 @@ CMDCG.do = function() {
 			cmdcObj.buttonEL.classList.toggle('cm-dc-start-small-btn');
 			cmdcObj.rockerEL.classList.toggle('cm-dc-rocker-small');
 			cmdcObj.rockerEL.style.backgroundImage = 'url(' + sourceLinkRoot + 'img/rocker-small.png' + ')'
-			cmdcObj.bottombakEL.style.height = '250px'
+			cmdcObj.bottombakEL.style.backgroundImage = 'url(' + sourceLinkRoot + 'img/allbodies-small.png' + ')'
+			cmdcObj.bottombakEL.style.height = '215px'
+			cmdcObj.closeEL.style.backgroundImage = 'url(' + sourceLinkRoot + 'img/close-small.png' + ')'
+			cmdcObj.closeEL.classList.contains('cm-dc-close') && cmdcObj.closeEL.classList.remove('cm-dc-close');
+			cmdcObj.closeEL.classList.toggle('cm-dc-close-small');
 			clearInterval(cmdcObj.si)
 			cmdcObj.changeRockerSmall()
 			changeImg = true
@@ -889,7 +892,11 @@ CMDCG.do = function() {
 			cmdcObj.buttonEL.classList.toggle('cm-dc-start-btn');
 			cmdcObj.rockerEL.classList.toggle('cm-dc-rocker');
 			cmdcObj.rockerEL.style.backgroundImage = 'url(' + sourceLinkRoot + 'img/rocker.png' + ')'
+			cmdcObj.bottombakEL.style.backgroundImage = 'url(' + sourceLinkRoot + 'img/allbodies.png' + ')'
 			cmdcObj.bottombakEL.style.height = '300px'
+			cmdcObj.closeEL.style.backgroundImage = 'url(' + sourceLinkRoot + 'img/close.png' + ')'
+			cmdcObj.closeEL.classList.contains('cm-dc-close-small') && cmdcObj.closeEL.classList.remove('cm-dc-close-small');
+			cmdcObj.closeEL.classList.toggle('cm-dc-close');
 			clearInterval(cmdcObj.sis)
 			cmdcObj.changeRocker()
 			changeImg = false
@@ -971,6 +978,9 @@ CMDCG.do = function() {
 
 	//完全加载完进行展示上报
 	CMDC.Interface.reportShow('winpop')
+
+	//滚动到指定位置
+	$('.link_break')[1] && window.scrollTo(255, $('.link_break')[1].offsetTop)
 
 	return {
 		engine: engine,
