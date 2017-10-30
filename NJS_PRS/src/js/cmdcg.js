@@ -590,9 +590,9 @@ CMDCG.do = function() {
 
 	//自动消失
 	CMDCG.do.disappear = function(){
-		CMDCG.do.disappearSTO = setTimeout(function(){
-			!CMDCG.do.clicked && CMDCG.do.closeFun('disappear')
-		}, timeout* 20)
+		// CMDCG.do.disappearSTO = setTimeout(function(){
+		// 	!CMDCG.do.clicked && CMDCG.do.closeFun('disappear')
+		// }, timeout* 20)
 	}
 
 	CMDCG.do.disappear()
@@ -788,7 +788,7 @@ CMDCG.do = function() {
 		stiffness: 0.05, //弹簧, 0是线
 		// stiffness: 0.009, //弹簧, 0是线
 		damping: 1,
-		length: 80,
+		length: 100,
 		render: {
 			visible: false,
 			lineWidth: 4,

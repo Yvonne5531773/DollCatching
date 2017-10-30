@@ -61,8 +61,8 @@
 (function() {
 	var CMDC = {
 		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
-		sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
+		sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
 		playAgain: false,
@@ -206,7 +206,7 @@
 					data[i] = obj[i];
 				}
 				data.w = 'dcgame';
-				data.cid = '';
+				data.cid = '57068818';
 				try {
 					Catcher && Catcher.report(data);
 				} catch (e) {
@@ -249,6 +249,7 @@
 				alertImg: sourceLinkRoot + 'img/alertbkg.png',
 				alertbtnImg: sourceLinkRoot + 'img/alertbtn.png',
 				alertFlashImg: sourceLinkRoot + 'img/flash.png',
+				bothsideBodyImg: sourceLinkRoot + 'img/bothside-bodies-small.png',
 			}
 			var cmdcObj = {
 				botEL: {},
@@ -270,6 +271,7 @@
 						'.move_upper { -webkit-animation-name: move_upper;animation-name: move_upper; -webkit-animation-duration: .7s;animation-duration: .7s; -webkit-animation-iteration-count: 1;animation-iteration-count: 1; -webkit-animation-fill-mode: forwards;animation-fill-mode: forwards;}' +
 						'.cm-dc-bottom {min-width:1180px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:28;height:240px;background-repeat: no-repeat;background-position: center top;display:none;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto};}' +
 						'.cm-dc-bottom-small {min-width:1180px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:28;height:180px;background-repeat: no-repeat;background-position: center top;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto; background: url("' + resource.botSmallImg + '")}' +
+						'.cm-dc-both-side-body {width:1400px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:2;height:275px;background-position: center top;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto; background: url("' + resource.bothsideBodyImg + '") no-repeat}' +
 						'.cm-dc-left {cursor:pointer;z-index:99;position:fixed;bottom:0;right: 50%;top:0;margin-right: 700px;width: 18%;height: 100%;background: #e9445f;}' +
 						'.cm-dc-right {cursor:pointer;z-index:90;position:fixed;bottom:0;left: 50%;top:0;margin-left: 700px;width: 18%;height: 100%;background: #e9445f;}' +
 						'.cm-dc-middle {z-index:21;position:fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;min-width:1180px;background-repeat: no-repeat;background-position: center top;display: none;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto}' +
@@ -309,6 +311,7 @@
 						close = document.createElement('div'),
 						rocker = document.createElement('div'),
 						start = document.createElement('div'),
+						bothsideBody = document.createElement('div'),
 						botImg = document.createElement('img'),
 						leftImg = document.createElement('img'),
 						leftlogo = document.createElement('a'),
@@ -324,6 +327,7 @@
 					rightlogo.className = 'cm-dc-11logo-right';
 					rocker.className = 'cm-dc-rocker';
 					start.className = 'cm-dc-start-btn';
+					bothsideBody.className = 'cm-dc-both-side-body';
 					bot.style.backgroundImage = 'url(' + resource.botImg + ')'
 					middle.style.backgroundImage = 'url(' + resource.middleImg + ')'
 					bottombak.style.backgroundImage = 'url(' + resource.bottombakImg + ')'
@@ -350,6 +354,7 @@
 					cmdc.appendChild(bottombak);
 					cmdc.appendChild(bottombak);
 					cmdc.appendChild(start);
+					cmdc.appendChild(bothsideBody);
 					document.body.appendChild(cmdc);
 				},
 				show: function () {
@@ -398,12 +403,12 @@
 
 	window.CMDC = CMDC;
 
-	if(CMDC.Interface.ready()){
+	// if(CMDC.Interface.ready()){
 		try{
-			if(cmdcCookie('cmdcg') === '1'){
-				CMDC.Interface.close('cookie')
-				return
-			}
+			// if(cmdcCookie('cmdcg') === '1'){
+			// 	CMDC.Interface.close('cookie')
+			// 	return
+			// }
 			CMDC.loadSource();
 
 			CMDC.dosomethingforbkg()
@@ -420,6 +425,6 @@
 			console.log('error', e)
 			CMDC.Interface.error()
 		}
-	}
+	// }
 
 })();
