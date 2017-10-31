@@ -85,9 +85,9 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 
 (function() {
 	var CMDC = {
-		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
-		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
+		sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
 		playAgain: false,
@@ -451,12 +451,12 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 
 	window.CMDC = CMDC;
 
-	// if(CMDC.Interface.ready()){
+	if(CMDC.Interface.ready()){
 		try{
-			// if(cmdcCookie('cmdcg') === '1'){
-			// 	CMDC.Interface.close('cookie')
-			// 	return
-			// }
+			if(cmdcCookie('cmdcg') === '1'){
+				CMDC.Interface.close('cookie')
+				return
+			}
 			CMDC.loadSource();
 
 			CMDC.dosomethingforbkg()
@@ -472,7 +472,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			console.log('error', e)
 			CMDC.Interface.error()
 		}
-	// }
+	}
 })();
 
 var CMDCG = CMDCG || {};
@@ -734,7 +734,7 @@ CMDCG.do = function() {
 			scaleoffest = 0.65,
 			label = 'stack';
 		return Composites.stack(criteria.x, criteria.y, criteria.columns, criteria.rows, 0, 0, function(x, y) {
-			if (Common.random() < 0.3) {
+			if (Common.random() < 0.5) {
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*5, 36, 46, {
 					label: label,
 					render: {
@@ -750,118 +750,6 @@ CMDCG.do = function() {
 					mass: massVal,
 					angle: -Math.PI * Common.random(0, 1),
 				});
-			} else if(Common.random() > 0.3 && Common.random() < 0.6){
-				return Bodies.rectangle(x+Common.random()*25, y+Common.random(), 36, 46, {
-					label: label,
-					render: {
-						sprite: {
-							xScale: scaleoffest,
-							yScale: scaleoffest,
-							texture: sourceLinkRoot + 'img/pred.png'
-						}
-					},
-					chamfer: { radius: radiusVal },
-					// friction: 0.7,
-					timeScale: timeScaleVal,
-					mass: massVal,
-					angle: -Math.PI * Common.random(0, 1)
-				});
-			} else if(Common.random() > 0.6 && Common.random() < 0.65){
-				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*15, 30, 40, {
-					label: label,
-					render: {
-						sprite: {
-							xScale: scaleoffest,
-							yScale: scaleoffest,
-							texture: sourceLinkRoot + 'img/ggift.png'
-						}
-					},
-					chamfer: { radius: radiusVal },
-					// friction: 0.7,
-					timeScale: timeScaleVal,
-					mass: massVal,
-					angle: -Math.PI * Common.random(0, 1)
-				});
-			}else if(Common.random() > 0.65 && Common.random() < 0.7){
-				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*15, 30, 40, {
-					label: label,
-					render: {
-						sprite: {
-							xScale: scaleoffest,
-							yScale: scaleoffest,
-							texture: sourceLinkRoot + 'img/pgift.png'
-						}
-					},
-					chamfer: { radius: radiusVal },
-					// friction: 0.7,
-					timeScale: timeScaleVal,
-					mass: massVal,
-					angle: -Math.PI * Common.random(0, 1)
-				});
-			} else if(Common.random() > 0.7 && Common.random() < 0.75){
-				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*4, 30, 40, {
-					label: label,
-					render: {
-						sprite: {
-							xScale: scaleoffest,
-							yScale: scaleoffest,
-							texture: sourceLinkRoot + 'img/bgift.png'
-						}
-					},
-					chamfer: { radius: radiusVal },
-					// friction: 0.7,
-					timeScale: timeScaleVal,
-					mass: massVal,
-					angle: -Math.PI * Common.random(0, 1)
-				});
-			} else if(Common.random() > 0.75 && Common.random() < 0.8){
-				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*4, 30, 44, {
-					label: label,
-					render: {
-						sprite: {
-							xScale: scaleoffest,
-							yScale: scaleoffest,
-							texture: sourceLinkRoot + 'img/obag.png'
-						}
-					},
-					chamfer: { radius: radiusVal },
-					// friction: 0.7,
-					timeScale: timeScaleVal,
-					mass: massVal,
-					angle: -Math.PI * Common.random(0, 1)
-				});
-			} else if(Common.random() > 0.8 && Common.random() < 0.85){
-				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*3, 30, 44, {
-					label: label,
-					render: {
-						sprite: {
-							xScale: scaleoffest,
-							yScale: scaleoffest,
-							texture: sourceLinkRoot + 'img/pbag.png'
-						}
-					},
-					chamfer: { radius: radiusVal },
-					// friction: 0.7,
-					timeScale: timeScaleVal,
-					mass: massVal,
-					angle: -Math.PI * Common.random(0, 1)
-				});
-			} else if(Common.random() > 0.85 && Common.random() < 0.9){
-				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*44, 30, 44, {
-					label: label,
-					render: {
-						sprite: {
-							xScale: scaleoffest,
-							yScale: scaleoffest,
-							texture: sourceLinkRoot + '/img/rbag.png'
-						}
-					},
-					chamfer: { radius: radiusVal },
-					// friction: 0.7,
-					timeScale: timeScaleVal,
-					mass: massVal,
-					angle: -Math.PI * Common.random(0, 1)
-				});
 			} else{
 				return Bodies.rectangle(x+Common.random()*25, y+Common.random()*4, 30, 44, {
 					label: label,
@@ -869,7 +757,7 @@ CMDCG.do = function() {
 						sprite: {
 							xScale: scaleoffest,
 							yScale: scaleoffest,
-							texture: sourceLinkRoot + '/img/rred.png'
+							texture: sourceLinkRoot + '/img/pred.png'
 						}
 					},
 					chamfer: { radius: radiusVal },
@@ -918,9 +806,9 @@ CMDCG.do = function() {
 		spring.stiffness = 0.005
 		//弹簧伸长
 		var si = setInterval(function () {
-			if (spring.length >= 200) clearInterval(si)
-			spring.length += 30
-		}, 80)
+			if (spring.length >= 120) clearInterval(si)
+			spring.length += 60
+		}, 40)
 		//抓娃娃状态
 		CMDCG.do.sto1 = setTimeout(function () {
 			catched = true
@@ -988,7 +876,7 @@ CMDCG.do = function() {
 
 	CMDCG.do.bindEvents = function(){
 		//屏幕事件 点击
-		$('.cm-dc-middle').bind('click', function(event){
+		$('.cm-dc-middle, .cm-dc-bottom').bind('click', function(event){
 			CMDCG.do.clickFun('click1')
 		})
 		//抓取按钮事件 点击
@@ -1026,7 +914,7 @@ CMDCG.do = function() {
 	}
 
 	CMDCG.do.unbindEvents = function(){
-		$('.cm-dc-middle').unbind('click')
+		$('.cm-dc-middle, .cm-dc-bottom').unbind('click')
 		$('.cm-dc-start-btn, .cm-dc-start-small-btn').unbind('click')
 		$('.cm-dc-close, .cm-dc-close-small').unbind('click')
 		$(document).unbind('keyup')
@@ -1049,10 +937,9 @@ CMDCG.do = function() {
 			}
 		}
 		//判断是否抓住红包
-		includeStack && CMDC.Interface.reportClick('click5')
-		// console.log('includeStack', includeStack)
-		// console.log('notStatic', notStatic)
-		!includeStack && notStatic && CMDC.Interface.reportClick('click5')
+		CMDC.Interface.reportClick('click5')
+		// includeStack && CMDC.Interface.reportClick('click5')
+		// !includeStack && notStatic && CMDC.Interface.reportClick('click5')
 	}
 
 	//自动消失
@@ -1076,7 +963,7 @@ CMDCG.do = function() {
 		engine: engine,
 		options: {
 			width: 1180,
-			height: document.documentElement.clientHeight,
+			height: 900,
 			background: 'transparent',
 			showAngleIndicator: false,
 			wireframes: false
@@ -1109,7 +996,7 @@ CMDCG.do = function() {
 	//物品池, 最好不超过40个
 	var	criteria = {
 		x: 10,
-		y: 350,
+		y: 380,
 		columns: 14,
 		rows: 1,
 	}
