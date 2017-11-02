@@ -312,11 +312,17 @@
 				id: 'wreckingBall',
 				init: Example.wreckingBall,
 				sourceLink: sourceLinkRoot + '/wreckingBall.js'
+			},
+			{
+				name: 'Test',
+				id: 'test',
+				init: Example.five,
+				// sourceLink: sourceLinkRoot + '/wreckingBall.js'
 			}
 		]
 	});
 
 	document.body.appendChild(demo.dom.root);
 
-	MatterTools.Demo.start(demo);
+	// MatterTools.Demo.start(demo);
 })();
