@@ -40,7 +40,7 @@ function five() {
 	var vertexSets = [];
 
 	$(svg_data).find('path').each(function(i, path) {
-		vertexSets.push(Svg.pathToVertices(path, 20));
+		vertexSets.push(Svg.pathToVertices(path, 30));
 	});
 
 	five = Bodies.fromVertices(400, 500, vertexSets, {
@@ -73,8 +73,8 @@ function five() {
 	});
 
 	function enginRun() {
-		CMDCG.do.raf = window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 600, 1);
+		window.requestAnimationFrame(enginRun);
+		Engine.update(engine, 1000 / 300, 1);
 	}
 	enginRun()
 
