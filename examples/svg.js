@@ -46,7 +46,6 @@ Example.svg = function() {
 	for (var i = 0; i < svgs.length; i += 1) {
 		(function(i) {
 			$.get('./svg/' + svgs[i] + '.svg').done(function(data) {
-				console.log('data', data)
 				var vertexSets = [],
 					color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58']);
 
