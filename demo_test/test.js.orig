@@ -287,7 +287,11 @@ function five() {
 
 	function enginRun() {
 		window.requestAnimationFrame(enginRun);
+<<<<<<< HEAD
 		Engine.update(engine, 1000 / 60, 1);
+=======
+		Engine.update(engine, 1000 / 300, 1);
+>>>>>>> 6dbc18067c1ae6d8d2ee66e7f16bf552a3f41e4b
 	}
 	// enginRun()
 
