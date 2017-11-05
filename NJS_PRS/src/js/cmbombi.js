@@ -316,7 +316,11 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 						'.simpleAlertHead {position:absolute;width:210px;height:90px;top:-100px;left:18.5%;cursor:pointer;background: url("' + resource.alertHeadImg + '") no-repeat}' +
 						'.simpleAlertFlash {cursor:pointer;z-index:99;position: absolute;margin: auto;top: 0;left: 0;right: 0;bottom:70px;width: 600px;height: 600px;background-repeat: no-repeat;animation: rotates 8s linear infinite;-moz-animation: rotates 8s linear infinite; -webkit-animation: rotates 8s linear infinite;-ms-animation: rotates 8s linear infinite;-o-animation: rotates 8s linear infinite;background-image: url("' + resource.alertFlashImg + '")}' +
 						'@-webkit-keyframes zoomIn { 0% {  opacity: 0;  -webkit-transform: scale3d(.6, .6, .6);  -ms-transform: scale3d(.6, .6, .6);  transform: scale3d(.6, .6, .6);  } 50% {  opacity: 1;  -webkit-transform: scale3d(1.2, 1.2, 1.2);  -ms-transform: scale3d(1.2, 1.2, 1.2);  transform: scale3d(1.2, 1.2, 1.2);  } 80% {  opacity: 1;  -webkit-transform: scale3d(0.8, 0.8, 0.8);  -ms-transform: scale3d(0.8, 0.8, 0.8);  transform: scale3d(0.8, 0.8, 0.8);  } }  @keyframes zoomIn { 0% {  opacity: 0;  -webkit-transform: scale3d(.6, .6, .6);  -ms-transform: scale3d(.6, .6, .6);  transform: scale3d(.6, .6, .6);  } 50% {  opacity: 1;  -webkit-transform: scale3d(1.2, 1.2, 1.2);  -ms-transform: scale3d(1.2, 1.2, 1.2);  transform: scale3d(1.2, 1.2, 1.2);  } 80% {  opacity: 1;  -webkit-transform: scale3d(0.8, 0.8, 0.8);  -ms-transform: scale3d(0.8, 0.8, 0.8);  transform: scale3d(0.8, 0.8, 0.8);  } 100% {opacity: 1;  -webkit-transform: scale3d(1, 1, 1);  -ms-transform: scale3d(1, 1, 1);  transform: scale3d(1, 1, 1);}}  @-webkit-keyframes swing { 20% {  -webkit-transform: rotate3d(0, 0, 1, 15deg);transform: rotate3d(0, 0, 1, 15deg) } 40% {  -webkit-transform: rotate3d(0, 0, 1, -10deg); transform: rotate3d(0, 0, 1, -10deg)} 60% {-webkit-transform: rotate3d(0, 0, 1, 5deg);transform: rotate3d(0, 0, 1, 5deg)} 80% {-webkit-transform: rotate3d(0, 0, 1, -5deg);transform: rotate3d(0, 0, 1, -5deg)} 100% {-webkit-transform: rotate3d(0, 0, 1, 0deg); transform: rotate3d(0, 0, 1, 0deg) } }@keyframes swing { 20% {  -webkit-transform: rotate3d(0, 0, 1, 15deg);  -ms-transform: rotate3d(0, 0, 1, 15deg);transform: rotate3d(0, 0, 1, 15deg)} 40% {-webkit-transform: rotate3d(0, 0, 1, -10deg);-ms-transform: rotate3d(0, 0, 1, -10deg);transform: rotate3d(0, 0, 1, -10deg)} 60% {-webkit-transform: rotate3d(0, 0, 1, 5deg);-ms-transform: rotate3d(0, 0, 1, 5deg); transform: rotate3d(0, 0, 1, 5deg)} 80% {-webkit-transform: rotate3d(0, 0, 1, -5deg);-ms-transform: rotate3d(0, 0, 1, -5deg);transform: rotate3d(0, 0, 1, -5deg)} 100% {-webkit-transform: rotate3d(0, 0, 1, 0deg);-ms-transform: rotate3d(0, 0, 1, 0deg);transform: rotate3d(0, 0, 1, 0deg)}}' +
-						' @-webkit-keyframes cm-bom-rubberBand {0% {-webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)}30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)} 60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1, 1, 1);-ms-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1)}} @keyframes cm-bom-rubberBand { 0% { -webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)}60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1, 1, 1);-ms-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1)}} .cm-bom-rubberBand {-webkit-animation-duration: 2s;animation-duration: 2s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: cm-bom-rubberBand;animation-name: cm-bom-rubberBand; }';
+						'@-webkit-keyframes rotates{from{-webkit-transform:rotate(0deg)}to{-webkit-transform:rotate(360deg)}}\n' +
+						'@-ms-keyframes rotates{from{-ms-transform:rotate(0deg)}to{-ms-transform:rotate(360deg)}}\n' +
+						'@-moz-keyframes rotates{from{-moz-transform:rotate(0deg)}to{-moz-transform:rotate(360deg)}}\n' +
+						'@-o-keyframes rotates{from{-o-transform:rotate(0deg)}to{-o-transform:rotate(360deg)}}' +
+						' @-webkit-keyframes cm-bom-rubberBand {0% {-webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)}30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)} 60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1.2, 1, 1);-ms-transform: scale3d(1.2, 1, 1);transform: scale3d(1.2, 1, 1)}} @keyframes cm-bom-rubberBand { 0% { -webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)}60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1.2, 1, 1);-ms-transform: scale3d(1.2, 1, 1);transform: scale3d(1.2, 1, 1)}} .cm-bom-rubberBand {-webkit-animation-duration: 2s;animation-duration: 2s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: cm-bom-rubberBand;animation-name: cm-bom-rubberBand; }';
 					var cssStyle = {};
 					cssStyle = document.createElement('style');
 					cssStyle.type = 'text/css';
@@ -524,7 +528,7 @@ CMBOMBG.do = function() {
 			for (var i = 0; i < bodies.length; i++) {
 				var body = bodies[i];
 				if (!body.isStatic && body.position.y >= 100) {
-					var forceMagnitude = 0.04* body.mass;
+					var forceMagnitude = 0.035* body.mass;
 					Body.applyForce(body, body.position, {
 						x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
 						y: -forceMagnitude + Common.random() * -forceMagnitude
@@ -533,7 +537,9 @@ CMBOMBG.do = function() {
 			}
 		}
 	};
+	//动画结束
 	CMBOMBG.do.canvasELAnimationEnd =  function(){
+		World.remove(world, vertices);
 		explosion(engine)
 		setTimeout(function(){
 			var alert = cmdcAlert({
@@ -543,6 +549,10 @@ CMBOMBG.do = function() {
 					}
 				}
 			})
+			//当物品掉落到底部后，就清除所有
+			setTimeout(function () {
+
+			}, CMBOMB.timeout)
 		}, 100)
 	}
 
@@ -574,7 +584,7 @@ CMBOMBG.do = function() {
 				label: 'stack',
 				frictionAir: .02,
 				friction: 0.01,
-				restitution: 0, //恢复原状
+				// restitution: 0.2, //恢复原状
 				render: {
 					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#FFFFFF", '#66DD00'][Math.round(Math.random() * 4)]
 				}
@@ -598,25 +608,6 @@ CMBOMBG.do = function() {
 			CMBOMB.addEvent(rubberBand, 'webkitAnimationEnd', CMBOMBG.do.canvasELAnimationEnd)
 			Events.off(engine, 'afterUpdate')
 		}
-		// for(var i = 0; i < bodies.length; i++){
-		// 	if(bodies[i].position.y){
-		//
-		// 	}
-		// }
-		// if(stacks.bodies && stacks.bodies.length >= CMBOMBG.do.criteria.column*CMBOMBG.do.criteria.row){
-		// 	$('canvas').addClass('cm-bom-rubberBand')
-		// 	World.remove(world, vertices);
-		// 	explosion(engine)
-		// 	setTimeout(function(){
-		// 		var alert = cmdcAlert({
-		// 			"buttons": {
-		// 				"gotmall": function () {
-		//
-		// 				}
-		// 			}
-		// 		})
-		// 	}, 200)
-		// }
 	})
 
 	Render.lookAt(render, {
@@ -628,7 +619,7 @@ CMBOMBG.do = function() {
 		window.requestAnimationFrame(enginRun);
 		Engine.update(engine, 1000 / 60, 1);
 	}
-	// enginRun()
+	enginRun()
 
 	return {
 		engine: engine,
