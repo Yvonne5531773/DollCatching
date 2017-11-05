@@ -40,7 +40,7 @@
 			exampleSelect: true
 		},
 		tools: {
-			inspector: false, //调试工具
+			inspector: true, //调试工具
 			gui: true //调试工具
 		},
 		inline: false,

@@ -5,46 +5,67 @@ Example.five = function() {
 	var Engine = Matter.Engine,
 		Render = Matter.Render,
 		Runner = Matter.Runner,
+		Body = Matter.Body,
+		Composite = Matter.Composite,
 		Composites = Matter.Composites,
 		Common = Matter.Common,
+		Constraint = Matter.Constraint,
 		MouseConstraint = Matter.MouseConstraint,
 		Mouse = Matter.Mouse,
 		World = Matter.World,
-		Query = Matter.Query,
+		Events = Matter.Events,
+		Bodies = Matter.Bodies,
+		Vertices = Matter.Vertices,
 		Svg = Matter.Svg,
-		Bodies = Matter.Bodies;
+		Query = Matter.Query;
 
-	// create engine
 	var engine = Engine.create(),
-		world = engine.world;
+		world = engine.world,
+		runner = Runner.create(),
+		vertices,
+		vertexSets = [],
+		stacks,
+		render = Render.create({
+			element: document.body,
+			engine: engine,
+			options: {
+				wireframes: false,
+				background: 'transparent',
+				width: 1400,
+				height: 800
+			}
+		});
 
-	// create renderer
-	var render = Render.create({
-		element: document.body,
-		engine: engine,
-		options: {
-			wireframes: false,
-			background: 'transparent',
-			width: Math.min(document.documentElement.clientWidth, 800),
-			height: Math.min(document.documentElement.clientHeight, 600)
+	var explosion = function(engine, b) {
+		if(b){
+			var fm = 0.0025* b.mass;
+			Body.applyForce(b, b.position, {
+				x: (fm + Common.random() * fm) * Common.choose([1, -1]),
+				y: -fm + Common.random() * -fm
+			});
+		}else{
+			var bodies = Composite.allBodies(engine.world);
+			for (var i = 0; i < bodies.length; i++) {
+				var body = bodies[i];
+				if (!body.isStatic && body.position.y >= 100) {
+					var forceMagnitude = 0.04* body.mass;
+					Body.applyForce(body, body.position, {
+						x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
+						y: -forceMagnitude + Common.random() * -forceMagnitude
+					});
+				}
+			}
 		}
-	});
+	};
 
 	Render.run(render);
-
-	// create runner
-	var runner = Runner.create();
 	Runner.run(runner, engine);
 
-	// add bodies
-	var five;
-	var vertexSets = [];
-
 	$(svg_data).find('path').each(function(i, path) {
-		vertexSets.push(Svg.pathToVertices(path, 20));
+		vertexSets.push(Svg.pathToVertices(path, 30));
 	});
 
-	five = Bodies.fromVertices(400, 500, vertexSets, {
+	vertices = Bodies.fromVertices(400, 500, vertexSets, {
 		isStatic: true,
 		render: {
 			fillStyle: 'transparent',
@@ -53,37 +74,62 @@ Example.five = function() {
 		}
 	}, true);
 
-	World.add(world, five);
 
-	var massVal = 0.02,
-		timeScaleVal = 0.6,
-		radiusVal = 15,
-		scaleoffest = 0.75;
-	World.add(world, Composites.stack(280, -3800, 2, 110, 3, 5, function(x, y) {
-		if (Query.point([five], { x: x, y: y }).length === 0) {
+	stacks = Composites.stack(280, -2900, 2, 100, 3, 5, function(x, y, column, row, lastBody, i) {
+		if (Query.point([vertices], { x: x, y: y }).length === 0) {
 			return Bodies.polygon(x, y, 6, 12, {
-				// frictionAir: .02,
-				// friction: 0.01,
-				// restitution: 0,
-				timeScale: timeScaleVal,
-				mass: massVal,
+				label: 'stack',
+				frictionAir: .02,
+				friction: 0.01,
+				restitution: 0,  //恢复原状
 				render: {
-					fillStyle: ["#FFFFFF", "#4285F4", "#EA4335", "#FBBC05", "#34A853"][Math.round(Math.random() * 4)]
+					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#FFFFFF", '#66DD00'][Math.round(Math.random() * 4)]
 				}
 			});
 		}
-	}));
-	// fit the render viewport to the scene
+	})
+
+	World.add(world, vertices);
+	World.add(world, stacks);
+
+	Events.on(engine, 'afterUpdate', function(event) {
+		var bodies = Composite.allBodies(engine.world),
+			body = bodies[1]
+		if(body.position.y >= 600 && body.label==='stack'){
+			console.log('afterUpdate bodies', body.position.y)
+			console.log('afterUpdate bodies', body)
+		}
+		// for(var i = 0; i < bodies.length; i++){
+		// 	if(bodies[i].position.y){
+		//
+		// 	}
+		// }
+		// if(stacks.bodies && stacks.bodies.length >= CMBOMBG.do.criteria.column*CMBOMBG.do.criteria.row){
+		// 	$('canvas').addClass('cm-bom-rubberBand')
+		// 	World.remove(world, vertices);
+		// 	explosion(engine)
+		// 	setTimeout(function(){
+		// 		var alert = cmdcAlert({
+		// 			"buttons": {
+		// 				"gotmall": function () {
+		//
+		// 				}
+		// 			}
+		// 		})
+		// 	}, 200)
+		// }
+	})
+
 	Render.lookAt(render, {
 		min: { x: 0, y: 0 },
-		max: { x: 800, y: 800 }
+		max: { x: 800, y: 900 }
 	});
 
 	function enginRun() {
 		window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 600, 1);
+		Engine.update(engine, 1000 / 60, 1);
 	}
-	enginRun()
+	// enginRun()
 
 	return {
 		engine: engine,
@@ -94,7 +140,7 @@ Example.five = function() {
 			Matter.Render.stop(render);
 			Matter.Runner.stop(runner);
 		}
-	};
+	}
 };
 
 // five()
