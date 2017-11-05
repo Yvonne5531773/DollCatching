@@ -1,1 +1,604 @@
-!function(n){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=n();else if("function"==typeof define&&define.amd)define([],n);else{var r;"undefined"!=typeof window?r=window:"undefined"!=typeof global?r=global:"undefined"!=typeof self&&(r=self),r.decomp=n()}}(function(){return function n(r,e,t){function u(o,i){if(!e[o]){if(!r[o]){var a="function"==typeof require&&require;if(!i&&a)return a(o,!0);if(f)return f(o,!0);throw new Error("Cannot find module '"+o+"'")}var l=e[o]={exports:{}};r[o][0].call(l.exports,function(n){var e=r[o][1][n];return u(e?e:n)},l,l.exports,n,r,e,t)}return e[o].exports}for(var f="function"==typeof require&&require,o=0;o<t.length;o++)u(t[o]);return u}({1:[function(n,r,e){function t(n,r,e){e=e||0;var t,u,f,o,i,a,l,h=[0,0];return t=n[1][1]-n[0][1],u=n[0][0]-n[1][0],f=t*n[0][0]+u*n[0][1],o=r[1][1]-r[0][1],i=r[0][0]-r[1][0],a=o*r[0][0]+i*r[0][1],l=t*i-o*u,E(l,0,e)||(h[0]=(i*f-u*a)/l,h[1]=(t*a-o*f)/l),h}function u(n,r,e,t){var u=r[0]-n[0],f=r[1]-n[1],o=t[0]-e[0],i=t[1]-e[1];if(o*f-i*u===0)return!1;var a=(u*(e[1]-n[1])+f*(n[0]-e[0]))/(o*f-i*u),l=(o*(n[1]-e[1])+i*(e[0]-n[0]))/(i*u-o*f);return a>=0&&a<=1&&l>=0&&l<=1}function f(n,r,e){return(r[0]-n[0])*(e[1]-n[1])-(e[0]-n[0])*(r[1]-n[1])}function o(n,r,e){return f(n,r,e)>0}function i(n,r,e){return f(n,r,e)>=0}function a(n,r,e){return f(n,r,e)<0}function l(n,r,e){return f(n,r,e)<=0}function h(n,r,e,t){if(t){var u=L,o=N;u[0]=r[0]-n[0],u[1]=r[1]-n[1],o[0]=e[0]-r[0],o[1]=e[1]-r[1];var i=u[0]*o[0]+u[1]*o[1],a=Math.sqrt(u[0]*u[0]+u[1]*u[1]),l=Math.sqrt(o[0]*o[0]+o[1]*o[1]),h=Math.acos(i/(a*l));return h<t}return 0===f(n,r,e)}function c(n,r){var e=r[0]-n[0],t=r[1]-n[1];return e*e+t*t}function v(n,r){var e=n.length;return n[r<0?r%e+e:r%e]}function p(n){n.length=0}function s(n,r,e,t){for(var u=e;u<t;u++)n.push(r[u])}function g(n){for(var r=0,e=n,t=1;t<n.length;++t)(e[t][1]<e[r][1]||e[t][1]===e[r][1]&&e[t][0]>e[r][0])&&(r=t);o(v(n,r-1),v(n,r),v(n,r+1))||d(n)}function d(n){for(var r=[],e=n.length,t=0;t!==e;t++)r.push(n.pop());for(var t=0;t!==e;t++)n[t]=r[t]}function m(n,r){return a(v(n,r-1),v(n,r),v(n,r+1))}function y(n,r,e){var u,f,o=U,a=V;if(i(v(n,r+1),v(n,r),v(n,e))&&l(v(n,r-1),v(n,r),v(n,e)))return!1;f=c(v(n,r),v(n,e));for(var h=0;h!==n.length;++h)if((h+1)%n.length!==r&&h!==r&&i(v(n,r),v(n,e),v(n,h+1))&&l(v(n,r),v(n,e),v(n,h))&&(o[0]=v(n,r),o[1]=v(n,e),a[0]=v(n,h),a[1]=v(n,h+1),u=t(o,a),c(v(n,r),u)<f))return!1;return!0}function x(n,r,e,t){var u=t||[];if(p(u),r<e)for(var f=r;f<=e;f++)u.push(n[f]);else{for(var f=0;f<=e;f++)u.push(n[f]);for(var f=r;f<n.length;f++)u.push(n[f])}return u}function A(n){for(var r=[],e=[],t=[],u=[],f=Number.MAX_VALUE,o=0;o<n.length;++o)if(m(n,o))for(var i=0;i<n.length;++i)if(y(n,o,i)){e=A(x(n,o,i,u)),t=A(x(n,i,o,u));for(var a=0;a<t.length;a++)e.push(t[a]);e.length<f&&(r=e,f=e.length,r.push([v(n,o),v(n,i)]))}return r}function b(n){var r=A(n);return r.length>0?q(n,r):[n]}function q(n,r){if(0===r.length)return[n];if(r instanceof Array&&r.length&&r[0]instanceof Array&&2===r[0].length&&r[0][0]instanceof Array){for(var e=[n],t=0;t<r.length;t++)for(var u=r[t],f=0;f<e.length;f++){var o=e[f],i=q(o,u);if(i){e.splice(f,1),e.push(i[0],i[1]);break}}return e}var u=r,t=n.indexOf(u[0]),f=n.indexOf(u[1]);return t!==-1&&f!==-1&&[x(n,t,f),x(n,f,t)]}function w(n){var r,e=n;for(r=0;r<e.length-1;r++)for(var t=0;t<r-1;t++)if(u(e[r],e[r+1],e[t],e[t+1]))return!1;for(r=1;r<e.length-2;r++)if(u(e[0],e[e.length-1],e[r],e[r+1]))return!1;return!0}function M(n,r,e,t,u){u=u||0;var f=r[1]-n[1],o=n[0]-r[0],i=f*n[0]+o*n[1],a=t[1]-e[1],l=e[0]-t[0],h=a*e[0]+l*e[1],c=f*l-a*o;return E(c,0,u)?[0,0]:[(l*i-o*h)/c,(f*h-a*i)/c]}function k(n,r,e,t,u,f,h){f=f||100,h=h||0,u=u||25,r="undefined"!=typeof r?r:[],e=e||[],t=t||[];var p=[0,0],g=[0,0],d=[0,0],y=0,x=0,A=0,b=0,q=0,w=0,C=0,E=[],L=[],N=n,U=n;if(U.length<3)return r;if(h++,h>f)return console.warn("quickDecomp: max level ("+f+") reached."),r;for(var V=0;V<n.length;++V)if(m(N,V)){e.push(N[V]),y=x=Number.MAX_VALUE;for(var X=0;X<n.length;++X)o(v(N,V-1),v(N,V),v(N,X))&&l(v(N,V-1),v(N,V),v(N,X-1))&&(d=M(v(N,V-1),v(N,V),v(N,X),v(N,X-1)),a(v(N,V+1),v(N,V),d)&&(A=c(N[V],d),A<x&&(x=A,g=d,w=X))),o(v(N,V+1),v(N,V),v(N,X+1))&&l(v(N,V+1),v(N,V),v(N,X))&&(d=M(v(N,V+1),v(N,V),v(N,X),v(N,X+1)),o(v(N,V-1),v(N,V),d)&&(A=c(N[V],d),A<y&&(y=A,p=d,q=X)));if(w===(q+1)%n.length)d[0]=(g[0]+p[0])/2,d[1]=(g[1]+p[1])/2,t.push(d),V<q?(s(E,N,V,q+1),E.push(d),L.push(d),0!==w&&s(L,N,w,N.length),s(L,N,0,V+1)):(0!==V&&s(E,N,V,N.length),s(E,N,0,q+1),E.push(d),L.push(d),s(L,N,w,V+1));else{if(w>q&&(q+=n.length),b=Number.MAX_VALUE,q<w)return r;for(var X=w;X<=q;++X)i(v(N,V-1),v(N,V),v(N,X))&&l(v(N,V+1),v(N,V),v(N,X))&&(A=c(v(N,V),v(N,X)),A<b&&(b=A,C=X%n.length));V<C?(s(E,N,V,C+1),0!==C&&s(L,N,C,U.length),s(L,N,0,V+1)):(0!==V&&s(E,N,V,U.length),s(E,N,0,C+1),s(L,N,C,V+1))}return E.length<L.length?(k(E,r,e,t,u,f,h),k(L,r,e,t,u,f,h)):(k(L,r,e,t,u,f,h),k(E,r,e,t,u,f,h)),r}return r.push(n),r}function C(n,r){for(var e=0,t=n.length-1;n.length>3&&t>=0;--t)h(v(n,t-1),v(n,t),v(n,t+1),r)&&(n.splice(t%n.length,1),e++);return e}function E(n,r,e){return e=e||0,Math.abs(n-r)<e}r.exports={decomp:b,quickDecomp:k,isSimple:w,removeCollinearPoints:C,makeCCW:g};var L=[],N=[],U=[],V=[]},{}]},{},[1])(1)});
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.decomp=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+module.exports = {
+    decomp: polygonDecomp,
+    quickDecomp: polygonQuickDecomp,
+    isSimple: polygonIsSimple,
+    removeCollinearPoints: polygonRemoveCollinearPoints,
+    makeCCW: polygonMakeCCW
+};
+
+/**
+ * Compute the intersection between two lines.
+ * @static
+ * @method lineInt
+ * @param  {Array}  l1          Line vector 1
+ * @param  {Array}  l2          Line vector 2
+ * @param  {Number} precision   Precision to use when checking if the lines are parallel
+ * @return {Array}              The intersection point.
+ */
+function lineInt(l1,l2,precision){
+    precision = precision || 0;
+    var i = [0,0]; // point
+    var a1, b1, c1, a2, b2, c2, det; // scalars
+    a1 = l1[1][1] - l1[0][1];
+    b1 = l1[0][0] - l1[1][0];
+    c1 = a1 * l1[0][0] + b1 * l1[0][1];
+    a2 = l2[1][1] - l2[0][1];
+    b2 = l2[0][0] - l2[1][0];
+    c2 = a2 * l2[0][0] + b2 * l2[0][1];
+    det = a1 * b2 - a2*b1;
+    if (!scalar_eq(det, 0, precision)) { // lines are not parallel
+        i[0] = (b2 * c1 - b1 * c2) / det;
+        i[1] = (a1 * c2 - a2 * c1) / det;
+    }
+    return i;
+}
+
+/**
+ * Checks if two line segments intersects.
+ * @method segmentsIntersect
+ * @param {Array} p1 The start vertex of the first line segment.
+ * @param {Array} p2 The end vertex of the first line segment.
+ * @param {Array} q1 The start vertex of the second line segment.
+ * @param {Array} q2 The end vertex of the second line segment.
+ * @return {Boolean} True if the two line segments intersect
+ */
+function lineSegmentsIntersect(p1, p2, q1, q2){
+	var dx = p2[0] - p1[0];
+	var dy = p2[1] - p1[1];
+	var da = q2[0] - q1[0];
+	var db = q2[1] - q1[1];
+
+	// segments are parallel
+	if((da*dy - db*dx) === 0){
+		return false;
+	}
+
+	var s = (dx * (q1[1] - p1[1]) + dy * (p1[0] - q1[0])) / (da * dy - db * dx);
+	var t = (da * (p1[1] - q1[1]) + db * (q1[0] - p1[0])) / (db * dx - da * dy);
+
+	return (s>=0 && s<=1 && t>=0 && t<=1);
+}
+
+/**
+ * Get the area of a triangle spanned by the three given points. Note that the area will be negative if the points are not given in counter-clockwise order.
+ * @static
+ * @method area
+ * @param  {Array} a
+ * @param  {Array} b
+ * @param  {Array} c
+ * @return {Number}
+ */
+function triangleArea(a,b,c){
+    return (((b[0] - a[0])*(c[1] - a[1]))-((c[0] - a[0])*(b[1] - a[1])));
+}
+
+function isLeft(a,b,c){
+    return triangleArea(a,b,c) > 0;
+}
+
+function isLeftOn(a,b,c) {
+    return triangleArea(a, b, c) >= 0;
+}
+
+function isRight(a,b,c) {
+    return triangleArea(a, b, c) < 0;
+}
+
+function isRightOn(a,b,c) {
+    return triangleArea(a, b, c) <= 0;
+}
+
+var tmpPoint1 = [],
+    tmpPoint2 = [];
+
+/**
+ * Check if three points are collinear
+ * @method collinear
+ * @param  {Array} a
+ * @param  {Array} b
+ * @param  {Array} c
+ * @param  {Number} [thresholdAngle=0] Threshold angle to use when comparing the vectors. The function will return true if the angle between the resulting vectors is less than this value. Use zero for max precision.
+ * @return {Boolean}
+ */
+function collinear(a,b,c,thresholdAngle) {
+    if(!thresholdAngle){
+        return triangleArea(a, b, c) === 0;
+    } else {
+        var ab = tmpPoint1,
+            bc = tmpPoint2;
+
+        ab[0] = b[0]-a[0];
+        ab[1] = b[1]-a[1];
+        bc[0] = c[0]-b[0];
+        bc[1] = c[1]-b[1];
+
+        var dot = ab[0]*bc[0] + ab[1]*bc[1],
+            magA = Math.sqrt(ab[0]*ab[0] + ab[1]*ab[1]),
+            magB = Math.sqrt(bc[0]*bc[0] + bc[1]*bc[1]),
+            angle = Math.acos(dot/(magA*magB));
+        return angle < thresholdAngle;
+    }
+}
+
+function sqdist(a,b){
+    var dx = b[0] - a[0];
+    var dy = b[1] - a[1];
+    return dx * dx + dy * dy;
+}
+
+/**
+ * Get a vertex at position i. It does not matter if i is out of bounds, this function will just cycle.
+ * @method at
+ * @param  {Number} i
+ * @return {Array}
+ */
+function polygonAt(polygon, i){
+    var s = polygon.length;
+    return polygon[i < 0 ? i % s + s : i % s];
+}
+
+/**
+ * Clear the polygon data
+ * @method clear
+ * @return {Array}
+ */
+function polygonClear(polygon){
+    polygon.length = 0;
+}
+
+/**
+ * Append points "from" to "to"-1 from an other polygon "poly" onto this one.
+ * @method append
+ * @param {Polygon} poly The polygon to get points from.
+ * @param {Number}  from The vertex index in "poly".
+ * @param {Number}  to The end vertex index in "poly". Note that this vertex is NOT included when appending.
+ * @return {Array}
+ */
+function polygonAppend(polygon, poly, from, to){
+    for(var i=from; i<to; i++){
+        polygon.push(poly[i]);
+    }
+}
+
+/**
+ * Make sure that the polygon vertices are ordered counter-clockwise.
+ * @method makeCCW
+ */
+function polygonMakeCCW(polygon){
+    var br = 0,
+        v = polygon;
+
+    // find bottom right point
+    for (var i = 1; i < polygon.length; ++i) {
+        if (v[i][1] < v[br][1] || (v[i][1] === v[br][1] && v[i][0] > v[br][0])) {
+            br = i;
+        }
+    }
+
+    // reverse poly if clockwise
+    if (!isLeft(polygonAt(polygon, br - 1), polygonAt(polygon, br), polygonAt(polygon, br + 1))) {
+        polygonReverse(polygon);
+    }
+}
+
+/**
+ * Reverse the vertices in the polygon
+ * @method reverse
+ */
+function polygonReverse(polygon){
+    var tmp = [];
+    var N = polygon.length;
+    for(var i=0; i!==N; i++){
+        tmp.push(polygon.pop());
+    }
+    for(var i=0; i!==N; i++){
+		polygon[i] = tmp[i];
+    }
+}
+
+/**
+ * Check if a point in the polygon is a reflex point
+ * @method isReflex
+ * @param  {Number}  i
+ * @return {Boolean}
+ */
+function polygonIsReflex(polygon, i){
+    return isRight(polygonAt(polygon, i - 1), polygonAt(polygon, i), polygonAt(polygon, i + 1));
+}
+
+var tmpLine1=[],
+    tmpLine2=[];
+
+/**
+ * Check if two vertices in the polygon can see each other
+ * @method canSee
+ * @param  {Number} a Vertex index 1
+ * @param  {Number} b Vertex index 2
+ * @return {Boolean}
+ */
+function polygonCanSee(polygon, a,b) {
+    var p, dist, l1=tmpLine1, l2=tmpLine2;
+
+    if (isLeftOn(polygonAt(polygon, a + 1), polygonAt(polygon, a), polygonAt(polygon, b)) && isRightOn(polygonAt(polygon, a - 1), polygonAt(polygon, a), polygonAt(polygon, b))) {
+        return false;
+    }
+    dist = sqdist(polygonAt(polygon, a), polygonAt(polygon, b));
+    for (var i = 0; i !== polygon.length; ++i) { // for each edge
+        if ((i + 1) % polygon.length === a || i === a){ // ignore incident edges
+            continue;
+        }
+        if (isLeftOn(polygonAt(polygon, a), polygonAt(polygon, b), polygonAt(polygon, i + 1)) && isRightOn(polygonAt(polygon, a), polygonAt(polygon, b), polygonAt(polygon, i))) { // if diag intersects an edge
+            l1[0] = polygonAt(polygon, a);
+            l1[1] = polygonAt(polygon, b);
+            l2[0] = polygonAt(polygon, i);
+            l2[1] = polygonAt(polygon, i + 1);
+            p = lineInt(l1,l2);
+            if (sqdist(polygonAt(polygon, a), p) < dist) { // if edge is blocking visibility to b
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+/**
+ * Copy the polygon from vertex i to vertex j.
+ * @method copy
+ * @param  {Number} i
+ * @param  {Number} j
+ * @param  {Polygon} [targetPoly]   Optional target polygon to save in.
+ * @return {Polygon}                The resulting copy.
+ */
+function polygonCopy(polygon, i,j,targetPoly){
+    var p = targetPoly || [];
+    polygonClear(p);
+    if (i < j) {
+        // Insert all vertices from i to j
+        for(var k=i; k<=j; k++){
+            p.push(polygon[k]);
+        }
+
+    } else {
+
+        // Insert vertices 0 to j
+        for(var k=0; k<=j; k++){
+            p.push(polygon[k]);
+        }
+
+        // Insert vertices i to end
+        for(var k=i; k<polygon.length; k++){
+            p.push(polygon[k]);
+        }
+    }
+
+    return p;
+}
+
+/**
+ * Decomposes the polygon into convex pieces. Returns a list of edges [[p1,p2],[p2,p3],...] that cuts the polygon.
+ * Note that this algorithm has complexity O(N^4) and will be very slow for polygons with many vertices.
+ * @method getCutEdges
+ * @return {Array}
+ */
+function polygonGetCutEdges(polygon) {
+    var min=[], tmp1=[], tmp2=[], tmpPoly = [];
+    var nDiags = Number.MAX_VALUE;
+
+    for (var i = 0; i < polygon.length; ++i) {
+        if (polygonIsReflex(polygon, i)) {
+            for (var j = 0; j < polygon.length; ++j) {
+                if (polygonCanSee(polygon, i, j)) {
+                    tmp1 = polygonGetCutEdges(polygonCopy(polygon, i, j, tmpPoly));
+                    tmp2 = polygonGetCutEdges(polygonCopy(polygon, j, i, tmpPoly));
+
+                    for(var k=0; k<tmp2.length; k++){
+                        tmp1.push(tmp2[k]);
+                    }
+
+                    if (tmp1.length < nDiags) {
+                        min = tmp1;
+                        nDiags = tmp1.length;
+                        min.push([polygonAt(polygon, i), polygonAt(polygon, j)]);
+                    }
+                }
+            }
+        }
+    }
+
+    return min;
+}
+
+/**
+ * Decomposes the polygon into one or more convex sub-Polygons.
+ * @method decomp
+ * @return {Array} An array or Polygon objects.
+ */
+function polygonDecomp(polygon){
+    var edges = polygonGetCutEdges(polygon);
+    if(edges.length > 0){
+        return polygonSlice(polygon, edges);
+    } else {
+        return [polygon];
+    }
+}
+
+/**
+ * Slices the polygon given one or more cut edges. If given one, this function will return two polygons (false on failure). If many, an array of polygons.
+ * @method slice
+ * @param {Array} cutEdges A list of edges, as returned by .getCutEdges()
+ * @return {Array}
+ */
+function polygonSlice(polygon, cutEdges){
+    if(cutEdges.length === 0){
+		return [polygon];
+    }
+    if(cutEdges instanceof Array && cutEdges.length && cutEdges[0] instanceof Array && cutEdges[0].length===2 && cutEdges[0][0] instanceof Array){
+
+        var polys = [polygon];
+
+        for(var i=0; i<cutEdges.length; i++){
+            var cutEdge = cutEdges[i];
+            // Cut all polys
+            for(var j=0; j<polys.length; j++){
+                var poly = polys[j];
+                var result = polygonSlice(poly, cutEdge);
+                if(result){
+                    // Found poly! Cut and quit
+                    polys.splice(j,1);
+                    polys.push(result[0],result[1]);
+                    break;
+                }
+            }
+        }
+
+        return polys;
+    } else {
+
+        // Was given one edge
+        var cutEdge = cutEdges;
+        var i = polygon.indexOf(cutEdge[0]);
+        var j = polygon.indexOf(cutEdge[1]);
+
+        if(i !== -1 && j !== -1){
+            return [polygonCopy(polygon, i,j),
+                    polygonCopy(polygon, j,i)];
+        } else {
+            return false;
+        }
+    }
+}
+
+/**
+ * Checks that the line segments of this polygon do not intersect each other.
+ * @method isSimple
+ * @param  {Array} path An array of vertices e.g. [[0,0],[0,1],...]
+ * @return {Boolean}
+ * @todo Should it check all segments with all others?
+ */
+function polygonIsSimple(polygon){
+    var path = polygon, i;
+    // Check
+    for(i=0; i<path.length-1; i++){
+        for(var j=0; j<i-1; j++){
+            if(lineSegmentsIntersect(path[i], path[i+1], path[j], path[j+1] )){
+                return false;
+            }
+        }
+    }
+
+    // Check the segment between the last and the first point to all others
+    for(i=1; i<path.length-2; i++){
+        if(lineSegmentsIntersect(path[0], path[path.length-1], path[i], path[i+1] )){
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function getIntersectionPoint(p1, p2, q1, q2, delta){
+	delta = delta || 0;
+	var a1 = p2[1] - p1[1];
+	var b1 = p1[0] - p2[0];
+	var c1 = (a1 * p1[0]) + (b1 * p1[1]);
+	var a2 = q2[1] - q1[1];
+	var b2 = q1[0] - q2[0];
+	var c2 = (a2 * q1[0]) + (b2 * q1[1]);
+	var det = (a1 * b2) - (a2 * b1);
+
+	if(!scalar_eq(det,0,delta)){
+		return [((b2 * c1) - (b1 * c2)) / det, ((a1 * c2) - (a2 * c1)) / det];
+	} else {
+		return [0,0];
+    }
+}
+
+/**
+ * Quickly decompose the Polygon into convex sub-polygons.
+ * @method quickDecomp
+ * @param  {Array} result
+ * @param  {Array} [reflexVertices]
+ * @param  {Array} [steinerPoints]
+ * @param  {Number} [delta]
+ * @param  {Number} [maxlevel]
+ * @param  {Number} [level]
+ * @return {Array}
+ */
+function polygonQuickDecomp(polygon, result,reflexVertices,steinerPoints,delta,maxlevel,level){
+    maxlevel = maxlevel || 100;
+    level = level || 0;
+    delta = delta || 25;
+    result = typeof(result)!=="undefined" ? result : [];
+    reflexVertices = reflexVertices || [];
+    steinerPoints = steinerPoints || [];
+
+    var upperInt=[0,0], lowerInt=[0,0], p=[0,0]; // Points
+    var upperDist=0, lowerDist=0, d=0, closestDist=0; // scalars
+    var upperIndex=0, lowerIndex=0, closestIndex=0; // Integers
+    var lowerPoly=[], upperPoly=[]; // polygons
+    var poly = polygon,
+        v = polygon;
+
+    if(v.length < 3){
+		return result;
+    }
+
+    level++;
+    if(level > maxlevel){
+        console.warn("quickDecomp: max level ("+maxlevel+") reached.");
+        return result;
+    }
+
+    for (var i = 0; i < polygon.length; ++i) {
+        if (polygonIsReflex(poly, i)) {
+            reflexVertices.push(poly[i]);
+            upperDist = lowerDist = Number.MAX_VALUE;
+
+
+            for (var j = 0; j < polygon.length; ++j) {
+                if (isLeft(polygonAt(poly, i - 1), polygonAt(poly, i), polygonAt(poly, j)) && isRightOn(polygonAt(poly, i - 1), polygonAt(poly, i), polygonAt(poly, j - 1))) { // if line intersects with an edge
+                    p = getIntersectionPoint(polygonAt(poly, i - 1), polygonAt(poly, i), polygonAt(poly, j), polygonAt(poly, j - 1)); // find the point of intersection
+                    if (isRight(polygonAt(poly, i + 1), polygonAt(poly, i), p)) { // make sure it's inside the poly
+                        d = sqdist(poly[i], p);
+                        if (d < lowerDist) { // keep only the closest intersection
+                            lowerDist = d;
+                            lowerInt = p;
+                            lowerIndex = j;
+                        }
+                    }
+                }
+                if (isLeft(polygonAt(poly, i + 1), polygonAt(poly, i), polygonAt(poly, j + 1)) && isRightOn(polygonAt(poly, i + 1), polygonAt(poly, i), polygonAt(poly, j))) {
+                    p = getIntersectionPoint(polygonAt(poly, i + 1), polygonAt(poly, i), polygonAt(poly, j), polygonAt(poly, j + 1));
+                    if (isLeft(polygonAt(poly, i - 1), polygonAt(poly, i), p)) {
+                        d = sqdist(poly[i], p);
+                        if (d < upperDist) {
+                            upperDist = d;
+                            upperInt = p;
+                            upperIndex = j;
+                        }
+                    }
+                }
+            }
+
+            // if there are no vertices to connect to, choose a point in the middle
+            if (lowerIndex === (upperIndex + 1) % polygon.length) {
+                //console.log("Case 1: Vertex("+i+"), lowerIndex("+lowerIndex+"), upperIndex("+upperIndex+"), poly.size("+polygon.length+")");
+                p[0] = (lowerInt[0] + upperInt[0]) / 2;
+                p[1] = (lowerInt[1] + upperInt[1]) / 2;
+                steinerPoints.push(p);
+
+                if (i < upperIndex) {
+                    //lowerPoly.insert(lowerPoly.end(), poly.begin() + i, poly.begin() + upperIndex + 1);
+                    polygonAppend(lowerPoly, poly, i, upperIndex+1);
+                    lowerPoly.push(p);
+                    upperPoly.push(p);
+                    if (lowerIndex !== 0){
+                        //upperPoly.insert(upperPoly.end(), poly.begin() + lowerIndex, poly.end());
+                        polygonAppend(upperPoly, poly,lowerIndex,poly.length);
+                    }
+                    //upperPoly.insert(upperPoly.end(), poly.begin(), poly.begin() + i + 1);
+                    polygonAppend(upperPoly, poly,0,i+1);
+                } else {
+                    if (i !== 0){
+                        //lowerPoly.insert(lowerPoly.end(), poly.begin() + i, poly.end());
+                        polygonAppend(lowerPoly, poly,i,poly.length);
+                    }
+                    //lowerPoly.insert(lowerPoly.end(), poly.begin(), poly.begin() + upperIndex + 1);
+                    polygonAppend(lowerPoly, poly,0,upperIndex+1);
+                    lowerPoly.push(p);
+                    upperPoly.push(p);
+                    //upperPoly.insert(upperPoly.end(), poly.begin() + lowerIndex, poly.begin() + i + 1);
+                    polygonAppend(upperPoly, poly,lowerIndex,i+1);
+                }
+            } else {
+                // connect to the closest point within the triangle
+                //console.log("Case 2: Vertex("+i+"), closestIndex("+closestIndex+"), poly.size("+polygon.length+")\n");
+
+                if (lowerIndex > upperIndex) {
+                    upperIndex += polygon.length;
+                }
+                closestDist = Number.MAX_VALUE;
+
+                if(upperIndex < lowerIndex){
+                    return result;
+                }
+
+                for (var j = lowerIndex; j <= upperIndex; ++j) {
+                    if (isLeftOn(polygonAt(poly, i - 1), polygonAt(poly, i), polygonAt(poly, j)) && isRightOn(polygonAt(poly, i + 1), polygonAt(poly, i), polygonAt(poly, j))) {
+                        d = sqdist(polygonAt(poly, i), polygonAt(poly, j));
+                        if (d < closestDist) {
+                            closestDist = d;
+                            closestIndex = j % polygon.length;
+                        }
+                    }
+                }
+
+                if (i < closestIndex) {
+                    polygonAppend(lowerPoly, poly,i,closestIndex+1);
+                    if (closestIndex !== 0){
+                        polygonAppend(upperPoly, poly,closestIndex,v.length);
+                    }
+                    polygonAppend(upperPoly, poly,0,i+1);
+                } else {
+                    if (i !== 0){
+                        polygonAppend(lowerPoly, poly,i,v.length);
+                    }
+                    polygonAppend(lowerPoly, poly,0,closestIndex+1);
+                    polygonAppend(upperPoly, poly,closestIndex,i+1);
+                }
+            }
+
+            // solve smallest poly first
+            if (lowerPoly.length < upperPoly.length) {
+                polygonQuickDecomp(lowerPoly,result,reflexVertices,steinerPoints,delta,maxlevel,level);
+                polygonQuickDecomp(upperPoly,result,reflexVertices,steinerPoints,delta,maxlevel,level);
+            } else {
+                polygonQuickDecomp(upperPoly,result,reflexVertices,steinerPoints,delta,maxlevel,level);
+                polygonQuickDecomp(lowerPoly,result,reflexVertices,steinerPoints,delta,maxlevel,level);
+            }
+
+            return result;
+        }
+    }
+    result.push(polygon);
+
+    return result;
+}
+
+/**
+ * Remove collinear points in the polygon.
+ * @method removeCollinearPoints
+ * @param  {Number} [precision] The threshold angle to use when determining whether two edges are collinear. Use zero for finest precision.
+ * @return {Number}           The number of points removed
+ */
+function polygonRemoveCollinearPoints(polygon, precision){
+    var num = 0;
+    for(var i=polygon.length-1; polygon.length>3 && i>=0; --i){
+        if(collinear(polygonAt(polygon, i-1),polygonAt(polygon, i),polygonAt(polygon, i+1),precision)){
+            // Remove the middle point
+            polygon.splice(i%polygon.length,1);
+            num++;
+        }
+    }
+    return num;
+}
+
+/**
+ * Check if two scalars are equal
+ * @static
+ * @method eq
+ * @param  {Number} a
+ * @param  {Number} b
+ * @param  {Number} [precision]
+ * @return {Boolean}
+ */
+function scalar_eq(a,b,precision){
+    precision = precision || 0;
+    return Math.abs(a-b) < precision;
+}
+
+},{}]},{},[1])
+(1)
+});

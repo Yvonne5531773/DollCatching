@@ -155,23 +155,57 @@ var buildWalls = function () {
 				var x = cmdcObj.rockerEL.style.backgroundPositionX
 				cmdcObj.rockerEL.style.backgroundPositionX = x === '0px' ? '-83px' : '0px'
 			}, CMDC.timeout * 0.6)
+		},
+		loadSource: function () {
+			console.log('in loadSource')
+			var oHead = document.getElementsByTagName('HEAD').item(0),
+				pfScript = document.createElement("script"),
+				deScript = document.createElement("script"),
+				paScript = document.createElement("script"),
+				mScript = document.createElement("script"),
+				mgScript = document.createElement("script"),
+				mdScript = document.createElement("script"),
+				mainScript = document.createElement("script"),
+				jquery = document.createElement("script"),
+				sourceLinkRoot = '//localhost:8000/NJS_PRS/src/';
+
+			// pfScript.src = sourceLinkRoot + "js/polyfill.js";
+			// deScript.src = sourceLinkRoot + "js/decomp.js";
+			// paScript.src = sourceLinkRoot + "js/pathseg.js";
+			// mScript.src = sourceLinkRoot + "js/matter.js";
+			// jquery.src = sourceLinkRoot + "js/jquery-1.11.0.min.js";
+			pfScript.src = "polyfill.js";
+			deScript.src = "decomp.js";
+			paScript.src = "pathseg.js";
+			mScript.src = "matter.js";
+			jquery.src = "jquery-1.11.0.min.js";
+
+			typeof jQuery === 'undefined' && oHead.appendChild(jquery);
+			oHead.appendChild(pfScript);
+			oHead.appendChild(deScript);
+			oHead.appendChild(paScript);
+			oHead.appendChild(mScript);
+
+			setTimeout(function () {
+				// oHead.appendChild(deScript);
+				// oHead.appendChild(paScript);
+				// oHead.appendChild(mScript);
+				setTimeout(function () {
+
+				}, 1000)
+			}, 1000* 2)
 		}
 	}
+	cmdcObj.loadSource()
 	cmdcObj.init(resource);
 	cmdcObj.rootEL = cmdcObj.$(".cm-dc-class")
-	// cmdcObj.botEL = cmdcObj.$(".cm-dc-bottom")
-	// cmdcObj.leftEL = cmdcObj.$(".cm-dc-left")
-	// cmdcObj.middleEL = cmdcObj.$(".cm-dc-middle")
-	// cmdcObj.bottombakEL = cmdcObj.$(".cm-dc-bottom-bak")
-	// cmdcObj.rockerEL = cmdcObj.$(".cm-dc-rocker")
-	// cmdcObj.buttonEL = cmdcObj.$(".cm-dc-start-btn")
-	// cmdcObj.closeEL = cmdcObj.$(".cm-dc-close")
 	cmdcObj.show();
 
 	window.cmdcObj = cmdcObj;
 }
 
 function five() {
+	var CMBOMBG = {}
 	var Engine = Matter.Engine,
 		Render = Matter.Render,
 		Runner = Matter.Runner,
@@ -188,61 +222,23 @@ function five() {
 		Vertices = Matter.Vertices,
 		Svg = Matter.Svg,
 		Query = Matter.Query;
-
-	// create engine
+	console.log('222222222')
 	var engine = Engine.create(),
-		world = engine.world;
-
-	// create renderer
-	var render = Render.create({
-		element: document.body,
-		engine: engine,
-		options: {
-			wireframes: false,
-			background: 'transparent',
-			width: 1400,
-			height: 800
-		}
-	});
-
-	Render.run(render);
-
-	// create runner
-	var runner = Runner.create();
-	Runner.run(runner, engine);
-
-	// add bodies
-	var five;
-	var vertexSets = [];
-
-	$(svg_data).find('path').each(function(i, path) {
-		vertexSets.push(Svg.pathToVertices(path, 30));
-	});
-
-	five = Bodies.fromVertices(400, 500, vertexSets, {
-		isStatic: true,
-		render: {
-			fillStyle: 'transparent',
-			strokeStyle: 'transparent',
-			lineWidth: 0
-		}
-	}, true);
-
-	World.add(world, five);
-
-	setTimeout(function(){
-		World.remove(world, five);
-		explosion(engine)
-		setTimeout(function(){
-			var alert = cmdcAlert({
-				"buttons": {
-					"gotmall": function () {
-
-					}
-				}
-			})
-		}, 200)
-	}, 8000)
+		world = engine.world,
+		runner = Runner.create(),
+		vertices,
+		vertexSets = [],
+		stacks,
+		render = Render.create({
+			element: document.body,
+			engine: engine,
+			options: {
+				wireframes: false,
+				background: 'transparent',
+				width: 1400,
+				height: 800
+			}
+		});
 
 	var explosion = function(engine, b) {
 		if(b){
@@ -256,7 +252,7 @@ function five() {
 			for (var i = 0; i < bodies.length; i++) {
 				var body = bodies[i];
 				if (!body.isStatic && body.position.y >= 100) {
-					var forceMagnitude = 0.04* body.mass;
+					var forceMagnitude = 0.035* body.mass;
 					Body.applyForce(body, body.position, {
 						x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
 						y: -forceMagnitude + Common.random() * -forceMagnitude
@@ -265,23 +261,77 @@ function five() {
 			}
 		}
 	};
+	//动画结束
+	CMBOMBG.canvasELAnimationEnd =  function(){
+		World.remove(world, vertices);
+		explosion(engine)
+		setTimeout(function(){
+			var alert = cmdcAlert({
+				"buttons": {
+					"gotmall": function () {
 
-	World.add(world, Composites.stack(280, -3800, 2, 100, 3, 5, function(x, y) {
-		if (Query.point([five], { x: x, y: y }).length === 0) {
+					}
+				}
+			})
+			//当物品掉落到底部后，就清除所有
+			setTimeout(function () {
+
+			}, CMBOMB.timeout)
+		}, 100)
+	}
+
+	Render.run(render);
+	Runner.run(runner, engine);
+
+	$(svg_data).find('path').each(function(i, path) {
+		vertexSets.push(Svg.pathToVertices(path, 30));
+	});
+
+	vertices = Bodies.fromVertices(400, 500, vertexSets, {
+		isStatic: true,
+		render: {
+			fillStyle: 'transparent',
+			strokeStyle: 'transparent',
+			lineWidth: 0
+		}
+	}, true);
+
+	CMBOMBG.criteria = {
+		x: 280,
+		y: -2900,
+		column: 2,
+		row: 100
+	}
+	stacks = Composites.stack(CMBOMBG.criteria.x, CMBOMBG.criteria.y, CMBOMBG.criteria.column, CMBOMBG.criteria.row, 3, 5, function(x, y, column, row, lastBody, i) {
+		if (Query.point([vertices], { x: x, y: y }).length === 0) {
 			return Bodies.polygon(x, y, 6, 12, {
+				label: 'stack',
 				frictionAir: .02,
 				friction: 0.01,
-				restitution: 0,
+				// restitution: 0.2, //恢复原状
 				render: {
 					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#FFFFFF", '#66DD00'][Math.round(Math.random() * 4)]
 				}
 			});
 		}
-	}));
+	})
 
+	World.add(world, vertices);
+	World.add(world, stacks);
 
 	Events.on(engine, 'afterUpdate', function(event) {
-		console.log('in afterUpdate')
+		var bodies = Composite.allBodies(engine.world),
+			body = bodies[1] //下落的最后元素
+
+		//svg顶部到上层的距离
+		var verticeTop = 150
+		if(body.position.y >= verticeTop && body.label==='stack'){
+			$('canvas').addClass('cm-bom-rubberBand')
+			var rubberBand = $('.cm-bom-rubberBand')[0]
+			CMBOMB.addEvent(rubberBand, 'animationend', CMBOMBG.canvasELAnimationEnd)
+			CMBOMB.addEvent(rubberBand, 'webkitAnimationEnd', CMBOMBG.canvasELAnimationEnd)
+			Events.off(engine, 'afterUpdate')
+		}
 	})
 
 	Render.lookAt(render, {
@@ -293,7 +343,7 @@ function five() {
 		window.requestAnimationFrame(enginRun);
 		Engine.update(engine, 1000 / 60, 1);
 	}
-	// enginRun()
+	enginRun()
 
 	return {
 		engine: engine,
@@ -305,9 +355,12 @@ function five() {
 			Matter.Runner.stop(runner);
 		}
 	}
+
 }
 
 buildWalls()
-var instance = five()
-cmdcObj.rootEL.appendChild(instance.canvas)
-$('canvas').addClass('animated')
+setTimeout(function () {
+	var instance = five()
+	cmdcObj.rootEL.appendChild(instance.canvas)
+	$('canvas').addClass('animated')
+},3000)

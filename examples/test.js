@@ -75,13 +75,13 @@ Example.five = function() {
 	}, true);
 
 
-	stacks = Composites.stack(280, -2900, 2, 100, 3, 5, function(x, y, column, row, lastBody, i) {
+	stacks = Composites.stack(265, -3200, 2, 45, 3, 5, function(x, y, column, row, lastBody, i) {
 		if (Query.point([vertices], { x: x, y: y }).length === 0) {
-			return Bodies.polygon(x, y, 6, 12, {
+			return Bodies.polygon(x, y, 8, 16, {
 				label: 'stack',
 				frictionAir: .02,
 				friction: 0.01,
-				restitution: 0,  //恢复原状
+				restitution: 0.01,  //恢复原状
 				render: {
 					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#FFFFFF", '#66DD00'][Math.round(Math.random() * 4)]
 				}

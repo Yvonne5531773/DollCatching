@@ -78,8 +78,8 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 
 (function() {
 	var CMBOMB = {
-		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-		sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
@@ -94,15 +94,12 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			return false;
 		},
 		loadSource: function () {
-			if (CMBOMB.isInclude('cmdcg.js')) return
 			var oHead = document.getElementsByTagName('HEAD').item(0),
 				pfScript = document.createElement("script"),
 				deScript = document.createElement("script"),
 				paScript = document.createElement("script"),
 				mScript = document.createElement("script"),
 				mgScript = document.createElement("script"),
-				mdScript = document.createElement("script"),
-				mainScript = document.createElement("script"),
 				jquery = document.createElement("script"),
 				sourceLinkRoot = CMBOMB.sourceLinkRoot;
 
@@ -111,17 +108,14 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			paScript.src = sourceLinkRoot + "js/pathseg.js";
 			mScript.src = sourceLinkRoot + "js/matter.js";
 			mgScript.src = sourceLinkRoot + "js/matter-tools.gui.js";
-
 			jquery.src = sourceLinkRoot + "js/jquery-1.11.0.min.js";
 
 			typeof jQuery === 'undefined' && oHead.appendChild(jquery);
 			oHead.appendChild(pfScript);
-			setTimeout(function () {
-				oHead.appendChild(deScript);
-				oHead.appendChild(paScript);
-				oHead.appendChild(mScript);
-				// oHead.appendChild(mgScript); //debug tool
-			}, CMBOMB.timeout* 0.3)
+			oHead.appendChild(deScript);
+			oHead.appendChild(paScript);
+			oHead.appendChild(mScript);
+			// oHead.appendChild(mgScript); //debug tool
 		},
 		removejscssfile: function (filename, filetype) {
 			var targetelement = (filetype === "js") ? "script" : (filetype === "css") ? "link" : "none";
@@ -235,8 +229,12 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			}
 		},
 		play: function () {
-			var instance = CMBOMBG.do()
-			instance.canvas && cmbombObj.rootEL.appendChild(instance.canvas)
+			try{
+				var instance = CMBOMBG.do()
+				instance.canvas && cmbombObj.rootEL.appendChild(instance.canvas)
+			}catch(e){
+				console.log(e)
+			}
 		},
 		buildWalls: function () {
 			var sourceLinkRoot = CMBOMB.sourceLinkRoot
@@ -320,7 +318,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 						'@-ms-keyframes rotates{from{-ms-transform:rotate(0deg)}to{-ms-transform:rotate(360deg)}}\n' +
 						'@-moz-keyframes rotates{from{-moz-transform:rotate(0deg)}to{-moz-transform:rotate(360deg)}}\n' +
 						'@-o-keyframes rotates{from{-o-transform:rotate(0deg)}to{-o-transform:rotate(360deg)}}' +
-						' @-webkit-keyframes cm-bom-rubberBand {0% {-webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)}30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)} 60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1.2, 1, 1);-ms-transform: scale3d(1.2, 1, 1);transform: scale3d(1.2, 1, 1)}} @keyframes cm-bom-rubberBand { 0% { -webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)}60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1.2, 1, 1);-ms-transform: scale3d(1.2, 1, 1);transform: scale3d(1.2, 1, 1)}} .cm-bom-rubberBand {-webkit-animation-duration: 2s;animation-duration: 2s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: cm-bom-rubberBand;animation-name: cm-bom-rubberBand; }';
+						' @-webkit-keyframes cm-bom-rubberBand {0% {-webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)}30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)} 60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1, 1, 1);-ms-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1)}} @keyframes cm-bom-rubberBand { 0% { -webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)}60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1, 1, 1);-ms-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1)}} .cm-bom-rubberBand {-webkit-animation-duration: 2s;animation-duration: 2s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: cm-bom-rubberBand;animation-name: cm-bom-rubberBand; }';
 					var cssStyle = {};
 					cssStyle = document.createElement('style');
 					cssStyle.type = 'text/css';
@@ -443,7 +441,6 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			window.cmbombObj = cmbombObj;
 		},
 		addEvent: function(obj, event, fun){
-			console.log('addEvent obj', obj)
 			if(obj.addEventListener)
 				obj.addEventListener(event, fun, false);
 			else if(obj.attachEvent)
@@ -470,7 +467,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 				CMBOMB.buildWalls();
 				//建立娃娃机场景
 				CMBOMB.play();
-			}, CMBOMB.timeout* 0.8);
+			}, CMBOMB.timeout* 0.5);
 
 		} catch (e) {
 			console.log('error', e)
@@ -498,7 +495,6 @@ CMBOMBG.do = function() {
 		Vertices = Matter.Vertices,
 		Svg = Matter.Svg,
 		Query = Matter.Query;
-
 	var engine = Engine.create(),
 		world = engine.world,
 		runner = Runner.create(),
@@ -528,7 +524,7 @@ CMBOMBG.do = function() {
 			for (var i = 0; i < bodies.length; i++) {
 				var body = bodies[i];
 				if (!body.isStatic && body.position.y >= 100) {
-					var forceMagnitude = 0.035* body.mass;
+					var forceMagnitude = 0.025* body.mass;
 					Body.applyForce(body, body.position, {
 						x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
 						y: -forceMagnitude + Common.random() * -forceMagnitude
@@ -573,18 +569,22 @@ CMBOMBG.do = function() {
 	}, true);
 
 	CMBOMBG.do.criteria = {
-		x: 280,
-		y: -2900,
+		x: 260,
+		y: -2800,
 		column: 2,
-		row: 100
+		row: 90,
+		sides: 6,
+		radius: 14
 	}
 	stacks = Composites.stack(CMBOMBG.do.criteria.x, CMBOMBG.do.criteria.y, CMBOMBG.do.criteria.column, CMBOMBG.do.criteria.row, 3, 5, function(x, y, column, row, lastBody, i) {
 		if (Query.point([vertices], { x: x, y: y }).length === 0) {
-			return Bodies.polygon(x, y, 6, 12, {
+			return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
 				label: 'stack',
 				frictionAir: .02,
 				friction: 0.01,
-				// restitution: 0.2, //恢复原状
+				restitution: 0.03, //恢复原状
+				mass: 0.8,
+				timeScale: 0.8,
 				render: {
 					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#FFFFFF", '#66DD00'][Math.round(Math.random() * 4)]
 				}
@@ -617,7 +617,7 @@ CMBOMBG.do = function() {
 
 	function enginRun() {
 		window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 60, 1);
+		Engine.update(engine, 1000 / 300, 1);
 	}
 	enginRun()
 
