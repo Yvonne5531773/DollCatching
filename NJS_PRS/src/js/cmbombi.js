@@ -14,7 +14,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 		red.hasClass('redAnimat') && red.removeClass('redAnimat');
 		red.hasClass('redAnimated') && red.removeClass('redAnimated');
 	}),
-	c.append(red).append(r).append(h)}s.append(c).append(f),$(".cm-dc-class").append(s).append(i),c.show().animate({ opacity:"1"}, 350)},o.bind("click",function(){l.closeAll=!1,n.close()}),n.close=function(){l.closeAll?$(".simpleAlert").remove():c.animate({marginTop:"-188px",opacity:"0"},200,function(){$(".simpleAlert").last().remove()})},n.init(),n};
+	c.append(red).append(r).append(h)}s.append(c).append(f),$(".cm-bomb-class").append(s).append(i),c.show().animate({ opacity:"1"}, 350)},o.bind("click",function(){l.closeAll=!1,n.close()}),n.close=function(){l.closeAll?$(".simpleAlert").remove():c.animate({marginTop:"-188px",opacity:"0"},200,function(){$(".simpleAlert").last().remove()})},n.init(),n};
 
 
 (function(undefined) {
@@ -110,12 +110,12 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			mgScript.src = sourceLinkRoot + "js/matter-tools.gui.js";
 			jquery.src = sourceLinkRoot + "js/jquery-1.11.0.min.js";
 
-			typeof jQuery === 'undefined' && oHead.appendChild(jquery);
 			oHead.appendChild(pfScript);
 			oHead.appendChild(deScript);
 			oHead.appendChild(paScript);
 			oHead.appendChild(mScript);
 			// oHead.appendChild(mgScript); //debug tool
+			typeof jQuery === 'undefined' && oHead.appendChild(jquery);
 		},
 		removejscssfile: function (filename, filetype) {
 			var targetelement = (filetype === "js") ? "script" : (filetype === "css") ? "link" : "none";
@@ -302,9 +302,9 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 						'.cm-dc-number-l {top:25px;left:10px;position: relative;float:right; width: 33px;z-index:9;height:40px;background-repeat: no-repeat;background-position-x: -360px;background-image: url("' + resource.numberImg +
 						'")}' +
 						'.cm-dc-number-r {top:25px;left:10px;position: relative;float:right; width: 33px;z-index:9;height:40px;background-repeat: no-repeat;background-image: url("' + resource.numberImg + '")}' +
-						'.cm-dc-class {top:0px;bottom:0px;left:0;right:0;margin:0 auto;position: fixed;z-index:89;min-width: 1180px;height: 100%;font-family: Helvetica, Arial, sans-serif; display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center; -webkit-box-pack: center; -ms-flex-pack: center;justify-content: center; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column;flex-direction: column;height: 100vh;} .cm-dc-class canvas { border-radius: 8px;max-width: 100%;max-height: 100%;}' +
+						'.cm-bomb-class {top:0px;bottom:0px;left:0;right:0;margin:0 auto;position: fixed;z-index:89;min-width: 1180px;height: 100%;font-family: Helvetica, Arial, sans-serif; display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center; -webkit-box-pack: center; -ms-flex-pack: center;justify-content: center; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column;flex-direction: column;height: 100vh;} .cm-bomb-class canvas { border-radius: 8px;max-width: 100%;max-height: 100%;}' +
 						'.simpleAlert {position: fixed;z-index: 100;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1075px ;height:1050px;animation-name: zoomIn;-webkit-animation-name: zoomIn;-webkit-animation-duration: 2s;animation-duration: 2s;animation-delay: 0s;-webkit-animation-delay: 0s;animation-iteration-count:1;-webkit-animation-iteration-count:1;}' +
-						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color: #000;opacity: 0.1;filter:alpha(opacity=50);z-index:99}' +
+						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color:#000;opacity:0.4;filter:alpha(opacity=50);z-index:99}' +
 						'.simpleAlertBody {cursor:pointer;z-index:100;position:absolute;width:345px;height:317px;top:0;left:0;right:0;bottom:70px;margin:auto;}' +
 						'.simpleAlertRed {cursor:pointer;z-index:100;position:absolute;width:345px;height:317px;top:0;left:0;right:0;margin:auto;background-repeat: no-repeat;background: url("' + resource.alertImg + '")}' +
 						'.redAnimat {animation-name: swing;-webkit-animation-name: swing;-webkit-animation-duration: 1s;animation-duration: 1s;animation-delay: 2s;-webkit-animation-delay: 2s;animation-iteration-count: 1;-webkit-animation-iteration-count: 1;}' +
@@ -342,7 +342,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 						botImg = document.createElement('img'),
 						lineImgL = document.createElement('img'),
 						lineImgR = document.createElement('img');
-					cmdc.className = 'cm-dc-class'
+					cmdc.className = 'cm-bomb-class'
 					bot.className = 'cm-dc-bottom';
 					left.className = 'cm-dc-left';
 					right.className = 'cm-dc-right';
@@ -428,7 +428,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 				}
 			}
 			cmbombObj.init(resource);
-			cmbombObj.rootEL = cmbombObj.$(".cm-dc-class")
+			cmbombObj.rootEL = cmbombObj.$(".cm-bomb-class")
 			cmbombObj.botEL = cmbombObj.$(".cm-dc-bottom")
 			cmbombObj.leftEL = cmbombObj.$(".cm-dc-left")
 			cmbombObj.middleEL = cmbombObj.$(".cm-dc-middle")
@@ -447,6 +447,21 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 				obj.attachEvent("on"+event, fun, false);
 			return false;
 		},
+		removeEvent: function (e, type, func, flag) {
+			if (e.removeEventListener) {
+				e.removeEventListener(type, func, flag || false);
+			} else if (e.detachEvent) {
+				e.detachEvent("on" + type, func, flag || false);
+			} else {
+				e["on" + type] = null;
+			}
+		},
+		mmFunc: function(){
+			console.log('mmFunc')
+			CMBOMB.removeEvent(document, 'mousemove', CMBOMB.mmFunc)
+			//开始
+			CMBOMB.play()
+		},
 		dosomethingforbkg: function(){
 
 		}
@@ -456,7 +471,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 
 	// if(CMBOMB.Interface.ready()) {
 		try {
-			// if (cmdcCookie('cmdcg') === '1') {
+			// if (cmdcCookie('cmbombg') === '1') {
 			// 	CMBOMB.Interface.close('cookie')
 			// 	return
 			// }
@@ -465,9 +480,9 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			setTimeout(function () {
 				//建立游戏周边场景
 				CMBOMB.buildWalls();
-				//建立娃娃机场景
-				CMBOMB.play();
-			}, CMBOMB.timeout* 0.5);
+				//绑定鼠标移动事件
+				CMBOMB.addEvent(document, 'mousemove', CMBOMB.mmFunc)
+			}, CMBOMB.timeout);
 
 		} catch (e) {
 			console.log('error', e)
@@ -524,7 +539,7 @@ CMBOMBG.do = function() {
 			for (var i = 0; i < bodies.length; i++) {
 				var body = bodies[i];
 				if (!body.isStatic && body.position.y >= 100) {
-					var forceMagnitude = 0.025* body.mass;
+					var forceMagnitude = 0.04* body.mass;
 					Body.applyForce(body, body.position, {
 						x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
 						y: -forceMagnitude + Common.random() * -forceMagnitude
@@ -547,8 +562,8 @@ CMBOMBG.do = function() {
 			})
 			//当物品掉落到底部后，就清除所有
 			setTimeout(function () {
-
-			}, CMBOMB.timeout)
+				World.clear(world)
+			}, CMBOMB.timeout* 8)
 		}, 100)
 	}
 
@@ -569,12 +584,12 @@ CMBOMBG.do = function() {
 	}, true);
 
 	CMBOMBG.do.criteria = {
-		x: 260,
-		y: -2800,
+		x: 270,
+		y: -2700,
 		column: 2,
-		row: 90,
-		sides: 6,
-		radius: 14
+		row: 60,
+		sides: 8,
+		radius: 15
 	}
 	stacks = Composites.stack(CMBOMBG.do.criteria.x, CMBOMBG.do.criteria.y, CMBOMBG.do.criteria.column, CMBOMBG.do.criteria.row, 3, 5, function(x, y, column, row, lastBody, i) {
 		if (Query.point([vertices], { x: x, y: y }).length === 0) {
@@ -582,11 +597,11 @@ CMBOMBG.do = function() {
 				label: 'stack',
 				frictionAir: .02,
 				friction: 0.01,
-				restitution: 0.03, //恢复原状
-				mass: 0.8,
-				timeScale: 0.8,
+				restitution: 0.05, //恢复原状
+				mass: 1,
+				timeScale: 1.1,
 				render: {
-					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#FFFFFF", '#66DD00'][Math.round(Math.random() * 4)]
+					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#ff5f00", '#66DD00'][Math.round(Math.random() * 4)]
 				}
 			});
 		}
@@ -600,8 +615,9 @@ CMBOMBG.do = function() {
 			body = bodies[1] //下落的最后元素
 
 		//svg顶部到上层的距离
-		var verticeTop = 150
+		var verticeTop = 100
 		if(body.position.y >= verticeTop && body.label==='stack'){
+			console.log('body', body)
 			$('canvas').addClass('cm-bom-rubberBand')
 			var rubberBand = $('.cm-bom-rubberBand')[0]
 			CMBOMB.addEvent(rubberBand, 'animationend', CMBOMBG.do.canvasELAnimationEnd)
@@ -617,9 +633,9 @@ CMBOMBG.do = function() {
 
 	function enginRun() {
 		window.requestAnimationFrame(enginRun);
-		Engine.update(engine, 1000 / 300, 1);
+		Engine.update(engine, 1000 / 60, 1);
 	}
-	enginRun()
+	// enginRun()
 
 	return {
 		engine: engine,
