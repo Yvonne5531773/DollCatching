@@ -78,9 +78,9 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 
 (function() {
 	var CMBOMB = {
-		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
-		// sourceLinkRoot: '//act.cmcmcdn.com/dollcatching/NJS_PRS/output/',
+		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
 		playAgain: false,
@@ -457,7 +457,6 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			}
 		},
 		mmFunc: function(){
-			console.log('mmFunc')
 			CMBOMB.removeEvent(document, 'mousemove', CMBOMB.mmFunc)
 			//开始
 			CMBOMB.play()
@@ -479,10 +478,10 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			CMBOMB.dosomethingforbkg()
 			setTimeout(function () {
 				//建立游戏周边场景
-				CMBOMB.buildWalls();
+				CMBOMB.buildWalls()
 				//绑定鼠标移动事件
 				CMBOMB.addEvent(document, 'mousemove', CMBOMB.mmFunc)
-			}, CMBOMB.timeout);
+			}, CMBOMB.timeout)
 
 		} catch (e) {
 			console.log('error', e)
@@ -585,9 +584,9 @@ CMBOMBG.do = function() {
 
 	CMBOMBG.do.criteria = {
 		x: 270,
-		y: -2700,
+		y: -1900,
 		column: 2,
-		row: 60,
+		row: 55,
 		sides: 8,
 		radius: 15
 	}
