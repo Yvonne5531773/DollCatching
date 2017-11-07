@@ -13,6 +13,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 	red.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e){
 		red.hasClass('redAnimat') && red.removeClass('redAnimat');
 		red.hasClass('redAnimated') && red.removeClass('redAnimated');
+		// red.addClass('cm-bom-rotateY')
 	}),
 	c.append(red).append(r).append(h)}s.append(c).append(f),$(".cm-bomb-class").append(s).append(i),c.show().animate({ opacity:"1"}, 350)},o.bind("click",function(){l.closeAll=!1,n.close()}),n.close=function(){l.closeAll?$(".simpleAlert").remove():c.animate({marginTop:"-188px",opacity:"0"},200,function(){$(".simpleAlert").last().remove()})},n.init(),n};
 
@@ -305,7 +306,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 						'.cm-bomb-class {top:0px;bottom:0px;left:0;right:0;margin:0 auto;position: fixed;z-index:89;min-width: 1180px;height: 100%;font-family: Helvetica, Arial, sans-serif; display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center; -webkit-box-pack: center; -ms-flex-pack: center;justify-content: center; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column;flex-direction: column;height: 100vh;} .cm-bomb-class canvas { border-radius: 8px;max-width: 100%;max-height: 100%;}' +
 						'.simpleAlert {position: fixed;z-index: 100;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1075px ;height:1050px;animation-name: zoomIn;-webkit-animation-name: zoomIn;-webkit-animation-duration: 2s;animation-duration: 2s;animation-delay: 0s;-webkit-animation-delay: 0s;animation-iteration-count:1;-webkit-animation-iteration-count:1;}' +
 						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color:#000;opacity:0.4;filter:alpha(opacity=50);z-index:99}' +
-						'.simpleAlertBody {cursor:pointer;z-index:100;position:absolute;width:345px;height:317px;top:0;left:0;right:0;bottom:70px;margin:auto;}' +
+						'.simpleAlertBody {cursor:pointer;z-index:100;position:absolute;width:345px;height:317px;top:0;left:0;right:0;bottom:70px;margin:auto;perspective:1000px}' +
 						'.simpleAlertRed {cursor:pointer;z-index:100;position:absolute;width:345px;height:317px;top:0;left:0;right:0;margin:auto;background-repeat: no-repeat;background: url("' + resource.alertImg + '")}' +
 						'.redAnimat {animation-name: swing;-webkit-animation-name: swing;-webkit-animation-duration: 1s;animation-duration: 1s;animation-delay: 2s;-webkit-animation-delay: 2s;animation-iteration-count: 1;-webkit-animation-iteration-count: 1;}' +
 						'.redAnimated {animation-name: swing;-webkit-animation-name: swing;-webkit-animation-duration: 0.8s;animation-duration: 0.8s;animation-iteration-count: 1;-webkit-animation-iteration-count: 1;}' +
@@ -318,7 +319,8 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 						'@-ms-keyframes rotates{from{-ms-transform:rotate(0deg)}to{-ms-transform:rotate(360deg)}}\n' +
 						'@-moz-keyframes rotates{from{-moz-transform:rotate(0deg)}to{-moz-transform:rotate(360deg)}}\n' +
 						'@-o-keyframes rotates{from{-o-transform:rotate(0deg)}to{-o-transform:rotate(360deg)}}' +
-						' @-webkit-keyframes cm-bom-rubberBand {0% {-webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)}30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)} 60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1, 1, 1);-ms-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1)}} @keyframes cm-bom-rubberBand { 0% { -webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)}60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1, 1, 1);-ms-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1)}} .cm-bom-rubberBand {-webkit-animation-duration: 2s;animation-duration: 2s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: cm-bom-rubberBand;animation-name: cm-bom-rubberBand; }';
+						' @-webkit-keyframes cm-bom-rubberBand {0% {-webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)}30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)} 60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1, 1, 1);-ms-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1)}} @keyframes cm-bom-rubberBand { 0% { -webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)}60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1, 1, 1);-ms-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1)}} .cm-bom-rubberBand {-webkit-animation-duration: 2s;animation-duration: 2s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: cm-bom-rubberBand;animation-name: cm-bom-rubberBand; }' +
+						'@-webkit-keyframes rotateY { 0% { -webkit-transform: rotateY(0deg); -ms-transform: rotateY(0deg); transform: rotateY(0deg)} 30% {-webkit-transform: rotateY(45deg);-ms-transform: rotateY(45deg);transform: rotateY(45deg)}60% {-webkit-transform: rotateY(0deg);-ms-transform: rotateY(0deg);transform: rotateY(0deg)} 100% {-webkit-transform: rotateY(-45deg);-ms-transform: rotateY(-45deg);transform: rotateY(-45deg)}} @keyframes rotateY { 0% { -webkit-transform: rotateY(0deg); -ms-transform: rotateY(0deg); transform: rotateY(0deg)} 30% {-webkit-transform: rotateY(45deg);-ms-transform: rotateY(45deg);transform: rotateY(45deg)}60% {-webkit-transform: rotateY(0deg);-ms-transform: rotateY(0deg);transform: rotateY(0deg)} 100% {-webkit-transform: rotateY(-45deg);-ms-transform: rotateY(-45deg);transform: rotateY(-45deg)}} .cm-bom-rotateY {-webkit-animation-duration: 2s;animation-duration: 2s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: rotateY;animation-name: rotateY; }';
 					var cssStyle = {};
 					cssStyle = document.createElement('style');
 					cssStyle.type = 'text/css';
@@ -562,6 +564,8 @@ CMBOMBG.do = function() {
 			//当物品掉落到底部后，就清除所有
 			setTimeout(function () {
 				World.clear(world)
+				//销毁canvas对象
+				$('.cm-bom-rubberBand') && $('.cm-bom-rubberBand').remove()
 			}, CMBOMB.timeout* 8)
 		}, 100)
 	}
