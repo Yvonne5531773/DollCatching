@@ -79,8 +79,8 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 
 (function() {
 	var CMBOMB = {
-		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-		sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
@@ -541,9 +541,13 @@ CMBOMBG.do = function() {
 				var body = bodies[i];
 				if (!body.isStatic && body.position.y >= 100) {
 					var forceMagnitude = 0.04* body.mass;
+					var x = (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([0.65, -0.65]),
+					y = -forceMagnitude + Common.random() * -forceMagnitude - 0.0015
+					console.log('x', x)
+					console.log('y', y)
 					Body.applyForce(body, body.position, {
-						x: (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
-						y: -forceMagnitude + Common.random() * -forceMagnitude
+						x: x,
+						y: y
 					});
 				}
 			}
@@ -600,9 +604,10 @@ CMBOMBG.do = function() {
 				label: 'stack',
 				frictionAir: .02,
 				friction: 0.01,
-				restitution: 0.05, //恢复原状
-				mass: 1,
-				timeScale: 1.1,
+				restitution: 0.5, //恢复原状
+				mass: 0.3,
+				timeScale: 0.7,
+				// timeScale: 01.1,
 				render: {
 					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#ff5f00", '#66DD00'][Math.round(Math.random() * 4)]
 				}
@@ -638,7 +643,7 @@ CMBOMBG.do = function() {
 		window.requestAnimationFrame(enginRun);
 		Engine.update(engine, 1000 / 60, 1);
 	}
-	// enginRun()
+	enginRun()
 
 	return {
 		engine: engine,
