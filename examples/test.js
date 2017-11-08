@@ -31,8 +31,8 @@ Example.five = function() {
 			options: {
 				wireframes: false,
 				background: 'transparent',
-				width: 1400,
-				height: 800
+				width: 600,
+				height: 600
 			}
 		});
 
@@ -92,37 +92,37 @@ Example.five = function() {
 	World.add(world, vertices);
 	World.add(world, stacks);
 
-	Events.on(engine, 'afterUpdate', function(event) {
-		var bodies = Composite.allBodies(engine.world),
-			body = bodies[1]
-		if(body.position.y >= 600 && body.label==='stack'){
-			console.log('afterUpdate bodies', body.position.y)
-			console.log('afterUpdate bodies', body)
-		}
-		// for(var i = 0; i < bodies.length; i++){
-		// 	if(bodies[i].position.y){
-		//
-		// 	}
-		// }
-		// if(stacks.bodies && stacks.bodies.length >= CMBOMBG.do.criteria.column*CMBOMBG.do.criteria.row){
-		// 	$('canvas').addClass('cm-bom-rubberBand')
-		// 	World.remove(world, vertices);
-		// 	explosion(engine)
-		// 	setTimeout(function(){
-		// 		var alert = cmdcAlert({
-		// 			"buttons": {
-		// 				"gotmall": function () {
-		//
-		// 				}
-		// 			}
-		// 		})
-		// 	}, 200)
-		// }
-	})
+	// Events.on(engine, 'afterUpdate', function(event) {
+	// 	var bodies = Composite.allBodies(engine.world),
+	// 		body = bodies[1]
+	// 	if(body.position.y >= 600 && body.label==='stack'){
+	// 		// console.log('afterUpdate bodies', body.position.y)
+	// 		// console.log('afterUpdate bodies', body)
+	// 	}
+	// 	// for(var i = 0; i < bodies.length; i++){
+	// 	// 	if(bodies[i].position.y){
+	// 	//
+	// 	// 	}
+	// 	// }
+	// 	// if(stacks.bodies && stacks.bodies.length >= CMBOMBG.do.criteria.column*CMBOMBG.do.criteria.row){
+	// 	// 	$('canvas').addClass('cm-bom-rubberBand')
+	// 	// 	World.remove(world, vertices);
+	// 	// 	explosion(engine)
+	// 	// 	setTimeout(function(){
+	// 	// 		var alert = cmdcAlert({
+	// 	// 			"buttons": {
+	// 	// 				"gotmall": function () {
+	// 	//
+	// 	// 				}
+	// 	// 			}
+	// 	// 		})
+	// 	// 	}, 200)
+	// 	// }
+	// })
 
 	Render.lookAt(render, {
 		min: { x: 0, y: 0 },
-		max: { x: 800, y: 900 }
+		max: { x: 750, y: 800 }
 	});
 
 	function enginRun() {

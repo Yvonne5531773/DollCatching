@@ -79,8 +79,8 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 
 (function() {
 	var CMBOMB = {
-		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
@@ -303,7 +303,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 						'.cm-dc-number-l {top:25px;left:10px;position: relative;float:right; width: 33px;z-index:9;height:40px;background-repeat: no-repeat;background-position-x: -360px;background-image: url("' + resource.numberImg +
 						'")}' +
 						'.cm-dc-number-r {top:25px;left:10px;position: relative;float:right; width: 33px;z-index:9;height:40px;background-repeat: no-repeat;background-image: url("' + resource.numberImg + '")}' +
-						'.cm-bomb-class {top:0px;bottom:0px;left:0;right:0;margin:0 auto;position: fixed;z-index:89;min-width: 1180px;height: 100%;font-family: Helvetica, Arial, sans-serif; display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center; -webkit-box-pack: center; -ms-flex-pack: center;justify-content: center; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column;flex-direction: column;height: 100vh;} .cm-bomb-class canvas { border-radius: 8px;max-width: 100%;max-height: 100%;}' +
+						'.cm-bomb-class {top:0px;bottom:0px;left:0;right:0;margin:0 auto;position: fixed;z-index:89;min-width: 1180px;height: 100%;font-family: Helvetica, Arial, sans-serif; display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center; -webkit-box-pack: center; -ms-flex-pack: center;justify-content: center; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column;flex-direction: column;height: 100vh;} .cm-bomb-class canvas { border-radius: 8px;}' +
 						'.simpleAlert {position: fixed;z-index: 100;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1075px ;height:1050px;animation-name: zoomIn;-webkit-animation-name: zoomIn;-webkit-animation-duration: 2s;animation-duration: 2s;animation-delay: 0s;-webkit-animation-delay: 0s;animation-iteration-count:1;-webkit-animation-iteration-count:1;}' +
 						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color:#000;opacity:0.4;filter:alpha(opacity=50);z-index:99}' +
 						'.simpleAlertBody {cursor:pointer;z-index:100;position:absolute;width:345px;height:317px;top:0;left:0;right:0;bottom:70px;margin:auto;perspective:1000px}' +
@@ -540,11 +540,9 @@ CMBOMBG.do = function() {
 			for (var i = 0; i < bodies.length; i++) {
 				var body = bodies[i];
 				if (!body.isStatic && body.position.y >= 100) {
-					var forceMagnitude = 0.04* body.mass;
-					var x = (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([0.65, -0.65]),
-					y = -forceMagnitude + Common.random() * -forceMagnitude - 0.0015
-					console.log('x', x)
-					console.log('y', y)
+					var forceMagnitude = 0.055* body.mass;
+					var x = (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([0.85, -0.85]),
+					y = -forceMagnitude + Common.random() * -forceMagnitude - 0.009
 					Body.applyForce(body, body.position, {
 						x: x,
 						y: y
@@ -591,23 +589,23 @@ CMBOMBG.do = function() {
 	}, true);
 
 	CMBOMBG.do.criteria = {
-		x: 270,
-		y: -1900,
+		x: 275,
+		y: -2000,
 		column: 2,
-		row: 55,
+		row: 66,
 		sides: 8,
-		radius: 15
+		radius: 14
 	}
 	stacks = Composites.stack(CMBOMBG.do.criteria.x, CMBOMBG.do.criteria.y, CMBOMBG.do.criteria.column, CMBOMBG.do.criteria.row, 3, 5, function(x, y, column, row, lastBody, i) {
 		if (Query.point([vertices], { x: x, y: y }).length === 0) {
 			return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
 				label: 'stack',
 				frictionAir: .02,
-				friction: 0.01,
-				restitution: 0.5, //恢复原状
-				mass: 0.3,
-				timeScale: 0.7,
-				// timeScale: 01.1,
+				friction: 0,
+				restitution: 0.001, //恢复原状
+				mass: 0.6,
+				timeScale: 0.9,
+				// timeScale: 1.1,
 				render: {
 					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#ff5f00", '#66DD00'][Math.round(Math.random() * 4)]
 				}
@@ -625,7 +623,6 @@ CMBOMBG.do = function() {
 		//svg顶部到上层的距离
 		var verticeTop = 100
 		if(body.position.y >= verticeTop && body.label==='stack'){
-			console.log('body', body)
 			$('canvas').addClass('cm-bom-rubberBand')
 			var rubberBand = $('.cm-bom-rubberBand')[0]
 			CMBOMB.addEvent(rubberBand, 'animationend', CMBOMBG.do.canvasELAnimationEnd)
