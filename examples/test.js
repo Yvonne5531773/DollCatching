@@ -86,6 +86,29 @@ Example.five = function() {
 		}
 	}, true);
 
+	var body1 = Bodies.circle(370, 260, 20, { isStatic: true })
+	var body2 = Bodies.circle(452, 260, 20, { isStatic: true })
+
+	var body3 = Bodies.circle(263, 220, 18, { isStatic: true })
+	var body4 = Bodies.circle(339, 220, 18, { isStatic: true })
+	var body5 = Bodies.circle(413, 220, 18, { isStatic: true })
+	var body6 = Bodies.circle(491, 220, 18, { isStatic: true })
+	var body7 = Bodies.circle(570, 220, 18, { isStatic: true })
+
+	var body8 = Bodies.circle(308, 180, 12, { isStatic: true })
+	var body9 = Bodies.circle(370, 165, 12, { isStatic: true })
+	var body10 = Bodies.circle(455, 165, 12, { isStatic: true })
+	var body11 = Bodies.circle(524, 180, 12, { isStatic: true })
+
+	var body12 = Bodies.circle(173, 230, 12, { isStatic: true })
+	var body13 = Bodies.circle(170, 281, 18, { isStatic: true })
+	var body14 = Bodies.circle(120, 315, 12, { isStatic: true })
+	var body15 = Bodies.circle(160, 355, 18, { isStatic: true })
+
+	var body16 = Bodies.circle(638, 230, 12, { isStatic: true })
+	var body17 = Bodies.circle(644, 281, 18, { isStatic: true })
+	var body18 = Bodies.circle(698, 315, 12, { isStatic: true })
+	var body19 = Bodies.circle(660, 355, 18, { isStatic: true })
 
 	stacksLeft = Composites.stack(230, -3000, 1, 63, 3, 5, function(x, y, column, row, lastBody, i) {
 		if (Query.point([vertices], { x: x, y: y }).length === 0) {
@@ -94,6 +117,8 @@ Example.five = function() {
 				frictionAir: .02,
 				friction: 0.01,
 				restitution: 0.001,  //恢复原状
+				mass: 0.3,
+				timeScale: 0.9,
 				render: {
 					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#FFFFFF", '#66DD00'][Math.round(Math.random() * 4)]
 				}
@@ -107,6 +132,8 @@ Example.five = function() {
 				frictionAir: .02,
 				friction: 0.01,
 				restitution: 0.001,  //恢复原状
+				mass: 0.3,
+				timeScale: 0.9,
 				render: {
 					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#FFFFFF", '#66DD00'][Math.round(Math.random() * 4)]
 				}
@@ -117,34 +144,14 @@ Example.five = function() {
 	World.add(world, vertices);
 	World.add(world, stacksLeft);
 	World.add(world, stacksRight);
+	World.add(world, [body1, body2, body3, body4, body5, body6, body7, body8, body9, body10, body11, body12, body13, body14, body15, body16, body17, body18, body19])
 
-	// Events.on(engine, 'afterUpdate', function(event) {
-	// 	var bodies = Composite.allBodies(engine.world),
-	// 		body = bodies[1]
-	// 	if(body.position.y >= 600 && body.label==='stack'){
-	// 		// console.log('afterUpdate bodies', body.position.y)
-	// 		// console.log('afterUpdate bodies', body)
-	// 	}
-	// 	// for(var i = 0; i < bodies.length; i++){
-	// 	// 	if(bodies[i].position.y){
-	// 	//
-	// 	// 	}
-	// 	// }
-	// 	// if(stacks.bodies && stacks.bodies.length >= CMBOMBG.do.criteria.column*CMBOMBG.do.criteria.row){
-	// 	// 	$('canvas').addClass('cm-bom-rubberBand')
-	// 	// 	World.remove(world, vertices);
-	// 	// 	explosion(engine)
-	// 	// 	setTimeout(function(){
-	// 	// 		var alert = cmdcAlert({
-	// 	// 			"buttons": {
-	// 	// 				"gotmall": function () {
-	// 	//
-	// 	// 				}
-	// 	// 			}
-	// 	// 		})
-	// 	// 	}, 200)
-	// 	// }
-	// })
+	var counter = 0
+	Events.on(engine, 'afterUpdate', function(event) {
+		// counter += 1;
+		// if (counter === 30)
+		// 	Body.setStatic(body1, true);
+	})
 
 	Render.lookAt(render, {
 		min: { x: 0, y: 0 },

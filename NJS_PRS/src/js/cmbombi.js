@@ -92,8 +92,8 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 
 (function() {
 	var CMBOMB = {
-		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
-		sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
+		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
@@ -255,7 +255,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			var resource = {
 				botImg: sourceLinkRoot + 'img/control.png',
 				botSmallImg: sourceLinkRoot + 'img/control-small.png',
-				middleImg: sourceLinkRoot + 'img/hull.png',
+				middleImg: sourceLinkRoot + 'img/bomb/head.png',
 				bottombakImg: sourceLinkRoot + 'img/allbodies.png',
 				closeImg: sourceLinkRoot + 'img/close.png',
 				closeSmallImg: sourceLinkRoot + 'img/close-small.png',
@@ -299,7 +299,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 						'.cm-dc-both-side-body {width:1400px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:2;height:300px;background-position: center top;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto; background: url("' + resource.bothsideBodyImg + '") no-repeat}' +
 						'.cm-dc-left {cursor: pointer;overflow:hidden;z-index:30;position:fixed;bottom:0;right: 50%;top:0;margin-right:700px;width: 18%;height: 100%;background: #262564;}' +
 						'.cm-dc-right {cursor: pointer;overflow:hidden;z-index:30;position:fixed;bottom:0;left: 50%;top:0;margin-left: 700px;width: 18%;height: 100%;background: #262564;}' +
-						'.cm-dc-middle {z-index:21;position:fixed;margin:auto;top: 0;left: 0;right: 0;bottom: 0;min-width:1180px;background-repeat: no-repeat;background-position: center top;display: none;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto}' +
+						'.cm-bomb-middle {z-index:21;position:fixed;margin:auto;top: 15px;left: 25px;right: 0;bottom: 0;min-width:1160px;background-repeat: no-repeat;background-position: center top;width:400px;height:300px;display: none}' +
 						'.cm-dc-bottom-bak {position: fixed;margin: auto;left: 0;right: 0;bottom:0px;width: 1400px;z-index:5;height:320px;background-repeat: no-repeat;display: none} ' +
 						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index:101;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close:hover {background-position: -80px} .cm-dc-close:active {background-position: -160px}' +
 						'.cm-dc-close-small {width: 40px;height: 40px;cursor: pointer;top: 5px; margin: auto;z-index:101;position: fixed; right:5px;background-repeat: no-repeat;} .cm-dc-close-small:hover {background-position: -40px} .cm-dc-close-small:active {background-position: -80px}' +
@@ -318,7 +318,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 						'.cm-dc-number-r {top:25px;left:10px;position: relative;float:right; width: 33px;z-index:9;height:40px;background-repeat: no-repeat;background-image: url("' + resource.numberImg + '")}' +
 						'.cm-bomb-class {top:0px;bottom:0px;left:0;right:0;margin:0 auto;position: fixed;z-index:89;min-width: 1180px;height: 100%;font-family: Helvetica, Arial, sans-serif; display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center; -webkit-box-pack: center; -ms-flex-pack: center;justify-content: center; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column;flex-direction: column;height: 100vh;} .cm-bomb-class canvas { border-radius: 8px;}' +
 						'.simpleAlert {position: fixed;z-index: 100;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1075px ;height:1050px;animation-name: zoomIn;-webkit-animation-name: zoomIn;-webkit-animation-duration: 2s;animation-duration: 2s;animation-delay: 0s;-webkit-animation-delay: 0s;animation-iteration-count:1;-webkit-animation-iteration-count:1;}' +
-						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color:#000;opacity:0.4;filter:alpha(opacity=50);z-index:99}' +
+						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color:#000;opacity:0;filter:alpha(opacity=50);z-index:99}' +
 						'.simpleAlertBody {cursor:pointer;z-index:100;position:absolute;width:345px;height:317px;top:0;left:0;right:0;bottom:70px;margin:auto;perspective:1000px}' +
 						'.simpleAlertRed {cursor:pointer;z-index:100;position:absolute;width:345px;height:317px;top:0;left:0;right:0;margin:auto;background-repeat: no-repeat;background: url("' + resource.alertImg + '")}' +
 						'.redAnimat {animation-name: swing;-webkit-animation-name: swing;-webkit-animation-duration: 1s;animation-duration: 1s;animation-delay: 2s;-webkit-animation-delay: 2s;animation-iteration-count: 1;-webkit-animation-iteration-count: 1;}' +
@@ -339,7 +339,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 					cssStyle.type = 'text/css';
 					cssStyle.innerHTML = cssStr;
 					document.getElementsByTagName('HEAD').item(0).appendChild(cssStyle);
-					var cmdc = document.createElement('div'),
+					var cmbomb = document.createElement('div'),
 						bot = document.createElement('div'),
 						left = document.createElement('div'),
 						right = document.createElement('div'),
@@ -357,11 +357,11 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 						botImg = document.createElement('img'),
 						lineImgL = document.createElement('img'),
 						lineImgR = document.createElement('img');
-					cmdc.className = 'cm-bomb-class'
+					cmbomb.className = 'cm-bomb-class'
 					bot.className = 'cm-dc-bottom';
 					left.className = 'cm-dc-left';
 					right.className = 'cm-dc-right';
-					middle.className = 'cm-dc-middle';
+					middle.className = 'cm-bomb-middle';
 					bottombak.className = 'cm-dc-bottom-bak';
 					close.className = 'cm-dc-close-small';
 					upper.className = 'cm-dc-upper'
@@ -411,13 +411,13 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 					// cmdc.appendChild(bot);
 					// cmdc.appendChild(left);
 					// cmdc.appendChild(right);
-					// cmdc.appendChild(middle);
+					cmbomb.appendChild(middle);
 					// cmdc.appendChild(close);
 					// cmdc.appendChild(bottombak);
 					// cmdc.appendChild(bottombak);
 					// cmdc.appendChild(start);
 					// cmdc.appendChild(bothsideBody);
-					document.body.appendChild(cmdc);
+					document.body.appendChild(cmbomb);
 				},
 				show: function () {
 					cmbombObj.botEL.style.display = 'block'
@@ -446,7 +446,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			cmbombObj.rootEL = cmbombObj.$(".cm-bomb-class")
 			cmbombObj.botEL = cmbombObj.$(".cm-dc-bottom")
 			cmbombObj.leftEL = cmbombObj.$(".cm-dc-left")
-			cmbombObj.middleEL = cmbombObj.$(".cm-dc-middle")
+			cmbombObj.middleEL = cmbombObj.$(".cm-bomb-middle")
 			cmbombObj.bottombakEL = cmbombObj.$(".cm-dc-bottom-bak")
 			cmbombObj.rockerEL = cmbombObj.$(".cm-dc-rocker")
 			cmbombObj.buttonEL = cmbombObj.$(".cm-dc-start-btn")
@@ -553,10 +553,12 @@ CMBOMBG.do = function() {
 			var bodies = Composite.allBodies(engine.world);
 			for (var i = 0; i < bodies.length; i++) {
 				var body = bodies[i];
-				if (!body.isStatic && body.position.y >= 100) {
-					var forceMagnitude = 0.04* body.mass;
+				if(body.isStatic)
+					Body.setStatic(body, false);
+				if (body.position.y) {
+					var forceMagnitude = 0.03* body.mass;
 					var x = (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
-					y = -forceMagnitude + Common.random() * -forceMagnitude - 0.015
+					y = -forceMagnitude + Common.random() * -forceMagnitude - 0.005
 					Body.applyForce(body, body.position, {
 						x: x,
 						y: y
@@ -567,23 +569,35 @@ CMBOMBG.do = function() {
 	};
 	//动画结束
 	CMBOMBG.do.canvasELAnimationEnd =  function(){
-		// World.remove(world, vertices);
-		// explosion(engine)
-		// setTimeout(function(){
-		// 	var alert = cmdcAlert({
-		// 		"buttons": {
-		// 			"gotmall": function () {
-		//
-		// 			}
-		// 		}
-		// 	})
-		// 	//当物品掉落到底部后，就清除所有
-		// 	setTimeout(function () {
-		// 		World.clear(world)
-		// 		//销毁canvas对象
-		// 		$('.cm-bom-rubberBand') && $('.cm-bom-rubberBand').remove()
-		// 	}, CMBOMB.timeout* 8)
-		// }, 100)
+		//金币消失
+		CMBOMBG.do.setBodiesVisible(engine, false)
+		//中部天猫头出现
+		$('.cm-bomb-middle') && $('.cm-bomb-middle').css('display', 'block')
+
+		//炸
+		setTimeout(function(){
+			$('.cm-bomb-middle') && $('.cm-bomb-middle').css('display', 'none')
+			CMBOMBG.do.setBodiesVisible(engine, true)
+			World.remove(world, vertices);
+			explosion(engine)
+			//红包出现
+			setTimeout(function(){
+				var alert = cmdcAlert({
+					"buttons": {
+						"gotmall": function () {
+
+						}
+					}
+				})
+				//当物品掉落到底部后，就清除所有
+				setTimeout(function () {
+					World.clear(world)
+					//销毁canvas对象
+					$('.cm-bom-rubberBand') && $('.cm-bom-rubberBand').remove()
+				}, CMBOMB.timeout* 8)
+			}, 100)
+		}, 1000)
+
 	}
 
 	Render.run(render);
@@ -598,93 +612,344 @@ CMBOMBG.do = function() {
 		render: {
 			fillStyle: 'transparent',
 			strokeStyle: 'transparent',
-			lineWidth: 0
+			lineWidth: 0,
+			// sprite: {
+			// 	xScale: 1,
+			// 	yScale: 1,
+			// 	texture: CMBOMB.sourceLinkRoot + 'img/bomb/head.png'
+			// }
 		}
 	}, true);
 
-	CMBOMBG.do.createCoin = function(x, y, img){
-		// if (Query.point([vertices], { x: x, y: y }).length === 0) {
-			return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
-				label: 'stack',
-				frictionAir: .02,
-				friction: 0.001,
-				restitution: 0.001, //恢复原状
-				mass: 0.6,
-				timeScale: 0.9,
-				// timeScale: 1.1,
-				render: {
-					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#ff5f00", '#66DD00'][Math.round(Math.random() * 4)]
-				}
-			});
-		// }
-	}
-	CMBOMBG.do.criteria = {
-		x: 275,
-		y: -2100,
-		column: 1,
-		row: 74,
-		sides: 10,
-		radius: 13
-	}
-	CMBOMBG.do.createCoin = function(){
+	//创建周边金块
+	var scaleVal = 1
+	var body1 = Bodies.circle(370, 260, 20, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/9.png'
+		}} })
+	var body2 = Bodies.circle(452, 260, 20, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/11.png'
+		}} })
 
+	var body3 = Bodies.circle(263, 220, 18, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/5.png'
+		}} })
+	var body4 = Bodies.circle(339, 220, 18, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/7.png'
+		}} })
+	var body5 = Bodies.circle(413, 220, 18, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/10.png'
+		}} })
+	var body6 = Bodies.circle(491, 220, 18, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/13.png'
+		}} })
+	var body7 = Bodies.circle(570, 220, 18, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/15.png'
+		}} })
+
+	var body8 = Bodies.circle(308, 180, 12, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/6.png'
+		}} })
+	var body9 = Bodies.circle(370, 165, 12, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/8.png'
+		}} })
+	var body10 = Bodies.circle(455, 165, 12, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/12.png'
+		}} })
+	var body11 = Bodies.circle(524, 180, 12, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/14.png'
+		}} })
+
+	var body12 = Bodies.circle(173, 230, 12, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/4.png'
+		}} })
+	var body13 = Bodies.circle(170, 281, 18, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/3.png'
+		}} })
+	var body14 = Bodies.circle(120, 315, 12, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/1.png'
+		}} })
+	var body15 = Bodies.circle(160, 355, 18, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/2.png'
+		}} })
+
+	var body16 = Bodies.circle(638, 230, 12, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/16.png'
+		}} })
+	var body17 = Bodies.circle(644, 281, 18, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/17.png'
+		}} })
+	var body18 = Bodies.circle(698, 315, 12, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/19.png'
+		}} })
+	var body19 = Bodies.circle(660, 355, 18, { isStatic: true, render: {
+		sprite: {
+			xScale: scaleVal,
+			yScale: scaleVal,
+			texture: CMBOMB.sourceLinkRoot + 'img/bomb/rect/18.png'
+		}} })
+
+	CMBOMBG.do.criteria = {
+		y: -2400,
+		column: 1,
+		row: 75,
+		sides: 10,
+		radius: 15
 	}
-	stacksLeft = Composites.stack(230, CMBOMBG.do.criteria.y, CMBOMBG.do.criteria.column, CMBOMBG.do.criteria.row, 3, 5, function(x, y, column, row, lastBody, i) {
-		if (Query.point([vertices], { x: x, y: y }).length === 0) {
-			if (Common.random() < 0.12) {
-				return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
-					label: 'stack',
-					frictionAir: .02,
-					friction: 0.001,
-					restitution: 0.001, //恢复原状
-					mass: 0.6,
-					timeScale: 0.9,
-					render: {
-						sprite: {
-							xScale: 0.25,
-							yScale: 0.25,
-							texture: CMBOMB.sourceLinkRoot + 'img/coin1.png'
+	CMBOMBG.do.createCoin = function(x){
+		return Composites.stack(x, CMBOMBG.do.criteria.y, CMBOMBG.do.criteria.column, CMBOMBG.do.criteria.row, 3, 5, function(x, y, column, row, lastBody, i) {
+			var label = 'stack',
+				frictionAir = 0.02,
+				friction = 0.0001,
+				restitution = 0.002, //恢复原状
+				mass = 0.3,
+				timeScale = 0.9,
+				scale = 0.4
+			if (Query.point([vertices], { x: x, y: y }).length === 0) {
+				if (Common.random() < 0.1) {
+					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
+						label: label,
+						frictionAir: frictionAir,
+						friction: friction,
+						restitution: restitution, //恢复原状
+						mass: mass,
+						timeScale: timeScale,
+						render: {
+							sprite: {
+								xScale: scale,
+								yScale: scale,
+								texture: CMBOMB.sourceLinkRoot + 'img/bomb/coin1.png'
+							}
 						}
-					}
-				});
-			}else if (Common.random() > 0.12 && Common.random() < 0.24) {
-				return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
-					label: 'stack',
-					frictionAir: .02,
-					friction: 0.001,
-					restitution: 0.001, //恢复原状
-					mass: 0.6,
-					timeScale: 0.9,
-					render: {
-						sprite: {
-							xScale: 0.25,
-							yScale: 0.25,
-							texture: CMBOMB.sourceLinkRoot + 'img/coin2.png'
+					});
+				}else if (Common.random() > 0.1 && Common.random() < 0.2) {
+					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
+						label: label,
+						frictionAir: frictionAir,
+						friction: friction,
+						restitution: restitution, //恢复原状
+						mass: mass,
+						timeScale: timeScale,
+						render: {
+							sprite: {
+								xScale: scale,
+								yScale: scale,
+								texture: CMBOMB.sourceLinkRoot + 'img/bomb/coin2.png'
+							}
 						}
-					}
-				});
+					});
+				}else if (Common.random() > 0.2 && Common.random() < 0.3) {
+					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
+						label: label,
+						frictionAir: frictionAir,
+						friction: friction,
+						restitution: restitution, //恢复原状
+						mass: mass,
+						timeScale: timeScale,
+						render: {
+							sprite: {
+								xScale: scale,
+								yScale: scale,
+								texture: CMBOMB.sourceLinkRoot + 'img/bomb/coin3.png'
+							}
+						}
+					});
+				}else if (Common.random() > 0.3 && Common.random() < 0.4) {
+					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
+						label: label,
+						frictionAir: frictionAir,
+						friction: friction,
+						restitution: restitution, //恢复原状
+						mass: mass,
+						timeScale: timeScale,
+						render: {
+							sprite: {
+								xScale: scale,
+								yScale: scale,
+								texture: CMBOMB.sourceLinkRoot + 'img/bomb/coin4.png'
+							}
+						}
+					});
+				}else if (Common.random() > 0.4 && Common.random() < 0.5) {
+					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
+						label: label,
+						frictionAir: frictionAir,
+						friction: friction,
+						restitution: restitution, //恢复原状
+						mass: mass,
+						timeScale: timeScale,
+						render: {
+							sprite: {
+								xScale: scale,
+								yScale: scale,
+								texture: CMBOMB.sourceLinkRoot + 'img/bomb/coin5.png'
+							}
+						}
+					});
+				}else if (Common.random() > 0.5 && Common.random() < 0.6) {
+					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
+						label: label,
+						frictionAir: frictionAir,
+						friction: friction,
+						restitution: restitution, //恢复原状
+						mass: mass,
+						timeScale: timeScale,
+						render: {
+							sprite: {
+								xScale: scale,
+								yScale: scale,
+								texture: CMBOMB.sourceLinkRoot + 'img/bomb/coin6.png'
+							}
+						}
+					});
+				}else if (Common.random() > 0.6 && Common.random() < 0.7) {
+					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
+						label: label,
+						frictionAir: frictionAir,
+						friction: friction,
+						restitution: restitution, //恢复原状
+						mass: mass,
+						timeScale: timeScale,
+						render: {
+							sprite: {
+								xScale: scale,
+								yScale: scale,
+								texture: CMBOMB.sourceLinkRoot + 'img/bomb/coin7.png'
+							}
+						}
+					});
+				}else if (Common.random() > 0.7 && Common.random() < 0.8) {
+					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
+						label: label,
+						frictionAir: frictionAir,
+						friction: friction,
+						restitution: restitution, //恢复原状
+						mass: mass,
+						timeScale: timeScale,
+						render: {
+							sprite: {
+								xScale: scale,
+								yScale: scale,
+								texture: CMBOMB.sourceLinkRoot + 'img/bomb/coin8.png'
+							}
+						}
+					});
+				}else if (Common.random() > 0.8 && Common.random() < 0.9) {
+					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
+						label: label,
+						frictionAir: frictionAir,
+						friction: friction,
+						restitution: restitution, //恢复原状
+						mass: mass,
+						timeScale: timeScale,
+						render: {
+							sprite: {
+								xScale: scale,
+								yScale: scale,
+								texture: CMBOMB.sourceLinkRoot + 'img/bomb/coin9.png'
+							}
+						}
+					});
+				}else {
+					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
+						label: label,
+						frictionAir: frictionAir,
+						friction: friction,
+						restitution: restitution, //恢复原状
+						mass: mass,
+						timeScale: timeScale,
+						render: {
+							sprite: {
+								xScale: scale,
+								yScale: scale,
+								texture: CMBOMB.sourceLinkRoot + 'img/bomb/coin1.png'
+							}
+						}
+					});
+				}
+			}
+		})
+	}
+
+	//设置金币消失
+	CMBOMBG.do.setBodiesVisible = function(engine, bool){
+		var bodies = Composite.allBodies(engine.world),
+			body
+		for (var i = 0; i < bodies.length; i++) {
+			body = bodies[i]
+			if (body.label === 'stack') {
+				body.render.visible = bool
 			}
 		}
-	})
-	stacksRight = Composites.stack(560, CMBOMBG.do.criteria.y, CMBOMBG.do.criteria.column, CMBOMBG.do.criteria.row, 3, 5, function(x, y, column, row, lastBody, i) {
-		if (Query.point([vertices], { x: x, y: y }).length === 0) {
-			return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
-				label: 'stack',
-				frictionAir: .02,
-				friction: 0.001,
-				restitution: 0.001, //恢复原状
-				mass: 0.6,
-				timeScale: 0.9,
-				render: {
-					sprite: {
-						xScale: 0.25,
-						yScale: 0.25,
-						texture: CMBOMB.sourceLinkRoot + 'img/coin1.png'
-					}
-				}
-			});
+	}
+
+	//设置静态
+	CMBOMBG.do.setBodiesStatic = function(engine, bool){
+		var bodies = Composite.allBodies(engine.world),
+			body
+		for (var i = 0; i < bodies.length; i++) {
+			body = bodies[i]
+			if (body.label === 'Circle Body') {
+				Body.setStatic(body, bool);
+			}
 		}
-	})
+	}
+
+	stacksLeft = CMBOMBG.do.createCoin(230)
+	stacksRight = CMBOMBG.do.createCoin(560)
 
 	World.add(world, vertices);
 	World.add(world, stacksLeft);
@@ -693,10 +958,11 @@ CMBOMBG.do = function() {
 	Events.on(engine, 'afterUpdate', function(event) {
 		var bodies = Composite.allBodies(engine.world),
 			body = bodies[1] //下落的最后元素
-
 		//svg顶部到上层的距离
-		var verticeTop = 100
+		var verticeTop = 250
 		if(body.position.y >= verticeTop && body.label==='stack'){
+			World.add(world, [body1, body2, body3, body4, body5, body6, body7, body8, body9, body10, body11, body12, body13, body14, body15, body16, body17, body18, body19])
+
 			$('canvas').addClass('cm-bom-rubberBand')
 			var rubberBand = $('.cm-bom-rubberBand')[0]
 			CMBOMB.addEvent(rubberBand, 'animationend', CMBOMBG.do.canvasELAnimationEnd)
