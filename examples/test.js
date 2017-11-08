@@ -1,4 +1,16 @@
-var svg_data = '<?xml version="1.0" encoding="utf-8"?> <!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --> <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"viewBox="0 0 800 600" style="enable-background:new 0 0 800 600;" xml:space="preserve"> <path d="M556,320.4c-9.4-22.3-22.7-41.3-39.9-56.9c-17.2-15.6-37.4-27.3-60.5-35.1c-23.1-7.8-48.1-11.7-75-11.7 c-2.7,0-5.8,0.1-9.3,0.4c-3.5,0.3-7.1,0.4-10.9,0.4c-4.3,0.5-8.6,0.8-12.9,0.8V109.4h201.7V11h-10v88.4H337.5v128.9h10 c4.5,0,9.1-0.3,13.5-0.8c3.9,0,7.6-0.2,11.1-0.4c3.2-0.2,6.1-0.4,8.5-0.4c25.7,0,49.8,3.8,71.8,11.2c21.7,7.3,40.9,18.4,57,33 c16,14.5,28.6,32.5,37.4,53.4c8.8,21,13.3,44.5,13.3,69.9c0,30-5.6,56.6-16.7,79.1c-11.1,22.5-26.5,41.6-45.6,56.7 c-19.4,15.3-42.2,27.1-67.8,35c-25.8,8-53.9,12.1-83.4,12.1c-11.2,0-23.4-1.2-36.2-3.5c-13-2.3-26.1-5.3-38.7-8.7 c-12.6-3.4-24.3-7.2-34.9-11.4c-6.9-2.7-13.2-5.3-18.7-7.8l26.2-65c8.9,4.2,20.1,8.6,34,13.3c20,6.8,41.3,10.2,63.3,10.2 c18.6,0,36.1-2.3,52-6.8c16.1-4.6,30.3-11.4,42.3-20.1c12.2-8.9,21.9-20.1,28.8-33.3c6.9-13.2,10.4-28.4,10.4-45 c0-32.8-13.2-59-39.2-77.9c-25-18.1-62.4-27.3-111.2-27.3c-5.9,0-12.8,0.1-20.9,0.4c-7.9,0.3-15.5,0.7-22.6,1.2 c-4.6,0.3-9.4,0.5-14.3,0.7V11h-10v295.3c8.6,0,16.9-0.3,25-0.8c7-0.5,14.4-0.9,22.2-1.2c7.8-0.3,14.7-0.4,20.6-0.4 c46.8,0,81.9,8.5,105.3,25.4c23.4,16.9,35.1,40.2,35.1,69.8c0,15.1-3.1,28.5-9.3,40.3c-6.2,11.8-14.8,21.8-25.8,29.9 c-11,8.1-24.1,14.3-39.1,18.6c-15.1,4.3-31.5,6.5-49.2,6.5c-21,0-41-3.2-60.1-9.7c-19.1-6.5-33.2-12.4-42.4-17.8l-33.9,83.9 c7.5,3.8,16.8,7.8,27.8,12.1c11,4.3,23,8.2,35.9,11.7s26.1,6.5,39.5,8.9c13.4,2.4,26.1,3.6,37.9,3.6c30.7,0,59.4-4.2,86.3-12.5 c26.9-8.3,50.6-20.6,71-36.7c20.4-16.1,36.6-36.2,48.4-60.1c11.8-23.9,17.8-51.8,17.8-83.5C570.2,367.4,565.4,342.8,556,320.4z"/> </svg>';
+var svg_data = '<?xml version="1.0" encoding="utf-8"?>\n' +
+	'<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->\n' +
+	'<svg version="1.1" id="图层_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"\n' +
+	'\t viewBox="0 0 406 239.5" style="enable-background:new 0 0 406 239.5;" xml:space="preserve">\n' +
+	'<path d="M254.5,62.5h-93c-42.6,0-50.6-9.6-55.9-16c-0.7-0.9-1.4-1.7-2.1-2.4C97.4,38,80.3,17.9,76.3,12.9c-0.5-0.6-5-6-13.3-9.8\n' +
+	'\tl1.2-2.7c6.8,3.1,12.1,7.7,14.4,10.6c3.9,4.9,20.9,24.9,26.9,30.9c0.8,0.8,1.5,1.7,2.3,2.6c4.9,5.9,12.4,14.9,53.6,14.9h93\n' +
+	'\tc27.2,0,34.8-5.4,52.9-26.5c1.8-2.1,3.5-4.2,5.3-6.2c9.3-11.1,18.1-21.7,29.4-27.1l1.3,2.7c-10.7,5.1-19.3,15.4-28.4,26.3\n' +
+	'\tc-1.7,2.1-3.5,4.2-5.3,6.3C291.8,55.8,283.6,62.5,254.5,62.5z"/>\n' +
+	'<path d="M366.5,239.5h-329C13,239.5,2,233.1,2,195C2,157.5,0,66.9,0,66l0-22c0-9.2,1.4-22.8,13.6-33.9l2,2.2C4.3,22.6,3,35.3,3,44\n' +
+	'\tv22c0,0.9,2,91.4,2,129c0,37.4,10.4,41.5,32.5,41.5h329c34.5,0,34.5-18.2,34.5-37.5c0-8.8,0.6-51.5,1.1-89.3\n' +
+	'\tC402.6,78.5,403,49,403,44c0-12.9-4.2-23.4-12.4-31.3l2.1-2.2C401.4,18.9,406,30.5,406,44c0,5-0.4,34.5-0.9,65.8\n' +
+	'\tc-0.5,37.7-1.1,80.5-1.1,89.2C404,218,404,239.5,366.5,239.5z"/>\n' +
+	'</svg>\n';
 
 var Example = Example || {};
 Example.five = function() {
@@ -31,8 +43,8 @@ Example.five = function() {
 			options: {
 				wireframes: false,
 				background: 'transparent',
-				width: 600,
-				height: 600
+				width: 1400,
+				height: 800
 			}
 		});
 
@@ -62,10 +74,10 @@ Example.five = function() {
 	Runner.run(runner, engine);
 
 	$(svg_data).find('path').each(function(i, path) {
-		vertexSets.push(Svg.pathToVertices(path, 30));
+		vertexSets.push(Svg.pathToVertices(path, 10));
 	});
 
-	vertices = Bodies.fromVertices(400, 500, vertexSets, {
+	vertices = Bodies.fromVertices(400, 350, vertexSets, {
 		isStatic: true,
 		render: {
 			fillStyle: 'transparent',
@@ -75,13 +87,26 @@ Example.five = function() {
 	}, true);
 
 
-	stacks = Composites.stack(265, -3200, 2, 45, 3, 5, function(x, y, column, row, lastBody, i) {
+	stacksLeft = Composites.stack(230, -3000, 1, 63, 3, 5, function(x, y, column, row, lastBody, i) {
 		if (Query.point([vertices], { x: x, y: y }).length === 0) {
-			return Bodies.polygon(x, y, 8, 16, {
+			return Bodies.polygon(x, y, 8, 14, {
 				label: 'stack',
 				frictionAir: .02,
 				friction: 0.01,
-				restitution: 0.01,  //恢复原状
+				restitution: 0.001,  //恢复原状
+				render: {
+					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#FFFFFF", '#66DD00'][Math.round(Math.random() * 4)]
+				}
+			});
+		}
+	})
+	stacksRight = Composites.stack(560, -3000, 1, 63, 3, 5, function(x, y, column, row, lastBody, i) {
+		if (Query.point([vertices], { x: x, y: y }).length === 0) {
+			return Bodies.polygon(x, y, 8, 14, {
+				label: 'stack',
+				frictionAir: .02,
+				friction: 0.01,
+				restitution: 0.001,  //恢复原状
 				render: {
 					fillStyle: [ "#4285F4", "#EA4335", "#FBBC05", "#FFFFFF", '#66DD00'][Math.round(Math.random() * 4)]
 				}
@@ -90,7 +115,8 @@ Example.five = function() {
 	})
 
 	World.add(world, vertices);
-	World.add(world, stacks);
+	World.add(world, stacksLeft);
+	World.add(world, stacksRight);
 
 	// Events.on(engine, 'afterUpdate', function(event) {
 	// 	var bodies = Composite.allBodies(engine.world),
@@ -122,14 +148,14 @@ Example.five = function() {
 
 	Render.lookAt(render, {
 		min: { x: 0, y: 0 },
-		max: { x: 750, y: 800 }
+		max: { x: 800, y: 800 }
 	});
 
 	function enginRun() {
 		window.requestAnimationFrame(enginRun);
 		Engine.update(engine, 1000 / 60, 1);
 	}
-	// enginRun()
+	enginRun()
 
 	return {
 		engine: engine,

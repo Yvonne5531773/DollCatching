@@ -1,6 +1,6 @@
 
 (function(){
-	var cmdc = document.createElement('script');
-	cmdc.src = '//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/js/cmbombi.js';
-	document.head.appendChild(cmdc);
+	var cmbomb = document.createElement('script');
+	cmbomb.src = '//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/js/cmbombi.js';
+	document.head.appendChild(cmbomb);
 })()
