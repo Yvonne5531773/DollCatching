@@ -43,7 +43,7 @@ Example.five = function() {
 			options: {
 				wireframes: false,
 				background: 'transparent',
-				width: 1400,
+				width: 800,
 				height: 800
 			}
 		});

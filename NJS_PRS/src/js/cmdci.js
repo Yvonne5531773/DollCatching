@@ -85,7 +85,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		sourceLinkRoot: '//act.cmcmcdn.com/1111/dollcatching/NJS_PRS/output/',
-		tmallLink: '//s.click.taobao.com/yxl72Zw',
+		tmallLink: 'https://s.click.taobao.com/t?e=m%3D2%26s%3DeRBCqIfTZbAcQipKwQzePCperVdZeJviszgHCoaJEBVyINtkUhsv0PGvscbCScM4kYq54YhbC%2BNUQtbrqkftlHBwruG5dmsoRLq4NwTxjyyk1V41DU9bQk2srC8Mk09eQgZss1jm63jO54LQ%2FVw1Lw6GXwCJ2z%2BDwie7bKUJ13xJewJHSe1v7X6B%2F00oBp4ZPQUuEDH%2BG9QZldUL%2B%2F5hsliR%2Bx%2Be38MfoGnais0viBsP11EHIsR3TMeqpm1q4YKLqHxuZFEYQ8v%2FDhyQJvbkc5lqCaY1L5Vbk8PNP5PCal2OlizfJnPpKzUXllRFT%2FLflne%2Bvno5ekOdzyyO9CIkVdQc6rs1qJwrxg5p7bh%2BFbQ%3D',
 		dc: {},
 		playAgain: false,
 		timeout: 1000,
@@ -468,7 +468,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 		*/
 		dosomethingforbkg: function(){
 			$('body').css('overflow-y', 'hidden')
-		}
+		},
 	};
 
 	window.CMDC = CMDC;
@@ -851,8 +851,9 @@ CMDCG.do = function() {
 						}
 					})
 					CMDCG.do.setBodiesStatic(engine, true)
-					//开始自动消失计时
-					CMDCG.do.disappear()
+					// //开始自动消失计时
+					// CMDCG.do.disappear()
+					CMDCG.do.addEvent(document, 'mousemove', CMDCG.do.begin)
 					CMDC.Interface.reportShow('red')
 				}, timeout * 1.2)
 			}, timeout )
@@ -923,6 +924,7 @@ CMDCG.do = function() {
 				event.currentTarget.className==='cm-dc-right' && $(event.currentTarget.childNodes[0]).css('background-positionX', "0px")
 			}else if(event.type === "click"){
 				window.open(tmallLink)
+				CMDCG.do.closeFun('receive')
 				CMDC.Interface.reportClick('click7', 1)
 			}
 		})
@@ -934,6 +936,7 @@ CMDCG.do = function() {
 				$('.cm-dc-sign').css('background-positionX', "0px")
 			} else if (event.type === "click") {
 				window.open(tmallLink)
+				CMDCG.do.closeFun('receive')
 				CMDC.Interface.reportClick('click8', 1)
 			}
 		})
@@ -954,6 +957,34 @@ CMDCG.do = function() {
 		$(document).unbind('keyup')
 		$('.cm-dc-upper').unbind('click mouseover mouseout')
 		$('.cm-dc-left, .cm-dc-right').unbind('mouseover mouseout click')
+		$('document').unbind('mousemove', CMDC.beginFunc)
+		$(document).mousemove(function(e){
+
+		});
+	}
+
+	CMDCG.do.addEvent = function(obj, event, fun){
+		if(obj.addEventListener)
+			obj.addEventListener(event, fun, false);
+		else if(obj.attachEvent)
+			obj.attachEvent("on"+event, fun, false);
+		return false;
+	}
+
+	CMDCG.do.removeEvent = function (e, type, func, flag) {
+		if (e.removeEventListener) {
+			e.removeEventListener(type, func, flag || false);
+		} else if (e.detachEvent) {
+			e.detachEvent("on" + type, func, flag || false);
+		} else {
+			e["on" + type] = null;
+		}
+	}
+
+	CMDCG.do.begin = function(){
+		CMDCG.do.removeEvent(document, 'mousemove', CMDCG.do.begin)
+		//开始自动消失计时
+		CMDCG.do.disappear()
 	}
 
 	//设置静态

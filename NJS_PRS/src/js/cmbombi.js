@@ -14,21 +14,50 @@ var svg_data = '<?xml version="1.0" encoding="utf-8"?>\n' +
 	'\tc-0.5,37.7-1.1,80.5-1.1,89.2C404,218,404,239.5,366.5,239.5z"/>\n' +
 	'</svg>\n';
 
-var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t,e),n={},s=$('<div class="simpleAlert">'),i=$('<div class="simpleAlertShelter">'),c=$('<div class="simpleAlertBody">'),red=$('<div class="simpleAlertRed redAnimat">'),o=$('<img class="simpleAlertBodyClose" height="14" width="14"/>');return n.init=function(){for(var e=0,t=!1,n=[],o=0;o<2;o++)for(var p in l.buttons)switch(o){case 0:n.push(p);break;case 1:t=n.length<=1,e++;var r=$('<a class="simpleAlertBtn simpleAlertBtn'+e+'">'+"</a>");var f=$('<div class="simpleAlertFlash'+'">'+"</div>");var h=$('<div class="simpleAlertHead'+'">'+"</div>");r.bind("click", l.buttons[p]), c.bind("click", l.buttons[p]),
-	red.bind("mouseover mouseout", function(event) {
+var cmbombAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t,e),n={},s=$('<div class="simpleAlert">'),i=$('<div class="simpleAlertShelter">'),c=$('<div class="simpleAlertBody">'),red=$('<div class="simpleAlertRed redAnimat">'),o=$('<img class="simpleAlertBodyClose" height="14" width="14"/>');return n.init=function(){for(var e=0,t=!1,n=[],o=0;o<2;o++)for(var p in l.buttons)switch(o){case 0:n.push(p);break;case 1:t=n.length<=1,e++;var r=$('<a class="simpleAlertBtn simpleAlertBtn'+e+'">'+"</a>");var f=$('<div class="simpleAlertFlash'+'">'+"</div>");var h=$('<div class="simpleAlertHead'+'">'+"</div>");r.bind("click", l.buttons[p]), s.bind("click", l.buttons[p]),
+	coin1 = document.createElement('div'),
+	coin2 = document.createElement('div'),
+	coin3 = document.createElement('div'),
+	coin4 = document.createElement('div'),
+	coin5 = document.createElement('div'),
+	coin6 = document.createElement('div'),
+	coin7 = document.createElement('div'),
+	coin8 = document.createElement('div'),
+	coin1.className = 'cm-coin1',
+	coin2.className = 'cm-coin2',
+	coin3.className = 'cm-coin3',
+	coin4.className = 'cm-coin4',
+	coin5.className = 'cm-coin5',
+	coin6.className = 'cm-coin6',
+	coin7.className = 'cm-coin7',
+	coin8.className = 'cm-coin8',
+
+	s.bind("mouseover mouseout", function(event) {
 		if (event.type === "mouseover") {
-			red.toggleClass('redAnimated');
+			// red.toggleClass('redAnimated');
+			CMBOMBG.do.disappearSTO && clearTimeout(CMBOMBG.do.disappearSTO)
 		} else if (event.type === "mouseout") {
-			red.hasClass('redAnimat') && red.removeClass('redAnimat');
-			red.hasClass('redAnimated') && red.removeClass('redAnimated');
+			// red.hasClass('redAnimat') && red.removeClass('redAnimat');
+			// red.hasClass('redAnimated') && red.removeClass('redAnimated');
+			CMBOMBG.do.disappear()
 		}
 	}),
-	red.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e){
+	s.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e){
 		red.hasClass('redAnimat') && red.removeClass('redAnimat');
 		red.hasClass('redAnimated') && red.removeClass('redAnimated');
 		// red.addClass('cm-bom-rotateY')
 	}),
-	c.append(red).append(r).append(h)}s.append(c).append(f),$(".cm-bomb-class").append(s).append(i),c.show().animate({ opacity:"1"}, 350)},o.bind("click",function(){l.closeAll=!1,n.close()}),n.close=function(){l.closeAll?$(".simpleAlert").remove():c.animate({marginTop:"-188px",opacity:"0"},200,function(){$(".simpleAlert").last().remove()})},n.init(),n};
+	c.append(red),
+		c.append(coin1).append(coin2).append(coin3).append(coin4).append(coin5).append(coin6).append(coin7).append(coin8)
+		// .append(r)
+		// .append(h)
+}
+s.append(c)
+	// .append(f)
+	,$("body")
+		.append(s)
+		.append(i)
+	,c.show().animate({ opacity:"1"}, 350)},o.bind("click",function(){l.closeAll=!1,n.close()}),n.close=function(){$(".simpleAlert").remove()},n.init(),n};
 
 
 (function(undefined) {
@@ -87,7 +116,7 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 		options.expires = Math.round((86400000 - Math.max(c - d.getTime(), 0)) / 1000);
 		this.set(name, value, options);
 	};
-	window.cmdcCookie = cookie;
+	window.cmbombCookie = cookie;
 })();
 
 (function() {
@@ -121,7 +150,6 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			deScript.src = sourceLinkRoot + "js/decomp.js";
 			paScript.src = sourceLinkRoot + "js/pathseg.js";
 			mScript.src = sourceLinkRoot + "js/matter.js";
-			mgScript.src = sourceLinkRoot + "js/matter-tools.gui.js";
 			jquery.src = sourceLinkRoot + "js/jquery-1.11.0.min.js";
 
 			oHead.appendChild(pfScript);
@@ -145,31 +173,32 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			var removejscssfile = CMBOMB.removejscssfile,
 				sourceLinkRoot = CMBOMB.sourceLinkRoot;
 			removejscssfile(sourceLinkRoot + "js/polyfill.js", 'js')
+			removejscssfile(sourceLinkRoot + "js/decomp.js", 'js')
+			removejscssfile(sourceLinkRoot + "js/pathseg.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/matter.js", 'js')
-			removejscssfile(sourceLinkRoot + "js/cmdcg.js", 'js')
-			removejscssfile(sourceLinkRoot + "js/cmdci.js", 'js')
-			removejscssfile(sourceLinkRoot + "js/cmdctool.js", 'js')
+			removejscssfile(sourceLinkRoot + "js/cmbombi.js", 'js')
 			removejscssfile(sourceLinkRoot + "js/jquery-1.11.0.min.js", 'js')
 		},
 		Interface: {
-			close: function (action, index) {
+			close: function (action) {
 				try {
 					if (action === 'receive') {
-						Catcher && Catcher.receive();
+						bigBomb && bigBomb.receive();
 					} else {
-						Catcher && Catcher.gameOver();
-						CMBOMB.Interface.reportClose(action, index);
+						bigBomb && bigBomb.gameOver();
+						CMBOMB.Interface.reportClose(action);
 					}
 				} catch (e) {
-					Catcher && Catcher.error()
+					console.log('error',e)
+					bigBomb && bigBomb.error()
 				}
 			},
 			ready: function () {
 				if (window.requestAnimationFrame) {
 					try {
-						Catcher && Catcher.ready();
+						bigBomb && bigBomb.ready();
 					} catch (e) {
-						Catcher && Catcher.error()
+						bigBomb && bigBomb.error()
 						CMBOMB.Interface.reportClose('error-exit')
 						console.log('error',e)
 					}
@@ -177,9 +206,9 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 				}
 				// 浏览器版本过低
 				try {
-					Catcher && Catcher.notSupport();
+					bigBomb && bigBomb.notSupport();
 				} catch (e) {
-					Catcher && Catcher.error()
+					bigBomb && bigBomb.error()
 					CMBOMB.Interface.reportClose('error-exit')
 					console.log('error',e)
 				}
@@ -188,18 +217,18 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 			},
 			click: function () {
 				try {
-					Catcher && Catcher.receive();
+					bigBomb && bigBomb.receive();
 				} catch (e) {
-					Catcher && Catcher.error()
+					bigBomb && bigBomb.error()
 					CMBOMB.Interface.reportClose('error-exit')
 					console.log('error',e)
 				}
 			},
 			error: function () {
 				try {
-					Catcher && Catcher.error();
+					bigBomb && bigBomb.error();
 				} catch (e) {
-					Catcher && Catcher.error()
+					bigBomb && bigBomb.error()
 					console.log('error',e)
 				}
 				CMBOMB.Interface.reportClose('error-exit')
@@ -233,10 +262,10 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 				for (var i in obj) {
 					data[i] = obj[i];
 				}
-				data.w = 'dcgame';
-				data.cid = '57068818';
+				data.w = 'coinboom';
+				data.cid = '57471519';
 				try {
-					Catcher && Catcher.report(data);
+					bigBomb && bigBomb.report(data);
 				} catch (e) {
 					console.log('error', e)
 				}
@@ -253,39 +282,29 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 		buildWalls: function () {
 			var sourceLinkRoot = CMBOMB.sourceLinkRoot
 			var resource = {
-				botImg: sourceLinkRoot + 'img/control.png',
-				botSmallImg: sourceLinkRoot + 'img/control-small.png',
 				middleImg: sourceLinkRoot + 'img/bomb/head.png',
-				bottombakImg: sourceLinkRoot + 'img/allbodies.png',
-				closeImg: sourceLinkRoot + 'img/close.png',
-				closeSmallImg: sourceLinkRoot + 'img/close-small.png',
-				logoLImg: sourceLinkRoot + 'img/11logo-l.png',
-				logoRImg: sourceLinkRoot + 'img/11logo-r.png',
-				rockerImg: sourceLinkRoot + 'img/rocker.png',
-				startBtnImg: sourceLinkRoot + 'img/button.png',
-				alertImg: sourceLinkRoot + 'img/alertbkg.png',
+				closeImg: sourceLinkRoot + 'img/bomb/close.png',
+				alertImg: sourceLinkRoot + 'img/bomb/red.gif',
+				// alertImg: sourceLinkRoot + 'img/bomb/red.png',
 				alertbtnImg: sourceLinkRoot + 'img/alertbtn.png',
 				alertFlashImg: sourceLinkRoot + 'img/flash.png',
 				alertHeadImg: sourceLinkRoot + 'img/nice.png',
-				bothsideBodyImg: sourceLinkRoot + 'img/bothside-bodies-small.png',
-				frameImg: sourceLinkRoot + 'img/frame.png',
-				numberImg: sourceLinkRoot + 'img/number.png',
-				lineImg: sourceLinkRoot + 'img/line.png',
-				signImg: sourceLinkRoot + 'img/sign.png',
+				backflash: sourceLinkRoot + 'img/bomb/backflash.png',
+				flash: sourceLinkRoot + 'img/bomb/flash.png',
+				coin1: sourceLinkRoot + 'img/bomb/side/1.png',
+				coin2: sourceLinkRoot + 'img/bomb/side/2.png',
+				coin3: sourceLinkRoot + 'img/bomb/side/3.png',
+				coin4: sourceLinkRoot + 'img/bomb/side/4.png',
+				coin5: sourceLinkRoot + 'img/bomb/side/5.png',
+				coin6: sourceLinkRoot + 'img/bomb/side/6.png',
+				coin7: sourceLinkRoot + 'img/bomb/side/7.png',
+				coin8: sourceLinkRoot + 'img/bomb/side/8.png',
 			}
 			var cmbombObj = {
 				rootEL: {},
-				botEL: {},
 				leftEL: {},
 				middleEL: {},
-				bottombakEL: {},
-				rockerEL: {},
-				buttonEL: {},
-				numberLEL: {},
-				numberREL: {},
 				redEL: {},
-				si: {},
-				sis: {},
 				$: function (className) {
 					return document.querySelector(className);
 				},
@@ -293,32 +312,17 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 					cmbombObj.createDom(resource)
 				},
 				createDom: function (resource) {
-					var cssStr = '.move_upper { -webkit-animation-name: move_upper;animation-name: move_upper; -webkit-animation-duration: .7s;animation-duration: .7s; -webkit-animation-iteration-count: 1;animation-iteration-count: 1; -webkit-animation-fill-mode: forwards;animation-fill-mode: forwards;}' +
-						'.cm-dc-bottom {min-width:1180px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:31;height:240px;background-repeat: no-repeat;background-position: center top;display:none;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto};}' +
-						'.cm-dc-bottom-small {min-width:1180px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:28;height:180px;background-repeat: no-repeat;background-position: center top;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto; background: url("' + resource.botSmallImg + '")}' +
-						'.cm-dc-both-side-body {width:1400px;position:fixed;margin: auto;left: 0;right: 0;bottom: -10px;z-index:2;height:300px;background-position: center top;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto; background: url("' + resource.bothsideBodyImg + '") no-repeat}' +
-						'.cm-dc-left {cursor: pointer;overflow:hidden;z-index:30;position:fixed;bottom:0;right: 50%;top:0;margin-right:700px;width: 18%;height: 100%;background: #262564;}' +
-						'.cm-dc-right {cursor: pointer;overflow:hidden;z-index:30;position:fixed;bottom:0;left: 50%;top:0;margin-left: 700px;width: 18%;height: 100%;background: #262564;}' +
-						'.cm-bomb-middle {z-index:21;position:fixed;margin:auto;top: 15px;left: 25px;right: 0;bottom: 0;min-width:1160px;background-repeat: no-repeat;background-position: center top;width:400px;height:300px;display: none}' +
-						'.cm-dc-bottom-bak {position: fixed;margin: auto;left: 0;right: 0;bottom:0px;width: 1400px;z-index:5;height:320px;background-repeat: no-repeat;display: none} ' +
+					var cssStr =
+						'.cm-bomb-middle {z-index:21;position:fixed;margin:auto;top: 15px;left: 25px;right: 0;bottom: 0;min-width:1160px;background-repeat: no-repeat;background-position: center top;width:400px;height:300px;display: none; cursor:pointer}' +
+						'.cm-bomb-middle-backflash {z-index:20;position:fixed;margin:auto;top: 0;left:35px;right: 0;bottom: 0;min-width:1160px;background-repeat: no-repeat;background-position: center top;width:455px;height:1000px;display: none; cursor:pointer; background: url("' + resource.backflash + '") no-repeat}' +
+						'.cm-bomb-middle-flash {z-index:23;position:fixed;margin:auto;top: 0;left:35px;right: 0;bottom: 0;min-width:1160px;background-repeat: no-repeat;background-position: center top;width:455px;height:900px;display: none; cursor:pointer; background: url("' + resource.flash + '") no-repeat}' +
 						'.cm-dc-close {width: 80px;height: 80px;cursor: pointer;top: 20px; margin: auto;z-index:101;position: fixed; right:28px;background-repeat: no-repeat;} .cm-dc-close:hover {background-position: -80px} .cm-dc-close:active {background-position: -160px}' +
 						'.cm-dc-close-small {width: 40px;height: 40px;cursor: pointer;top: 5px; margin: auto;z-index:101;position: fixed; right:5px;background-repeat: no-repeat;} .cm-dc-close-small:hover {background-position: -40px} .cm-dc-close-small:active {background-position: -80px}' +
 						'.cm-dc-11logo-l {position:absolute;top:0;left:60px;bottom:0;right:0;margin:auto;cursor:pointer;display: inline-block;width:340px; height: 300px;background-repeat: no-repeat;z-index:99}' +
 						'.cm-dc-11logo-r {position:absolute;top:0;bottom:0;right:40px;margin:auto;cursor:pointer;display: inline-block;width:340px; height: 300px;background-repeat: no-repeat;z-index:99}' +
-						'.cm-dc-rocker {position:fixed;margin:auto;left:0;right:830px;bottom:-20px;z-index:32;width:160px;height: 270px;background-repeat: no-repeat;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto}' +
-						'.cm-dc-rocker-small {position:fixed;margin:auto;left:0;right:830px;bottom:-20px;z-index:40;width:80px;height: 148px;background-repeat: no-repeat;cursor:url(\'https://www.duba.com/static/v2/images/point.cur\'),auto}' +
-						'.cm-dc-start-btn {cursor:pointer;position:fixed;margin:auto;left:0;right:0;bottom:7px;z-index:32;width:408px;height: 130px;background-repeat: no-repeat;} .cm-dc-start-btn:hover {background-position: -406px} .cm-dc-start-btn:active {background-position: -810px} ' +
-						'.cm-dc-start-small-btn {cursor:pointer;position:fixed;margin:auto;left:0;right:0;bottom: 10px;z-index:40;width:204px;height: 65px;background-repeat: no-repeat;} .cm-dc-start-small-btn:hover {background-position: -203px} .cm-dc-start-small-btn:active {background-position: -405px} ' +
-						'.cm-dc-upper {position: fixed;  margin: auto; top:0; left: 0;  right: 0;  width: 1180px;z-index:99;height:100px; cursor:pointer;}' +
-						'.cm-dc-sign {position: absolute;  margin: auto; top:0; left: 0;  right: 0;  width: 480px;z-index:99;height:145px; cursor:pointer;background: url("' + resource.signImg + '") no-repeat}' +
-						'.cm-dc-frame {top:15px;right:70px;position: relative;float:right; width: 102px;z-index:9;height:65px;background-repeat: no-repeat; background-image: url("' + resource.frameImg +
-						'")}' +
-						'.cm-dc-number-l {top:25px;left:10px;position: relative;float:right; width: 33px;z-index:9;height:40px;background-repeat: no-repeat;background-position-x: -360px;background-image: url("' + resource.numberImg +
-						'")}' +
-						'.cm-dc-number-r {top:25px;left:10px;position: relative;float:right; width: 33px;z-index:9;height:40px;background-repeat: no-repeat;background-image: url("' + resource.numberImg + '")}' +
-						'.cm-bomb-class {top:0px;bottom:0px;left:0;right:0;margin:0 auto;position: fixed;z-index:89;min-width: 1180px;height: 100%;font-family: Helvetica, Arial, sans-serif; display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center; -webkit-box-pack: center; -ms-flex-pack: center;justify-content: center; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column;flex-direction: column;height: 100vh;} .cm-bomb-class canvas { border-radius: 8px;}' +
-						'.simpleAlert {position: fixed;z-index: 100;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1075px ;height:1050px;animation-name: zoomIn;-webkit-animation-name: zoomIn;-webkit-animation-duration: 2s;animation-duration: 2s;animation-delay: 0s;-webkit-animation-delay: 0s;animation-iteration-count:1;-webkit-animation-iteration-count:1;}' +
-						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color:#000;opacity:0;filter:alpha(opacity=50);z-index:99}' +
+						'.cm-bomb-class {cursor:pointer;top:0px;bottom:0px;left:0;right:0;margin:0 auto;position: fixed;z-index:89;width: 1180px;height: 100%;font-family: Helvetica, Arial, sans-serif; display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center; -webkit-box-pack: center; -ms-flex-pack: center;justify-content: center; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column;flex-direction: column;height: 100vh;} .cm-bomb-class canvas { border-radius: 8px;cursor: pointer;}' +
+						'.simpleAlert {position: fixed;z-index: 100;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1075px ;height:1050px;animation-name: zoomIn;-webkit-animation-name: zoomIn;-webkit-animation-duration: 1s;animation-duration: 1s;animation-delay: 0s;-webkit-animation-delay: 0s;animation-iteration-count:1;-webkit-animation-iteration-count:1;cursor:pointer}' +
+						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color:#000;opacity:0.3;filter:alpha(opacity=50);z-index:99}' +
 						'.simpleAlertBody {cursor:pointer;z-index:100;position:absolute;width:345px;height:317px;top:0;left:0;right:0;bottom:70px;margin:auto;perspective:1000px}' +
 						'.simpleAlertRed {cursor:pointer;z-index:100;position:absolute;width:345px;height:317px;top:0;left:0;right:0;margin:auto;background-repeat: no-repeat;background: url("' + resource.alertImg + '")}' +
 						'.redAnimat {animation-name: swing;-webkit-animation-name: swing;-webkit-animation-duration: 1s;animation-duration: 1s;animation-delay: 2s;-webkit-animation-delay: 2s;animation-iteration-count: 1;-webkit-animation-iteration-count: 1;}' +
@@ -332,126 +336,50 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 						'@-ms-keyframes rotates{from{-ms-transform:rotate(0deg)}to{-ms-transform:rotate(360deg)}}\n' +
 						'@-moz-keyframes rotates{from{-moz-transform:rotate(0deg)}to{-moz-transform:rotate(360deg)}}\n' +
 						'@-o-keyframes rotates{from{-o-transform:rotate(0deg)}to{-o-transform:rotate(360deg)}}' +
-						' @-webkit-keyframes cm-bom-rubberBand {0% {-webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)}30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)} 60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1, 1, 1);-ms-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1)}} @keyframes cm-bom-rubberBand { 0% { -webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 30% {-webkit-transform: scale3d(1.1, 1.1, 1);-ms-transform: scale3d(1.1, 1.1, 1);transform: scale3d(1.1, 1.1, 1)}60% {-webkit-transform: scale3d(.75, 0.65, 1);-ms-transform: scale3d(.75, 0.65, 1);transform: scale3d(.75, 0.65, 1)} 100% {-webkit-transform: scale3d(1, 1, 1);-ms-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1)}} .cm-bom-rubberBand {-webkit-animation-duration: 2s;animation-duration: 2s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: cm-bom-rubberBand;animation-name: cm-bom-rubberBand; }' +
-						'@-webkit-keyframes rotateY { 0% { -webkit-transform: rotateY(0deg); -ms-transform: rotateY(0deg); transform: rotateY(0deg)} 30% {-webkit-transform: rotateY(45deg);-ms-transform: rotateY(45deg);transform: rotateY(45deg)}60% {-webkit-transform: rotateY(0deg);-ms-transform: rotateY(0deg);transform: rotateY(0deg)} 100% {-webkit-transform: rotateY(-45deg);-ms-transform: rotateY(-45deg);transform: rotateY(-45deg)}} @keyframes rotateY { 0% { -webkit-transform: rotateY(0deg); -ms-transform: rotateY(0deg); transform: rotateY(0deg)} 30% {-webkit-transform: rotateY(45deg);-ms-transform: rotateY(45deg);transform: rotateY(45deg)}60% {-webkit-transform: rotateY(0deg);-ms-transform: rotateY(0deg);transform: rotateY(0deg)} 100% {-webkit-transform: rotateY(-45deg);-ms-transform: rotateY(-45deg);transform: rotateY(-45deg)}} .cm-bom-rotateY {-webkit-animation-duration: 2s;animation-duration: 2s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: rotateY;animation-name: rotateY; }';
+						' @-webkit-keyframes cm-bom-rubberBand {0% {-webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 60% {-webkit-transform: scale3d(1.2, 1.2, 1);-ms-transform: scale3d(1.2, 1.2, 1);transform: scale3d(1.2, 1.2, 1)} 100% {-webkit-transform: scale3d(1, 1, 1);-ms-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1)}} @keyframes cm-bom-rubberBand { 0% { -webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 60% {-webkit-transform: scale3d(1.2, 1.2, 1);-ms-transform: scale3d(1.2, 1.2, 1);transform: scale3d(1.2, 1.2, 1)} 100% {-webkit-transform: scale3d(1, 1, 1);-ms-transform: scale3d(1, 1, 1);transform: scale3d(1, 1, 1)}} .cm-bom-rubberBand {-webkit-animation-duration: 1.5s;animation-duration: 1.5s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: cm-bom-rubberBand;animation-name: cm-bom-rubberBand; }' +
+						'@-webkit-keyframes rotateY { 0% { -webkit-transform: rotateY(0deg); -ms-transform: rotateY(0deg); transform: rotateY(0deg)} 30% {-webkit-transform: rotateY(45deg);-ms-transform: rotateY(45deg);transform: rotateY(45deg)}60% {-webkit-transform: rotateY(0deg);-ms-transform: rotateY(0deg);transform: rotateY(0deg)} 100% {-webkit-transform: rotateY(-45deg);-ms-transform: rotateY(-45deg);transform: rotateY(-45deg)}} @keyframes rotateY { 0% { -webkit-transform: rotateY(0deg); -ms-transform: rotateY(0deg); transform: rotateY(0deg)} 30% {-webkit-transform: rotateY(45deg);-ms-transform: rotateY(45deg);transform: rotateY(45deg)}60% {-webkit-transform: rotateY(0deg);-ms-transform: rotateY(0deg);transform: rotateY(0deg)} 100% {-webkit-transform: rotateY(-45deg);-ms-transform: rotateY(-45deg);transform: rotateY(-45deg)}} .cm-bom-rotateY {-webkit-animation-duration: 2s;animation-duration: 2s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: rotateY;animation-name: rotateY; }' +
+						'@-webkit-keyframes flash { 0% {  opacity: 0  } 50% {  opacity: 0.6  } 100% { opacity: 0  }}  @keyframes flash { 0% {  opacity: 0  } 50% {  opacity: 0.6  } 100% { opacity: 0  } }  .flash {  -webkit-animation-name: flash;  animation-name: flash; -webkit-animation-duration: 1s;  animation-duration: 1s;  -webkit-animation-fill-mode: both;  animation-fill-mode: both;}' +
+						' @-webkit-keyframes cm-bom-head-fadeout {0% { opacity: 1;-webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 100%{ opacity: 0;-webkit-transform: scale3d(4, 4, 1);-ms-transform: scale3d(4, 4, 1);transform: scale3d(4, 4, 1)}} @keyframes cm-bom-head-fadeout {0% { opacity: 1;-webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 100%{ opacity: 0;-webkit-transform: scale3d(4, 4, 1);-ms-transform: scale3d(4, 4, 1);transform: scale3d(4, 4, 1)}} ' +
+						'.cm-bom-head-fadeout {-webkit-animation-duration: 1.5s;animation-duration: 1.5s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: cm-bom-head-fadeout;animation-name: cm-bom-head-fadeout; }' +
+						'.cm-coin1{z-index:2;width: 105px; height: 60px; position: absolute; margin:auto; top: 0;left:-507px;right: 0;bottom: 183px;  background: url("' + resource.coin1 + '") no-repeat;}\n' +
+						'\t.cm-coin2{z-index:2;width: 105px; height: 60px; position: absolute; margin:auto; top: 0;left:-357px;right: 0;bottom: 360px;  background: url("' + resource.coin2 + '") no-repeat;}\n' +
+						'\t.cm-coin3{z-index:2;width: 105px; height: 90px; position: absolute; margin:auto; top: 200px;left:-354px;right: 0;bottom: 0; background: url("' + resource.coin3 + '") no-repeat;}\n' +
+						'\t.cm-coin4{z-index:100;width: 105px; height: 60px; position: absolute; margin:auto; top: 0;left:-207px;right: 0;bottom: 183px;  background: url("' + resource.coin4 + '") no-repeat;}\n' +
+						'\t.cm-coin5{z-index:2;width: 105px; height: 52px; position: absolute; margin:auto; top: 0;left:-62px;right: 0;bottom: 450px;  background: url("' + resource.coin5 + '") no-repeat;}\n' +
+						'\t.cm-coin6{z-index:100;width: 105px; height: 52px; position: absolute; margin:auto; top: 0;left:154px;right: 0;bottom: 322px;  background: url("' + resource.coin6 + '") no-repeat;}\n' +
+						'\t.cm-coin7{width: 60px;  height: 52px;  position: absolute;  margin:auto;  top: 0;left: 270px;right: 0;bottom: 130px;  background: url("' + resource.coin7 + '") no-repeat;}\n' +
+						'\t.cm-coin8{width: 100px;  height: 80px;  position: absolute;  margin:auto;  top: 0;left: 374px;right: 0;bottom: 340px;  background: url("' + resource.coin8 + '") no-repeat;}' +
+						'.cm-bomb-close {width: 30px;height: 30px;cursor: pointer;top:10px; margin: auto;z-index:101;position: fixed; right:60px;background: url("' + resource.closeImg + '") no-repeat;display:none} .cm-bomb-close:hover {background-position: -30px} .cm-bomb-close:active {background-position: -60px}';
 					var cssStyle = {};
 					cssStyle = document.createElement('style');
 					cssStyle.type = 'text/css';
 					cssStyle.innerHTML = cssStr;
 					document.getElementsByTagName('HEAD').item(0).appendChild(cssStyle);
 					var cmbomb = document.createElement('div'),
-						bot = document.createElement('div'),
-						left = document.createElement('div'),
-						right = document.createElement('div'),
 						middle = document.createElement('div'),
-						bottombak = document.createElement('div'),
-						close = document.createElement('div'),
-						rocker = document.createElement('div'),
-						start = document.createElement('div'),
-						bothsideBody = document.createElement('div'),
-						upper = document.createElement('div'),
-						frame = document.createElement('div'),
-						numberL = document.createElement('div'),
-						numberR = document.createElement('div'),
-						sign = document.createElement('div'),
-						botImg = document.createElement('img'),
-						lineImgL = document.createElement('img'),
-						lineImgR = document.createElement('img');
-					cmbomb.className = 'cm-bomb-class'
-					bot.className = 'cm-dc-bottom';
-					left.className = 'cm-dc-left';
-					right.className = 'cm-dc-right';
-					middle.className = 'cm-bomb-middle';
-					bottombak.className = 'cm-dc-bottom-bak';
-					close.className = 'cm-dc-close-small';
-					upper.className = 'cm-dc-upper'
-					frame.className = 'cm-dc-frame'
-					rocker.className = 'cm-dc-rocker';
-					start.className = 'cm-dc-start-btn';
-					bothsideBody.className = 'cm-dc-both-side-body';
-					numberL.className = 'cm-dc-number-l';
-					numberR.className = 'cm-dc-number-r';
-					sign.className = 'cm-dc-sign';
-					bot.style.backgroundImage = 'url(' + resource.botImg + ')'
-					middle.style.backgroundImage = 'url(' + resource.middleImg + ')'
-					bottombak.style.backgroundImage = 'url(' + resource.bottombakImg + ')'
-					close.style.backgroundImage = 'url(' + resource.closeSmallImg + ')'
-					rocker.style.backgroundImage = 'url(' + resource.rockerImg + ')'
-					start.style.backgroundImage = 'url(' + resource.startBtnImg + ')'
+						backFlash = document.createElement('div')
+						flash = document.createElement('div')
+						closeEl = document.createElement('div');
 
-					botImg.src = resource.botImg;
-					botImg.style.width = '1180px';
-					botImg.style.display = 'inline-block';
-					lineImgL.src = resource.lineImg;
-					lineImgL.style.width = '330px'
-					lineImgL.style.height = '100%'
-					lineImgL.style.left = '60px'
-					lineImgL.style.position = 'relative'
-					lineImgR.src = resource.lineImg;
-					lineImgR.style.width = '330px'
-					lineImgR.style.height = '100%'
-					lineImgR.style.right = '60px'
-					lineImgR.style.position = 'relative'
-					var leftlogo = document.createElement('a'),
-						rightlogo = document.createElement('a')
-					leftlogo.className = 'cm-dc-11logo-l'
-					rightlogo.className = 'cm-dc-11logo-r'
-					leftlogo.style.backgroundImage = 'url(' + resource.logoLImg + ')'
-					rightlogo.style.backgroundImage = 'url(' + resource.logoRImg + ')'
-					// left.appendChild(leftlogo)
-					// right.appendChild(rightlogo)
-					// upper.appendChild(frame);
-					// upper.appendChild(numberL);
-					// upper.appendChild(sign);
-					// upper.appendChild(numberR);
-					// left.appendChild(lineImgL);
-					// right.appendChild(lineImgR);
-					// cmdc.appendChild(upper);
-					// cmdc.appendChild(rocker);
-					// cmdc.appendChild(bot);
-					// cmdc.appendChild(left);
-					// cmdc.appendChild(right);
+					cmbomb.className = 'cm-bomb-class'
+					middle.className = 'cm-bomb-middle'
+					backFlash.className = 'cm-bomb-middle-backflash'
+					flash.className = 'cm-bomb-middle-flash'
+					closeEl.className = 'cm-bomb-close'
+
+					middle.style.backgroundImage = 'url(' + resource.middleImg + ')'
+
+					cmbomb.appendChild(flash);
 					cmbomb.appendChild(middle);
-					// cmdc.appendChild(close);
-					// cmdc.appendChild(bottombak);
-					// cmdc.appendChild(bottombak);
-					// cmdc.appendChild(start);
-					// cmdc.appendChild(bothsideBody);
+					cmbomb.appendChild(backFlash);
 					document.body.appendChild(cmbomb);
+					document.body.appendChild(closeEl);
 				},
-				show: function () {
-					cmbombObj.botEL.style.display = 'block'
-					cmbombObj.leftEL.style.display = 'block'
-					cmbombObj.middleEL.style.display = 'block'
-					cmbombObj.bottombakEL.style.display = 'block'
-					cmbombObj.botEL.style.bottom = '-60px'
-					cmbombObj.botEL.classList.toggle('move_upper')
-					CMBOMB.isIE && (cmbombObj.middleEL.style.cursor = 'pointer')
-					cmbombObj.changeRocker()
-				},
-				changeRocker: function(){
-					cmbombObj.si = setInterval(function () {
-						var x = cmbombObj.rockerEL.style.backgroundPositionX
-						cmbombObj.rockerEL.style.backgroundPositionX = x === '0px' ? '-166px' : '0px'
-					}, CMBOMB.timeout * 0.6)
-				},
-				changeRockerSmall: function(){
-					cmbombObj.sis = setInterval(function () {
-						var x = cmbombObj.rockerEL.style.backgroundPositionX
-						cmbombObj.rockerEL.style.backgroundPositionX = x === '0px' ? '-83px' : '0px'
-					}, CMBOMB.timeout * 0.6)
-				}
 			}
 			cmbombObj.init(resource);
 			cmbombObj.rootEL = cmbombObj.$(".cm-bomb-class")
-			cmbombObj.botEL = cmbombObj.$(".cm-dc-bottom")
-			cmbombObj.leftEL = cmbombObj.$(".cm-dc-left")
 			cmbombObj.middleEL = cmbombObj.$(".cm-bomb-middle")
-			cmbombObj.bottombakEL = cmbombObj.$(".cm-dc-bottom-bak")
-			cmbombObj.rockerEL = cmbombObj.$(".cm-dc-rocker")
-			cmbombObj.buttonEL = cmbombObj.$(".cm-dc-start-btn")
 			cmbombObj.closeEL = cmbombObj.$(".cm-dc-close")
-			// cmbombObj.show();
 
 			window.cmbombObj = cmbombObj;
 		},
@@ -485,19 +413,18 @@ var cmdcAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend(t
 
 	// if(CMBOMB.Interface.ready()) {
 		try {
-			// if (cmdcCookie('cmbombg') === '1') {
+			// if (cmbombCookie('cmbombg') === '1') {
 			// 	CMBOMB.Interface.close('cookie')
 			// 	return
 			// }
 			CMBOMB.loadSource();
-			CMBOMB.dosomethingforbkg()
+			// CMBOMB.dosomethingforbkg()
 			setTimeout(function () {
 				//建立游戏周边场景
 				CMBOMB.buildWalls()
 				//绑定鼠标移动事件
 				CMBOMB.addEvent(document, 'mousemove', CMBOMB.mmFunc)
 			}, CMBOMB.timeout)
-
 		} catch (e) {
 			console.log('error', e)
 			CMBOMB.Interface.error()
@@ -556,9 +483,9 @@ CMBOMBG.do = function() {
 				if(body.isStatic)
 					Body.setStatic(body, false);
 				if (body.position.y) {
-					var forceMagnitude = 0.03* body.mass;
-					var x = (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([1, -1]),
-					y = -forceMagnitude + Common.random() * -forceMagnitude - 0.005
+					var forceMagnitude = 0.06* body.mass;
+					var x = (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([2, -1.5]),
+					y = -forceMagnitude + Common.random() * -forceMagnitude - 0.012
 					Body.applyForce(body, body.position, {
 						x: x,
 						y: y
@@ -569,35 +496,142 @@ CMBOMBG.do = function() {
 	};
 	//动画结束
 	CMBOMBG.do.canvasELAnimationEnd =  function(){
-		//金币消失
-		CMBOMBG.do.setBodiesVisible(engine, false)
-		//中部天猫头出现
-		$('.cm-bomb-middle') && $('.cm-bomb-middle').css('display', 'block')
-
 		//炸
-		setTimeout(function(){
-			$('.cm-bomb-middle') && $('.cm-bomb-middle').css('display', 'none')
-			CMBOMBG.do.setBodiesVisible(engine, true)
-			World.remove(world, vertices);
-			explosion(engine)
-			//红包出现
-			setTimeout(function(){
-				var alert = cmdcAlert({
-					"buttons": {
-						"gotmall": function () {
+		$('.cm-bomb-middle-backflash') && $('.cm-bomb-middle-backflash').css('display', 'none')
+		$('.cm-bomb-middle') && $('.cm-bomb-middle').addClass('cm-bom-head-fadeout')
+		var headFadeout = $('.cm-bom-head-fadeout')[0]
 
-						}
-					}
-				})
-				//当物品掉落到底部后，就清除所有
-				setTimeout(function () {
-					World.clear(world)
-					//销毁canvas对象
-					$('.cm-bom-rubberBand') && $('.cm-bom-rubberBand').remove()
-				}, CMBOMB.timeout* 8)
-			}, 100)
-		}, 1000)
+		setTimeout(function () {
+			CMBOMBG.do.showRed()
+		}, 800)
 
+		// CMBOMB.addEvent(headFadeout, 'animationend', CMBOMBG.do.headFadeoutAnimationEnd)
+		// CMBOMB.addEvent(headFadeout, 'webkitAnimationEnd', CMBOMBG.do.headFadeoutAnimationEnd)
+
+		CMBOMBG.do.setBodiesVisible(engine, true)
+		World.remove(world, vertices);
+		explosion(engine)
+		//减慢金币掉落的速度
+		setTimeout(function () {
+			CMBOMBG.do.setBodiesTimeScale(engine, 0.45)
+		}, 300)
+	}
+
+	CMBOMBG.do.flashELAnimationEnd =  function(){
+		//周边展示
+		// World.add(world, [body1, body2, body3, body4, body5, body6, body7, body8, body9, body10, body11, body12, body13, body14, body15, body16, body17, body18, body19])
+		// $('canvas') && $('canvas').addClass('cm-bom-rubberBand')
+		// var rubberBand = $('.cm-bom-rubberBand')[0]
+		// CMBOMB.addEvent(rubberBand, 'animationend', CMBOMBG.do.canvasELAnimationEnd)
+		// CMBOMB.addEvent(rubberBand, 'webkitAnimationEnd', CMBOMBG.do.canvasELAnimationEnd)
+
+		//流入上报
+		CMBOMB.Interface.reportShow('show')
+	}
+
+	CMBOMBG.do.showRed =  function(){
+		//红包出现
+		CMBOMBG.do.alert = cmbombAlert({
+			"buttons": {
+				"gotmall": function () {
+					window.open(CMBOMB.tmallLink)
+					CMBOMBG.do.closeFun('receive')
+					CMBOMB.Interface.reportClick('click2', 1)
+				}
+			}
+		})
+		CMBOMBG.do.disappear()
+		//当物品掉落到底部后，就清除所有
+		CMBOMBG.do.sto8 = setTimeout(function () {
+			World.clear(world)
+			//销毁canvas对象
+			$('.cm-bomb-class') && $('.cm-bomb-class').remove()
+		}, CMBOMB.timeout* 8)
+		//红包展示上报
+		CMBOMB.Interface.reportShow('red')
+		//关闭按钮出现
+		$('.cm-bomb-close') && $('.cm-bomb-close').css('display', 'block')
+		// $('.cm-bomb-middle-backflash') && $('.cm-bomb-middle-backflash').css('display', 'block')
+		//
+		// var count = 1
+		// var red = document.getElementsByClassName('simpleAlertRed')[0]
+		// var is20 = false, is1 = true
+		// function rafcallback() {
+		// 	if(count > 20 || is20) {
+		// 		is20 = true
+		// 		is1 = false
+		// 		if(count === 2){
+		// 			is20 = false
+		// 			is1 = true
+		// 		}
+		// 		red.style.backgroundImage = 'url(' + CMBOMB.sourceLinkRoot + 'img/bomb/red/1_000' + count-- + '.png)'
+		// 		G = requestAnimationFrame(rafcallback)
+		// 	}else if(count < 1 || is1) {
+		// 		is20 = false
+		// 		is1 = true
+		// 		if(count === 19){
+		// 			is20 = true
+		// 			is1 = false
+		// 		}
+		// 		red.style.backgroundImage = 'url(' + CMBOMB.sourceLinkRoot + 'img/bomb/red/1_000' + count++ + '.png)'
+		// 		G = requestAnimationFrame(rafcallback)
+		// 	}
+		// }
+		// requestAnimationFrame(rafcallback);
+	}
+
+	//绑定事件
+	CMBOMBG.do.bindEvents = function() {
+		//点击金币
+		$('.cm-bomb-class').bind('click', function (event) {
+			window.open(CMBOMB.tmallLink)
+			CMBOMBG.do.closeFun('receive')
+			CMBOMB.Interface.reportClick('click1', 1)
+		})
+		//关闭按钮
+		$('.cm-bomb-close').bind('click', function(){
+			CMBOMBG.do.closeFun('exit2')
+		})
+	}
+	CMBOMBG.do.bindEvents()
+
+	CMBOMBG.do.unbindEvents = function(){
+		$('.cm-bomb-class').unbind('click')
+		$('.cm-bomb-close').unbind('click')
+	}
+
+	CMBOMBG.do.clickFun = function(action){
+		CMBOMB.Interface.reportClick(action)
+	}
+
+	//关闭方法
+	CMBOMBG.do.closeFun = function(action) {
+		action !== 'disappear' && cmbombCookie.setToday('cmbombg', 1);
+
+		CMBOMBG.do.disappearSTO && clearTimeout(CMBOMBG.do.disappearSTO)
+		CMBOMBG.do.sto8 && clearTimeout(CMBOMBG.do.sto8)
+
+		//清除事件
+		cancelAnimationFrame(CMBOMBG.do.raf)
+		//清除加载的文件
+		CMBOMB.clearSource()
+		World.clear(world)
+		$('.cm-bomb-class') && $('.cm-bomb-class').remove()
+		$('.simpleAlertShelter') && $('.simpleAlertShelter').remove()
+		$('.cm-bomb-close') && $('.cm-bomb-close').remove()
+
+		CMBOMBG.do.unbindEvents()
+		//关闭弹窗红包
+		CMBOMBG.do.alert && CMBOMBG.do.alert.close()
+
+		CMBOMB.Interface.close(action)
+	}
+
+	//自动消失
+	CMBOMBG.do.disappear = function(){
+		CMBOMBG.do.disappearSTO = setTimeout(function(){
+			CMBOMBG.do.alert && CMBOMBG.do.closeFun('disappear')
+		}, 1000* 30)
 	}
 
 	Render.run(render);
@@ -612,12 +646,7 @@ CMBOMBG.do = function() {
 		render: {
 			fillStyle: 'transparent',
 			strokeStyle: 'transparent',
-			lineWidth: 0,
-			// sprite: {
-			// 	xScale: 1,
-			// 	yScale: 1,
-			// 	texture: CMBOMB.sourceLinkRoot + 'img/bomb/head.png'
-			// }
+			lineWidth: 5
 		}
 	}, true);
 
@@ -743,21 +772,21 @@ CMBOMBG.do = function() {
 		}} })
 
 	CMBOMBG.do.criteria = {
-		y: -2400,
+		y: -2100,
 		column: 1,
-		row: 75,
-		sides: 10,
-		radius: 15
+		row: 85,
+		sides: 8,
+		radius: 12
 	}
 	CMBOMBG.do.createCoin = function(x){
 		return Composites.stack(x, CMBOMBG.do.criteria.y, CMBOMBG.do.criteria.column, CMBOMBG.do.criteria.row, 3, 5, function(x, y, column, row, lastBody, i) {
 			var label = 'stack',
-				frictionAir = 0.02,
+				frictionAir = 0.03,
 				friction = 0.0001,
-				restitution = 0.002, //恢复原状
-				mass = 0.3,
-				timeScale = 0.9,
-				scale = 0.4
+				restitution = 0.001, //恢复原状
+				mass = 0.6,
+				timeScale = 0.8,
+				scale = 0.3
 			if (Query.point([vertices], { x: x, y: y }).length === 0) {
 				if (Common.random() < 0.1) {
 					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
@@ -824,7 +853,7 @@ CMBOMBG.do = function() {
 						}
 					});
 				}else if (Common.random() > 0.4 && Common.random() < 0.5) {
-					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
+					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius-4, {
 						label: label,
 						frictionAir: frictionAir,
 						friction: friction,
@@ -840,7 +869,7 @@ CMBOMBG.do = function() {
 						}
 					});
 				}else if (Common.random() > 0.5 && Common.random() < 0.6) {
-					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius, {
+					return Bodies.polygon(x, y, CMBOMBG.do.criteria.sides, CMBOMBG.do.criteria.radius-4, {
 						label: label,
 						frictionAir: frictionAir,
 						friction: friction,
@@ -932,10 +961,22 @@ CMBOMBG.do = function() {
 			body = bodies[i]
 			if (body.label === 'stack') {
 				body.render.visible = bool
+				body.frictionAir = 0.02
 			}
 		}
 	}
-
+	CMBOMBG.do.setBodiesTimeScale = function(engine, value){
+		var bodies = Composite.allBodies(engine.world),
+			body
+		for (var i = 0; i < bodies.length; i++) {
+			body = bodies[i]
+			if (body.label === 'stack') {
+				body.timeScale = value
+				// body.render.sprite.xScale = 0.2
+				// body.render.sprite.yScale = 0.2
+			}
+		}
+	}
 	//设置静态
 	CMBOMBG.do.setBodiesStatic = function(engine, bool){
 		var bodies = Composite.allBodies(engine.world),
@@ -961,12 +1002,28 @@ CMBOMBG.do = function() {
 		//svg顶部到上层的距离
 		var verticeTop = 250
 		if(body.position.y >= verticeTop && body.label==='stack'){
-			World.add(world, [body1, body2, body3, body4, body5, body6, body7, body8, body9, body10, body11, body12, body13, body14, body15, body16, body17, body18, body19])
+			$('.cm-bomb-middle-flash') && $('.cm-bomb-middle-flash').css('display', 'block') && $('.cm-bomb-middle-flash').addClass('flash')
+			// $('canvas').addClass('cm-bom-rubberBand')
+			var flash = $('.cm-bomb-middle-flash')[0]
 
-			$('canvas').addClass('cm-bom-rubberBand')
-			var rubberBand = $('.cm-bom-rubberBand')[0]
-			CMBOMB.addEvent(rubberBand, 'animationend', CMBOMBG.do.canvasELAnimationEnd)
-			CMBOMB.addEvent(rubberBand, 'webkitAnimationEnd', CMBOMBG.do.canvasELAnimationEnd)
+			//金币消失
+			setTimeout(function () {
+				CMBOMBG.do.setBodiesVisible(engine, false)
+				setTimeout(function () {
+					//中部天猫头出现
+					$('.cm-bomb-middle') && $('.cm-bomb-middle').css('display', 'block')
+					$('.cm-bomb-middle-backflash') && $('.cm-bomb-middle-backflash').css('display', 'block')
+				}, 0)
+
+				World.add(world, [body1, body2, body3, body4, body5, body6, body7, body8, body9, body10, body11, body12, body13, body14, body15, body16, body17, body18, body19])
+				$('canvas') && $('canvas').addClass('cm-bom-rubberBand')
+				var rubberBand = $('.cm-bom-rubberBand')[0]
+				CMBOMB.addEvent(rubberBand, 'animationend', CMBOMBG.do.canvasELAnimationEnd)
+				CMBOMB.addEvent(rubberBand, 'webkitAnimationEnd', CMBOMBG.do.canvasELAnimationEnd)
+			}, 50)
+
+			CMBOMB.addEvent(flash, 'animationend', CMBOMBG.do.flashELAnimationEnd)
+			CMBOMB.addEvent(flash, 'webkitAnimationEnd', CMBOMBG.do.flashELAnimationEnd)
 			Events.off(engine, 'afterUpdate')
 		}
 	})
@@ -977,7 +1034,7 @@ CMBOMBG.do = function() {
 	});
 
 	function enginRun() {
-		window.requestAnimationFrame(enginRun);
+		CMBOMBG.do.raf = window.requestAnimationFrame(enginRun);
 		Engine.update(engine, 1000 / 60, 1);
 	}
 	enginRun()
