@@ -121,9 +121,9 @@ s.append(c)
 
 (function() {
 	var CMBOMB = {
-		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
-		sourceLinkRoot: '//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/',
+		// sourceLinkRoot: '//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/',
 		tmallLink: '//s.click.taobao.com/yxl72Zw',
 		dc: {},
 		playAgain: false,
@@ -341,15 +341,17 @@ s.append(c)
 						'@-webkit-keyframes flash { 0% {  opacity: 0  } 50% {  opacity: 0.6  } 100% { opacity: 0  }}  @keyframes flash { 0% {  opacity: 0  } 50% {  opacity: 0.6  } 100% { opacity: 0  } }  .flash {  -webkit-animation-name: flash;  animation-name: flash; -webkit-animation-duration: 1s;  animation-duration: 1s;  -webkit-animation-fill-mode: both;  animation-fill-mode: both;}' +
 						' @-webkit-keyframes cm-bom-head-fadeout {0% { opacity: 1;-webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 100%{ opacity: 0;-webkit-transform: scale3d(4, 4, 1);-ms-transform: scale3d(4, 4, 1);transform: scale3d(4, 4, 1)}} @keyframes cm-bom-head-fadeout {0% { opacity: 1;-webkit-transform: scale3d(1, 1, 1); -ms-transform: scale3d(1, 1, 1); transform: scale3d(1, 1, 1)} 100%{ opacity: 0;-webkit-transform: scale3d(4, 4, 1);-ms-transform: scale3d(4, 4, 1);transform: scale3d(4, 4, 1)}} ' +
 						'.cm-bom-head-fadeout {-webkit-animation-duration: 1.5s;animation-duration: 1.5s;-webkit-animation-fill-mode: both;animation-fill-mode: both;-webkit-animation-name: cm-bom-head-fadeout;animation-name: cm-bom-head-fadeout; }' +
-						'.cm-coin1{z-index:2;width: 105px; height: 60px; position: absolute; margin:auto; top: 0;left:-507px;right: 0;bottom: 183px;  background: url("' + resource.coin1 + '") no-repeat;}\n' +
-						'\t.cm-coin2{z-index:2;width: 105px; height: 60px; position: absolute; margin:auto; top: 0;left:-357px;right: 0;bottom: 360px;  background: url("' + resource.coin2 + '") no-repeat;}\n' +
-						'\t.cm-coin3{z-index:2;width: 105px; height: 90px; position: absolute; margin:auto; top: 200px;left:-354px;right: 0;bottom: 0; background: url("' + resource.coin3 + '") no-repeat;}\n' +
-						'\t.cm-coin4{z-index:100;width: 105px; height: 60px; position: absolute; margin:auto; top: 0;left:-207px;right: 0;bottom: 183px;  background: url("' + resource.coin4 + '") no-repeat;}\n' +
+						'.cm-coin1{z-index:2;width: 105px; height: 60px; position: absolute; margin:auto; top: 0;left:-507px;right: 0;bottom: 183px;  background: url("' + resource.coin1 + '") no-repeat;animation: jump 2s infinite ease;}\n' +
+						'\t.cm-coin2{z-index:2;width: 105px; height: 60px; position: absolute; margin:auto; top: 0;left:-357px;right: 0;bottom: 360px;  background: url("' + resource.coin2 + '") no-repeat; animation: jump 2s infinite ease;}\n' +
+						'\t.cm-coin3{z-index:2;width: 105px; height: 90px; position: absolute; margin:auto; top: 200px;left:-354px;right: 0;bottom: 0; background: url("' + resource.coin3 + '") no-repeat}\n' +
+						'\t.cm-coin4{z-index:100;width: 105px; height: 60px; position: absolute; margin:auto; top: 0;left:-300px;right: 0;bottom: 183px;  background: url("' + resource.coin4 + '") no-repeat;}\n' +
 						'\t.cm-coin5{z-index:2;width: 105px; height: 52px; position: absolute; margin:auto; top: 0;left:-62px;right: 0;bottom: 450px;  background: url("' + resource.coin5 + '") no-repeat;}\n' +
 						'\t.cm-coin6{z-index:100;width: 105px; height: 52px; position: absolute; margin:auto; top: 0;left:154px;right: 0;bottom: 322px;  background: url("' + resource.coin6 + '") no-repeat;}\n' +
 						'\t.cm-coin7{width: 60px;  height: 52px;  position: absolute;  margin:auto;  top: 0;left: 270px;right: 0;bottom: 130px;  background: url("' + resource.coin7 + '") no-repeat;}\n' +
-						'\t.cm-coin8{width: 100px;  height: 80px;  position: absolute;  margin:auto;  top: 0;left: 374px;right: 0;bottom: 340px;  background: url("' + resource.coin8 + '") no-repeat;}' +
-						'.cm-bomb-close {width: 30px;height: 30px;cursor: pointer;top:0;right:0;left:300px;bottom:490px;margin: auto;z-index:101;position: fixed;background: url("' + resource.closeImg + '") no-repeat;display:none} .cm-bomb-close:hover {background-position: -30px} .cm-bomb-close:active {background-position: -60px}';
+						'\t.cm-coin8{width: 100px;  height: 80px;  position: absolute;  margin:auto;  top: 0;left: 374px;right: 0;bottom: 340px;  background: url("' + resource.coin8 + '") no-repeat;animation: jump 2s infinite ease;}' +
+						'.cm-bomb-close {width: 30px;height: 30px;cursor: pointer;top:0;right:0;left:300px;bottom:490px;margin: auto;z-index:101;position: fixed;background: url("' + resource.closeImg + '") no-repeat;display:none} .cm-bomb-close:hover {background-position: -30px} .cm-bomb-close:active {background-position: -60px}' +
+						// '.cm-bomb-jump {  animation: jump 1.5s infinite ease;  }' +
+						'@keyframes jump { 0% {  top: 0;  } 50% {  top: -40px;  } 100% {  top: 0;  } }';
 					var cssStyle = {};
 					cssStyle = document.createElement('style');
 					cssStyle.type = 'text/css';
@@ -403,22 +405,18 @@ s.append(c)
 			CMBOMB.removeEvent(document, 'mousemove', CMBOMB.mmFunc)
 			//开始
 			CMBOMB.play()
-		},
-		dosomethingforbkg: function(){
-
 		}
 	};
 
 	window.CMBOMB = CMBOMB;
 
-	if(CMBOMB.Interface.ready()) {
+	// if(CMBOMB.Interface.ready()) {
 		try {
-			if (cmbombCookie('cmbombg') === '1') {
-				CMBOMB.Interface.close('cookie')
-				return
-			}
-			CMBOMB.loadSource();
-			// CMBOMB.dosomethingforbkg()
+			// if (cmbombCookie('cmbombg') === '1') {
+			// 	CMBOMB.Interface.close('cookie')
+			// 	return
+			// }
+			CMBOMB.loadSource()
 			setTimeout(function () {
 				//建立游戏周边场景
 				CMBOMB.buildWalls()
@@ -429,7 +427,7 @@ s.append(c)
 			console.log('error', e)
 			CMBOMB.Interface.error()
 		}
-	}
+	// }
 })();
 
 var CMBOMBG = CMBOMBG || {};
@@ -469,6 +467,9 @@ CMBOMBG.do = function() {
 			}
 		});
 
+	//金币流入后上报
+	CMBOMB.Interface.reportShow('show1')
+
 	var explosion = function(engine, b) {
 		if(b){
 			var fm = 0.0025* b.mass;
@@ -483,9 +484,9 @@ CMBOMBG.do = function() {
 				if(body.isStatic)
 					Body.setStatic(body, false);
 				if (body.position.y) {
-					var forceMagnitude = 0.06* body.mass;
+					var forceMagnitude = 0.05* body.mass;
 					var x = (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([2, -1.5]),
-					y = -forceMagnitude + Common.random() * -forceMagnitude - 0.012
+					y = -forceMagnitude + Common.random() * -forceMagnitude - 0.015
 					Body.applyForce(body, body.position, {
 						x: x,
 						y: y
@@ -505,9 +506,6 @@ CMBOMBG.do = function() {
 			CMBOMBG.do.showRed()
 		}, 800)
 
-		// CMBOMB.addEvent(headFadeout, 'animationend', CMBOMBG.do.headFadeoutAnimationEnd)
-		// CMBOMB.addEvent(headFadeout, 'webkitAnimationEnd', CMBOMBG.do.headFadeoutAnimationEnd)
-
 		CMBOMBG.do.setBodiesVisible(engine, true)
 		World.remove(world, vertices);
 		explosion(engine)
@@ -515,6 +513,8 @@ CMBOMBG.do = function() {
 		setTimeout(function () {
 			CMBOMBG.do.setBodiesTimeScale(engine, 0.45)
 		}, 300)
+		//爆炸后上报
+		CMBOMB.Interface.reportShow('show3')
 	}
 
 	CMBOMBG.do.flashELAnimationEnd =  function(){
@@ -525,8 +525,8 @@ CMBOMBG.do = function() {
 		// CMBOMB.addEvent(rubberBand, 'animationend', CMBOMBG.do.canvasELAnimationEnd)
 		// CMBOMB.addEvent(rubberBand, 'webkitAnimationEnd', CMBOMBG.do.canvasELAnimationEnd)
 
-		//流入上报
-		CMBOMB.Interface.reportShow('show')
+		//猫头出现上报
+		CMBOMB.Interface.reportShow('show2')
 	}
 
 	CMBOMBG.do.showRed =  function(){
