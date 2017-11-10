@@ -164,10 +164,10 @@ var cmbombAlert=function(e){var t={closeAll:!1,content:"",buttons:{}},l=$.extend
 			mScript.src = sourceLinkRoot + "js/matter.js";
 			jquery.src = sourceLinkRoot + "js/jquery-1.11.0.min.js";
 
-			oHead.appendChild(pfScript);
-			oHead.appendChild(deScript);
-			oHead.appendChild(paScript);
-			oHead.appendChild(mScript);
+			// oHead.appendChild(pfScript);
+			// oHead.appendChild(deScript);
+			// oHead.appendChild(paScript);
+			// oHead.appendChild(mScript);
 
 			// oHead.appendChild(mgScript); //debug tool
 			typeof jQuery === 'undefined' && oHead.appendChild(jquery);
