@@ -133,10 +133,10 @@ s.append(c)
 
 (function() {
 	var CMBOMB = {
-		sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
+		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
-		// sourceLinkRoot: '//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/',
-		tmallLink: '//s.click.taobao.com/yxl72Zw',
+		sourceLinkRoot: '//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/',
+		tmallLink: 'https://s.click.taobao.com/t?e=m%3D2%26s%3DqEJQzkBlCPwcQipKwQzePCperVdZeJviszgHCoaJEBVyINtkUhsv0PGvscbCScM4JM9aA%2FfMoSJUQtbrqkftlHBwruG5dmsoQ%2F9Ld%2FhJ2e94NabOYw2fnE2srC8Mk09eQgZss1jm63jO54LQ%2FVw1Lw6GXwCJ2z%2BDwie7bKUJ13xJewJHSe1v7X6B%2F00oBp4ZPQUuEDH%2BG9QZldUL%2B%2F5hsliR%2Bx%2Be38MfoGnais0viBsP11EHIsR3TMeqpm1q4YKLqHxuZFEYQ8v%2FDhyQJvbkc5lqCaY1L5Vbk8PNP5PCal2OlizfJnPpKzUXllRFT%2FLflne%2Bvno5ekOdzyyO9CIkVdQc6rs1qJwrxg5p7bh%2BFbQ%3D',
 		dc: {},
 		playAgain: false,
 		timeout: 1000,
@@ -419,17 +419,22 @@ s.append(c)
 			CMBOMB.removeEvent(document, 'mousemove', CMBOMB.mmFunc)
 			//开始
 			CMBOMB.play()
+		},
+		disappearFunc: function(){
+			CMBOMB.removeEvent(document, 'mousemove', CMBOMB.disappearFunc)
+			//消失计时开始
+			CMBOMBG.do.disappear()
 		}
 	};
 
 	window.CMBOMB = CMBOMB;
 
-	// if(CMBOMB.Interface.ready()) {
+	if(CMBOMB.Interface.ready()) {
 		try {
-			// if (cmbombCookie('cmbombg') === '1') {
-			// 	CMBOMB.Interface.close('cookie')
-			// 	return
-			// }
+			if (cmbombCookie('cmbombg') === '1') {
+				CMBOMB.Interface.close('cookie')
+				return
+			}
 			CMBOMB.loadSource()
 			setTimeout(function () {
 				//建立游戏周边场景
@@ -442,7 +447,7 @@ s.append(c)
 			console.log('error', e)
 			CMBOMB.Interface.error()
 		}
-	// }
+	}
 })();
 
 var CMBOMBG = CMBOMBG || {};
@@ -555,7 +560,9 @@ CMBOMBG.do = function() {
 				}
 			}
 		})
-		CMBOMBG.do.disappear()
+		//绑定鼠标移动事件, 控制红包自动消失
+		CMBOMB.addEvent(document, 'mousemove', CMBOMB.disappearFunc)
+
 		//当物品掉落到底部后，就清除所有
 		CMBOMBG.do.sto8 = setTimeout(function () {
 			World.clear(world)
