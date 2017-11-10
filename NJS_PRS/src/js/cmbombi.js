@@ -504,7 +504,7 @@ CMBOMBG.do = function() {
 				if(body.isStatic)
 					Body.setStatic(body, false);
 				if (body.position.y) {
-					var forceMagnitude = 0.04* body.mass;
+					var forceMagnitude = 0.05* body.mass;
 					var x = (forceMagnitude + Common.random() * forceMagnitude) * Common.choose([2.2, -1.8]),
 					y = -forceMagnitude + Common.random() * -forceMagnitude - 0.025
 					Body.applyForce(body, body.position, {
@@ -525,9 +525,9 @@ CMBOMBG.do = function() {
 		setTimeout(function () {
 			CMBOMBG.do.showRed()
 			//减慢金币掉落的速度
-			setTimeout(function () {
-				CMBOMBG.do.setBodiesTimeScale(engine, 0.3)
-			}, 100)
+			// setTimeout(function () {
+			// 	CMBOMBG.do.setBodiesTimeScale(engine, 0.3)
+			// }, 100)
 		}, 800)
 
 		CMBOMBG.do.setBodiesVisible(engine, true)
