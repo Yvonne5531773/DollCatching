@@ -132,7 +132,7 @@ s.append(c)
 })();
 
 (function() {
-	var CMBOMB = {
+	CMBOMB = {
 		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		sourceLinkRoot: '//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/',
@@ -427,7 +427,7 @@ s.append(c)
 		}
 	};
 
-	window.CMBOMB = CMBOMB;
+	// window.CMBOMB = CMBOMB;
 
 	if(CMBOMB.Interface.ready()) {
 		try {
@@ -450,7 +450,7 @@ s.append(c)
 	}
 })();
 
-var CMBOMBG = CMBOMBG || {};
+// var CMBOMBG = CMBOMBG || {};
 
 CMBOMBG.do = function() {
 	var Engine = Matter.Engine,

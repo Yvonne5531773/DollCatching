@@ -1,5 +1,7 @@
 
 (function(){
+	window.CMBOMB = {};
+	window.CMBOMBG = {};
 	if (!window.requestAnimationFrame) {
 		bigBomb && bigBomb.notSupport();
 		bigBomb && bigBomb.report({node: 1031100, w: 'coinboom', cid: '57471519', snode: 1365, expand: 'not-support'});
