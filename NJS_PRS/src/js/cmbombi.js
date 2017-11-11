@@ -334,7 +334,7 @@ s.append(c)
 						'.cm-dc-11logo-l {position:absolute;top:0;left:60px;bottom:0;right:0;margin:auto;cursor:pointer;display: inline-block;width:340px; height: 300px;background-repeat: no-repeat;z-index:99}' +
 						'.cm-dc-11logo-r {position:absolute;top:0;bottom:0;right:40px;margin:auto;cursor:pointer;display: inline-block;width:340px; height: 300px;background-repeat: no-repeat;z-index:99}' +
 						'.cm-bomb-class {cursor:pointer;top:0px;bottom:0px;left:0;right:0;margin:0 auto;position: fixed;z-index:89;width: 1180px;height: 100%;font-family: Helvetica, Arial, sans-serif; display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center; -webkit-box-pack: center; -ms-flex-pack: center;justify-content: center; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column;flex-direction: column;height: 100vh;} .cm-bomb-class canvas { border-radius: 8px;cursor: pointer;}' +
-						'.simpleAlert {position: fixed;z-index: 100;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:700px ;height:700px;animation-name: zoomIn;-webkit-animation-name: zoomIn;-webkit-animation-duration: 1s;animation-duration: 1s;animation-delay: 0s;-webkit-animation-delay: 0s;animation-iteration-count:1;-webkit-animation-iteration-count:1;cursor:pointer}' +
+						'.simpleAlert {position: fixed;z-index: 100;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1180px ;height:800px;animation-name: zoomIn;-webkit-animation-name: zoomIn;-webkit-animation-duration: 1s;animation-duration: 1s;animation-delay: 0s;-webkit-animation-delay: 0s;animation-iteration-count:1;-webkit-animation-iteration-count:1;cursor:pointer}' +
 						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color:#000;opacity:0;filter:alpha(opacity=50);z-index:99;display:none}' +
 						'.simpleAlertBody {cursor:pointer;z-index:100;position:absolute;width:345px;height:317px;top:0;left:0;right:0;bottom:70px;margin:auto;perspective:1000px}' +
 						'.simpleAlertRed {cursor:pointer;z-index:100;position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;background-repeat: no-repeat;background: url("' + resource.alertImg + '") no-repeat; width: 300px;  height: 397px;  -webkit-background-size: 100%;  background-size: 100%; animation: bomb-redbag 1.5s steps(1, start) 0s infinite;}' +
@@ -655,7 +655,7 @@ CMBOMBG.do = function() {
 	CMBOMBG.do.disappear = function(){
 		CMBOMBG.do.disappearSTO = setTimeout(function(){
 			CMBOMBG.do.alert && CMBOMBG.do.closeFun('disappear')
-		}, 1000* 40)
+		}, 1000* 60)
 	}
 
 	Render.run(render);
