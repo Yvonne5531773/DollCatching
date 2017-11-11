@@ -136,7 +136,7 @@ s.append(c)
 		// sourceLinkRoot: '//localhost:8000/NJS_PRS/src/',
 		// sourceLinkRoot: '//10.20.240.179:8000/NJS_PRS/src/',
 		sourceLinkRoot: '//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/',
-		tmallLink: 'https://s.click.taobao.com/t?e=m%3D2%26s%3DqEJQzkBlCPwcQipKwQzePCperVdZeJviszgHCoaJEBVyINtkUhsv0PGvscbCScM4JM9aA%2FfMoSJUQtbrqkftlHBwruG5dmsoQ%2F9Ld%2FhJ2e94NabOYw2fnE2srC8Mk09eQgZss1jm63jO54LQ%2FVw1Lw6GXwCJ2z%2BDwie7bKUJ13xJewJHSe1v7X6B%2F00oBp4ZPQUuEDH%2BG9QZldUL%2B%2F5hsliR%2Bx%2Be38MfoGnais0viBsP11EHIsR3TMeqpm1q4YKLqHxuZFEYQ8v%2FDhyQJvbkc5lqCaY1L5Vbk8PNP5PCal2OlizfJnPpKzUXllRFT%2FLflne%2Bvno5ekOdzyyO9CIkVdQc6rs1qJwrxg5p7bh%2BFbQ%3D',
+		tmallLink: 'http://s.click.taobao.com/t?e=m%3D2%26s%3DMVK65UoErY8cQipKwQzePCperVdZeJviK7Vc7tFgwiFRAdhuF14FMac36Gvw%2FAS95x%2BIUlGKNpWmuB8lbS8CJx9jet3NJ0mDm4%2BUt7tFAIP4yys7zPO1Q45N7u7NTPnp6oVw0fmJ46szuTGl041QAqX4VWt66S4EJPwiig1bxLOG0wUe4iTmUXaH9JtUKSe2efZpbDTKrsfMdRRDA0ZDJ0rFczBYd7wQxSvoguaRvVa9n67sAxTD53JytX4l6gEhFZoM2rr84YLNxU4O7hKvXhtwIo9S%2Bd7SN8%2FKeOHPighE1sG8MHlaX1fugIxg4EuBT7cdELNMaxfkXkdea8kgYymBZ5ZWikN7cSpj5qSCmbA%3D',
 		dc: {},
 		playAgain: false,
 		timeout: 1000,
@@ -297,8 +297,7 @@ s.append(c)
 			var resource = {
 				middleImg: sourceLinkRoot + 'img/bomb/head.png',
 				closeImg: sourceLinkRoot + 'img/bomb/close.png',
-				// alertImg: sourceLinkRoot + 'img/bomb/red.gif',
-				alertImg: sourceLinkRoot + 'img/bomb/red2.png',
+				alertImg: sourceLinkRoot + 'img/bomb/red.png',
 				alertbtnImg: sourceLinkRoot + 'img/alertbtn.png',
 				alertFlashImg: sourceLinkRoot + 'img/flash.png',
 				alertHeadImg: sourceLinkRoot + 'img/nice.png',
@@ -337,7 +336,7 @@ s.append(c)
 						'.simpleAlert {position: fixed;z-index: 100;margin:auto;top: 0;left: 0;right: 0;bottom: 0;width:1180px ;height:800px;animation-name: zoomIn;-webkit-animation-name: zoomIn;-webkit-animation-duration: 1s;animation-duration: 1s;animation-delay: 0s;-webkit-animation-delay: 0s;animation-iteration-count:1;-webkit-animation-iteration-count:1;cursor:pointer}' +
 						'.simpleAlertShelter {position: fixed;width: 100%;height: 100%;top:0;left:0;background-color:#000;opacity:0;filter:alpha(opacity=50);z-index:99;display:none}' +
 						'.simpleAlertBody {cursor:pointer;z-index:100;position:absolute;width:345px;height:317px;top:0;left:0;right:0;bottom:70px;margin:auto;perspective:1000px}' +
-						'.simpleAlertRed {cursor:pointer;z-index:100;position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;background-repeat: no-repeat;background: url("' + resource.alertImg + '") no-repeat; width: 300px;  height: 397px;  -webkit-background-size: 100%;  background-size: 100%; animation: bomb-redbag 1.5s steps(1, start) 0s infinite;}' +
+						'.simpleAlertRed {cursor:pointer;z-index:100;position:absolute;top:0;left:0;right:0;bottom:0;margin:auto;background-repeat: no-repeat;background: url("' + resource.alertImg + '") no-repeat; width: 300px;  height: 397px;  -webkit-background-size: 100%;  background-size: 100%; animation: bomb-redbag 1.9s steps(1, start) 0s infinite;}' +
 						'.redbag {  width: 300px;  height: 397px;  -webkit-background-size: 100%;  background-size: 100%; animation: bomb-redbag 1s steps(1, start) 0s infinite; }' +
 						'.redAnimat {animation-name: swing;-webkit-animation-name: swing;-webkit-animation-duration: 1s;animation-duration: 1s;animation-delay: 2s;-webkit-animation-delay: 2s;animation-iteration-count: 1;-webkit-animation-iteration-count: 1;}' +
 						'.redAnimated {animation-name: swing;-webkit-animation-name: swing;-webkit-animation-duration: 0.8s;animation-duration: 0.8s;animation-iteration-count: 1;-webkit-animation-iteration-count: 1;}' +
