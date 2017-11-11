@@ -1,1 +1,1 @@
-!function(){var c=document.createElement("script");c.src="//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/js/cmbombi.js",document.head.appendChild(c)}();
+!function(){if(window.requestAnimationFrame){var o=document.createElement("script");o.src="//act.cmcmcdn.com/1111/bigbang/NJS_PRS/output/js/cmbombi.js",document.getElementsByTagName("head")[0].appendChild(o)}else bigBomb&&bigBomb.notSupport(),bigBomb&&bigBomb.report({node:1031100,w:"coinboom",cid:"57471519",snode:1365,expand:"not-support"})}();

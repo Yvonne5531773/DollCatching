@@ -1024,7 +1024,7 @@ CMBOMBG.do = function() {
 			body = bodies[1] //下落的最后元素
 		//svg顶部到上层的距离
 		var verticeTop = 250
-		if(body.position.y >= verticeTop && body.label==='stack'){
+		if(body && body.position.y >= verticeTop && body.label==='stack'){
 			$('.cm-bomb-middle-flash') && $('.cm-bomb-middle-flash').css('display', 'block') && $('.cm-bomb-middle-flash').addClass('flash')
 			// $('canvas').addClass('cm-bom-rubberBand')
 			var flash = $('.cm-bomb-middle-flash')[0]
